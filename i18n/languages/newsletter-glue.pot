@@ -1,0 +1,663 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-12 21:26+0100\n"
+"PO-Revision-Date: 2020-07-12 21:27+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Eazy Po 0.9.5.3\n"
+
+#: newsletter-glue.php:52 newsletter-glue.php:60
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: includes/ajax-functions.php:229
+msgid "This cannot be empty"
+msgstr ""
+
+#: includes/functions.php:15
+#: includes/admin/connect/views/form-mailchimp.php:11
+msgid "Mailchimp"
+msgstr ""
+
+#: includes/functions.php:122
+#, php-format
+msgid "%s from %s"
+msgstr ""
+
+#: includes/admin/admin-fields.php:38 includes/admin/admin-fields.php:134
+#: includes/admin/admin-scripts.php:54
+#: includes/admin/settings/views/settings-css.php:25
+msgid "Saving..."
+msgstr ""
+
+#: includes/admin/admin-fields.php:43 includes/admin/admin-fields.php:139
+#: includes/admin/admin-scripts.php:55
+#: includes/admin/settings/views/settings-css.php:30
+msgid "Saved"
+msgstr ""
+
+#: includes/admin/admin-fields.php:56
+msgid "Verifying..."
+msgstr ""
+
+#: includes/admin/admin-functions.php:14
+#: includes/admin/admin-functions.php:193 includes/admin/admin-menu.php:19
+msgid "Newsletter Glue"
+msgstr ""
+
+#: includes/admin/admin-functions.php:193
+#, php-format
+msgid "Seamlessly sent by %s"
+msgstr ""
+
+#: includes/admin/admin-menu.php:21
+#: includes/admin/connect/views/connect.php:14
+#: includes/admin/connect/views/form-mailchimp.php:27
+msgid "Connect"
+msgstr ""
+
+#: includes/admin/admin-menu.php:22
+msgid "Email automation"
+msgstr ""
+
+#: includes/admin/admin-menu.php:23
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/admin-menu.php:24
+msgid "Upgrade"
+msgstr ""
+
+#: includes/admin/admin-scripts.php:53
+msgid ""
+"We can&rsquo;t publish yet. Your email newsletter is missing some important "
+"details.<br /><a href=\"#\">Let&rsquo;s fix that.</a>"
+msgstr ""
+
+#: includes/admin/admin-scripts.php:56
+#: includes/admin/settings/views/settings.php:28
+msgid "Save"
+msgstr ""
+
+#: includes/admin/deactivate.php:176
+msgid "Quick feedback about Newsletter Glue"
+msgstr ""
+
+#: includes/admin/deactivate.php:179
+msgid "If you have a moment, please let us know why you are deactivating:"
+msgstr ""
+
+#: includes/admin/deactivate.php:187
+msgid "I only needed the plugin for a short period"
+msgstr ""
+
+#: includes/admin/deactivate.php:196
+msgid "I found a better plugin"
+msgstr ""
+
+#: includes/admin/deactivate.php:199
+msgid "Kindly tell us the Plugin name."
+msgstr ""
+
+#: includes/admin/deactivate.php:206
+msgid "The plugin broke my site"
+msgstr ""
+
+#: includes/admin/deactivate.php:215
+msgid "The plugin suddenly stopped working"
+msgstr ""
+
+#: includes/admin/deactivate.php:224
+msgid "I no longer need the plugin"
+msgstr ""
+
+#: includes/admin/deactivate.php:233
+msgid "It's a temporary deactivation. I'm just debugging an issue."
+msgstr ""
+
+#: includes/admin/deactivate.php:242
+msgid "Other"
+msgstr ""
+
+#: includes/admin/deactivate.php:245
+msgid "Kindly tell us the reason so we can improve."
+msgstr ""
+
+#: includes/admin/deactivate.php:249
+msgid "Have more feedback about the plugin? Don&rsquo;t hold back."
+msgstr ""
+
+#: includes/admin/deactivate.php:254
+msgid "Anonymous feedback"
+msgstr ""
+
+#: includes/admin/deactivate.php:255
+msgid "Skip & Deactivate"
+msgstr ""
+
+#: includes/admin/deactivate.php:258
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: includes/admin/deactivate.php:259
+msgid "Cancel"
+msgstr ""
+
+#: includes/admin/meta-boxes.php:14
+msgid "Newsletter Glue: Send as newsletter"
+msgstr ""
+
+#: includes/admin/posts.php:17 includes/admin/views/posts-status.php:20
+msgid "Newsletter status"
+msgstr ""
+
+#: includes/admin/posts.php:49 includes/admin/posts.php:57
+msgid "View log"
+msgstr ""
+
+#: includes/admin/posts.php:51
+#: includes/admin/connect/views/connect-card.php:110
+#: includes/admin/views/metabox-status.php:22
+#: includes/admin/views/posts-status.php:42
+#: includes/integrations/mailchimp/init.php:417
+msgid "Get help"
+msgstr ""
+
+#: includes/admin/posts.php:56
+msgid "Multiple newsletters"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:19
+#: includes/admin/connect/views/connect-card.php:28
+msgid "Add new connection"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:26
+#: includes/admin/connect/views/connect-card.php:49
+msgid "Back"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:34
+msgid "Select email software..."
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:39
+msgid "Request new connection"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:64
+msgid "test"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:68
+msgid "edit"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:69
+msgid "remove"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:81
+msgid "Testing connection..."
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:84
+msgid "Stop test"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:92
+#: includes/admin/onboarding/views/connected.php:25
+msgid "Connected!"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:99
+msgid "Close"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:103
+msgid "Not connected"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:106
+msgid "Test again"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:107
+msgid "Edit connection details"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:118
+msgid "Connection removed"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:126
+msgid "Remove connection?"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:129
+msgid "Confirm"
+msgstr ""
+
+#: includes/admin/connect/views/connect-card.php:130
+msgid "Go back"
+msgstr ""
+
+#: includes/admin/connect/views/connect.php:15
+msgid "Connect via API to your email software."
+msgstr ""
+
+#: includes/admin/connect/views/form-mailchimp.php:20
+msgid "Enter API Key"
+msgstr ""
+
+#: includes/admin/connect/views/form-mailchimp.php:21
+msgid "Get API key"
+msgstr ""
+
+#: includes/admin/connect/views/form-mailchimp.php:35
+msgid "Show me"
+msgstr ""
+
+#: includes/admin/onboarding/views/completed.php:17
+msgid "Set up complete!"
+msgstr ""
+
+#: includes/admin/onboarding/views/completed.php:19
+msgid "You&rsquo;re ready to send your first newsletter."
+msgstr ""
+
+#: includes/admin/onboarding/views/completed.php:20
+msgid ""
+"We&rsquo;ve created a demo post which you can use to send a test newsletter."
+msgstr ""
+
+#: includes/admin/onboarding/views/completed.php:21
+msgid "Let&rsquo;s head over there now."
+msgstr ""
+
+#: includes/admin/onboarding/views/completed.php:25
+msgid "Send test newsletter"
+msgstr ""
+
+#: includes/admin/onboarding/views/connect.php:17
+msgid "Let&rsquo;s begin by connecting your email software..."
+msgstr ""
+
+#: includes/admin/onboarding/views/connect.php:23
+#: includes/admin/onboarding/views/connected.php:32
+#: includes/admin/onboarding/views/mailchimp.php:71
+#: includes/admin/onboarding/views/mailchimp.php:122
+msgid "next"
+msgstr ""
+
+#: includes/admin/onboarding/views/connect.php:24
+#: includes/admin/onboarding/views/connected.php:33
+#: includes/admin/onboarding/views/mailchimp.php:72
+#: includes/admin/onboarding/views/mailchimp.php:123
+msgid "prev"
+msgstr ""
+
+#: includes/admin/onboarding/views/connected.php:17
+msgid "Great, you&rsquo;re connected!"
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:17
+msgid "Now, let&rsquo;s select your default audience."
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:18
+#: includes/admin/onboarding/views/mailchimp.php:83
+msgid "You can always change this later on in the settings."
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:23
+#: includes/admin/settings/views/settings-mailchimp.php:15
+#: includes/admin/views/metabox-mailchimp.php:33
+msgid "Audience"
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:36
+#: includes/admin/settings/views/settings-mailchimp.php:28
+#: includes/admin/views/metabox-mailchimp.php:49
+msgid "Who receives your email."
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:47
+#: includes/admin/settings/views/settings-mailchimp.php:39
+#: includes/admin/views/metabox-mailchimp.php:60
+msgid "Segment / tag"
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:61
+#: includes/admin/settings/views/settings-mailchimp.php:53
+#: includes/admin/views/metabox-mailchimp.php:75
+msgid "A specific group of subscribers."
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:82
+msgid "Last step! Personalise your emails."
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:88
+#: includes/admin/settings/views/settings-mailchimp.php:69
+#: includes/admin/views/metabox-mailchimp.php:87
+msgid "From name"
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:94
+#: includes/admin/settings/views/settings-mailchimp.php:75
+#: includes/admin/views/metabox-mailchimp.php:93
+msgid "Your subscribers will see this name in their inbox."
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:104
+#: includes/admin/settings/views/settings-mailchimp.php:85
+#: includes/admin/views/metabox-mailchimp.php:103
+msgid "From email"
+msgstr ""
+
+#: includes/admin/onboarding/views/mailchimp.php:114
+#: includes/admin/settings/views/settings-mailchimp.php:91
+#: includes/admin/views/metabox-mailchimp.php:109
+msgid "Subscribers will see and reply to this email address."
+msgstr ""
+
+#: includes/admin/onboarding/views/onboarding.php:27
+msgid "Skip"
+msgstr ""
+
+#: includes/admin/onboarding/views/welcome.php:15
+#: includes/admin/views/topbar.php:15
+msgid "<span>Newsletter</span> Glue"
+msgstr ""
+
+#: includes/admin/onboarding/views/welcome.php:19
+msgid "Hi friend,"
+msgstr ""
+
+#: includes/admin/onboarding/views/welcome.php:20
+msgid "Ready to send a post to your subscribers?"
+msgstr ""
+
+#: includes/admin/onboarding/views/welcome.php:21
+msgid "Let&rsquo;s get you started!"
+msgstr ""
+
+#: includes/admin/onboarding/views/welcome.php:24
+msgid "Get started"
+msgstr ""
+
+#: includes/admin/onboarding/views/welcome.php:27
+msgid "This will only take a minute."
+msgstr ""
+
+#: includes/admin/settings/settings.php:48
+#: includes/admin/settings/views/settings-defaults.php:13
+msgid "Email Defaults"
+msgstr ""
+
+#: includes/admin/settings/settings.php:49
+#: includes/admin/settings/views/settings-css.php:13
+msgid "Custom CSS"
+msgstr ""
+
+#: includes/admin/settings/views/settings-css.php:15
+#, php-format
+msgid "Add custom CSS to all your newsletters. %s"
+msgstr ""
+
+#: includes/admin/settings/views/settings-css.php:15
+#: includes/admin/settings/views/settings-mailchimp.php:116
+#: includes/integrations/mailchimp/init.php:296
+#: includes/integrations/mailchimp/init.php:301
+#: includes/integrations/mailchimp/init.php:425
+msgid "Learn more."
+msgstr ""
+
+#: includes/admin/settings/views/settings-css.php:34
+msgid "Enter custom CSS here..."
+msgstr ""
+
+#: includes/admin/settings/views/settings-defaults.php:15
+msgid ""
+"All newsletters will default to the details shown here.<br /> Change details "
+"for individual newsletters at the bottom of each new post."
+msgstr ""
+
+#: includes/admin/settings/views/settings-defaults.php:24
+#: includes/admin/views/metabox-connect.php:27
+msgid "Start by connecting your email software &#x21C4;"
+msgstr ""
+
+#: includes/admin/settings/views/settings-mailchimp.php:105
+msgid "Sent by Newsletter Glue"
+msgstr ""
+
+#: includes/admin/settings/views/settings-mailchimp.php:111
+msgid "Promote us, and we&rsquo;ll promote you back:"
+msgstr ""
+
+#: includes/admin/settings/views/settings-mailchimp.php:114
+msgid ""
+"Check this box to add the words<br />\"Seamlessly sent by Newsletter Glue"
+"\"<br />to the bottom of your newsletter.<br />Don&rsquo;t worry, it&rsquo;s "
+"small."
+msgstr ""
+
+#: includes/admin/settings/views/settings-mailchimp.php:115
+#, php-format
+msgid "Then, %s and we&rsquo;ll feature your newsletter.<br />%s"
+msgstr ""
+
+#: includes/admin/settings/views/settings-mailchimp.php:115
+msgid "let us know"
+msgstr ""
+
+#: includes/admin/views/metabox-connect.php:15
+#: includes/admin/views/metabox-mailchimp.php:17
+#: includes/admin/views/metabox-reset.php:16
+msgid "Send as newsletter"
+msgstr ""
+
+#: includes/admin/views/metabox-connect.php:21
+msgid "Send this blog post as an email newsletter."
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:23
+msgid "Send this blog post as an email newsletter. (expand options)"
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:120
+msgid "Subject"
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:126
+msgid "Example: Issue #3 It&rsquo;s raining cats, dogs, and skateboards"
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:128
+msgid "Short, catchy subject lines get more opens."
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:137
+msgid "Schedule to send"
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:159
+msgid "Your email is ready to publish."
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:163
+msgid ""
+"Your email is ready to publish. <strong>Update</strong> this post to send it."
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:169
+msgid "Almost ready! Just fill in the blank red boxes."
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:174
+msgid "Send test email to"
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:192
+msgid "Send test now"
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:193
+msgid "Sending..."
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:194
+msgid "Sent!"
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:195
+msgid "Could not send"
+msgstr ""
+
+#: includes/admin/views/metabox-mailchimp.php:198
+msgid "Start again"
+msgstr ""
+
+#: includes/admin/views/metabox-reset.php:21
+#, php-format
+msgid ""
+"You&rsquo;ve already saved an email for this post as a draft in %s. Want to "
+"create another one?"
+msgstr ""
+
+#: includes/admin/views/metabox-reset.php:23
+msgid ""
+"You&rsquo;ve already sent this post as a newsletter. Want to send it again?"
+msgstr ""
+
+#: includes/admin/views/metabox-reset.php:30
+msgid "Create new newsletter"
+msgstr ""
+
+#: includes/admin/views/metabox-reset.php:30
+msgid "Send another newsletter"
+msgstr ""
+
+#: includes/admin/views/metabox-status.php:16
+msgid "Your email newsletter is on its way!"
+msgstr ""
+
+#: includes/admin/views/metabox-status.php:17
+msgid "Edit and send again..."
+msgstr ""
+
+#: includes/admin/views/posts-status.php:19
+msgid "Subject line"
+msgstr ""
+
+#: includes/admin/views/posts-status.php:21
+msgid "Time, Date published"
+msgstr ""
+
+#: includes/admin/views/topbar.php:19
+msgid "Help &amp; Documentation"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:173
+msgid "Everyone in audience"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:228
+#, php-format
+msgid ""
+"Your <strong><em>From Email</em></strong> address isn&rsquo;t verified.<br /"
+">\n"
+"\t\t\t\t\t\t%s Or %s"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:229
+#: includes/integrations/mailchimp/init.php:448
+msgid "Verify email now &#8599;."
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:229
+#: includes/integrations/mailchimp/init.php:448
+msgid "learn more."
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:296
+msgid "You can send <strong>10</strong> more test emails today."
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:301
+msgid "You can send <strong>20</strong> more test emails today."
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:342
+msgid "Whoops! The subject line is empty.<br />Fill it out to send."
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:416
+msgid "Your email is on its way!<br />Check your inbox in 3-5 minutes."
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:417
+#, php-format
+msgid "Can&rsquo;t find your email? %s"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:424
+msgid "Too many tests sent in a 24 hour period for your account."
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:439
+msgid "Missing subject"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:446
+msgid "Unverified domain"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:447
+#, php-format
+msgid ""
+"Your email newsletter was not sent, because your email address is not "
+"verified. %s Or %s"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:455
+msgid "Saved as draft"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:463
+msgid "Sent"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:477
+msgid "Immediately"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:478
+msgid "Save as draft in Mailchimp"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:502
+msgid "<strong>Verified.</strong> <a href=\"#\">Learn more</a>"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:508
+msgid ""
+"<strong>Email not verified. This means your emails won&rsquo;t send.<br />\n"
+"\t\t\t\t\t<a href=\"#\">Verify email now &#8599;.</a></strong> Or <a href=\"#"
+"\">learn more.</a>"
+msgstr ""
