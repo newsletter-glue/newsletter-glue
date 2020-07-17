@@ -43,6 +43,11 @@ function newsletterglue_save_meta_box( $post_id, $post ) {
 		return;
 	}
 
+	// Avoid draft save.
+	if ( ! isset( $post->post_status ) || $post->post_status != 'publish' ) {
+		return;
+	}
+
 	// Check user has permission to edit
 	if ( ! current_user_can( 'manage_newsletterglue' ) ) {
 		return;

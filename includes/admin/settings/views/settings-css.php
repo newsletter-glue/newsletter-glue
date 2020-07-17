@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php esc_html_e( 'Custom CSS', 'newsletter-glue' ); ?>
 
-	<div class="sub header"><?php echo wp_kses_post( sprintf( __( 'Add custom CSS to all your newsletters. %s', 'newsletter-glue' ), '<a href="#">' . __( 'Learn more.', 'newsletter-glue' ) . '</a>' ) ); ?></div>
+	<div class="sub header"><?php echo wp_kses_post( sprintf( __( 'Add custom CSS to all your newsletters. %s', 'newsletter-glue' ), '<a href="https://docs.memberhero.pro/article/6-custom-css" target="_blank">' . __( 'Learn more.', 'newsletter-glue' ) . '</a>' ) ); ?></div>
 
 </div>
 

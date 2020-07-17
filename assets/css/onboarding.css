@@ -73,6 +73,7 @@
 	color: rgba( 0, 0, 0, 0.4 );
 	text-decoration: underline;
 	box-shadow: none !important;
+	margin: 0 30px;
 }
 
 .ngl-boarding-skip a:hover {

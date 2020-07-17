@@ -26,7 +26,7 @@ function newsletterglue_redirect_to_onboarding() {
 	$on_screen 	= isset( $_GET[ 'ngl_screen' ] ) && $_GET[ 'ngl_screen' ] == 'onboarding' ? true : false;
 
 	if ( $post_id && $post_id == get_option( 'newsletterglue_demo_post' ) && ! $on_screen ) {
-		if ( ! get_option( 'newsletterglue_onboarding_done' ) ) {
+		if ( ! get_option( 'newsletterglue_onboarding_done' ) && newsletterglue_has_no_active_api() ) {
 			exit( wp_redirect( add_query_arg( 'ngl_screen', 'onboarding' ) ) );
 		}
 	}

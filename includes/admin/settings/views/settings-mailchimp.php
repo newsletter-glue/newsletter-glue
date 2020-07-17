@@ -112,8 +112,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</label>
 
 			<span><?php _e( 'Check this box to add the words<br />"Seamlessly sent by Newsletter Glue"<br />to the bottom of your newsletter.<br />Don&rsquo;t worry, it&rsquo;s small.', 'newsletter-glue' ); ?></span>
-			<span><?php printf( __( 'Then, %s and we&rsquo;ll feature your newsletter.<br />%s', 'newsletter-glue' ), '<a href="#">' . __( 'let us know', 'newsletter-glue' ) . '</a>',
-				'<a href="#" class="ngl-lighter">' . __( 'Learn more.', 'newsletter-glue' ) . '</a>' ); ?></span>
+			<span><?php printf( __( 'Then, %s and we&rsquo;ll feature your newsletter.<br />%s', 'newsletter-glue' ), '<a href="https://ctt.ac/A25aM" target="_blank">' . __( 'let us know', 'newsletter-glue' ) . '</a>',
+				'<a href="https://docs.memberhero.pro/article/5-sent-by" target="_blank" class="ngl-lighter">' . __( 'Learn more.', 'newsletter-glue' ) . '</a>' ); ?></span>
 
 		</div>
 	</div>

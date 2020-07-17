@@ -489,20 +489,14 @@
 		event.stopPropagation();
 	} );
 
-	// Detect if WP is saving.
-	if ( wp.data ) {
-		wp.data.subscribe(() => {
-			var isSavingPost = wp.data.select('core/editor').isSavingPost();
-			var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
-			var metabox = $( '.ngl-send' );
-			if ( isSavingPost && ! isAutosavingPost ) {
-				if ( metabox.find( '#ngl_send_newsletter' ).is( ':checked' ) ) {
-					metabox.addClass( 'is-hidden' );
-					$( '.ngl-msgbox-wrap' ).removeClass( 'is-hidden' );
-				}
-			}
-		} );
-	}
+	// Trigger newsletter sent message.
+	$( document ).on( 'click', '.editor-post-publish-button', function( event ) {
+		var metabox = $( '.ngl-send' );
+		if ( metabox.find( '#ngl_send_newsletter' ).is( ':checked' ) ) {
+			metabox.addClass( 'is-hidden' );
+			$( '.ngl-msgbox-wrap' ).removeClass( 'is-hidden' );
+		}
+	} );
 
 	// Textarea tab indent.
 	$( document ).delegate('.ngl-textarea', 'keydown', function(e) {

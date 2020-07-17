@@ -59,7 +59,9 @@ class NGL_Mailchimp {
 
 		$account = $this->api->get( '/' );
 
-		if ( ! $account ) {
+		$valid_account = ! empty( $account ) && isset( $account[ 'account_id' ] ) ? true : false;
+
+		if ( ! $valid_account ) {
 
 			$this->remove_integration();
 
@@ -226,7 +228,7 @@ class NGL_Mailchimp {
 
 			$result = array(
 				'fail'	=> sprintf( __( 'Your <strong><em>From Email</em></strong> address isn&rsquo;t verified.<br />
-						%s Or %s', 'newsletter-glue' ), '<a href="#">' . __( 'Verify email now &#8599;.', 'newsletter-glue' ) . '</a>', '<a href="#">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' ),
+						%s Or %s', 'newsletter-glue' ), '<a href="#">' . __( 'Verify email now &#8599;.', 'newsletter-glue' ) . '</a>', '<a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' ),
 			);
 
 			return $result;
@@ -293,12 +295,12 @@ class NGL_Mailchimp {
 					if ( $this->is_free_account() ) {
 
 						if ( $this->tests_sent_in_24_hours() == 14 ) {
-							$response['success'] = '<span class="ngl-test-limit">' . __( 'You can send <strong>10</strong> more test emails today.', 'newsletter-glue' ) . '<br /><a href="#">' . __( 'Learn more.', 'newsletter-glue' ) . '</a></span>';
+							$response['success'] = '<span class="ngl-test-limit">' . __( 'You can send <strong>10</strong> more test emails today.', 'newsletter-glue' ) . '<br /><a href="https://docs.memberhero.pro/article/8-email-limits" target="_blank">' . __( 'Learn more.', 'newsletter-glue' ) . '</a></span>';
 						}
 					} else {
 
 						if ( $this->tests_sent_in_24_hours() == 180 ) {
-							$response['success'] = '<span class="ngl-test-limit">' . __( 'You can send <strong>20</strong> more test emails today.', 'newsletter-glue' ) . '<br /><a href="#">' . __( 'Learn more.', 'newsletter-glue' ) . '</a></span>';
+							$response['success'] = '<span class="ngl-test-limit">' . __( 'You can send <strong>20</strong> more test emails today.', 'newsletter-glue' ) . '<br /><a href="https://docs.memberhero.pro/article/8-email-limits" target="_blank">' . __( 'Learn more.', 'newsletter-glue' ) . '</a></span>';
 						}
 					}
 
@@ -413,8 +415,13 @@ class NGL_Mailchimp {
 	 * Test success.
 	 */
 	public function get_test_success_msg() {
-		return __( 'Your email is on its way!<br />Check your inbox in 3-5 minutes.', 'newsletter-glue' ) 
+
+		$msg = __( 'Your email is on its way!<br />Check your inbox in 3-5 minutes.', 'newsletter-glue' ) 
 		. '<br /><span style="color:rgba(0, 0, 0, 0.6) !important;">' . sprintf( __( 'Can&rsquo;t find your email? %s', 'newsletter-glue' ), '<a href="#">' . __( 'Get help', 'newsletter-glue' ) . '</a>' ) . '.</span>';
+
+		$msg .= '<br /><br /><span style="color:rgba(0, 0, 0, 0.4) !important;font-size: 11px !important;">' . sprintf( __( 'You sent %s tests in the last 24 hours.', 'newsletter-glue' ), $this->tests_sent_in_24_hours() ) . '</span>';
+
+		return $msg;
 	}
 
 	/**
@@ -422,7 +429,7 @@ class NGL_Mailchimp {
 	 */
 	public function get_test_limit_msg() {
 		return __( 'Too many tests sent in a 24 hour period for your account.', 'newsletter-glue' ) 
-		. '<br /><a href="#">' . __( 'Learn more.', 'newsletter-glue' ) . '</a>';
+		. '<br /><a href="https://docs.memberhero.pro/article/3-could-not-send-test-email" target="_blank">' . __( 'Learn more.', 'newsletter-glue' ) . '</a>';
 	}
 
 	/**
@@ -445,7 +452,7 @@ class NGL_Mailchimp {
 				$output[ 'type' ] 		= 'error';
 				$output[ 'message' ] 	= __( 'Unverified domain', 'newsletter-glue' );
 				$output[ 'notice' ]		= sprintf( __( 'Your email newsletter was not sent, because your email address is not verified. %s Or %s', 'newsletter-glue' ), 
-				'<a href="#">' . __( 'Verify email now &#8599;.', 'newsletter-glue' ) . '</a>', '<a href="#">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' );
+				'<a href="#">' . __( 'Verify email now &#8599;.', 'newsletter-glue' ) . '</a>', '<a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' );
 				$output[ 'help' ]       = '';
 			}
 
@@ -506,7 +513,7 @@ class NGL_Mailchimp {
 
 			$response = array(
 				'failed'	=> __( '<strong>Email not verified. This means your emails won&rsquo;t send.<br />
-					<a href="#">Verify email now &#8599;.</a></strong> Or <a href="#">learn more.</a>', 'newsletter-glue' ),
+					<a href="#">Verify email now &#8599;.</a></strong> Or <a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">learn more.</a>', 'newsletter-glue' ),
 			);
 
 		}

@@ -122,12 +122,21 @@ p.ngl-credits {
 	font-size: 13px;
 	text-align: center;
 	color: #999;
+	padding-top: 70px;
 }
 
 p.ngl-credits a {
 	color: #999;
 	text-decoration: underline;
 }
+
+.wp-block-button__link {
+	padding: 12px 24px;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.wp-block-button__link.has-vivid-cyan-blue-background-color { background-color: #0693e3; }
 
 @media only screen and (max-width:596px) {
 
