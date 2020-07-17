@@ -43,6 +43,7 @@ function newsletterglue_has_no_active_api( $selected = '' ) {
 	}
 
 	return false;
+
 }
 
 /**
