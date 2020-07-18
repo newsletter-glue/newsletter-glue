@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php else : ?>
 
-	<?php include( 'settings-' . $connection . '.php' ); ?>
+	<?php include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $connection . '/settings.php'; ?>
 
 	<?php endif; ?>
 

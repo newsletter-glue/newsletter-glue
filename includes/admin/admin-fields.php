@@ -118,7 +118,7 @@ function newsletterglue_select_field( $args ) {
 				<?php foreach( $options as $key => $value ) { ?>
 				<div class="item" data-value="<?php echo esc_attr( $key ); ?>">
 					<?php if ( $has_icons ) { ?>
-					<img class="ui avatar image" src="<?php echo NGL_PLUGIN_URL; ?>assets/images/icons/<?php echo esc_attr( $key ); ?>.png">
+					<img class="ui avatar image" src="<?php echo NGL_PLUGIN_URL; ?>includes/integrations/<?php echo esc_attr( $key ); ?>/assets/icon.png">
 					<?php } ?>
 					<?php echo esc_html( $value ); ?>
 				</div>

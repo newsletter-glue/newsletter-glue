@@ -36,7 +36,7 @@ function newsletterglue_ajax_connect_api() {
 	// Get service.
 	$service = isset( $_POST['service'] ) ? sanitize_text_field( $_POST['service'] ) : '';
 
-	if ( ! in_array( $service, array_keys( newsletterglue_get_supported_providers() ) ) ) {
+	if ( ! in_array( $service, array_keys( newsletterglue_get_supported_apps() ) ) ) {
 		wp_die( -1 );
 	}
 
@@ -67,7 +67,7 @@ function newsletterglue_ajax_remove_api() {
 	// Get service.
 	$service = isset( $_POST['service'] ) ? sanitize_text_field( $_POST['service'] ) : '';
 
-	if ( ! in_array( $service, array_keys( newsletterglue_get_supported_providers() ) ) ) {
+	if ( ! in_array( $service, array_keys( newsletterglue_get_supported_apps() ) ) ) {
 		wp_die( -1 );
 	}
 
@@ -164,7 +164,7 @@ function newsletterglue_ajax_verify_email() {
 	$email 		= isset( $_REQUEST[ 'email' ] ) ? $_REQUEST[ 'email' ] : '';
 	$service 	= isset( $_REQUEST['service'] ) ? sanitize_text_field( $_REQUEST['service'] ) : '';
 
-	if ( ! in_array( $service, array_keys( newsletterglue_get_supported_providers() ) ) ) {
+	if ( ! in_array( $service, array_keys( newsletterglue_get_supported_apps() ) ) ) {
 		wp_die( -1 );
 	}
 
@@ -252,19 +252,19 @@ function newsletterglue_ajax_get_onboarding_settings() {
 		wp_die( -1 );
 	}
 
-	$api 	= isset( $_REQUEST['api'] ) ? sanitize_text_field( $_REQUEST['api'] ) : '';
+	$app 	= isset( $_REQUEST['api'] ) ? sanitize_text_field( $_REQUEST['api'] ) : '';
 
-	if ( ! in_array( $api, array_keys( newsletterglue_get_supported_providers() ) ) ) {
+	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {
 		wp_die( -1 );
 	}
 
-	include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $api . '/init.php';
+	include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $app . '/init.php';
 
-	$classname 	= 'NGL_' . ucfirst( $api );
+	$classname 	= 'NGL_' . ucfirst( $app );
 	$api		= new $classname();
 	$api->connect();
 
-	include NGL_PLUGIN_DIR . 'includes/admin/onboarding/views/mailchimp.php';
+	include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $app . '/onboarding.php';
 
 	die();
 }

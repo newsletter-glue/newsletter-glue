@@ -9,23 +9,24 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Creates the admin menu links.
  */
-function newsletterglue_get_supported_providers() {
-	
-	$providers = array(
+function newsletterglue_get_supported_apps() {
+
+	$apps = array(
 		'mailchimp'		=> __( 'Mailchimp', 'newsletter-glue' ),
 	);
 
-	return apply_filters( 'newsletterglue_get_supported_providers', $providers );
+	return apply_filters( 'newsletterglue_get_supported_apps', $apps );
+
 }
 
 /**
- * Get provider name (Service, or API name)
+ * Get app name (Service, or API name)
  */
-function newsletterglue_get_name( $provider ) {
+function newsletterglue_get_name( $app ) {
 
-	$providers = newsletterglue_get_supported_providers();
+	$apps = newsletterglue_get_supported_apps();
 
-	return isset( $providers[ $provider ] ) ? $providers[ $provider ] : '';
+	return isset( $apps[ $app ] ) ? $apps[ $app ] : '';
 }
 
 /**

@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_service',
 					'class'			=> 'ngl-service',
-					'options'		=> newsletterglue_get_supported_providers(),
+					'options'		=> newsletterglue_get_supported_apps(),
 					'placeholder' 	=> esc_html__( 'Select email software...', 'newsletter-glue' ),
 					'has_icons'		=> true,
 				) );
@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 
 		<!-- Software forms -->
-		<?php foreach( newsletterglue_get_supported_providers() as $key => $value ) : ?>
+		<?php foreach( newsletterglue_get_supported_apps() as $key => $value ) : ?>
 
 			<div class="ngl-card-add2 ngl-card-<?php echo esc_attr( $key ); ?> ngl-hidden" data-service="<?php echo esc_attr( $key ); ?>">
 
@@ -49,14 +49,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					<div class="ui basic noborder button ngl-back" data-screen="ngl-card-base"><i class="arrow left icon"></i><?php esc_html_e( 'Back', 'newsletter-glue' ); ?></div>
 				</div>
 
-				<?php include 'form-' . esc_attr( $key ) . '.php'; ?>
+				<?php include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $key . '/connect.php'; ?>
 
 			</div>
 
 			<?php if ( ! newsletterglue_is_onboarding_page() ) : ?>
 			<div class="ngl-card-view ngl-card-view-<?php echo esc_attr( $key ); ?> <?php if ( newsletterglue_has_no_active_api( $key ) ) echo 'ngl-hidden'; ?>" data-service="<?php echo esc_attr( $key ); ?>">
 
-				<div class="ngl-card-view-logo"></div>
+				<div class="ngl-card-view-logo" style="background-image: url( <?php echo NGL_PLUGIN_URL . 'includes/integrations/' . $key . '/assets/logo.png'; ?> );"></div>
 
 				<div class="ngl-header"><?php echo esc_html( $value ); ?></div>
 

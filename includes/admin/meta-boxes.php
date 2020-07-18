@@ -98,7 +98,8 @@ function newsletterglue_meta_box() {
 
 		include( 'views/metabox-status.php' );
 		include( 'views/metabox-reset.php' );
-		include( 'views/metabox-' . $connection . '.php' );
+
+		include NGL_PLUGIN_DIR . 'includes/integrations/' . $connection . '/metabox.php';
 
 		wp_nonce_field( 'newsletterglue_save_data', 'newsletterglue_meta_nonce' );
 

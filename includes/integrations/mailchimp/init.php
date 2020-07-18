@@ -21,8 +21,8 @@ class NGL_Mailchimp {
 	public function __construct() {
 
 		// Include needed files.
-		include_once 'api.php';
-		include_once 'batch.php';
+		include_once 'lib/api.php';
+		include_once 'lib/batch.php';
 
 		$this->get_api_key();
 	}
@@ -211,6 +211,7 @@ class NGL_Mailchimp {
 		// API request.
 		$this->api = new NGL_Mailchimp_API( $this->api_key );
 		$this->api->verify_ssl = false;
+
 		$post = get_post( $post_id );
 
 		// Verify domain.
@@ -232,6 +233,7 @@ class NGL_Mailchimp {
 			);
 
 			return $result;
+
 		}
 
 		// Settings.
@@ -416,12 +418,11 @@ class NGL_Mailchimp {
 	 */
 	public function get_test_success_msg() {
 
-		$msg = __( 'Your email is on its way!<br />Check your inbox in 3-5 minutes.', 'newsletter-glue' ) 
+		$message = __( 'Your email is on its way!<br />Check your inbox in 3-5 minutes.', 'newsletter-glue' ) 
 		. '<br /><span style="color:rgba(0, 0, 0, 0.6) !important;">' . sprintf( __( 'Can&rsquo;t find your email? %s', 'newsletter-glue' ), '<a href="#">' . __( 'Get help', 'newsletter-glue' ) . '</a>' ) . '.</span>';
 
-		$msg .= '<br /><br /><span style="color:rgba(0, 0, 0, 0.4) !important;font-size: 11px !important;">' . sprintf( __( 'You sent %s tests in the last 24 hours.', 'newsletter-glue' ), $this->tests_sent_in_24_hours() ) . '</span>';
+		return $message;
 
-		return $msg;
 	}
 
 	/**
