@@ -13,6 +13,7 @@ function newsletterglue_get_supported_apps() {
 
 	$apps = array(
 		'mailchimp'		=> __( 'Mailchimp', 'newsletter-glue' ),
+		'convertkit'	=> __( 'ConvertKit', 'newsletter-glue' ),
 	);
 
 	return apply_filters( 'newsletterglue_get_supported_apps', $apps );
