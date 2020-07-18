@@ -128,10 +128,14 @@ function newsletterglue_get_form_defaults( $post = 0, $api = '' ) {
 	$d->subject     = $subject;
 
 	// Get options from API.
-	$api_options = $api->get_form_defaults();
+	if ( method_exists( $api, 'get_form_defaults' ) ) {
 
-	foreach( $api_options as $key => $value ) {
-		$d->{$key} = $value;
+		$api_options = $api->get_form_defaults();
+
+		foreach( $api_options as $key => $value ) {
+			$d->{$key} = $value;
+		}
+
 	}
 
 	return $d;

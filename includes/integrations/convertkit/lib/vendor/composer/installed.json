@@ -1,0 +1,84 @@
+[
+    {
+        "name": "kub-at/php-simple-html-dom-parser",
+        "version": "1.8.2",
+        "version_normalized": "1.8.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ConvertKit/php-simple-html-dom-parser.git",
+            "reference": "2133982fa268436eca5a8ea2a2dd47344736edb0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ConvertKit/php-simple-html-dom-parser/zipball/2133982fa268436eca5a8ea2a2dd47344736edb0",
+            "reference": "2133982fa268436eca5a8ea2a2dd47344736edb0",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "time": "2019-04-24T20:12:57+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "KubAT\\PhpSimple\\HtmlDomParser": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "S.C. Chen",
+                "email": "me578022@gmail.com"
+            },
+            {
+                "name": "Jakub Stawowy",
+                "email": "Kub-AT@users.noreply.github.com"
+            }
+        ],
+        "description": "PHP Simple HTML DOM Parser with namespace and PHP 7.3 compatible",
+        "homepage": "http://simplehtmldom.sourceforge.net/",
+        "keywords": [
+            "dom",
+            "html",
+            "simple"
+        ],
+        "support": {
+            "source": "https://github.com/ConvertKit/php-simple-html-dom-parser/tree/1.8.2"
+        }
+    },
+    {
+        "name": "oldmine/relative-to-absolute-url",
+        "version": "1.7.1",
+        "version_normalized": "1.7.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ConvertKit/relative-to-absolute-url.git",
+            "reference": "51daebf43ee961dd0817ef3440afd540f37430e4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ConvertKit/relative-to-absolute-url/zipball/51daebf43ee961dd0817ef3440afd540f37430e4",
+            "reference": "51daebf43ee961dd0817ef3440afd540f37430e4",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^7"
+        },
+        "time": "2019-05-22T16:37:59+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "oldmine\\RelativeToAbsoluteUrl\\": "src",
+                "oldmine\\RelativeToAbsoluteUrl\\Tests\\": "tests"
+            }
+        },
+        "description": "Library adaptation to translate relative url to absolute. Original library: https://sourceforge.net/projects/absoluteurl/",
+        "support": {
+            "source": "https://github.com/ConvertKit/relative-to-absolute-url/tree/1.7.1"
+        }
+    }
+]

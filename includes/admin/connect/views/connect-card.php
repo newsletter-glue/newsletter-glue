@@ -54,7 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</div>
 
 			<?php if ( ! newsletterglue_is_onboarding_page() ) : ?>
-			<div class="ngl-card-view ngl-card-view-<?php echo esc_attr( $key ); ?> <?php if ( newsletterglue_has_no_active_api( $key ) ) echo 'ngl-hidden'; ?>" data-service="<?php echo esc_attr( $key ); ?>">
+			<div class="ngl-card-view ngl-card-view-<?php echo esc_attr( $key ); ?> <?php if ( newsletterglue_inactive_app( $key ) ) echo 'ngl-hidden'; ?>" data-service="<?php echo esc_attr( $key ); ?>">
 
 				<div class="ngl-card-view-logo" style="background-image: url( <?php echo NGL_PLUGIN_URL . 'includes/integrations/' . $key . '/assets/logo.png'; ?> );"></div>
 

@@ -28,6 +28,18 @@ function newsletterglue_get_name( $app ) {
 	$apps = newsletterglue_get_supported_apps();
 
 	return isset( $apps[ $app ] ) ? $apps[ $app ] : '';
+
+}
+
+/**
+ * Checks if app is integrated.
+ */
+function newsletterglue_inactive_app( $app ) {
+
+	$apps = get_option( 'newsletterglue_integrations' );
+
+	return ! isset( $apps[ $app ] ) ? true : false;
+
 }
 
 /**
@@ -57,6 +69,7 @@ function newsletterglue_get_current_page_url() {
 	$uri = apply_filters( 'newsletterglue_get_current_page_url', $uri );
 
 	return $uri;
+
 }
 
 /**

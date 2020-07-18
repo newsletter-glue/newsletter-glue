@@ -25,6 +25,7 @@ class NGL_Mailchimp {
 		include_once 'lib/batch.php';
 
 		$this->get_api_key();
+
 	}
 
 	/**

@@ -387,6 +387,11 @@
 	text-align: left;
 }
 
+.ngl-fields form {
+	display: flex;
+    flex-direction: column;
+}
+
 .ngl-helper {
 	margin: 8px 0 0;
 	color: rgba(0, 0, 0, 0.6);
@@ -1095,4 +1100,14 @@
 
 .ngl-metabox .ui.selection.dropdown {
 	padding: 0.75em 2.8em 0.75em 1em;
+}
+
+.ngl .ui.dropdown > .text > img,
+.ngl .ui.dropdown > .text > .image,
+.ngl .ui.dropdown .menu > .item > .image,
+.ngl .ui.dropdown .menu > .item > img {
+    margin-top: -0.15em;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
 }
