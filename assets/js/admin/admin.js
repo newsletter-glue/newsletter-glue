@@ -229,6 +229,9 @@
 				ngl_show_testing_screen();
 			},
 			success: function( result ) {
+
+				console.log( result );
+
 				setTimeout( function() {
 					if ( result.response === 'invalid' ) {
 						ngl_show_not_connected_screen();

@@ -65,7 +65,10 @@ class NGL_Convertkit {
 
 		$account = $this->api->make_request( 'v3/account?api_secret=' . $api_secret, 'get' );
 
-		$valid_account = isset( $account[ 'error' ] ) ? false : true;
+		$forms   = $this->api->make_request( 'v3/forms?api_key=' . $api_key, 'get' );
+
+		// Either account or forms return error. API key + secret testing.
+		$valid_account = isset( $account[ 'error' ] ) || isset( $forms[ 'error' ] ) ? false : true;
 
 		if ( ! $valid_account ) {
 
@@ -77,7 +80,7 @@ class NGL_Convertkit {
 
 		} else {
 
-			$this->save_integration( $api_key, $api_secret );
+			$this->save_integration( $api_key, $api_secret, $account );
 
 			$result = array( 'response' => 'successful' );
 
@@ -109,7 +112,7 @@ class NGL_Convertkit {
 	/**
 	 * Save Integration.
 	 */
-	public function save_integration( $api_key = '', $api_secret = '' ) {
+	public function save_integration( $api_key = '', $api_secret = '', $account = array() ) {
 		$integrations = get_option( 'newsletterglue_integrations' );
 
 		$integrations[ 'convertkit' ] = array();
@@ -125,7 +128,8 @@ class NGL_Convertkit {
 		if ( ! $options ) {
 
 			$globals[ 'convertkit' ] = array(
-
+				'from_name' 	=> newsletterglue_get_default_from_name(),
+				'from_email'	=> isset( $account[ 'primary_email_address' ] ) ? $account[ 'primary_email_address' ] : '',
 			);
 
 			update_option( 'newsletterglue_options', $globals );
@@ -139,6 +143,88 @@ class NGL_Convertkit {
 	public function connect() {
 
 		$this->api = new ConvertKit_API( $this->api_key, $this->api_secret );
+
+	}
+
+	/**
+	 * Get tags.
+	 */
+	public function get_tags() {
+
+		$_tags = array( '_everyone' => __( 'Everyone', 'newsletter-glue' ) );
+
+		$tags   = $this->api->make_request( 'v3/tags?api_key=' . $this->api_key, 'get' );
+
+		if ( isset( $tags[ 'tags' ] ) ) {
+			foreach( $tags[ 'tags' ] as $key => $data ) {
+				$_tags[ $data[ 'id' ] ] = $data[ 'name' ];
+			}
+		}
+
+		return $_tags;
+
+	}
+
+	/**
+	 * Verify email address.
+	 */
+	public function verify_email( $email = '' ) {
+
+		$response = array(
+			'success'	=> __( '<strong>Verified.</strong> <a href="#">Learn more</a>', 'newsletter-glue' ),
+		);
+
+		return $response;
+
+	}
+
+	/**
+	 * Get schedule options.
+	 */
+	public function get_schedule_options() {
+
+		$options = array(
+			'immediately'	=> __( 'Immediately', 'newsletter-glue' ),
+			'draft'			=> __( 'Save as draft in ConvertKit', 'newsletter-glue' ),
+		);
+
+		return $options;
+
+	}
+
+	/**
+	 * Get form defaults.
+	 */
+	public function get_form_defaults() {
+
+		$this->api = new ConvertKit_API( $this->api_key, $this->api_secret );
+
+		$defaults[ 'tags' ] = $this->get_tags();
+
+		return $defaults;
+	}
+
+	/**
+	 * Send newsletter.
+	 */
+	public function send_newsletter( $post_id = 0, $data = array(), $test = false ) {
+
+		if ( defined( 'NGL_SEND_IN_PROGRESS' ) ) {
+			return;
+		}
+
+		define( 'NGL_SEND_IN_PROGRESS', 'sending' );
+
+		// If no data was provided. Get it from the post.
+		if ( empty( $data ) ) {
+			$data = get_post_meta( $post_id, '_newsletterglue', true );
+		}
+
+		$result = array(
+			'fail'	=> __( 'Error occured', 'newsletter-glue' ),
+		);
+
+		return $result;
 
 	}
 
