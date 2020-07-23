@@ -255,7 +255,7 @@ class NGL_Mailchimp {
 
 		// Add segment.
 		if ( $segment ) {
-			$campaign_array['recipients']['segment_opts'] = array( 'saved_segment_id' => (int) $segment );
+			$campaign_array['recipients']['segment_opts'] = array( 'saved_segment_id' => ( int ) $segment );
 		}
 
 		// Create a campaign.
@@ -322,6 +322,7 @@ class NGL_Mailchimp {
 					$result = $this->api->post( 'campaigns/' . $campaign_id . '/actions/send' );
 
 				}
+
 				if ( $schedule === 'draft' ) {
 
 					$result = array(

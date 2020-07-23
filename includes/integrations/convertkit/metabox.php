@@ -39,10 +39,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				if ( isset( $settings->tag ) ) {
 					$tag = $settings->tag;
 				} else {
-					if ( $defaults->tags ) {
-						$keys = array_keys( $defaults->tags );
-						$tag = $keys[0];
-					}
+					$tag = newsletterglue_get_option( 'tag', 'convertkit' );
+				}
+				if ( ! $tag ) {
+					$tag = '_everyone';
 				}
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_tag',
