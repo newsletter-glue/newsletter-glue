@@ -1,7 +1,7 @@
 ( function( $ ) {
 	"use strict";
 
-	var ngl_service;
+	var ngl_app;
 	var ngl_back_screen;
 	var xhr;
 
@@ -29,13 +29,13 @@
 		if ( $( '.ngl-card-view' ).length ) {
 			setTimeout( function() {
 				$( '.ngl-card-state, .ngl-card-add2' ).addClass( 'ngl-hidden' );
-				$( '.ngl-card-view-' + ngl_service ).removeClass( 'ngl-hidden' );
+				$( '.ngl-card-view-' + ngl_app ).removeClass( 'ngl-hidden' );
 			}, 2000 );
 		} else {
 			// We are in onboarding.
 			$( '.ngl-boarding:visible' ).addClass( 'is-hidden' );
 			$( '.ngl-boarding[data-screen=3]' ).removeClass( 'is-hidden' );
-			ngl_onboarding_settings( ngl_service );
+			ngl_onboarding_settings( ngl_app );
 		}
 
 	}
@@ -123,9 +123,9 @@
 	function ngl_validate_email() {
 
 		var email 	= $( '#ngl_from_email' ).val();
-		var service = $( '#ngl_provider' ).val();
+		var app 	= $( '#ngl_app' ).val();
 
-		var data = 'action=newsletterglue_ajax_verify_email&security=' + newsletterglue_params.ajaxnonce + '&email=' + email + '&service=' + service;
+		var data = 'action=newsletterglue_ajax_verify_email&security=' + newsletterglue_params.ajaxnonce + '&email=' + email + '&app=' + app;
 
 		$.ajax( {
 			type : 'post',
@@ -179,11 +179,11 @@
 		$( '.ngl-card-base' ).removeClass( 'ngl-hidden' );
 	} );
 
-	// When a service is selected.
-	$( '.ngl-service' ).dropdown( 'setting', 'onChange', function( val ) {
+	// When a app is selected.
+	$( '.ngl-app' ).dropdown( 'setting', 'onChange', function( val ) {
 		$( this ).parents( '.ngl-card-base' ).addClass( 'ngl-hidden' );
 		$( '.ngl-card-' + val ).removeClass( 'ngl-hidden' );
-		ngl_service = val;
+		ngl_app = val;
 	} );
 
 	// Back one screen.
@@ -191,7 +191,7 @@
 		
 		if ( ! ngl_back_screen ) {
 			var screen = $( this ).attr( 'data-screen' );
-			$( '.ngl-service' ).dropdown( 'clear' );
+			$( '.ngl-app' ).dropdown( 'clear' );
 			$( this ).parent().parent().addClass( 'ngl-hidden' );
 			$( '.' + screen ).removeClass( 'ngl-hidden' );
 		} else {
@@ -204,11 +204,11 @@
 		event.preventDefault();
 
 		var theform = $( this );
-		var service = $( this ).parents( '.ngl-card-add2' ).attr( 'data-service' );
-		var data 	= theform.serialize() + '&action=newsletterglue_ajax_connect_api&security=' + newsletterglue_params.ajaxnonce + '&service=' + service;
+		var app 	= $( this ).parents( '.ngl-card-add2' ).attr( 'data-app' );
+		var data 	= theform.serialize() + '&action=newsletterglue_ajax_connect_api&security=' + newsletterglue_params.ajaxnonce + '&app=' + app;
 
 		var stop_form = false;
-		if ( ! $( '.ngl-card-' + service ).hasClass( 'ngl-hidden' ) ) {
+		if ( ! $( '.ngl-card-' + app ).hasClass( 'ngl-hidden' ) ) {
 			theform.find( 'input[type=text]:visible' ).each( function() {
 				if ( $( this ).val() == '' ) {
 					$( this ).addClass( 'error' ).focus();
@@ -258,8 +258,8 @@
 	// Test connection.
 	$( document ).on( 'click', '.ngl-ajax-test-connection', function( event ) {
 		event.preventDefault();
-		ngl_service = $( this ).parents( '.ngl-card-view' ).attr( 'data-service' );
-		$( '.ngl-card-add2.ngl-card-' + ngl_service + ' .ngl-fields form' ).trigger( 'submit' );
+		ngl_app = $( this ).parents( '.ngl-card-view' ).attr( 'data-app' );
+		$( '.ngl-card-add2.ngl-card-' + ngl_app + ' .ngl-fields form' ).trigger( 'submit' );
 		return false;
 	} );
 
@@ -282,18 +282,18 @@
 		event.preventDefault();
 		$( '.ngl-card-state.is-invalid' ).addClass( 'ngl-hidden' );
 		if ( $( this ).parents( '.ngl-card-view' ).is( ':visible' ) ) {
-			ngl_service = $( this ).parents( '.ngl-card-view' ).attr( 'data-service' );
-			ngl_back_screen = $( this ).parents( '.ngl-card-view-' + ngl_service );
+			ngl_app = $( this ).parents( '.ngl-card-view' ).attr( 'data-app' );
+			ngl_back_screen = $( this ).parents( '.ngl-card-view-' + ngl_app );
 		}
-		$( '.ngl-card-add2.ngl-card-' + ngl_service ).removeClass( 'ngl-hidden' );
+		$( '.ngl-card-add2.ngl-card-' + ngl_app ).removeClass( 'ngl-hidden' );
 		return false;
 	} );
 
 	// Remove connection.
 	$( document ).on( 'click', '.ngl-ajax-remove-connection', function( event ) {
 		event.preventDefault();
-		ngl_service = $( this ).parents( '.ngl-card-view' ).attr( 'data-service' );
-		$( '.ngl-ajax-remove' ).attr( 'data-ngl_service', ngl_service );
+		ngl_app = $( this ).parents( '.ngl-card-view' ).attr( 'data-app' );
+		$( '.ngl-ajax-remove' ).attr( 'data-ngl_app', ngl_app );
 		$( '.ngl-card-state.confirm-remove' ).removeClass( 'ngl-hidden' );
 		return false;
 	} );
@@ -303,9 +303,9 @@
 		event.preventDefault();
 		$( '.ngl-card-state.confirm-remove' ).addClass( 'ngl-hidden' );
 		$( '.ngl-card-state.is-removed' ).removeClass( 'ngl-hidden' );
-		$( '.ngl-service' ).dropdown( 'clear' );
+		$( '.ngl-app' ).dropdown( 'clear' );
 
-		var data = 'action=newsletterglue_ajax_remove_api&security=' + newsletterglue_params.ajaxnonce + '&service=' + $( this ).attr( 'data-ngl_service' );
+		var data = 'action=newsletterglue_ajax_remove_api&security=' + newsletterglue_params.ajaxnonce + '&app=' + $( this ).attr( 'data-ngl_app' );
 
 		$.ajax( {
 			type : 'post',

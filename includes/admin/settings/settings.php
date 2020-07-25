@@ -15,12 +15,12 @@ function newsletterglue_settings_page() {
 
 	$tab = newsletterglue_settings_tab();
 
-	$connection = newsletterglue_default_connection();
+	$app = newsletterglue_default_connection();
 
 	// Load into memory.
-	if ( $connection ) {
-		include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $connection . '/init.php';
-		$classname 	= 'NGL_' . ucfirst( $connection );
+	if ( $app ) {
+		include_once newsletterglue_get_path( $app ) . '/init.php';
+		$classname 	= 'NGL_' . ucfirst( $app );
 		$api		= new $classname();
 		$api->connect();
 	}

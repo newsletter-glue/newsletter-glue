@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 		<div class="ngl-field">
 			<?php
-				$audience  = newsletterglue_get_option( 'audience', $connection );
+				$audience  = newsletterglue_get_option( 'audience', $app );
 				$audiences = $api->get_audiences();
 				if ( ! $audience ) {
 					$audience = array_keys( $audiences );
@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="ngl-field">
 			<?php
 
-				$segment = newsletterglue_get_option( 'segment', $connection );
+				$segment = newsletterglue_get_option( 'segment', $app );
 
 				if ( ! $segment ) {
 					$segment = '_everyone';
@@ -73,7 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_from_name',
 					'helper'		=> __( 'Your subscribers will see this name in their inbox.', 'newsletter-glue' ),
-					'value'			=> newsletterglue_get_option( 'from_name', $connection ),
+					'value'			=> newsletterglue_get_option( 'from_name', $app ),
 					'class'			=> 'ngl-ajax',
 				) );
 			?>
@@ -89,7 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_from_email',
 					'helper'		=> __( 'Subscribers will see and reply to this email address.', 'newsletter-glue' ),
-					'value'			=> newsletterglue_get_option( 'from_email', $connection ),
+					'value'			=> newsletterglue_get_option( 'from_email', $app ),
 					'class'			=> 'ngl-ajax',
 				) );
 			?>

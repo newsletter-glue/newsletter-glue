@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 <div class="ngl-metabox">
 
-	<?php if ( ! $connection ) : ?>
+	<?php if ( ! $app ) : ?>
 
 	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-msg is-notice"><a href="<?php echo esc_url( admin_url( 'admin.php?page=ngl-connect' ) ); ?>"><?php _e( 'Start by connecting your email software &#x21C4;', 'newsletter-glue' ); ?></a></div>
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php else : ?>
 
-	<?php include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $connection . '/settings.php'; ?>
+	<?php include_once newsletterglue_get_path( $app ) . '/settings.php'; ?>
 
 	<?php endif; ?>
 

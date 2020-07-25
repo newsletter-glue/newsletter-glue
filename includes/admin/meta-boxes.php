@@ -83,15 +83,15 @@ add_action( 'save_post', 'newsletterglue_save_meta_box', 1, 2 );
 function newsletterglue_meta_box() {
 	global $post;
 
-	if ( ! $connection = newsletterglue_default_connection() ) {
+	if ( ! $app = newsletterglue_default_connection() ) {
 
 		include( 'views/metabox-connect.php' );
 
 	} else {
 
-		include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $connection . '/init.php';
+		include_once newsletterglue_get_path( $app ) . '/init.php';
 
-		$class 		= 'NGL_' . ucfirst( $connection );
+		$class 		= 'NGL_' . ucfirst( $app );
 		$api   		= new $class();
 		$defaults 	= newsletterglue_get_form_defaults( $post, $api );
 		$settings   = newsletterglue_get_data( $post->ID );
@@ -99,7 +99,7 @@ function newsletterglue_meta_box() {
 		include( 'views/metabox-status.php' );
 		include( 'views/metabox-reset.php' );
 
-		include NGL_PLUGIN_DIR . 'includes/integrations/' . $connection . '/metabox.php';
+		include newsletterglue_get_path( $app ) . '/metabox.php';
 
 		wp_nonce_field( 'newsletterglue_save_data', 'newsletterglue_meta_nonce' );
 
@@ -197,11 +197,11 @@ function newsletterglue_send( $post_id = 0, $test = false ) {
 
 	update_post_meta( $post_id, '_newsletterglue', $data );
 
-	$provider = $data[ 'provider' ];
+	$app = $data[ 'app' ];
 
-	include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $provider . '/init.php';
+	include_once newsletterglue_get_path( $app ) . '/init.php';
 
-	$classname = 'NGL_' . ucfirst( $provider );
+	$classname = 'NGL_' . ucfirst( $app );
 
 	$api = new $classname();
 

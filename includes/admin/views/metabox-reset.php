@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		<div class="ngl-field">
 			<?php if ( isset( $settings->schedule ) && $settings->schedule === 'draft' ) : ?>
-			<?php printf( __( 'You&rsquo;ve already saved an email for this post as a draft in %s. Want to create another one?', 'newsletter-glue' ), newsletterglue_get_name( $connection ) ); ?>
+			<?php printf( __( 'You&rsquo;ve already saved an email for this post as a draft in %s. Want to create another one?', 'newsletter-glue' ), newsletterglue_get_name( $app ) ); ?>
 			<?php else : ?>
 			<?php _e( 'You&rsquo;ve already sent this post as a newsletter. Want to send it again?', 'newsletter-glue' ); ?>
 			<?php endif; ?>

@@ -33,16 +33,16 @@ function newsletterglue_ajax_connect_api() {
 		wp_die( -1 );
 	}
 
-	// Get service.
-	$service = isset( $_POST['service'] ) ? sanitize_text_field( $_POST['service'] ) : '';
+	// Get app.
+	$app = isset( $_POST['app'] ) ? sanitize_text_field( $_POST['app'] ) : '';
 
-	if ( ! in_array( $service, array_keys( newsletterglue_get_supported_apps() ) ) ) {
+	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {
 		wp_die( -1 );
 	}
 
-	include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $service . '/init.php';
+	include_once newsletterglue_get_path( $app ) . '/init.php';
 
-	$classname 	= 'NGL_' . ucfirst( $service );
+	$classname 	= 'NGL_' . ucfirst( $app );
 	$api		= new $classname();
 	$result 	= $api->add_integration();
 
@@ -64,16 +64,16 @@ function newsletterglue_ajax_remove_api() {
 		wp_die( -1 );
 	}
 
-	// Get service.
-	$service = isset( $_POST['service'] ) ? sanitize_text_field( $_POST['service'] ) : '';
+	// Get app.
+	$app = isset( $_POST['app'] ) ? sanitize_text_field( $_POST['app'] ) : '';
 
-	if ( ! in_array( $service, array_keys( newsletterglue_get_supported_apps() ) ) ) {
+	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {
 		wp_die( -1 );
 	}
 
-	include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $service . '/init.php';
+	include_once newsletterglue_get_path( $app ) . '/init.php';
 
-	$classname 	= 'NGL_' . ucfirst( $service );
+	$classname 	= 'NGL_' . ucfirst( $app );
 	$api		= new $classname();
 	$result 	= $api->remove_integration();
 
@@ -162,15 +162,15 @@ function newsletterglue_ajax_verify_email() {
 	}
 
 	$email 		= isset( $_REQUEST[ 'email' ] ) ? $_REQUEST[ 'email' ] : '';
-	$service 	= isset( $_REQUEST['service'] ) ? sanitize_text_field( $_REQUEST['service'] ) : '';
+	$app 		= isset( $_REQUEST[ 'app' ] ) ? sanitize_text_field( $_REQUEST['app'] ) : '';
 
-	if ( ! in_array( $service, array_keys( newsletterglue_get_supported_apps() ) ) ) {
+	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {
 		wp_die( -1 );
 	}
 
-	include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $service . '/init.php';
+	include_once newsletterglue_get_path( $app ) . '/init.php';
 
-	$classname 	= 'NGL_' . ucfirst( $service );
+	$classname 	= 'NGL_' . ucfirst( $app );
 	$api		= new $classname();
 	$result 	= $api->verify_email( $email );
 
@@ -208,7 +208,7 @@ function newsletterglue_ajax_save_field() {
 
 	} else if ( $id == 'from_email' ) {
 
-		include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $app . '/init.php';
+		include_once newsletterglue_get_path( $app ) . '/init.php';
 
 		$classname 	= 'NGL_' . ucfirst( $app );
 		$api		= new $classname();
@@ -258,13 +258,13 @@ function newsletterglue_ajax_get_onboarding_settings() {
 		wp_die( -1 );
 	}
 
-	include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $app . '/init.php';
+	include_once newsletterglue_get_path( $app ) . '/init.php';
 
 	$classname 	= 'NGL_' . ucfirst( $app );
 	$api		= new $classname();
 	$api->connect();
 
-	include_once NGL_PLUGIN_DIR . 'includes/integrations/' . $app . '/onboarding.php';
+	include_once newsletterglue_get_path( $app ) . '/onboarding.php';
 
 	die();
 }

@@ -13,6 +13,7 @@ function newsletterglue_get_supported_apps() {
 
 	$apps = array(
 		'mailchimp'		=> __( 'Mailchimp', 'newsletter-glue' ),
+		'mailerlite'	=> __( 'MailerLite', 'newsletter-glue' ),
 		'convertkit'	=> __( 'ConvertKit', 'newsletter-glue' ),
 	);
 
@@ -140,4 +141,28 @@ function newsletterglue_get_default_from_name() {
 	}
 
 	return apply_filters( 'newsletterglue_get_default_from_name', $from_name );
+}
+
+/**
+ * Get application url.
+ */
+function newsletterglue_get_url( $app ) {
+
+	$path = NGL_PLUGIN_URL . 'includes/integrations/' . $app;
+
+	// Allow this path to be modified using WordPress filters.
+	return apply_filters( 'newsletterglue_get_url', $path, $app );
+
+}
+
+/**
+ * Get application path.
+ */
+function newsletterglue_get_path( $app ) {
+
+	$path = NGL_PLUGIN_DIR . 'includes/integrations/' . $app;
+
+	// Allow this path to be modified using WordPress filters.
+	return apply_filters( 'newsletterglue_get_path', $path, $app );
+
 }

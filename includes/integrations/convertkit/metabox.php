@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 <div class="ngl-metabox ngl-send <?php if ( isset( $settings->sent ) ) echo 'is-hidden'; ?>">
 
-	<input type="hidden" name="ngl_provider" id="ngl_provider" value="convertkit" />
+	<input type="hidden" name="ngl_app" id="ngl_app" value="convertkit" />
 
 	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-header">
