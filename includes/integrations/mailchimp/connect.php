@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			newsletterglue_text_field( array(
 				'id' 			=> 'ngl_mailchimp_key',
 				'placeholder' 	=> esc_html__( 'Enter API Key', 'newsletter-glue' ),
-				'helper'		=> '<a href="https://us3.admin.mailchimp.com/account/api-key-popup/" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . '</a>',
+				'helper'		=> '<a href="https://admin.mailchimp.com/account/api-key-popup/" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . '</a>',
 				'value'			=> isset( $integrations['mailchimp']['api_key'] ) ? $integrations['mailchimp']['api_key'] : '',
 			) );
 		?>

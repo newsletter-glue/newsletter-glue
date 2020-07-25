@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-boarding-close"><a href="<?php echo newsletterglue_skip_onboarding_url(); ?>"><span class="material-icons">close</span></a></div>
 	<div class="ngl-boarding-skip">
-		<a href="#"><?php _e( 'Get help', 'newsletter-glue' ); ?></a>
+		<a href="https://docs.memberhero.pro/article/10-onboarding" target="_blank"><?php _e( 'Get help', 'newsletter-glue' ); ?></a>
 		<a href="<?php echo newsletterglue_skip_onboarding_url(); ?>"><?php _e( 'Skip', 'newsletter-glue' ); ?></a>
 	</div>
 

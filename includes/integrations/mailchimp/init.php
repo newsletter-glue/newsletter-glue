@@ -293,23 +293,7 @@ class NGL_Mailchimp {
 
 				} else {
 
-					$this->add_test_email();
-
-					if ( $this->is_free_account() ) {
-
-						if ( $this->tests_sent_in_24_hours() == 14 ) {
-							$response['success'] = '<span class="ngl-test-limit">' . __( 'You can send <strong>10</strong> more test emails today.', 'newsletter-glue' ) . '<br /><a href="https://docs.memberhero.pro/article/8-email-limits" target="_blank">' . __( 'Learn more.', 'newsletter-glue' ) . '</a></span>';
-						}
-					} else {
-
-						if ( $this->tests_sent_in_24_hours() == 180 ) {
-							$response['success'] = '<span class="ngl-test-limit">' . __( 'You can send <strong>20</strong> more test emails today.', 'newsletter-glue' ) . '<br /><a href="https://docs.memberhero.pro/article/8-email-limits" target="_blank">' . __( 'Learn more.', 'newsletter-glue' ) . '</a></span>';
-						}
-					}
-
-					if ( ! isset( $response[ 'success' ] ) ) {
-						$response['success'] = $this->get_test_success_msg();
-					}
+					$response['success'] = $this->get_test_success_msg();
 
 				}
 
@@ -378,50 +362,12 @@ class NGL_Mailchimp {
 	}
 
 	/**
-	 * Add test email.
-	 */
-	public function add_test_email() {
-		$tests = get_option( 'newsletterglue_mailchimp_tests' );
-
-		if ( ! $tests ) {
-			$tests = array();
-		}
-
-		$tests[] = time();
-
-		update_option( 'newsletterglue_mailchimp_tests', $tests );
-	}
-
-	/**
-	 * Get tests sent in the last 24 hours.
-	 */
-	public function tests_sent_in_24_hours() {
-
-		$tests = get_option( 'newsletterglue_mailchimp_tests' );
-
-		if ( ! $tests ) {
-			return 0;
-		}
-
-		$count = 0;
-
-		foreach( $tests as $test ) {
-			$diff = time() - $test;
-			if ( $diff < 86400 ) {
-				$count++;
-			}
-		}
-
-		return $count;
-	}
-
-	/**
 	 * Test success.
 	 */
 	public function get_test_success_msg() {
 
 		$message = __( 'Your email is on its way!<br />Check your inbox in 3-5 minutes.', 'newsletter-glue' ) 
-		. '<br /><span style="color:rgba(0, 0, 0, 0.6) !important;">' . sprintf( __( 'Can&rsquo;t find your email? %s', 'newsletter-glue' ), '<a href="#">' . __( 'Get help', 'newsletter-glue' ) . '</a>' ) . '.</span>';
+		. '<br /><span style="color:rgba(0, 0, 0, 0.6) !important;">' . sprintf( __( 'Can&rsquo;t find your email? %s', 'newsletter-glue' ), '<a href="https://docs.memberhero.pro/article/11-email-delivery" target="_blank">' . __( 'Get help', 'newsletter-glue' ) . '</a>' ) . '.</span>';
 
 		return $message;
 
@@ -431,8 +377,18 @@ class NGL_Mailchimp {
 	 * Test failed.
 	 */
 	public function get_test_limit_msg() {
-		return __( 'Too many tests sent in a 24 hour period for your account.', 'newsletter-glue' ) 
-		. '<br /><a href="https://docs.memberhero.pro/article/3-could-not-send-test-email" target="_blank">' . __( 'Learn more.', 'newsletter-glue' ) . '</a>';
+
+		if ( $this->is_free_account() ) {
+			$test_count = 24;
+		} else {
+			$test_count = 200;
+		}
+
+		$message = __( 'Try testing again tomorrow?', 'newsletter-glue' );
+		$message .= '<br />';
+		$message .= sprintf( __( 'You&rsquo;ve sent too many test emails today. Mailchimp only allows %s test emails every 24 hours for your account.', 'newsletter-glue' ), $test_count );
+
+		return $message;
 	}
 
 	/**
@@ -509,14 +465,14 @@ class NGL_Mailchimp {
 		if ( isset( $result['verified'] ) && $result['verified'] == true ) {
 
 			$response = array(
-				'success'	=> __( '<strong>Verified.</strong> <a href="#">Learn more</a>', 'newsletter-glue' ),
+				'success'	=> __( '<strong>Verified.</strong> <a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">Learn more</a>', 'newsletter-glue' ),
 			);
 
 		} else {
 
 			$response = array(
 				'failed'	=> __( '<strong>Email not verified. This means your emails won&rsquo;t send.<br />
-					<a href="#">Verify email now &#8599;.</a></strong> Or <a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">learn more.</a>', 'newsletter-glue' ),
+					<a href="https://admin.mailchimp.com/account/domains/" target="_blank">Verify email now &#8599;.</a></strong> Or <a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">learn more.</a>', 'newsletter-glue' ),
 			);
 
 		}

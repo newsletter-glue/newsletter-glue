@@ -20,7 +20,7 @@ function newsletterglue_add_admin_menu() {
 
 	$connect_page 		= add_submenu_page( 'newsletter-glue', __( 'Connect', 'newsletter-glue' ), __( 'Connect', 'newsletter-glue' ), 'manage_newsletterglue', 'ngl-connect', 'newsletterglue_connect_page' );
 	$settings_page 		= add_submenu_page( 'newsletter-glue', __( 'Settings', 'newsletter-glue' ), __( 'Settings', 'newsletter-glue' ), 'manage_newsletterglue', 'ngl-settings', 'newsletterglue_settings_page' );
-	$upgrade_page 		= add_submenu_page( 'newsletter-glue', __( 'Upgrade', 'newsletter-glue' ), __( 'Upgrade', 'newsletter-glue' ), 'manage_newsletterglue', 'ngl-upgrade', 'newsletterglue_upgrade_page' );
+	//$upgrade_page 		= add_submenu_page( 'newsletter-glue', __( 'Upgrade', 'newsletter-glue' ), __( 'Upgrade', 'newsletter-glue' ), 'manage_newsletterglue', 'ngl-upgrade', 'newsletterglue_upgrade_page' );
 
 	//add_action( 'load-' . $page, 'hook' );
 

@@ -11,10 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function newsletterglue_add_meta_box() {
 
-	add_meta_box( 'newsletter_glue_metabox', __( 'Newsletter Glue: Send as newsletter', 'newsletter-glue' ), 'newsletterglue_meta_box', 'post' );
+	add_meta_box( 'newsletter_glue_metabox', __( 'Newsletter Glue: Send as newsletter', 'newsletter-glue' ), 'newsletterglue_meta_box', 'post', 'normal', 'high' );
 
 }
-add_action( 'add_meta_boxes', 'newsletterglue_add_meta_box' );
+add_action( 'add_meta_boxes', 'newsletterglue_add_meta_box', 1 );
 
 /**
  * Save meta box.

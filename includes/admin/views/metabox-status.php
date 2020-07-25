@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		<div class=""><object style="width: 80px;" data="<?php echo NGL_PLUGIN_URL . 'assets/images/sending.svg'; ?>" type="image/svg+xml"></object></div>
 
-		<a href="#" class="ngl-get-help"><i class="question circle outline icon"></i><?php esc_html_e( 'Get help', 'newsletter-glue' ); ?></a>
+		<a href="https://docs.memberhero.pro/article/11-email-delivery" target="_blank" class="ngl-get-help"><i class="question circle outline icon"></i><?php esc_html_e( 'Get help', 'newsletter-glue' ); ?></a>
 
 	</div>
 
