@@ -14,7 +14,7 @@ class Collection implements ArrayAccess, IteratorAggregate, Countable {
      *
      * @var array
      */
-    protected $items = [];
+    public $items = [];
 
     /**
      * Create a new collection.

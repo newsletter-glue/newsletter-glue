@@ -65,7 +65,7 @@ function newsletterglue_default_connection() {
 /**
  * Generate email template content from post and subject.
  */
-function newsletterglue_generate_content( $post, $subject ) {
+function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 
 $html = '<html><head><meta name="viewport" content="width=device-width, initial-scale=1"><style type="text/css">
 
@@ -203,7 +203,13 @@ p.ngl-credits a {
 		$the_content .= '<p class="ngl-credits">' . sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="#">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ) . '</p>';
 	}
 
+	// Add special apps content.
+	if ( $app == 'mailerlite' ) {
+		$the_content .= '<p class="ngl-credits"><a href="{$unsubscribe}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a></p>';
+	}
+
 	$html = str_replace( '{content}', $the_content, $html );
+	// End email content.
 
 	$html = str_replace( '{custom_css}', get_option( 'newsletterglue_css' ), $html );
 

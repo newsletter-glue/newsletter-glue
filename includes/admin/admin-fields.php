@@ -79,6 +79,7 @@ function newsletterglue_text_field( $args ) {
  * Show a select field.
  */
 function newsletterglue_select_field( $args ) {
+
 	$id 			= isset( $args['id'] ) ? $args['id'] : '';
 	$class 			= isset( $args['class'] ) ? $args['class'] : '';
 	$name			= isset( $args['name'] ) ? $args['name'] : $id;
@@ -90,6 +91,8 @@ function newsletterglue_select_field( $args ) {
 	$default 		= isset( $args['default'] ) ? $args['default'] : '';
 	$legacy			= isset( $args['legacy'] ) ? $args['legacy'] : false;
 	$has_icons		= isset( $args['has_icons'] ) ? true : false;
+	$multiple		= isset( $args['multiple'] ) ? true : false;
+
 	?>
 	<div class="field <?php echo strstr( $class, 'ngl-ajax' ) ? 'ngl-ajax-field' : ''; ?>">
 
@@ -99,7 +102,7 @@ function newsletterglue_select_field( $args ) {
 
 		<?php if ( $legacy ) { ?>
 
-		<select name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" class="ui dropdown <?php echo esc_attr( $class ); ?>">
+		<select name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" class="ui dropdown <?php echo esc_attr( $class ); ?>" <?php if ( $multiple ) echo 'multiple=""'; ?> >
 			<option value=""><?php echo esc_html( $placeholder ); ?></option>
 			<?php if ( $options ) { ?>
 				<?php foreach( $options as $key => $value ) { ?>

@@ -29,6 +29,59 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-metabox-flex">
 	<div class="ngl-metabox-flex">
+		<div class="ngl-metabox-header ngl-metabox-header-c">
+			<?php esc_html_e( 'Groups', 'newsletter-glue' ); ?>
+		</div>
+		<div class="ngl-field">
+			<?php
+				if ( isset( $settings->groups ) ) {
+					$groups = $settings->groups;
+				} else {
+					$groups = newsletterglue_get_option( 'groups', $app );
+				}
+
+				newsletterglue_select_field( array(
+					'id' 			=> 'ngl_groups',
+					'legacy'		=> true,
+					'helper'		=> __( 'Who receives your email.', 'newsletter-glue' ),
+					'options'		=> $api->get_groups(),
+					'default'		=> explode( ',', $groups ),
+					'multiple'		=> true,
+					'placeholder'	=> __( 'Everyone', 'newsletter-glue' ),
+				) );
+			?>
+		</div>
+	</div>
+
+	<div class="ngl-metabox-flex">
+		<div class="ngl-metabox-header ngl-metabox-header-c">
+			<?php esc_html_e( 'Segments', 'newsletter-glue' ); ?>
+		</div>
+		<div class="ngl-field">
+			<?php
+				if ( isset( $settings->segments ) ) {
+					$segments = $settings->segments;
+				} else {
+					$segments = newsletterglue_get_option( 'segments', $app );
+				}
+
+				newsletterglue_select_field( array(
+					'id' 			=> 'ngl_segments',
+					'legacy'		=> true,
+					'helper'		=> __( 'A specific group of subscribers.', 'newsletter-glue' ),
+					'options'		=> $api->get_segments(),
+					'default'		=> explode( ',', $segments ),
+					'multiple'		=> true,
+					'placeholder'	=> __( 'Everyone', 'newsletter-glue' ),
+				) );
+
+			?>
+		</div>
+	</div>
+	</div>
+
+	<div class="ngl-metabox-flex">
+	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-header">
 			<?php esc_html_e( 'From name', 'newsletter-glue' ); ?>
 		</div>
