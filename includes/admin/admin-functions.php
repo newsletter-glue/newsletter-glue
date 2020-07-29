@@ -200,7 +200,7 @@ p.ngl-credits a {
 	$credits = get_option( 'newsletterglue_credits' );
 
 	if ( $credits ) {
-		$the_content .= '<p class="ngl-credits">' . sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="#">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ) . '</p>';
+		$the_content .= '<p class="ngl-credits">' . sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="https://memberhero.pro/newsletterglue/">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ) . '</p>';
 	}
 
 	// Add special apps content.
