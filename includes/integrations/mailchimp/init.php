@@ -230,7 +230,7 @@ class NGL_Mailchimp {
 
 			$result = array(
 				'fail'	=> sprintf( __( 'Your <strong><em>From Email</em></strong> address isn&rsquo;t verified.<br />
-						%s Or %s', 'newsletter-glue' ), '<a href="#">' . __( 'Verify email now &#8599;.', 'newsletter-glue' ) . '</a>', '<a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' ),
+						%s Or %s', 'newsletter-glue' ), '<a href="https://admin.mailchimp.com/account/domains/" target="_blank">' . __( 'Verify email now &#8599;.', 'newsletter-glue' ) . '</a>', '<a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' ),
 			);
 
 			return $result;
@@ -411,8 +411,8 @@ class NGL_Mailchimp {
 				$output[ 'type' ] 		= 'error';
 				$output[ 'message' ] 	= __( 'Unverified domain', 'newsletter-glue' );
 				$output[ 'notice' ]		= sprintf( __( 'Your email newsletter was not sent, because your email address is not verified. %s Or %s', 'newsletter-glue' ), 
-				'<a href="#">' . __( 'Verify email now &#8599;.', 'newsletter-glue' ) . '</a>', '<a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' );
-				$output[ 'help' ]       = '';
+				'<a href="https://admin.mailchimp.com/account/domains/" target="_blank">' . __( 'Verify email now &#8599;.', 'newsletter-glue' ) . '</a>', '<a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' );
+				$output[ 'help' ]       = 'https://docs.memberhero.pro/article/7-unverified-email';
 			}
 
 			if ( $result['status'] == 'draft' ) {

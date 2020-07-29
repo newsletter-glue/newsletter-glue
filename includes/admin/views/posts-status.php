@@ -38,8 +38,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					if ( $data['type'] == 'neutral' ) {
 						$text .= '<span class="ngl-state ngl-neutral">' . $data[ 'message' ] . '</span>';
 					}
-					if ( isset( $data['help'] ) ) {
-						$text .= '<span class="ngl-error"><a href="#">' . __( 'Get help', 'newsletter-glue' ) . '</a></span>';
+					if ( isset( $data['help'] ) && ! empty( $data[ 'help' ] ) ) {
+						$text .= '<span class="ngl-error"><a href="' . esc_url( $data[ 'help' ] ) . '">' . __( 'Get help', 'newsletter-glue' ) . '</a></span>';
 					}
 					$text .= '</span>';
 					echo $text;
