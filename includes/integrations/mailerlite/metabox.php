@@ -203,6 +203,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="ngl-test-result ngl-is-invalid is-hidden">
 
 		</div>
+		<div class="ngl-test-result">
+			<?php _e( 'Note: This test email is a sample sent from WordPress.', 'newsletter-glue' ); ?><br />
+			<?php _e( 'MailerLite does not currently allow test emails to be sent through their API.', 'newsletter-glue' ); ?>
+		</div>
 	</div>
 
 	</div>

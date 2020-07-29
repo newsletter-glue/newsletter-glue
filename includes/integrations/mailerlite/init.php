@@ -251,16 +251,20 @@ class NGL_Mailerlite {
 
 		// Do test email.
 		if ( $test ) {
+			$response = array();
 
 			$test_email = $data[ 'test_email' ];
+
+			if ( ! is_email( $test_email ) ) {
+				$response[ 'fail' ] = __( 'Please enter a valid email', 'newsletter-glue' );
+				return $response;
+			}
 
 			add_filter( 'wp_mail_content_type', array( $this, 'wp_mail_content_type' ) );
 
 			$body = newsletterglue_generate_content( $post, $subject, 'mailerlite' );
 
 			wp_mail( $test_email, sprintf( __( '[Test] %s', 'newsletter-glue' ), $subject ), $body );
-
-			$response = array();
 
 			$response['success'] = $this->get_test_success_msg();
 
