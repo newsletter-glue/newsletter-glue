@@ -35,7 +35,7 @@ register_activation_hook( NGL_PLUGIN_FILE, 'newsletterglue_install' );
  * Un-Install
  */
 function newsletterglue_uninstall( $network_wide = false ) {
-	
+
 	global $wpdb;
 
 	wp_delete_post( get_option( 'newsletterglue_demo_post' ), true );
