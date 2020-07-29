@@ -107,7 +107,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				<a href="#" class="ngl-ajax-edit-connection"><?php echo __( 'Edit connection details', 'newsletter-glue' ); ?></a>
 			</div>
 			<div class="ngl-card-link-end">
-				<a href="https://docs.memberhero.pro/collection/7-newsletter-glue" class="ui basic noborder button" target="_blank"><i class="question circle outline icon"></i><?php esc_html_e( 'Get help', 'newsletter-glue' ); ?></a>
+				<a href="https://docs.memberhero.pro/article/2-connect" class="ui basic noborder button" target="_blank"><i class="question circle outline icon"></i><?php esc_html_e( 'Get help', 'newsletter-glue' ); ?></a>
 			</div>
 		</div>
 
