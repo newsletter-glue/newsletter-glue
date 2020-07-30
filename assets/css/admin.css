@@ -471,6 +471,10 @@
 }
 
 /* Metabox */
+.is-hidden {
+	display: none;
+}
+
 #newsletter_glue_metabox {
 	margin-bottom: 40px;
 }
@@ -478,6 +482,10 @@
 #newsletter_glue_metabox .inside {
 	margin: 0;
 	padding: 0;
+}
+
+#newsletter_glue_metabox .inside .is-hidden {
+	display: none;
 }
 
 .ngl-metabox {
