@@ -72,7 +72,7 @@ class NGL_Mailchimp {
 
 		} else {
 
-			$this->save_integration( $api_key );
+			$this->save_integration( $api_key, $account );
 
 			$result = array( 'response' => 'successful' );
 
@@ -104,7 +104,7 @@ class NGL_Mailchimp {
 	/**
 	 * Save Integration.
 	 */
-	public function save_integration( $api_key = '' ) {
+	public function save_integration( $api_key = '', $account = '' ) {
 		$integrations = get_option( 'newsletterglue_integrations' );
 
 		$integrations[ 'mailchimp' ] = array();
@@ -120,6 +120,7 @@ class NGL_Mailchimp {
 
 			$globals[ 'mailchimp' ] = array(
 				'from_name' 	=> newsletterglue_get_default_from_name(),
+				'from_email'	=> isset( $account[ 'email' ] ) ? $account[ 'email' ] : '',
 			);
 
 			update_option( 'newsletterglue_options', $globals );
