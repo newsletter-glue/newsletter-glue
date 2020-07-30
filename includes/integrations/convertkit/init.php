@@ -170,9 +170,13 @@ class NGL_Convertkit {
 	 */
 	public function verify_email( $email = '' ) {
 
-		$response = array(
-			'success'	=> __( '<strong>Verified.</strong> <a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">Learn more</a>', 'newsletter-glue' ),
-		);
+		if ( ! $email || ! is_email( $email ) ) {
+			$response = array(
+				'failed'	=> __( 'Enter a valid email.', 'newsletter-glue' ),
+			);
+		} else {
+			return true;
+		}
 
 		return $response;
 

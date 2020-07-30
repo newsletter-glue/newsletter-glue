@@ -32,7 +32,7 @@ function newsletterglue_text_field( $args ) {
 		<div class="ngl-limit">...</div>
 		<?php } ?>
 
-		<?php if ( strstr( $class, 'ngl-ajax' ) && $id != 'ngl_from_email' ) { ?>
+		<?php if ( strstr( $class, 'ngl-ajax' ) && ( $id != 'ngl_from_email' || strstr( $class, 'ngl-donotverify' ) ) ) { ?>
 		<span class="ngl-process ngl-ajax is-hidden is-waiting">
 			<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
 			<span class="ngl-process-text"><strong><?php _e( 'Saving...', 'newsletter-glue' ); ?></strong></span>
@@ -49,7 +49,7 @@ function newsletterglue_text_field( $args ) {
 		</span>
 		<?php } ?>
 
-		<?php if ( $id === 'ngl_from_email' ) { ?>
+		<?php if ( $id === 'ngl_from_email' && ! strstr( $class, 'ngl-donotverify' ) ) { ?>
 
 			<span class="ngl-process <?php if ( strstr( $class, 'ngl-ajax' ) ) echo 'ngl-ajax'; ?> is-hidden is-waiting">
 				<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>

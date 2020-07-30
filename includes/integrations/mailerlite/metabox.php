@@ -204,8 +204,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		</div>
 		<div class="ngl-test-result">
-			<?php _e( 'Note: This test email is a sample sent from WordPress.', 'newsletter-glue' ); ?><br />
-			<?php _e( 'MailerLite does not currently allow test emails to be sent through their API.', 'newsletter-glue' ); ?>
+			<?php _e( 'This test email is sent with WordPress. Which means it&rsquo;ll look slightly different from emails sent with MailerLite.', 'newsletter-glue' ); ?><br />
+			<?php _e( 'Sadly, MailerLite doesn&rsquo;t let us send test emails from WordPress right now.', 'newsletter-glue' ); ?>
 		</div>
 	</div>
 

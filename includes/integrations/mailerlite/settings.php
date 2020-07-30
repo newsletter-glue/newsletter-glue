@@ -86,7 +86,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					'id' 			=> 'ngl_from_email',
 					'helper'		=> __( 'Subscribers will see and reply to this email address.', 'newsletter-glue' ),
 					'value'			=> newsletterglue_get_option( 'from_email', $app ),
-					'class'			=> 'ngl-ajax',
+					'class'			=> 'ngl-ajax ngl-donotverify',
 				) );
 			?>
 		</div>

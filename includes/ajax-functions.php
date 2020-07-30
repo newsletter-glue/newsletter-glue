@@ -214,7 +214,7 @@ function newsletterglue_ajax_save_field() {
 		$api		= new $classname();
 		$result 	= $api->verify_email( $value );
 
-		if ( isset( $result['success'] ) ) {
+		if ( isset( $result['success'] ) || $result === true ) {
 			$options[ $app ][ $id ] = $value;
 		}
 

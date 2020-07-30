@@ -271,9 +271,9 @@ $newsletterglue_deactivate_nonce = wp_create_nonce( 'newsletterglue-deactivate-n
 
 $(function() {
 
-	var pluginSlug = '<?php echo plugin_basename( NGL_PLUGIN_DIR ); ?>';
+	var plugin_ = '<?php echo plugin_basename( NGL_PLUGIN_FILE ); ?>';
 
-	$(document).on('click', 'tr[data-slug="' + pluginSlug + '"] .deactivate', function(e){
+	$(document).on('click', 'tr[data-plugin="' + plugin_ + '"] .deactivate', function(e){
 		e.preventDefault();
 		$('.newsletterglue-popup-overlay').addClass('newsletterglue-active');
 		$('body').addClass('newsletterglue-hidden');
@@ -283,7 +283,7 @@ $(function() {
 		close_popup();
 	});
 
-	$(document).on('click', ".newsletterglue-serveypanel,tr[data-slug='" + pluginSlug + "'] .deactivate",function(e){
+	$(document).on('click', ".newsletterglue-serveypanel,tr[data-plugin='" + plugin_ + "'] .deactivate",function(e){
 		e.stopPropagation();
 	});
 
@@ -352,13 +352,13 @@ $(function() {
 		}).done(function() {
             $(".newsletterglue-spinner").hide();
             $(".newsletterglue-popup-allow-deactivate").removeAttr("disabled");
-            window.location.href =  $("tr[data-slug='"+ pluginSlug +"'] .deactivate a").attr('href');
+            window.location.href =  $("tr[data-plugin='"+ plugin_ +"'] .deactivate a").attr('href');
 		});
 
 	});
 
 	$('.newsletterglue-popup-skip-feedback').on('click', function(e){
-		window.location.href =  $("tr[data-slug='"+ pluginSlug +"'] .deactivate a").attr('href');
+		window.location.href =  $("tr[data-plugin='"+ plugin_ +"'] .deactivate a").attr('href');
 	});
 
 	function close_popup() {

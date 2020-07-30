@@ -148,9 +148,7 @@ class NGL_Mailerlite {
 				'failed'	=> __( 'Enter a valid email.', 'newsletter-glue' ),
 			);
 		} else {
-			$response = array(
-				'success'	=> __( '<strong>Verified.</strong> <a href="https://docs.memberhero.pro/article/7-unverified-email" target="_blank">Learn more</a>', 'newsletter-glue' ),
-			);
+			$response = true;
 		}
 
 		return $response;

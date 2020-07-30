@@ -137,9 +137,11 @@
 			},
 			success: function( response ) {
 				$( '.ngl-process' ).addClass( 'is-hidden' );
-				if ( response.success ) {
-					$( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
-					$( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
+				if ( response.success || response === true ) {
+					if ( response.success ) {
+						$( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
+						$( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
+					}
 					$( '#ngl_from_email' ).parent().parent().parent().removeClass( 'is-error' );
 					$( '#ngl_from_email' ).removeAttr( 'data-force-unready' );
 				} else {
