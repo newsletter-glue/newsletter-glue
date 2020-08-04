@@ -85,7 +85,7 @@ function newsletterglue_meta_box() {
 
 	if ( ! $app = newsletterglue_default_connection() ) {
 
-		include( 'views/metabox-connect.php' );
+		include( 'metabox/views/connect.php' );
 
 	} else {
 
@@ -96,8 +96,8 @@ function newsletterglue_meta_box() {
 		$defaults 	= newsletterglue_get_form_defaults( $post, $api );
 		$settings   = newsletterglue_get_data( $post->ID );
 
-		include( 'views/metabox-status.php' );
-		include( 'views/metabox-reset.php' );
+		include( 'metabox/views/status.php' );
+		include( 'metabox/views/reset.php' );
 
 		include newsletterglue_get_path( $app ) . '/metabox.php';
 
