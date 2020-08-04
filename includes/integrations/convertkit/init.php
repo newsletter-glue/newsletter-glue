@@ -6,10 +6,14 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! class_exists( 'NGL_Abstract_Integration', false ) ) {
+	include_once NGL_PLUGIN_DIR . 'includes/abstract-integration.php';
+}
+
 /**
  * Main Class.
  */
-class NGL_Convertkit {
+class NGL_Convertkit extends NGL_Abstract_Integration {
 
 	public $api_key = null;
 	public $api_secret = null;
