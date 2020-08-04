@@ -66,7 +66,7 @@ $newsletterglue_deactivate_nonce = wp_create_nonce( 'newsletterglue-deactivate-n
 
 .newsletterglue-popup-header h2 {
 	margin: 0;
-	background: url( <?php echo NGL_PLUGIN_URL . 'assets/images/menu.svg'; ?> ) no-repeat left center;
+	background: url( <?php echo NGL_PLUGIN_URL . 'assets/images/menu.png'; ?> ) no-repeat left center;
 	background-size: 24px 24px;
 	min-height: 24px;
 	padding-left: 36px;

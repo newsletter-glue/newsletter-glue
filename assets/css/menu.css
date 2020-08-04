@@ -1,7 +1,7 @@
 /* Menu Icon */
 .toplevel_page_newsletter-glue div.dashicons-admin-generic:before {
 	content: '';
-	background-image: url(../images/menu.svg);
+	background-image: url(../images/menu.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 20px 20px;
