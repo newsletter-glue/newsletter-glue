@@ -174,7 +174,7 @@ function newsletterglue_create_demo_post() {
 	$args = array(
 		'post_status'	=> 'draft',
 		'post_type'		=> 'post',
-		'post_title'	=> __( 'Newsletter Glue: Let&rsquo;s get you started', 'newsletter-glue' ),
+		'post_title'	=> __( "Newsletter Glue: Let's get you started", 'newsletter-glue' ),
 		'post_content'  => newsletterglue_get_onboarding_post(),
 		'post_author'	=> 1,
 	);
