@@ -174,9 +174,9 @@ function newsletterglue_create_demo_post() {
 	$args = array(
 		'post_status'	=> 'draft',
 		'post_type'		=> 'post',
-		'post_title'	=> 'Welcome to Newsletter Glue',
-		'post_content'  => 'This is a sample post telling you everything you need to know about how to get started with Newsletter Glue.',
-		'post_author'	=> get_current_user_id(),
+		'post_title'	=> __( 'Newsletter Glue: Let&rsquo;s get you started', 'newsletter-glue' ),
+		'post_content'  => newsletterglue_get_onboarding_post(),
+		'post_author'	=> 1,
 	);
 
 	$demo_post = wp_insert_post( $args );

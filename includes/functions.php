@@ -166,3 +166,14 @@ function newsletterglue_get_path( $app ) {
 	return apply_filters( 'newsletterglue_get_path', $path, $app );
 
 }
+
+/**
+ * Get onboarding post.
+ */
+function newsletterglue_get_onboarding_post() {
+	ob_start();
+
+	include( 'admin/views/welcome.php' );
+
+	return ob_get_clean();
+}
