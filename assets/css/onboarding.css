@@ -1,6 +1,6 @@
 /* First screen */
 .ngl-boarding {
-	padding: 120px 180px;
+	padding: 120px 80px;
 	font-size: 16px;
 	color: rgba( 0, 0, 0, 0.6 );
 	text-align: center;
@@ -39,6 +39,14 @@
 .ngl-boarding-completed .ngl-boarding-btn {
 	padding: 0;
 	margin: 0;
+}
+
+.ngl-boarding-completed {
+	padding-bottom: 60px;
+}
+
+.ngl-boarding-completed .ngl-boarding-logo {
+	margin-bottom: 20px;
 }
 
 .ngl-boarding-logo {
@@ -225,7 +233,7 @@
 
 .ngl-boarding .ngl-metabox-flex {
 	text-align: left;
-	padding-left: 10px;
+	padding-left: 120px;
 }
 
 .ngl-boarding .ngl-process.ngl-ajax.is-hidden {
@@ -250,4 +258,30 @@
 	border-radius: 6px;
 	width: 250px;
 	display: block !important;
+}
+
+/* Iframe */
+.ngl-video {
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 30px;
+	height: 0;
+	overflow: hidden;
+}
+
+.ngl-video iframe,  
+.ngl-video object,  
+.ngl-video embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.ngl-video img, 
+.ngl-video iframe, 
+.ngl-video object, 
+.ngl-video embed {
+    max-width: 100%;
 }
