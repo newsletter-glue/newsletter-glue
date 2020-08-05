@@ -314,6 +314,7 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			success: function( result ) {
+				console.log( result );
 				setTimeout( function() {
 					ngl_show_first_screen();
 				}, 2000 );

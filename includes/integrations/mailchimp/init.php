@@ -103,6 +103,10 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 		} else {
 			update_option( 'newsletterglue_integrations', $integrations );
 		}
+
+		$response = array( 'successful' => true );
+
+		return $response;
 	}
 
 	/**

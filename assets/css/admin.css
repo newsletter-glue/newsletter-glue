@@ -452,6 +452,7 @@
 	line-height: 1;
 	background-color: #4B00F4;
 	border-radius: 8px;
+	height: auto;
 }
 
 .ngl-btn button.ui.primary.button:hover,
