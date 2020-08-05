@@ -108,6 +108,25 @@ ul.blocks-gallery-grid {
 	list-style-type: none;
 }
 
+#template_body td table {
+	table-layout: fixed;
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #dbdbdb;
+}
+
+#template_body td table td {
+	width: 50%;
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #dcd7ca;
+}
+
+#template_body td table img {
+	margin: 0;
+	border-radius: 0;
+}
+
 .wp-block-columns {
 
 }
