@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<iframe width="560" height="315" src="https://www.youtube.com/embed/0LiLb3KKarE?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 	</div>
 
-	<h3>
+	<h3 style="max-width:100%;">
 		<span style="margin-top: 24px;"><?php _e( 'Now it&rsquo;s your turn.', 'newsletter-glue' ); ?></span>
 		<span><?php _e( 'Try it yourself in this demo post we&rsquo;ve created.', 'newsletter-glue' ); ?></span>
 	</h3>
