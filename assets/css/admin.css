@@ -1007,6 +1007,7 @@
 	color: #3400FF !important;
 	font-weight: 500;
 	box-shadow: none !important;
+	height: auto;
 }
 
 .ngl-metabox .ui.basic.button:hover,
