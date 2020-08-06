@@ -518,6 +518,7 @@
     color: #444 !important;
     border-color: #aaa !important;
     border-radius: 6px !important;
+	min-height: auto;
 }
 
 .ngl-metabox-flex.is-error input[type=text] {
