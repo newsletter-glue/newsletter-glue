@@ -57,8 +57,45 @@ function newsletterglue_run_install() {
 	// Setup user roles.
 	newsletterglue_install_roles();
 
+	// Add custom css.
+	newsletterglue_add_default_css();
+
 	// Set transient.
 	set_transient( '_ngl_onboarding', 1, 30 );
+
+	// Set version.
+	update_option( 'newsletterglue_version', NGL_VERSION );
+
+}
+
+/**
+ * Add default css.
+ */
+function newsletterglue_add_default_css() {
+
+	if ( ! get_option( 'newsletterglue_version' ) ) {
+
+$css = get_option( 'newsletterglue_css' );
+
+$css .= '
+.NGpurplebox {
+	padding: 30px;
+	background: #f1ecff;
+}
+
+.NGbluebox {
+	padding: 30px;
+	background: #d6f3ff;
+}
+
+.NGyellowbox {
+	padding: 30px;
+	background: #fffbdb;
+}
+';
+
+		update_option( 'newsletterglue_css', $css );
+	}
 
 }
 
