@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Newsletter Glue
  * Plugin URI: https://memberhero.pro
- * Description: No plugin description.
+ * Description: Email posts to subscribers from the WordPress editor. Works with Mailchimp, MailerLite…
  * Author: Newsletter Glue
  * Author URI: https://memberhero.pro/
  * Version: 1.0.0
