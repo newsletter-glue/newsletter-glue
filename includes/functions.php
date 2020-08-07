@@ -177,3 +177,15 @@ function newsletterglue_get_onboarding_post() {
 
 	return ob_get_clean();
 }
+
+/**
+ * Clean variables using sanitize_text_field. Arrays are cleaned recursively.
+ * Non-scalar values are ignored.
+ */
+function newsletterglue_sanitize( $var ) {
+	if ( is_array( $var ) ) {
+		return array_map( 'newsletterglue_sanitize', $var );
+	} else {
+		return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;
+	}
+}
