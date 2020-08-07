@@ -306,6 +306,9 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 				}
 
+				// Let's delete the campaign.
+				$this->api->delete( 'campaigns/' . $campaign_id );
+
 				return $response;
 
 			} else {
