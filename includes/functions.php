@@ -164,7 +164,6 @@ function newsletterglue_get_path( $app ) {
 
 	// Allow this path to be modified using WordPress filters.
 	return apply_filters( 'newsletterglue_get_path', $path, $app );
-
 }
 
 /**
