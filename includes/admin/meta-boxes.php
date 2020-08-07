@@ -69,7 +69,7 @@ function newsletterglue_save_meta_box( $post_id, $post ) {
 	}
 
 	// Save newsletter data.
-	newsletterglue_save_data( $post_id, $_POST );
+	newsletterglue_save_data( $post_id, newsletterglue_sanitize( $_POST ) );
 
 	// Send it.
 	newsletterglue_send( $post_id );

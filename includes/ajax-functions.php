@@ -138,7 +138,7 @@ function newsletterglue_ajax_test_email() {
 	$post_id = isset( $_REQUEST[ 'post_id' ] ) ? absint( $_REQUEST[ 'post_id' ] ) : '';
 
 	// Save newsletter data.
-	newsletterglue_save_data( $post_id, $_REQUEST );
+	newsletterglue_save_data( $post_id, newsletterglue_sanitize( $_REQUEST ) );
 
 	// Send it.
 	$response = newsletterglue_send( $post_id, true );
@@ -161,7 +161,7 @@ function newsletterglue_ajax_verify_email() {
 		wp_die( -1 );
 	}
 
-	$email 		= isset( $_REQUEST[ 'email' ] ) ? $_REQUEST[ 'email' ] : '';
+	$email 		= isset( $_REQUEST[ 'email' ] ) ? sanitize_email( $_REQUEST[ 'email' ] ) : '';
 	$app 		= isset( $_REQUEST[ 'app' ] ) ? sanitize_text_field( $_REQUEST['app'] ) : '';
 
 	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {
@@ -191,8 +191,8 @@ function newsletterglue_ajax_save_field() {
 		wp_die( -1 );
 	}
 
-	$id 	= isset( $_REQUEST[ 'id' ] ) ? str_replace( 'ngl_', '', $_REQUEST[ 'id' ] ) : '';
-	$value 	= isset( $_REQUEST['value'] ) ? trim( $_REQUEST['value'] ) : '';
+	$id 	= isset( $_REQUEST[ 'id' ] ) ? str_replace( 'ngl_', '', sanitize_text_field( $_REQUEST[ 'id' ] ) ) : '';
+	$value 	= isset( $_REQUEST['value'] ) ? sanitize_text_field( trim( $_REQUEST['value'] ) ) : '';
 	$app 	= newsletterglue_default_connection();
 
 	$options = get_option( 'newsletterglue_options' );
