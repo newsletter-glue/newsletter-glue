@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":398,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="https://wordpress-280578-1189454.cloudwaysapps.com/wp-content/uploads/2020/08/check-the-box-1.png" alt="" class="wp-image-398"/></figure>
+<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/check-the-box.png" alt="" class="wp-image-398"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:heading {"level":3} -->
@@ -109,7 +109,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <!-- /wp:heading -->
 
 <!-- wp:image {"id":399,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="https://wordpress-280578-1189454.cloudwaysapps.com/wp-content/uploads/2020/08/before-you-go-fill-out-deets.png" alt="" class="wp-image-399"/></figure>
+<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/before-you-go-fill-out-deets.png" alt="" class="wp-image-399"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:heading {"level":4} -->
@@ -117,15 +117,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <!-- /wp:heading -->
 
 <!-- wp:image {"id":414,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="https://wordpress-280578-1189454.cloudwaysapps.com/wp-content/uploads/2020/08/before-you-go-select-all1.png" alt="" class="wp-image-414"/></figure>
+<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/before-you-go-select-all.png" alt="" class="wp-image-414"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"id":415,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="https://wordpress-280578-1189454.cloudwaysapps.com/wp-content/uploads/2020/08/before-you-go-add-reusable-block1.png" alt="" class="wp-image-415"/></figure>
+<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/before-you-go-add-reusable-block.png" alt="" class="wp-image-415"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"id":416,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="https://wordpress-280578-1189454.cloudwaysapps.com/wp-content/uploads/2020/08/before-you-go-name-and-save2.png" alt="" class="wp-image-416"/></figure>
+<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/before-you-go-name-and-save.png" alt="" class="wp-image-416"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:heading {"level":4} -->
@@ -133,7 +133,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <!-- /wp:heading -->
 
 <!-- wp:image {"id":406,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="https://wordpress-280578-1189454.cloudwaysapps.com/wp-content/uploads/2020/08/type-footer.png" alt="" class="wp-image-406"/></figure>
+<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/type-footer.png" alt="" class="wp-image-406"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -149,7 +149,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":408,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="https://wordpress-280578-1189454.cloudwaysapps.com/wp-content/uploads/2020/08/publish-button3.png" alt="" class="wp-image-408"/></figure>
+<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/publish-button.png" alt="" class="wp-image-408"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -157,7 +157,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":411,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="https://wordpress-280578-1189454.cloudwaysapps.com/wp-content/uploads/2020/08/Screenshot-2020-08-07-at-11.51.23-AM.png" alt="" class="wp-image-411"/></figure>
+<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/email-sent.png" alt="" class="wp-image-411"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:separator -->

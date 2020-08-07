@@ -168,6 +168,13 @@ final class Newsletter_Glue {
 
 	}
 
+	/**
+	 * Assets URL.
+	 */
+	public function assets_url() {
+		return untrailingslashit( plugins_url( '/', NGL_PLUGIN_FILE ) ) . '/assets/images';
+	}
+
 }
 
 endif; // End if class_exists check.
