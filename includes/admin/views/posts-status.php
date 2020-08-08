@@ -16,9 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<thead>
 		<tr>
-			<td scope="col" class="ngl_subject"><?php _e( 'Subject line', 'newsletter-glue' ); ?></td>
-			<td scope="col" class="ngl_status"><?php _e( 'Newsletter status', 'newsletter-glue' ); ?></td>
-			<td scope="col" class="ngl_datetime"><?php _e( 'Time, Date published', 'newsletter-glue' ); ?></td>
+			<td scope="col" class="ngl_subject"><?php esc_html_e( 'Subject line', 'newsletter-glue' ); ?></td>
+			<td scope="col" class="ngl_status"><?php esc_html_e( 'Newsletter status', 'newsletter-glue' ); ?></td>
+			<td scope="col" class="ngl_datetime"><?php esc_html_e( 'Time, Date published', 'newsletter-glue' ); ?></td>
 		</tr>
 	</thead>
 
@@ -30,16 +30,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				<?php
 					$text = '';
 					if ( $data['type'] == 'error' ) {
-						$text .= '<span class="ngl-state ngl-error">' . $data[ 'message' ] . '</span>';
+						$text .= '<span class="ngl-state ngl-error">' . esc_html( $data[ 'message' ] ) . '</span>';
 					}
 					if ( $data['type'] == 'success' ) {
-						$text .= '<span class="ngl-state ngl-success">' . $data[ 'message' ] . '</span>';
+						$text .= '<span class="ngl-state ngl-success">' . esc_html( $data[ 'message' ] ) . '</span>';
 					}
 					if ( $data['type'] == 'neutral' ) {
-						$text .= '<span class="ngl-state ngl-neutral">' . $data[ 'message' ] . '</span>';
+						$text .= '<span class="ngl-state ngl-neutral">' . esc_html( $data[ 'message' ] ) . '</span>';
 					}
 					if ( isset( $data['help'] ) && ! empty( $data[ 'help' ] ) ) {
-						$text .= '<span class="ngl-error"><a href="' . esc_url( $data[ 'help' ] ) . '">' . __( 'Get help', 'newsletter-glue' ) . '</a></span>';
+						$text .= '<span class="ngl-error"><a href="' . esc_url( $data[ 'help' ] ) . '">' . esc_html__( 'Get help', 'newsletter-glue' ) . '</a></span>';
 					}
 					$text .= '</span>';
 					echo $text;

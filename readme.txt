@@ -1,7 +1,7 @@
 === WordPress email posts to subscribers (For Mailchimp, MailerLite) - Newsletter Glue ===
 
 Plugin name: Newsletter Glue - Email posts to subscribers, connect Mailchimp MailerLite
-Contributors: memberhero, lesleysim 
+Contributors: memberhero, lesleysim
 Donate link: http://example.com/
 Tags: newsletter, email, mailchimp, mailerlite, blog post
 Requires at least: 5.1
@@ -10,8 +10,8 @@ Requires PHP: 7.2
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
- 
-Send blog posts as email newsletters to your subscribers from WordPress. Connect to Mailchimp, MailerLite… 
+
+Send blog posts as email newsletters to your subscribers from WordPress. Connect to Mailchimp, MailerLite…
 
 == Description ==
 **Send blog posts as email newsletters to your subscribers from WordPress. Connect to Mailchimp, MailerLite (more soon...).**

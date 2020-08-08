@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-flex ngl-left">
 		<div class="ngl-logo"></div>
-		<div class="ngl-label"><?php _e( '<span>Newsletter</span> Glue', 'newsletter-glue' ); ?></div>
+		<div class="ngl-label"><?php echo wp_kses_post( __( '<span>Newsletter</span> Glue', 'newsletter-glue' ) ); ?></div>
 	</div>
 
 	<div class="ngl-flex ngl-right">
