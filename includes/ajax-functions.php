@@ -332,3 +332,43 @@ function newsletterglue_deactivate() {
 }
 add_action( 'wp_ajax_newsletterglue_deactivate', 'newsletterglue_deactivate' );
 add_action( 'wp_ajax_nopriv_newsletterglue_deactivate', 'newsletterglue_deactivate' );
+
+/**
+ * Send connection feedback.
+ */
+function newsletterglue_send_feedback() {
+
+	check_ajax_referer( 'newsletterglue-feedback-nonce', 'security' );
+
+	if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+		wp_die( 'No cheating, huh!' );
+	}
+
+	$software		= sanitize_text_field( wp_unslash( $_POST['_software'] ) );
+	$details       	= sanitize_text_field( wp_unslash( $_POST['_details'] ) );
+	$name       	= sanitize_text_field( wp_unslash( $_POST['_name'] ) );
+	$email         	= sanitize_email( wp_unslash( $_POST[ '_email' ] ) );
+
+	$fields = array(
+        'email' 			=> $email,
+        'website' 			=> get_site_url(),
+        'action' 			=> 'Feedback',
+        'name'  			=> $name,
+        'details'			=> $details,
+		'software'			=> $software,
+	);
+
+	$response = wp_remote_post( NGL_FEEDBACK_SERVER, array(
+		'method'      => 'POST',
+		'timeout'     => 5,
+		'httpversion' => '1.0',
+		'blocking'    => false,
+		'headers'     => array(),
+		'body'        => $fields,
+	) );
+
+	wp_die();
+
+}
+add_action( 'wp_ajax_newsletterglue_send_feedback', 'newsletterglue_send_feedback' );
+add_action( 'wp_ajax_nopriv_newsletterglue_send_feedback', 'newsletterglue_send_feedback' );

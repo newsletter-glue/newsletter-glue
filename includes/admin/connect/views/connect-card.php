@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				) );
 			?>
 			<div class="ngl-card-link-end">
-				<div class="ui basic noborder button ngl-request-modal"><i class="bullhorn icon"></i><?php esc_html_e( 'Request new connection', 'newsletter-glue' ); ?></div>
+				<a href="#" class="ui basic noborder button ngl-request-modal"><i class="bullhorn icon"></i><?php esc_html_e( 'Request new connection', 'newsletter-glue' ); ?></a>
 			</div>
 		</div>
 

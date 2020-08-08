@@ -111,7 +111,6 @@ final class Newsletter_Glue {
 			require_once NGL_PLUGIN_DIR . 'includes/admin/onboarding/onboarding.php';
 			require_once NGL_PLUGIN_DIR . 'includes/admin/posts.php';
 			require_once NGL_PLUGIN_DIR . 'includes/admin/settings/settings.php';
-			require_once NGL_PLUGIN_DIR . 'includes/admin/upgrade/upgrade.php';
 		}
 
 	}

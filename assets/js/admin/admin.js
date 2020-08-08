@@ -170,11 +170,6 @@
 		onChange: function() { ngl_validate_form(); }
 	} );
 
-	// Trigger modal manually.
-	$( document ).on( 'click', '.ngl-request-modal', function( event ) {
-		srv.openModal( true, '81611450cdc75d0c082f2ad30dc8d7bb9836d515' );
-	} );
-
 	// When user clicks to add new connection.
 	$( document ).on( 'click', '.ngl-card-add', function( event ) {
 		$( this ).addClass( 'ngl-hidden' );

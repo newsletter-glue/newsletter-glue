@@ -118,3 +118,22 @@ function newsletterglue_deactivate_modal() {
 
 }
 add_action( 'admin_footer', 'newsletterglue_deactivate_modal' );
+
+/**
+ * Send feedback regarding new connections.
+ */
+function newsletterglue_feedback_modal() {
+	global $pagenow;
+
+	if ( 'admin.php' !== $pagenow ) {
+		return;
+	}
+
+	if ( ! isset( $_GET[ 'page' ] ) || $_GET[ 'page' ] != 'ngl-connect' ) {
+		return;
+	}
+
+	require_once NGL_PLUGIN_DIR . 'includes/admin/feedback.php';
+
+}
+add_action( 'admin_footer', 'newsletterglue_feedback_modal' );
