@@ -2,7 +2,7 @@
 
 Plugin name: Newsletter Glue - Email posts to subscribers, connect Mailchimp MailerLite
 Contributors: memberhero, lesleysim
-Donate link: http://example.com/
+Donate link: https://paypal.me/memberhero
 Tags: newsletter, email, mailchimp, mailerlite, blog post
 Requires at least: 5.1
 Tested up to: 5.5
