@@ -356,6 +356,7 @@ function newsletterglue_send_feedback() {
         'name'  			=> $name,
         'details'			=> $details,
 		'software'			=> $software,
+		'plugin_name' 		=> 'Newsletter Glue',
 	);
 
 	$response = wp_remote_post( NGL_FEEDBACK_SERVER, array(
