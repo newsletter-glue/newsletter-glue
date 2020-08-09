@@ -52,8 +52,8 @@ class NGL_Convertkit extends NGL_Abstract_Integration {
 	public function add_integration() {
 
 		// Get API key from input.
-		$api_key 	= isset( $_POST['ngl_convertkit_key'] ) ? $_POST['ngl_convertkit_key'] : '';
-		$api_secret = isset( $_POST['ngl_convertkit_secret'] ) ? $_POST['ngl_convertkit_secret'] : '';
+		$api_key 	= isset( $_POST['ngl_convertkit_key'] ) ? sanitize_text_field( $_POST['ngl_convertkit_key'] ) : '';
+		$api_secret = isset( $_POST['ngl_convertkit_secret'] ) ? sanitize_text_field( $_POST['ngl_convertkit_secret'] ) : '';
 
 		// Test mode. no key provided.
 		if ( ! $api_key ) {

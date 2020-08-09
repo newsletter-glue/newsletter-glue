@@ -47,7 +47,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	public function add_integration() {
 
 		// Get API key from input.
-		$api_key = isset( $_POST['ngl_mailchimp_key'] ) ? $_POST['ngl_mailchimp_key'] : '';
+		$api_key = isset( $_POST['ngl_mailchimp_key'] ) ? sanitize_text_field( $_POST['ngl_mailchimp_key'] ) : '';
 
 		// Test mode. no key provided.
 		if ( ! $api_key ) {

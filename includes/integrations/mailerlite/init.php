@@ -49,7 +49,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	public function add_integration() {
 
 		// Get API key from input.
-		$api_key 	= isset( $_POST['ngl_mailerlite_key'] ) ? $_POST['ngl_mailerlite_key'] : '';
+		$api_key 	= isset( $_POST['ngl_mailerlite_key'] ) ? sanitize_text_field( $_POST['ngl_mailerlite_key'] ) : '';
 
 		// Test mode. no key provided.
 		if ( ! $api_key ) {
