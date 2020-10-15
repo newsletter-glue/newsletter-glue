@@ -1,0 +1,109 @@
+<?php
+/**
+ * Newsletter Metabox.
+ */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+$hide = false;
+
+if ( ! isset( $settings->sent ) ) {
+	$hide = true;
+}
+
+if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
+	$hide = false;
+}
+
+?>
+
+<div class="ngl-metabox ngl-send <?php if ( ! $hide ) echo 'is-hidden'; ?>">
+
+	<input type="hidden" name="ngl_app" id="ngl_app" value="mailerlite" />
+
+	<?php $api->show_send_option(); ?>
+
+	<div class="ngl-metabox-if-checked is-hidden">
+
+	<div class="ngl-metabox-flex">
+		<div class="ngl-metabox-header ngl-metabox-header-c">
+			<?php esc_html_e( 'Subject', 'newsletter-glue' ); ?>
+		</div>
+		<div class="ngl-field">
+			<?php
+				newsletterglue_text_field( array(
+					'id' 			=> 'ngl_subject',
+					'placeholder'	=> __( 'Example: Issue #3 It&rsquo;s raining cats, dogs, and skateboards', 'newsletter-glue' ),
+					'class'			=> 'large js-limit is-required',
+					'helper'		=> __( 'Short, catchy subject lines get more opens.', 'newsletter-glue' ),
+					'value'			=> isset( $settings->subject ) ? $settings->subject : $defaults->subject,
+				) );
+			?>
+		</div>
+	</div>
+
+	<div class="ngl-metabox-flex">
+	<div class="ngl-metabox-flex">
+		<div class="ngl-metabox-header ngl-metabox-header-c">
+			<?php esc_html_e( 'Groups', 'newsletter-glue' ); ?>
+		</div>
+		<div class="ngl-field">
+			<?php
+				if ( isset( $settings->groups ) ) {
+					$groups = $settings->groups;
+				} else {
+					$groups = newsletterglue_get_option( 'groups', $app );
+				}
+
+				newsletterglue_select_field( array(
+					'id' 			=> 'ngl_groups',
+					'legacy'		=> true,
+					'helper'		=> __( 'Who receives your email.', 'newsletter-glue' ),
+					'options'		=> $api->get_groups(),
+					'default'		=> explode( ',', $groups ),
+					'multiple'		=> true,
+					'placeholder'	=> __( 'Everyone', 'newsletter-glue' ),
+				) );
+			?>
+		</div>
+	</div>
+
+	<div class="ngl-metabox-flex">
+		<div class="ngl-metabox-header ngl-metabox-header-c">
+			<?php esc_html_e( 'Segments', 'newsletter-glue' ); ?>
+		</div>
+		<div class="ngl-field">
+			<?php
+				if ( isset( $settings->segments ) ) {
+					$segments = $settings->segments;
+				} else {
+					$segments = newsletterglue_get_option( 'segments', $app );
+				}
+
+				newsletterglue_select_field( array(
+					'id' 			=> 'ngl_segments',
+					'legacy'		=> true,
+					'helper'		=> sprintf( __( 'A specific group of subscribers. %s', 'newsletter-glue' ), '<a href="https://app.mailerlite.com/subscribers/segments" target="_blank">' . __( 'Create segment', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>' ),
+					'options'		=> $api->get_segments(),
+					'default'		=> explode( ',', $segments ),
+					'multiple'		=> true,
+					'placeholder'	=> __( 'Everyone', 'newsletter-glue' ),
+				) );
+
+			?>
+		</div>
+	</div>
+	</div>
+
+	<?php $api->show_from_options( $settings, $defaults, $post ); ?>
+
+	<?php $api->show_schedule_and_image_options( $settings, $defaults, $post ); ?>
+
+	<?php $api->show_states( $post ); ?>
+
+	<?php $api->show_test_email( $settings, $defaults, $post ); ?>
+
+	</div>
+
+</div>
