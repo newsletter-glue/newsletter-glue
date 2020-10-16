@@ -245,6 +245,8 @@ p.ngl-credits a {
 
 {custom_css}
 
+<?php do_action( 'newsletterglue_add_custom_styles' ); ?>
+
 </style>
 
 </head>

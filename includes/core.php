@@ -195,6 +195,10 @@ function newsletterglue_default_connection() {
  */
 function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 
+	global $ng_post;
+	
+	$ng_post = $post;
+
 	if ( ! defined( 'NGL_IN_EMAIL' ) ) {
 		define( 'NGL_IN_EMAIL', true );
 	}

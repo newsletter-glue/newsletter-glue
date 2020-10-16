@@ -46,18 +46,18 @@ function newsletterglue_block_show_hide_content() {
 		);
 	}
 
-	$js_dir    	= NGL_PLUGIN_URL . 'assets/gutenberg/';
-	$js_path   	= NGL_PLUGIN_DIR . 'assets/gutenberg/';
+	$js_dir    	= NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_show_hide_content/js/';
+	$css_dir   	= NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_show_hide_content/css/';
 
 	// Use minified libraries if SCRIPT_DEBUG is turned off
 	$suffix  = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 	$suffix  = '';
 
-	wp_register_script( 'newsletterglue-group-block', $js_dir . 'ngl-group' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-editor' ), time() );
+	wp_register_script( 'newsletterglue-group-block', $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-editor' ), time() );
 	wp_localize_script( 'newsletterglue-group-block', 'newsletterglue_block_show_hide_content', $defaults );
 
-	wp_register_style( 'newsletterglue-group-block', $js_dir . 'ngl-group' . $suffix . '.css', array(), time() );
-	wp_register_style( 'newsletterglue-group-block-style', $js_dir . 'ngl-group-style' . $suffix . '.css', array(), time() );
+	wp_register_style( 'newsletterglue-group-block', $css_dir . 'block' . $suffix . '.css', array(), time() );
+	wp_register_style( 'newsletterglue-group-block-style', $css_dir . 'block-ui' . $suffix . '.css', array(), time() );
 
 	register_block_type( 'newsletterglue/group', array(
 		'editor_script' 	=> 'newsletterglue-group-block',

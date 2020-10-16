@@ -19,7 +19,7 @@ function newsletterglue_get_blocks() {
 			'description'	=> __( 'Hide selected content from your blog/newsletter.', 'newsletter-glue' ),
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_show_hide_content' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_show_hide_content' ] ) : 'yes',
 			'callback'		=> 'newsletterglue_block_show_hide_content',
-			'icon'			=> NGL_PLUGIN_URL . 'assets/images/blocks/show-hide-content.png',
+			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_show_hide_content/icon/icon.png',
 		),
 		'newsletterglue_block_author' => array(
 			'title'			=> __( 'Author byline', 'newsletter-glue' ),
@@ -42,8 +42,8 @@ function newsletterglue_register_blocks() {
 
 	foreach( $blocks as $block_id => $params ) {
 		if ( $params[ 'use_block' ] === 'yes' ) {
-			if ( file_exists( NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '.php' ) ) {
-				include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '.php';
+			if ( file_exists( NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/' . $block_id . '.php' ) ) {
+				include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/' . $block_id . '.php';
 			}
 			if ( isset( $params[ 'callback' ] ) && function_exists( $params[ 'callback' ] ) ) {
 				call_user_func( $params[ 'callback' ] );
