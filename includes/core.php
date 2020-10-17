@@ -217,12 +217,14 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 	// Add logo.
 	$the_content .= newsletterglue_add_logo();
 
+	$title = isset( $post ) && isset( $post->post_title ) ? $post->post_title : $subject;
+
 	// This is email content.
 	if ( $position == 'above' ) {
 		$the_content .= newsletterglue_add_masthead_image( $post, 'above' );
-		$the_content .= '<h1>' . $subject . '</h1>';
+		$the_content .= '<h1>' . $title . '</h1>';
 	} else {
-		$the_content .= '<h1>' . $subject . '</h1>';
+		$the_content .= '<h1>' . $title . '</h1>';
 		$the_content .= newsletterglue_add_masthead_image( $post, 'below' );
 	}
 
