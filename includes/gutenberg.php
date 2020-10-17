@@ -32,7 +32,6 @@ function newsletterglue_get_blocks() {
 			'description'	=> __( 'Add a callout cards to your blog and newsletter.', 'newsletter-glue' ),
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_callout' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_callout' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_callout',
-			'pro'			=> 'yes',
 		),
 	);
 
