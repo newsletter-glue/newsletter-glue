@@ -29,7 +29,7 @@
 		description: 'Use this block to show author byline in newsletter.',
 		icon: 'layout',
 		category: 'newsletterglue-blocks',
-		keywords: [ 'newsletter', 'glue', 'group', 'container' ],
+		keywords: [ 'newsletter', 'glue', 'byline', 'author' ],
 		attributes: {
 			social: {
 				'type': 'string',
