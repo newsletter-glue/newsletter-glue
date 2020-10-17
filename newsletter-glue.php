@@ -3,7 +3,7 @@
  * Plugin Name: Newsletter Glue (PRO)
  * Plugin URI: https://newsletterglue.com/
  * Description: Email posts to subscribers from the WordPress editor. Works with Mailchimp, MailerLite, Sendinblue…
- * Author: Member Hero
+ * Author: Newsletter Glue
  * Author URI: https://newsletterglue.com
  * Version: 1.0.0
  * Text Domain: newsletter-glue
