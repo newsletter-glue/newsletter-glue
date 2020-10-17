@@ -24,8 +24,6 @@
 		},
 	];
 
-	console.log( newsletterglue_block_author );
-
 	registerBlockType( 'newsletterglue/author', {
 		title: 'NG: author byline',
 		description: 'Use this block to show author byline in newsletter.',
