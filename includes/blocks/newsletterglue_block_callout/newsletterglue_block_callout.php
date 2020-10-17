@@ -54,3 +54,16 @@ function newsletterglue_callout_block_render( $attributes, $content ) {
 	return $content;
 
 }
+
+/**
+ * Add cutom css.
+ */
+add_action( 'newsletterglue_add_custom_styles', 'newsletterglue_add_callout_block_css' );
+function newsletterglue_add_callout_block_css() { ?>
+
+.wp-block-newsletterglue-callout p {
+	margin: 0 !important;
+}
+
+<?php
+}
