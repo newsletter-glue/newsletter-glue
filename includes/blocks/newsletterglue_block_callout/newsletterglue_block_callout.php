@@ -48,7 +48,7 @@ function newsletterglue_callout_block_render( $attributes, $content ) {
 	// Hidden from email.
 	if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
 		$content = str_replace( 'wp-block-newsletterglue-callout', 'wp-block-newsletterglue-callout ngl-hide-in-email', $content );
-		$content = preg_replace('#<section class="wp-block-newsletterglue-callout ngl-hide-in-email">(.*?)</section>#s', '', $content );
+		$content = preg_replace('#<section class="wp-block-newsletterglue-callout ngl-hide-in-email(.*?)</section>#s', '', $content );
 	}
 
 	return $content;

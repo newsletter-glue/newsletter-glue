@@ -93,7 +93,7 @@
 
 						),
 
-						el( PanelBody, { title: 'Customize data', initialOpen: false },
+						el( PanelBody, { title: 'Customize data', initialOpen: true },
 
 							el( PanelRow, {},
 								el( TextControl, {
@@ -112,7 +112,7 @@
 
 						),
 
-						el( PanelBody, { title: 'Show/hide - author byline block', initialOpen: false },
+						el( PanelBody, { title: 'Show/hide - author byline block', initialOpen: true },
 
 							el( PanelRow, {},
 								el( ToggleControl, {

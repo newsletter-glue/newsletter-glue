@@ -47,6 +47,7 @@
 			},
 			cta_margin: {
 				'type' : 'number',
+				'default' : 25,
 			},
 			show_in_blog: {
 				'type' : 'boolean',
@@ -155,7 +156,7 @@
 							]
 						} ),
 
-						el( PanelBody, { title: 'Show/hide block', initialOpen: false },
+						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
 							el( PanelRow, {},
 								el( ToggleControl, {
