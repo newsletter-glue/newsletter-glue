@@ -8,40 +8,132 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 
+<!-- wp:paragraph -->
+<p>👋 Hey there!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Play with this demo post to get comfortable with Newsletter Glue.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>To start, here are 3 quick tips to turn you into a newsletter publishing superhero:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol><li>Send your first test email</li><li>Hide content from your email or blog</li><li>Create a newsletter template (using reusable blocks)</li></ol>
+<!-- /wp:list -->
+
+<!-- wp:image {"id":558,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/ezgif.com-gif-maker.gif" alt="" class="wp-image-558"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:separator -->
+<hr class="wp-block-separator"/>
+<!-- /wp:separator -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Tip 1: Send your first test email</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Start by scrolling to the end of this post and clicking the <strong>Send as newsletter</strong> checkbox.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Then, look for the <strong>Send test now</strong> button and click it. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":570,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/send-test-email.gif" alt="" class="wp-image-570"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":4} -->
+<h4><strong>Go on, try it now</strong>. I'll wait. 😎</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Welcome back! That was easy, right?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>(and if that didn't work, <a href="https://docs.newsletterglue.com/article/14-send-blog-post-to-email-list" target="_blank" rel="noreferrer noopener">learn more here</a>)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:separator -->
+<hr class="wp-block-separator"/>
+<!-- /wp:separator -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Tip 2: Hide content from your email or blog</h3>
+<!-- /wp:heading -->
+
+<!-- wp:newsletterglue/group {"showblog":true,"showemail":false} -->
+<section class="wp-block-newsletterglue-group"><!-- wp:paragraph -->
+<p>In 1 minute: Learn how to add a <strong>show/hide content</strong> block to hide content.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https://youtu.be/-lWglLltY8Y","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio wp-embed-aspect-4-3"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio wp-embed-aspect-4-3"><div class="wp-block-embed__wrapper">
+https://youtu.be/-lWglLltY8Y
+</div></figure>
+<!-- /wp:core-embed/youtube --></section>
+<!-- /wp:newsletterglue/group -->
+
+<!-- wp:paragraph -->
+<p>Notice how the video <em>didn't</em> show up in your test email? </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>That's because it's inside a <strong>show/hide content</strong> block. Click on it to check it out.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Try it now: Type "/show", and add a show/hide content block.</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Add some content inside, then <strong>save draft</strong>, and send yourself another test email to see if it worked.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Now you're getting the hang of it! 🎉</p>
+<!-- /wp:paragraph -->
+
 <!-- wp:heading -->
-<h2>👋 Hey there</h2>
+<h2>Tip 3: Create a newsletter template</h2>
+<!-- /wp:heading -->
+
+<!-- wp:newsletterglue/group -->
+<section class="wp-block-newsletterglue-group"><!-- wp:paragraph -->
+<p>In 1 minute: Learn how to create a simple newsletter template using reusable blocks</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https://www.youtube.com/watch?v=3LmTPBs1IhU","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio wp-embed-aspect-4-3"} -->
+<figure class="wp-block-embed-youtube wp-block-embed is-type-video is-provider-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio wp-embed-aspect-4-3"><div class="wp-block-embed__wrapper">
+https://www.youtube.com/watch?v=3LmTPBs1IhU
+</div></figure>
+<!-- /wp:core-embed/youtube --></section>
+<!-- /wp:newsletterglue/group -->
+
+<!-- wp:heading {"level":4} -->
+<h4>Try it now: Turn the content below into a newsletter template</h4>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>This is a hands-on demo post to familiarise yourself with Newsletter Glue. </p>
+<p>Need help? <a rel="noreferrer noopener" href="https://docs.newsletterglue.com/article/21-newsletter-template" target="_blank">Learn more here.</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:separator -->
+<hr class="wp-block-separator"/>
+<!-- /wp:separator -->
+
+<!-- wp:paragraph -->
+<p>Newsletter #</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Edit this post directly and play around.🤸‍♂️</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p><strong>Let's start!</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>Scroll down till you see this👇 . Then, try sending this post as a test email.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:image {"id":398,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/check-the-box.png" alt="" class="wp-image-398"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:heading {"level":3} -->
-<h3><strong>Go ahead, try it now!</strong></h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Then come back and create a reusable newsletter footer.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"customBackgroundColor":"#f1ecff","fontSize":"small","className":"NGpurplebox"} -->
-<p style="background-color:#f1ecff" class="has-background has-small-font-size NGpurplebox"><strong>👀</strong> Need help? <a rel="noreferrer noopener" href="https://docs.newsletterglue.com/article/14-send-blog-post-to-email-list" target="_blank">Read the step-by-step guide</a></p>
+<p>Hello from Singapore! 🇸🇬</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:separator -->
@@ -49,129 +141,41 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <!-- /wp:separator -->
 
 <!-- wp:heading -->
-<h2>Create a reusable newsletter footer.</h2>
+<h2>Main content</h2>
 <!-- /wp:heading -->
 
+<!-- wp:separator -->
+<hr class="wp-block-separator"/>
+<!-- /wp:separator -->
+
 <!-- wp:paragraph -->
-<p>See this <strong>Before you go</strong> section👇? </p>
+<p>Thanks for reading.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>We're going to turn it into a reusable newsletter footer.</p>
+<p>If you're not a subscriber, you can become one here.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Scroll down for instructions.</p>
+<p>Twitter | Instagram</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:separator -->
 <hr class="wp-block-separator"/>
 <!-- /wp:separator -->
 
-<!-- wp:heading {"level":3} -->
-<h3>Before you go</h3>
-<!-- /wp:heading -->
-
 <!-- wp:paragraph -->
-<p>Here are a few things you can do if you enjoyed reading this newsletter:</p>
+<p>This is the end of the tutorial.</p>
 <!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>💌 <strong>Become a subscriber:&nbsp;</strong>[link to your sign up page]</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p><strong>🗄 Explore past issues:&nbsp;</strong>[link to your newsletter archive]</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p><strong>👉 Forward this newsletter&nbsp;</strong>to friends who might enjoy it</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p><strong>🌈 Get in touch/Share cool Internet stuff</strong>: [link to your email]</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>➕&nbsp;<strong>Follow me on Twitter:</strong>&nbsp;[link to your twitter profile]</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:separator -->
-<hr class="wp-block-separator"/>
-<!-- /wp:separator -->
 
 <!-- wp:heading {"level":3} -->
-<h3>Steps to make a reusable footer</h3>
-<!-- /wp:heading -->
-
-<!-- wp:heading {"level":4} -->
-<h4>1. Fill in your details directly into the section above☝️</h4>
-<!-- /wp:heading -->
-
-<!-- wp:image {"id":399,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/before-you-go-fill-out-deets.png" alt="" class="wp-image-399"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:heading {"level":4} -->
-<h4>2. Add to reusable blocks</h4>
-<!-- /wp:heading -->
-
-<!-- wp:image {"id":414,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/before-you-go-select-all.png" alt="" class="wp-image-414"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {"id":415,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/before-you-go-add-reusable-block.png" alt="" class="wp-image-415"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {"id":416,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/before-you-go-name-and-save.png" alt="" class="wp-image-416"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:heading {"level":4} -->
-<h4>3. Use it!</h4>
-<!-- /wp:heading -->
-
-<!-- wp:image {"id":406,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/type-footer.png" alt="" class="wp-image-406"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-<p>Add your new footer to the bottom of this post. </p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>Check it out by sending yourself another test email. </p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>Or, if you're ready, hit <strong>Publish...</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:image {"id":408,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/publish-button.png" alt="" class="wp-image-408"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-<p>You should see this in the Newsletter Glue section...</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:image {"id":411,"sizeSlug":"large"} -->
-<figure class="wp-block-image size-large"><img src="<?php echo newsletterglue()->assets_url(); ?>/demo/email-sent.png" alt="" class="wp-image-411"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:separator -->
-<hr class="wp-block-separator"/>
-<!-- /wp:separator -->
-
-<!-- wp:heading {"level":3} -->
-<h3>The end!</h3>
+<h3>Here's what you can do next:</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>If you'd like to keep playing around, try sending one of your older posts as a newsletter. </p>
+<p>1. Try sending one of your older posts as a newsletter. </p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Have fun!</p>
+<p>2. Check us out on <a rel="noreferrer noopener" href="https://twitter.com/NewsletterGlue" target="_blank">Twitter</a> for updates.</p>
 <!-- /wp:paragraph -->
