@@ -1263,14 +1263,16 @@ div.ngl-settings .ui.selection.dropdown .menu {
     transform: translateX(16px);
 }
 
-.ngl-block-unused .ngl-block-top,
-.ngl-block-locked .ngl-block-top {
+.ngl-block-unused .ngl-block-top {
 	opacity: 0.7 !important;
 }
 
 .ngl-block-unused .ngl-block-title,
 .ngl-block-unused .ngl-block-desc,
-.ngl-block-unused .ngl-block-defaults,
+.ngl-block-unused .ngl-block-defaults {
+	opacity: 0.7;
+}
+
 .ngl-block-locked .ngl-block-title,
 .ngl-block-locked .ngl-block-desc,
 .ngl-block-locked .ngl-block-defaults {
@@ -1287,6 +1289,10 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-block-locked .ngl-block-defaults {
 	opacity: 0.5 !important;
+}
+
+.ngl-block-locked .ngl-block-top {
+	opacity: 1 !important;
 }
 
 /* Semantic */

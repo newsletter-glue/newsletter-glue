@@ -2,9 +2,27 @@
 
 	const el = element.createElement;
     const { registerBlockType } = blocks;
-	const { RichText, InspectorControls, InnerBlocks } = editor;
+	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors } = editor;
 	const { Fragment } = element;
 	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, ServerSideRender } = components;
+
+	const colorSamples = [
+		{
+			name: 'Default',
+			slug: 'default',
+			color: '#3400FF'
+		},
+		{
+			name: 'Black',
+			slug: 'black',
+			color: '#000000'
+		},
+		{
+			name: 'Coral',
+			slug: 'coral',
+			color: '#FF7F50'
+		},
+	];
 
 	registerBlockType( 'newsletterglue/author', {
 		title: 'NG: author byline',
@@ -32,9 +50,13 @@
 			show_in_email: {
 				'type' : 'boolean',
 				'default' : true,
+			},
+			button_border: {
+				'type' : 'string',
+				'default' : '#3400FF'
 			}
 		},
-		edit: function( props ) {
+		edit: withColors( 'formColor' ) ( function( props ) {
 			return [
 
 				el( ServerSideRender, {
@@ -108,10 +130,23 @@
 							)
 						),
 
+						el( PanelColorSettings, {
+							title: 'Color options',
+							colorSettings: [
+
+								{
+									value: props.attributes.button_border,
+									label: 'Button border',
+									onChange: ( colorValue ) => props.setAttributes( { button_border: colorValue } ),
+									colors: colorSamples,
+								}
+							]
+						} ),
+
 					),
 				)
 			];
-		},
+		} ),
 
 		// We're going to be rendering in PHP, so save() can just return null.
 		save: function() {

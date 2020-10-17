@@ -27,6 +27,12 @@ function newsletterglue_get_blocks() {
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_author' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_author' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_author_byline',
 		),
+		'newsletterglue_block_callout' => array(
+			'title'			=> __( 'Callout cards', 'newsletter-glue' ),
+			'description'	=> __( 'Add a callout cards to your blog and newsletter.', 'newsletter-glue' ),
+			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_callout' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_callout' ] ) : 'no',
+			'callback'		=> 'newsletterglue_block_callout',
+		),
 	);
 
 	return apply_filters( 'newsletterglue_get_blocks', $blocks );
