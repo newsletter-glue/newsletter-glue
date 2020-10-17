@@ -26,10 +26,8 @@ function newsletterglue_blocks_page() {
  */
 function newsletterglue_include_block_settings( $block_id ) {
 
-	$file 		= str_replace( '_', '-', str_replace( 'newsletterglue_block_', '', $block_id ) );
-	$file_url 	= NGL_PLUGIN_DIR . 'includes/admin/blocks/views/settings-' . $file . '.php';
-
-	$include = apply_filters( 'newsletterglue_include_block_settings', $file_url, $block_id );
+	$file_url 	= NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/settings.php';
+	$include 	= apply_filters( 'newsletterglue_include_block_settings', $file_url, $block_id );
 
 	if ( file_exists( $include ) ) {
 		include_once( $include );
@@ -42,10 +40,8 @@ function newsletterglue_include_block_settings( $block_id ) {
  */
 function newsletterglue_include_block_demo( $block_id ) {
 
-	$file 		= str_replace( '_', '-', str_replace( 'newsletterglue_block_', '', $block_id ) );
-	$file_url 	= NGL_PLUGIN_DIR . 'includes/admin/blocks/views/demo-' . $file . '.php';
-
-	$include = apply_filters( 'newsletterglue_include_block_demo', $file_url, $block_id );
+	$file_url 	= NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/demo.php';
+	$include 	= apply_filters( 'newsletterglue_include_block_demo', $file_url, $block_id );
 
 	if ( file_exists( $include ) ) {
 		include_once( $include );

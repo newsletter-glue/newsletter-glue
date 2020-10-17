@@ -14,12 +14,12 @@
         keywords: [ 'newsletter', 'glue', 'group', 'container' ],
 		attributes: {
 			showblog: {
-				type: 'boolean',
-				default: newsletterglue_block_show_hide_content.showblog
+				'type': 'boolean',
+				'default': newsletterglue_block_show_hide_content.showblog ? true : false,
 			},
 			showemail: {
-				type: 'boolean',
-				default: newsletterglue_block_show_hide_content.showemail
+				'type': 'boolean',
+				'default': newsletterglue_block_show_hide_content.showemail ? true : false,
 			}
 		},
         edit: function( props ) {

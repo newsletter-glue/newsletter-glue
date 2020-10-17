@@ -4,9 +4,47 @@
  */
 
 /**
+ * Update the show/hide block.
+ */
+function newsletterglue_block_author_save() {
+
+	delete_option( 'newsletterglue_block_author' );
+
+	$defaults = get_option( 'newsletterglue_block_author' );
+
+	if ( ! $defaults ) {
+		$defaults = array();
+	}
+
+	if ( isset( $_POST[ 'newsletterglue_block_author_show_in_email' ] ) ) {
+		$defaults[ 'show_in_email' ] = true;
+	} else {
+		$defaults[ 'show_in_email' ] = false;
+	}
+
+	if ( isset( $_POST[ 'newsletterglue_block_author_show_in_blog' ] ) ) {
+		$defaults[ 'show_in_blog' ] = true;
+	} else {
+		$defaults[ 'show_in_blog' ] = false;
+	}
+
+	update_option( 'newsletterglue_block_author', $defaults );
+
+	return $defaults;
+}
+
+/**
  * Author byline block.
  */
 function newsletterglue_block_author_byline() {
+
+	$defaults = get_option( 'newsletterglue_block_author' );
+	if ( ! $defaults ) {
+		$defaults = array(
+			'show_in_blog'	=> true,
+			'show_in_email'	=> true,
+		);
+	}
 
 	$js_dir    	= NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/js/';
 	$css_dir   	= NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/css/';
@@ -16,6 +54,7 @@ function newsletterglue_block_author_byline() {
 	$suffix  = '';
 
 	wp_register_script( 'newsletterglue-author-block', $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ), time() );
+	wp_localize_script( 'newsletterglue-author-block', 'newsletterglue_block_author', $defaults );
 
 	wp_register_style( 'newsletterglue-author-block-style', $css_dir . 'block-ui' . $suffix . '.css', array(), time() );
 
@@ -61,19 +100,27 @@ function newsletterglue_author_block_render( $attributes ) {
 	// Hide in blog.
 	$is_backend = defined('REST_REQUEST') && true === REST_REQUEST && 'edit' === filter_input( INPUT_GET, 'context', FILTER_SANITIZE_STRING );
 
+	$defaults = get_option( 'newsletterglue_block_author' );
+	if ( ! $defaults ) {
+		$defaults = array(
+			'show_in_blog'	=> true,
+			'show_in_email'	=> true,
+		);
+	}
+
+	$show_in_blog  = isset( $attributes[ 'show_in_blog' ] ) ? $attributes[ 'show_in_blog' ] : $defaults[ 'show_in_blog' ];
+	$show_in_email = isset( $attributes[ 'show_in_email' ] ) ? $attributes[ 'show_in_email' ] : $defaults[ 'show_in_email' ];
+
+	// Hide in blog.
 	if ( ! $is_backend ) {
-		if ( isset( $attributes['show_in_blog'] ) ) {
-			if ( empty( $attributes['show_in_blog'] ) && ! defined( 'NGL_IN_EMAIL' ) ) {
-				return;
-			}
+		if ( empty( $show_in_blog ) && ! defined( 'NGL_IN_EMAIL' ) ) {
+			return;
 		}
 	}
 
 	// Hide in email.
-	if ( isset( $attributes['show_in_email'] ) ) {
-		if ( empty( $attributes['show_in_email'] ) && defined( 'NGL_IN_EMAIL' ) ) {
-			return;
-		}
+	if ( empty( $show_in_email ) && defined( 'NGL_IN_EMAIL' ) ) {
+		return;
 	}
 
 	ob_start();

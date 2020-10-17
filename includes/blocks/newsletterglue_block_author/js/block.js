@@ -24,6 +24,8 @@
 		},
 	];
 
+	console.log( newsletterglue_block_author );
+
 	registerBlockType( 'newsletterglue/author', {
 		title: 'NG: author byline',
 		description: 'Use this block to show author byline in newsletter.',
@@ -45,11 +47,11 @@
 			},
 			show_in_blog: {
 				'type' : 'boolean',
-				'default' : true,
+				'default' : newsletterglue_block_author.show_in_blog ? true : false,
 			},
 			show_in_email: {
 				'type' : 'boolean',
-				'default' : true,
+				'default' : newsletterglue_block_author.show_in_email ? true : false,
 			},
 			button_border: {
 				'type' : 'string',

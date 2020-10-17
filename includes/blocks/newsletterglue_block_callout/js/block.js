@@ -51,11 +51,11 @@
 			},
 			show_in_blog: {
 				'type' : 'boolean',
-				'default' : true,
+				'default' : newsletterglue_block_callout.show_in_blog ? true : false
 			},
 			show_in_email: {
 				'type' : 'boolean',
-				'default' : true,
+				'default' : newsletterglue_block_callout.show_in_email ? true : false
 			},
 		},
 
