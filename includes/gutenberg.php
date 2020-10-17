@@ -32,6 +32,7 @@ function newsletterglue_get_blocks() {
 			'description'	=> __( 'Add a callout cards to your blog and newsletter.', 'newsletter-glue' ),
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_callout' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_callout' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_callout',
+			'pro'			=> 'yes',
 		),
 	);
 
@@ -59,3 +60,19 @@ function newsletterglue_register_blocks() {
 
 }
 add_action( 'init', 'newsletterglue_register_blocks' );
+
+/**
+ * Add our block category.
+ */
+function newsletterglue_add_block_category( $categories, $post ) {
+	return array_merge(
+		$categories,
+		array(
+			array(
+				'slug' => 'newsletterglue-blocks',
+				'title' => __( 'Newsletter Glue', 'newsletter-glue' ),
+			),
+		)
+	);
+}
+add_filter( 'block_categories', 'newsletterglue_add_block_category', 10, 2 );

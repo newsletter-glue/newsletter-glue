@@ -10,7 +10,7 @@
         title: 'NG: show/hide content',
 		description: 'Use this group block to show/hide content in posts and emails.',
         icon: 'layout',
-        category: 'design', 
+        category: 'newsletterglue-blocks',
         keywords: [ 'newsletter', 'glue', 'group', 'container' ],
 		attributes: {
 			showblog: {

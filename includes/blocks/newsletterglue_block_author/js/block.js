@@ -28,7 +28,7 @@
 		title: 'NG: author byline',
 		description: 'Use this block to show author byline in newsletter.',
 		icon: 'layout',
-		category: 'design', 
+		category: 'newsletterglue-blocks',
 		keywords: [ 'newsletter', 'glue', 'group', 'container' ],
 		attributes: {
 			social: {
