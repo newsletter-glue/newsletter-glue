@@ -37,6 +37,20 @@ function newsletterglue_block_callout() {
  */
 function newsletterglue_callout_block_render( $attributes, $content ) {
 
+	$show_in_blog  = isset( $attributes[ 'show_in_blog' ] ) ? $attributes[ 'show_in_blog' ] : 1;
+	$show_in_email = isset( $attributes[ 'show_in_email' ] ) ? $attributes[ 'show_in_email' ] : 1;
+
+	// Hidden from blog.
+	if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
+		$content = preg_replace('#<section class="wp-block-newsletterglue-callout(.*?)</section>#s', '', $content );
+	}
+
+	// Hidden from email.
+	if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
+		$content = str_replace( 'wp-block-newsletterglue-callout', 'wp-block-newsletterglue-callout ngl-hide-in-email', $content );
+		$content = preg_replace('#<section class="wp-block-newsletterglue-callout ngl-hide-in-email">(.*?)</section>#s', '', $content );
+	}
+
 	return $content;
 
 }
