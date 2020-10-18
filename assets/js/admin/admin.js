@@ -537,6 +537,8 @@
 		if ( metabox.find( '#ngl_send_newsletter' ).is( ':checked' ) ) {
 			metabox.addClass( 'is-hidden' );
 			$( '.ngl-msgbox-wrap' ).removeClass( 'is-hidden' );
+			$( '#ngl_send_newsletter, #ngl_send_newsletter2' ).prop( 'checked', false );
+			$( '.ngl-top-checkbox' ).addClass( 'is-hidden' );
 		}
 	} );
 
