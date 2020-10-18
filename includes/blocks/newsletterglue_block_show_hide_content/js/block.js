@@ -76,7 +76,7 @@
 
 } ) (
 	window.wp.blocks,
-	window.wp.editor,
+	window.wp.blockEditor,
 	window.wp.element,
 	window.wp.components
 );

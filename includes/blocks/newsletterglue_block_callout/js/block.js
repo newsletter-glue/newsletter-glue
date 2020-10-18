@@ -62,14 +62,14 @@
 		edit: withColors( 'formColor' ) ( function( props ) {
 
 			var formStyles = {
-				'background-color': props.attributes.bg_color,
-				'border-color' : props.attributes.border_color,
-				'border-radius' : props.attributes.border_radius,
-				'border-style' : props.attributes.border_style,
-				'border-width' : props.attributes.border_size,
-				'padding' : props.attributes.cta_padding,
-				'margin-top' : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
-				'margin-bottom' : props.attributes.cta_margin ? props.attributes.cta_margin : 0
+				backgroundColor : props.attributes.bg_color,
+				borderColor : props.attributes.border_color,
+				borderRadius : props.attributes.border_radius,
+				borderStyle : props.attributes.border_style,
+				borderWidth : props.attributes.border_size,
+				padding : props.attributes.cta_padding,
+				marginTop : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
+				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0
 			};
 
 			return (
@@ -192,14 +192,14 @@
 		save: function( props, className ) {
 
 			var formStyles = {
-				'background-color': props.attributes.bg_color,
-				'border-color' : props.attributes.border_color,
-				'border-radius' : props.attributes.border_radius,
-				'border-style' : props.attributes.border_style,
-				'border-width' : props.attributes.border_size,
-				'padding' : props.attributes.cta_padding,
-				'margin-top' : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
-				'margin-bottom' : props.attributes.cta_margin ? props.attributes.cta_margin : 0
+				backgroundColor : props.attributes.bg_color,
+				borderColor : props.attributes.border_color,
+				borderRadius : props.attributes.border_radius,
+				borderStyle : props.attributes.border_style,
+				borderWidth : props.attributes.border_size,
+				padding : props.attributes.cta_padding,
+				marginTop : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
+				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0
 			};
 
             return (
@@ -217,7 +217,7 @@
 
 } ) (
 	window.wp.blocks,
-	window.wp.editor,
+	window.wp.blockEditor,
 	window.wp.element,
 	window.wp.components
 );

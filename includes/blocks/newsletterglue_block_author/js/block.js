@@ -4,7 +4,8 @@
     const { registerBlockType } = blocks;
 	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors } = editor;
 	const { Fragment } = element;
-	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, ServerSideRender } = components;
+	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow } = components;
+	const ServerSideRender = wp.serverSideRender;
 
 	const colorSamples = [
 		{
@@ -157,7 +158,7 @@
 
 } ) (
 	window.wp.blocks,
-	window.wp.editor,
+	window.wp.blockEditor,
 	window.wp.element,
 	window.wp.components
 );
