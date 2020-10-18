@@ -533,13 +533,21 @@
 
 	// Trigger newsletter sent message.
 	$( document ).on( 'click', '.editor-post-publish-button', function( event ) {
+
 		var metabox = $( '.ngl-send' );
+
+		// Just sent?
+		if ( $( '.ngl-reset-newsletter' ).is( ':visible' ) ) {
+			$( '#ngl_send_newsletter, #ngl_send_newsletter2' ).prop( 'checked', false );
+		}
+
+		// Add message box.
 		if ( metabox.find( '#ngl_send_newsletter' ).is( ':checked' ) ) {
 			metabox.addClass( 'is-hidden' );
 			$( '.ngl-msgbox-wrap' ).removeClass( 'is-hidden' );
-			$( '#ngl_send_newsletter, #ngl_send_newsletter2' ).prop( 'checked', false );
 			$( '.ngl-top-checkbox' ).addClass( 'is-hidden' );
 		}
+
 	} );
 
 	// Textarea tab indent.
