@@ -19,19 +19,21 @@ function newsletterglue_get_blocks() {
 			'description'	=> __( 'Hide selected content from your blog/newsletter.', 'newsletter-glue' ),
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_show_hide_content' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_show_hide_content' ] ) : 'yes',
 			'callback'		=> 'newsletterglue_block_show_hide_content',
-			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_show_hide_content/icon/icon.png',
+			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_show_hide_content/icon/icon.svg',
 		),
 		'newsletterglue_block_author' => array(
 			'title'			=> __( 'Author byline', 'newsletter-glue' ),
-			'description'	=> __( 'Add that face, name, title/short bio and CTA to each newsletter', 'newsletter-glue' ),
+			'description'	=> __( 'Add an author byline and follow button to your newsletter.', 'newsletter-glue' ),
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_author' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_author' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_author_byline',
+			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/icon/icon.svg',
 		),
 		'newsletterglue_block_callout' => array(
-			'title'			=> __( 'Callout cards', 'newsletter-glue' ),
-			'description'	=> __( 'Add a callout cards to your blog and newsletter.', 'newsletter-glue' ),
+			'title'			=> __( 'Callout card', 'newsletter-glue' ),
+			'description'	=> __( 'Customise the background and border of this card to help its content stand out.', 'newsletter-glue' ),
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_callout' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_callout' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_callout',
+			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_callout/icon/icon.svg',
 		),
 	);
 

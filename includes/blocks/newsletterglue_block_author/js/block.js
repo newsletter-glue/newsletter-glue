@@ -26,8 +26,8 @@
 	];
 
 	registerBlockType( 'newsletterglue/author', {
-		title: 'NG: author byline',
-		description: 'Use this block to show author byline in newsletter.',
+		title: 'NG: Author byline',
+		description: 'Add an author byline and follow button to your newsletter.',
 		icon: 'layout',
 		category: 'newsletterglue-blocks',
 		keywords: [ 'newsletter', 'glue', 'byline', 'author' ],

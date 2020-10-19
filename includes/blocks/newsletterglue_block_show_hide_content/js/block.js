@@ -7,8 +7,8 @@
 	const { TextControl, ToggleControl, Panel, PanelBody, PanelRow } = components;
 
     registerBlockType( 'newsletterglue/group', {
-        title: 'NG: show/hide content',
-		description: 'Use this group block to show/hide content in posts and emails.',
+        title: 'NG: Show/hide content',
+		description: 'Hide selected content from your blog/newsletter.',
         icon: 'layout',
         category: 'newsletterglue-blocks',
         keywords: [ 'newsletter', 'glue', 'group', 'container' ],

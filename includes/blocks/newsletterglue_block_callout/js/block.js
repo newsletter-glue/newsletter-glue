@@ -20,8 +20,8 @@
 	];
 
 	registerBlockType( 'newsletterglue/callout', {
-		title: 'NG: callout card',
-		description: 'Use this block to add a callout to your newsletter.',
+		title: 'NG: Callout card',
+		description: 'Customise the background and border of this card to help its content stand out.',
 		icon: 'layout',
 		category: 'newsletterglue-blocks',
 		keywords: [ 'newsletter', 'glue', 'card', 'callout' ],
