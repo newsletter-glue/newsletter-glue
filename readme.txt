@@ -1,7 +1,7 @@
 === WordPress email posts to subscribers (For Mailchimp, MailerLite, Sendinblue) - Newsletter Glue ===
 
 Plugin name: Newsletter Glue - Email posts to subscribers, connect Mailchimp MailerLite
-Contributors: memberhero, lesleysim, ahmedfouade
+Contributors: newsletterglue, memberhero, lesleysim, ahmedfouade
 Donate link: https://paypal.me/memberhero
 Tags: newsletter, email, mailchimp, mailerlite, sendinblue
 Requires at least: 5.2
