@@ -19,10 +19,46 @@
 		{ value: 'hidden', label: 'hidden' },
 	];
 
+	const icon = el( 'svg', { width: 24, height: 24, viewBox: '0 0 47 36' },
+		el( 'g',
+			{ 
+				transform: 'translate(-783 -315.935)'
+			},
+			el( 'rect',
+			{
+				width: 38,
+				height: 27,
+				rx: 3,
+				transform: 'translate(783 315.935)'
+			} ),
+			el( 'g',
+			{
+				transform: 'translate(793 324.935)',
+				fill: '#fff',
+				stroke: '#000',
+				strokeWidth: '2px',
+				strokeDasharray: '2 2'
+			},
+				el( 'rect', {
+					width: 37,
+					height: 27,
+					rx: 3
+				} ),
+				el( 'rect', {
+					width: 35,
+					height: 25,
+					x: 1,
+					y: 1,
+					rx: 2
+				} )
+			)
+		)
+	);
+
 	registerBlockType( 'newsletterglue/callout', {
 		title: 'NG: Callout card',
 		description: 'Customise the background and border of this card to help its content stand out.',
-		icon: 'layout',
+		icon: icon,
 		category: 'newsletterglue-blocks',
 		keywords: [ 'newsletter', 'glue', 'card', 'callout' ],
 		attributes: {
