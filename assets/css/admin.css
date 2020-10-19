@@ -1123,20 +1123,16 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	position: absolute;
 	right: 20px;
 	top: 15px;
-	width: 38px;
-	height: 38px;
 	border-radius: 999px;
-	background: #fff;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid #00A332;
-}
-
-.ngl-block-upgrade-icon i {
-	margin: -1px 0 0 0;
-	font-size: 17px;
+	border: 2px solid #00A332;
 	color: #00A332;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 11px;
+	padding: 1px 10px;
 }
 
 .ngl-block-demo {
