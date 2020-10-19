@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<div class="ui large header">
 		<?php esc_html_e( 'Newsletter Block Manager', 'newsletter-glue' ); ?>
 		<div class="sub header"><?php esc_html_e( 'Manage all your newsletter blocks here.', 'newsletter-glue' ); ?></div>
-		<div class="sub header header2"><?php esc_html_e( 'Turning off blocks doesn&rsquo;t affect content you&rsquo;ve already published.', 'newsletter-glue' ); ?></div>
+		<div class="sub header header2"><?php esc_html_e( 'Disabling blocks doesn&rsquo;t affect content you&rsquo;ve already published.', 'newsletter-glue' ); ?></div>
 	</div>
 
 	<div class="ngl-block-container">

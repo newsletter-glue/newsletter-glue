@@ -22,7 +22,7 @@ if ( ! $defaults ) {
 
 	<div class="ngl-popup-header">
 		<?php _e( 'Author byline', 'newsletter-glue' ); ?>
-		<span><?php _e( 'Add that face, name, title/short bio and CTA to each newsletter.', 'newsletter-glue' ); ?></span>
+		<span><?php _e( 'Customise how this block shows up in the post editor.', 'newsletter-glue' ); ?></span>
 	</div>
 
 	<div class="ngl-popup-field-header"><?php _e( 'Show/hide block', 'newsletter-glue' ); ?></div>

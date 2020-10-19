@@ -21,8 +21,8 @@ if ( ! $defaults ) {
 	<a href="#" class="ngl-popup-close"><span class="dashicons dashicons-no-alt"></span></a>
 
 	<div class="ngl-popup-header">
-		<?php _e( 'Callout cards', 'newsletter-glue' ); ?>
-		<span><?php _e( 'Add a callout cards to your blog and newsletter.', 'newsletter-glue' ); ?></span>
+		<?php _e( 'Callout card', 'newsletter-glue' ); ?>
+		<span><?php _e( 'Customise how this block shows up in the post editor.', 'newsletter-glue' ); ?></span>
 	</div>
 
 	<div class="ngl-popup-field-header"><?php _e( 'Show/hide block', 'newsletter-glue' ); ?></div>
