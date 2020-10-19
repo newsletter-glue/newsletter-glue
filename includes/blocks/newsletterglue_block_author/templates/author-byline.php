@@ -20,7 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="ngl-author-name-1"><?php echo esc_html( $name ); ?></span>
 
 			<?php if ( $social_url ) : ?>
-			<span class="ngl-author-cta"><a href="<?php echo esc_url( $social_url ); ?>" target="_blank" style="border-color: <?php echo esc_attr( $button_border ); ?>"><?php echo $social_icon; ?> <?php _e( 'Follow', 'newsletter-glue' ); ?></a></span>
+			<span class="ngl-author-cta">
+				<a href="<?php echo esc_url( $social_url ); ?>" class="ngl-author-<?php echo esc_attr( $social ); ?>" target="_blank"><?php echo $social_icon; ?> <?php _e( 'Follow', 'newsletter-glue' ); ?></a>
+			</span>
 			<?php endif; ?>
 
 		</div>

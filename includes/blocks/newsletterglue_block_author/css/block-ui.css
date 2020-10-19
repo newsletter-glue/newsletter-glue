@@ -29,9 +29,8 @@
 }
 
 .ngl-author-cta a {
-	border: 1px solid #3400FF;
 	border-radius: 5px;
-	color: rgba(0, 0, 0, 0.6);
+	color: #fff;
 	text-decoration: none !important;
 	padding: 6px 12px;
 	display: inline-flex;
@@ -41,11 +40,10 @@
 }
 
 .ngl-author-cta a:hover {
-	border: 1px solid #3400FF;
-	color: rgba(0, 0, 0, 0.6);
+	color: #fff;
 }
 
-.ngl-author-cta svg {
+.ngl-author-cta img {
 	display: inline-block;
     width: 16px;
     height: 16px;
@@ -57,3 +55,9 @@
 	color: rgba(0, 0, 0, 0.6);
 	font-size: 14px;
 }
+
+.ngl-author-twitter { background-color: rgb(29, 161, 242); }
+.ngl-author-instagram { background-color: #DD2A7B; }
+.ngl-author-facebook { background-color: #3b5998; }
+.ngl-author-twitch { background-color: #6441a5; }
+.ngl-author-tiktok { background-color: #EE1D52; }

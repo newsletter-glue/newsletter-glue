@@ -42,6 +42,7 @@
 		attributes: {
 			social: {
 				'type': 'string',
+				'default' : 'twitter',
 			},
 			social_user: {
 				'type': 'string',
@@ -60,10 +61,6 @@
 				'type' : 'boolean',
 				'default' : newsletterglue_block_author.show_in_email ? true : false,
 			},
-			button_border: {
-				'type' : 'string',
-				'default' : '#3400FF'
-			}
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
 			return [
@@ -143,12 +140,6 @@
 							title: 'Color options',
 							colorSettings: [
 
-								{
-									value: props.attributes.button_border,
-									label: 'Button border',
-									onChange: ( colorValue ) => props.setAttributes( { button_border: colorValue } ),
-									colors: colorSamples,
-								}
 							]
 						} ),
 
