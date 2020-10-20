@@ -26,6 +26,7 @@
 			},
 			el( 'rect',
 			{
+				fill: '#3400FF',
 				width: 38,
 				height: 27,
 				rx: 3,
@@ -35,7 +36,7 @@
 			{
 				transform: 'translate(793 324.935)',
 				fill: '#fff',
-				stroke: '#000',
+				stroke: '#3400FF',
 				strokeWidth: '2px',
 				strokeDasharray: '2 2'
 			},
