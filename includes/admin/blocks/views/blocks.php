@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<?php foreach( $blocks as $block_id => $params ) : ?>
 		<div class="ngl-block <?php echo ( $params['use_block'] === 'yes' ) ? 'ngl-block-used' : 'ngl-block-unused'; ?> <?php echo ( isset( $params['pro'] ) && $params['pro'] === 'yes' ) ? 'ngl-block-locked' : ''; ?>" data-block="<?php echo esc_attr( $block_id ); ?>">
 			<div class="ngl-block-top" style="<?php if ( isset( $params['icon'] ) ) : ?>background-image: url( <?php echo $params['icon']; ?> )<?php endif; ?>">
-				<?php if ( isset( $params['pro'] ) && $params['pro'] === 'yes' ) : ?>
+				<?php if ( ( isset( $params['pro'] ) && $params['pro'] === 'yes' ) || isset( $params[ 'is_pro' ] ) ) : ?>
 				<div class="ngl-block-upgrade-icon"><?php _e( 'Pro', 'newsletter-glue' ); ?></div>
 				<?php endif; ?>
 				<a href="#" class="ngl-block-demo"><?php _e( 'See demo', 'newsletter-glue' ); ?></a>
