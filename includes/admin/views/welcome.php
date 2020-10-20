@@ -70,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 <!-- wp:newsletterglue/group {"showblog":true,"showemail":false} -->
 <section class="wp-block-newsletterglue-group"><!-- wp:paragraph -->
-<p>In 1 minute: Learn how to add a <strong>show/hide content</strong> block to hide content.</p>
+<p>In under 2 minutes: Learn how to add a <strong>show/hide content</strong> block to hide content.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:core-embed/youtube {"url":"https://youtu.be/-lWglLltY8Y","type":"video","providerNameSlug":"youtube","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio wp-embed-aspect-4-3"} -->
@@ -124,9 +124,9 @@ https://www.youtube.com/watch?v=3LmTPBs1IhU
 <p>Need help? <a rel="noreferrer noopener" href="https://docs.newsletterglue.com/article/21-newsletter-template" target="_blank">Learn more here.</a></p>
 <!-- /wp:paragraph -->
 
-<!-- wp:separator -->
-<hr class="wp-block-separator"/>
-<!-- /wp:separator -->
+<!-- wp:paragraph -->
+<p>///////////////////////////////////////////////////////////////////////////</p>
+<!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 <p>Newsletter #</p>
@@ -160,9 +160,9 @@ https://www.youtube.com/watch?v=3LmTPBs1IhU
 <p>Twitter | Instagram</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:separator -->
-<hr class="wp-block-separator"/>
-<!-- /wp:separator -->
+<!-- wp:paragraph -->
+<p>///////////////////////////////////////////////////////////////////////////</p>
+<!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 <p>This is the end of the tutorial.</p>
