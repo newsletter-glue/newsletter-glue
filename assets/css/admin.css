@@ -1135,6 +1135,10 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	padding: 1px 10px;
 }
 
+.ngl-block-upgrade-icon i {
+	height: auto;
+}
+
 .ngl-block-demo {
 	position: absolute;
 	bottom: 15px;
