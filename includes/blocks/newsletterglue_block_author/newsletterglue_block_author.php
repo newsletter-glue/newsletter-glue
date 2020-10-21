@@ -243,7 +243,7 @@ function newsletterglue_add_author_byline_css() { ?>
 	display: inline-block;
     width: 16px;
     height: 16px;
-	margin: 0 8px 0 0 !important;
+	margin: 0 4px 0 0 !important;
 }
 
 .ngl-author-bio {
