@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-07 16:35+0100\n"
-"PO-Revision-Date: 2020-10-07 16:35+0100\n"
+"POT-Creation-Date: 2020-10-22 00:39+0100\n"
+"PO-Revision-Date: 2020-10-22 00:39+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -82,38 +82,38 @@ msgstr ""
 msgid "Go back"
 msgstr ""
 
-#: includes/ajax-functions.php:424
+#: includes/ajax-functions.php:432
 msgid "This cannot be empty"
 msgstr ""
 
-#: includes/ajax-functions.php:476 includes/admin/admin-functions.php:307
+#: includes/ajax-functions.php:484 includes/admin/admin-functions.php:307
 #: includes/admin/connect/views/connect-card.php:59
 msgid "remove"
 msgstr ""
 
-#: includes/ajax-functions.php:687 includes/ajax-functions.php:730
+#: includes/ajax-functions.php:695 includes/ajax-functions.php:738
 msgid "No cheating, huh!"
 msgstr ""
 
-#: includes/core.php:229
+#: includes/core.php:235
 #: includes/admin/settings/views/settings-theme-preview.php:59
 #: includes/admin/settings/views/settings-theme-preview.php:99
 #, php-format
 msgid "Seamlessly sent by %s"
 msgstr ""
 
-#: includes/core.php:229 includes/admin/admin-functions.php:15
-#: includes/admin/admin-menu.php:19
+#: includes/core.php:235 includes/gutenberg.php:76
+#: includes/admin/admin-functions.php:15 includes/admin/admin-menu.php:19
 #: includes/admin/settings/views/settings-theme-preview.php:59
 #: includes/admin/settings/views/settings-theme-preview.php:99
 msgid "Newsletter Glue"
 msgstr ""
 
-#: includes/core.php:234
+#: includes/core.php:240
 msgid "Unsubscribe"
 msgstr ""
 
-#: includes/core.php:390
+#: includes/core.php:396
 msgid "Not set"
 msgstr ""
 
@@ -139,16 +139,37 @@ msgstr ""
 msgid "%s from %s"
 msgstr ""
 
-#: includes/gutenberg.php:36
-#: includes/admin/blocks/views/demo-show-hide-content.php:13
+#: includes/gutenberg.php:18
+#: includes/blocks/newsletterglue_block_show_hide_content/demo.php:15
+#: includes/blocks/newsletterglue_block_show_hide_content/settings.php:24
 msgid "Show/hide content"
 msgstr ""
 
-#: includes/gutenberg.php:37
+#: includes/gutenberg.php:19
 msgid "Hide selected content from your blog/newsletter."
 msgstr ""
 
-#: includes/install.php:218
+#: includes/gutenberg.php:25
+#: includes/blocks/newsletterglue_block_author/settings.php:24
+msgid "Author byline"
+msgstr ""
+
+#: includes/gutenberg.php:26
+msgid "Add an author byline and follow button to your newsletter."
+msgstr ""
+
+#: includes/gutenberg.php:33
+#: includes/blocks/newsletterglue_block_callout/settings.php:24
+msgid "Callout card"
+msgstr ""
+
+#: includes/gutenberg.php:34
+msgid ""
+"Customise the background and border of this card to help its content stand "
+"out."
+msgstr ""
+
+#: includes/install.php:216
 msgid "Newsletter Glue: Let's get you started"
 msgstr ""
 
@@ -191,6 +212,10 @@ msgstr ""
 
 #: includes/admin/admin-menu.php:22
 msgid "Settings"
+msgstr ""
+
+#: includes/admin/admin-menu.php:23
+msgid "Newsletter blocks"
 msgstr ""
 
 #: includes/admin/admin-scripts.php:55
@@ -364,7 +389,7 @@ msgid "What feature would you like, and what will it help you do?*"
 msgstr ""
 
 #: includes/admin/blocks/views/blocks.php:14
-msgid "Newsletter Blocks"
+msgid "Newsletter Block Manager"
 msgstr ""
 
 #: includes/admin/blocks/views/blocks.php:15
@@ -373,8 +398,7 @@ msgstr ""
 
 #: includes/admin/blocks/views/blocks.php:16
 msgid ""
-"Turning off blocks doesn&rsquo;t affect content you&rsquo;ve already "
-"published."
+"Disabling blocks doesn&rsquo;t affect content you&rsquo;ve already published."
 msgstr ""
 
 #: includes/admin/blocks/views/blocks.php:22
@@ -383,6 +407,10 @@ msgstr ""
 
 #: includes/admin/blocks/views/blocks.php:23
 msgid "Disable all"
+msgstr ""
+
+#: includes/admin/blocks/views/blocks.php:30
+msgid "Pro"
 msgstr ""
 
 #: includes/admin/blocks/views/blocks.php:32
@@ -401,12 +429,8 @@ msgstr ""
 msgid "Use block"
 msgstr ""
 
-#: includes/admin/blocks/views/settings-show-hide-content.php:23
-msgid "Show in blog post"
-msgstr ""
-
-#: includes/admin/blocks/views/settings-show-hide-content.php:31
-msgid "Show in email newsletter"
+#: includes/admin/blocks/views/blocks.php:59
+msgid "More soon..."
 msgstr ""
 
 #: includes/admin/connect/views/connect-card.php:18
@@ -980,6 +1004,37 @@ msgstr ""
 
 #: includes/admin/views/posts-status.php:21
 msgid "Time, Date published"
+msgstr ""
+
+#: includes/blocks/newsletterglue_block_author/settings.php:25
+#: includes/blocks/newsletterglue_block_callout/settings.php:25
+#: includes/blocks/newsletterglue_block_show_hide_content/settings.php:25
+msgid "Customise how this block shows up in the post editor."
+msgstr ""
+
+#: includes/blocks/newsletterglue_block_author/settings.php:28
+#: includes/blocks/newsletterglue_block_callout/settings.php:28
+msgid "Show/hide block"
+msgstr ""
+
+#: includes/blocks/newsletterglue_block_author/settings.php:34
+#: includes/blocks/newsletterglue_block_callout/settings.php:34
+#: includes/blocks/newsletterglue_block_show_hide_content/settings.php:34
+msgid "Show in blog post"
+msgstr ""
+
+#: includes/blocks/newsletterglue_block_author/settings.php:42
+#: includes/blocks/newsletterglue_block_callout/settings.php:42
+#: includes/blocks/newsletterglue_block_show_hide_content/settings.php:42
+msgid "Show in email newsletter"
+msgstr ""
+
+#: includes/blocks/newsletterglue_block_author/templates/author-byline.php:32
+msgid "Follow"
+msgstr ""
+
+#: includes/blocks/newsletterglue_block_show_hide_content/settings.php:28
+msgid "Show/hide - newsletter block"
 msgstr ""
 
 #: includes/integrations/campaignmonitor/connect.php:20
