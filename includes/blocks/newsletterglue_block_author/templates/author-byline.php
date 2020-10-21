@@ -11,7 +11,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="ngl-author">
 
-	<div class="ngl-author-pic"><?php echo get_avatar( $user_id, 80 ); ?></div>
+	<div class="ngl-author-pic">
+		<?php
+			if ( $profile_pic ) :
+				echo '<img alt="" src="' . esc_url( $profile_pic ) . '" class="avatar avatar-80 photo">';
+			else :
+				echo get_avatar( $user_id, 80 );
+			endif;
+		?>
+	</div>
 
 	<div class="ngl-author-meta">
 

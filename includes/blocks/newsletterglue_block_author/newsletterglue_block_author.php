@@ -78,6 +78,9 @@ function newsletterglue_block_author_byline() {
 			'show_in_email'	=> array(
 				'type'		=> 'boolean',
 			),
+			'profile_pic'	=> array(
+				'type'		=> 'string',
+			),
 		),
 		'editor_script'   => 'newsletterglue-author-block',
 		'style'           => 'newsletterglue-author-block-style',
@@ -131,6 +134,7 @@ function newsletterglue_author_block_render( $attributes ) {
 	$bio			= isset( $attributes[ 'author_bio' ] ) ? $attributes[ 'author_bio' ] : '';
 	$social 		= isset( $attributes[ 'social' ] ) ? $attributes[ 'social' ] : '';
 	$social_user 	= isset( $attributes[ 'social_user' ] ) ? $attributes[ 'social_user' ] : '';
+	$profile_pic 	= isset( $attributes[ 'profile_pic' ] ) ? $attributes[ 'profile_pic' ] : '';
 	$social_url		= '';
 	$social_icon	= '';
 
@@ -197,15 +201,15 @@ function newsletterglue_add_author_byline_css() { ?>
 }
 
 .ngl-author-pic {
-	max-width: 70px;
+	width: 70px;
 	margin: 0 15px 0 0;
 }
 
 .ngl-author-pic img {
+	margin: 0 !important;
 	display: block;
 	overflow: hidden;
 	border-radius: 999px;
-	margin: 0 !important;
 }
 
 .ngl-author-name {

@@ -2380,3 +2380,13 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	font-weight: bold;
 	padding: 0 0 10px;
 }
+
+/* Gutenberg */
+.ngl-gutenberg-btn {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.ngl-gutenberg-btn svg {
+	margin: 0 8px 0 0;
+}

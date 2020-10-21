@@ -2,7 +2,7 @@
 
 	const el = element.createElement;
     const { registerBlockType } = blocks;
-	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors } = editor;
+	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, MediaUpload } = editor;
 	const { Fragment } = element;
 	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow } = components;
 	const ServerSideRender = wp.serverSideRender;
@@ -62,8 +62,24 @@
 				'type' : 'boolean',
 				'default' : newsletterglue_block_author.show_in_email ? true : false,
 			},
+    		profile_pic: {
+    			type: 'string',
+    		}
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
+
+			var onSelectImage = function( media ) {
+				return props.setAttributes( {
+					profile_pic: media.url
+				} );
+			};
+
+			var removeImage = function() {
+				props.setAttributes( {
+					profile_pic: ''
+				} );
+			};
+
 			return [
 
 				el( ServerSideRender, {
@@ -103,12 +119,41 @@
 						el( PanelBody, { title: 'Customize data', initialOpen: true },
 
 							el( PanelRow, {},
+								el( MediaUpload, {
+									onSelect: onSelectImage,
+									type: 'image',
+									render: function( obj ) {
+										return [
+
+											el( components.Button, {
+													className: 'ngl-gutenberg-btn',
+													onClick: obj.open
+												},
+												el( 'svg', { className: '', width: '20', height: '20', viewBox: '0 0 42.301 42.301' },
+													el( 'path', { d: "M21.15.563A21.15,21.15,0,1,0,42.3,21.713,21.147,21.147,0,0,0,21.15.563Zm0,8.187a7.5,7.5,0,1,1-7.5,7.5A7.505,7.505,0,0,1,21.15,8.75Zm0,29.338A16.343,16.343,0,0,1,8.656,32.271a9.509,9.509,0,0,1,8.4-5.1,2.087,2.087,0,0,1,.606.094,11.292,11.292,0,0,0,3.488.588,11.249,11.249,0,0,0,3.488-.588,2.087,2.087,0,0,1,.606-.094,9.509,9.509,0,0,1,8.4,5.1A16.343,16.343,0,0,1,21.15,38.087Z" } )
+												),
+												el( 'span', {},
+													'Change profile image'
+												),
+											),
+											
+											el( 'a', { href: '#', onClick: removeImage },
+												'Remove'
+											),
+
+										];
+									}
+								} )
+							),
+
+							el( PanelRow, {},
 								el( TextControl, {
 									label: 'Name',
 									value: props.attributes.author_name,
 									onChange: ( value ) => { props.setAttributes( { author_name: value } ); },
 								} )
 							),
+
 							el( PanelRow, {},
 								el( TextControl, {
 									label: 'Short bio',
