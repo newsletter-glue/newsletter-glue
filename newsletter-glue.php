@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Newsletter Glue
- * Plugin URI: https://memberhero.pro/newsletterglue
- * Description: Email posts to subscribers from the WordPress editor. Works with Mailchimp, MailerLite…
- * Author: Member Hero
- * Author URI: https://memberhero.pro/
- * Version: 1.0.0
+ * Plugin URI: https://newsletterglue.com/
+ * Description: Email posts to subscribers from the WordPress editor. Works with Mailchimp, MailerLite, Sendinblue…
+ * Author: Newsletter Glue
+ * Author URI: https://newsletterglue.com
+ * Version: 1.1.4
  * Text Domain: newsletter-glue
  * Domain Path: /i18n/languages/
  */
@@ -17,8 +17,6 @@ if ( ! class_exists( 'Newsletter_Glue' ) ) :
 
 /**
  * Main Class.
- *
- * @since 1.4
  */
 final class Newsletter_Glue {
 	/** Singleton *************************************************************/
@@ -67,7 +65,7 @@ final class Newsletter_Glue {
 
 		// Plugin version.
 		if ( ! defined( 'NGL_VERSION' ) ) {
-			define( 'NGL_VERSION', '1.0.0' );
+			define( 'NGL_VERSION', '1.1.4' );
 		}
 
 		// Plugin Folder Path.
@@ -87,7 +85,7 @@ final class Newsletter_Glue {
 
 		// Feedback server.
 		if ( ! defined( 'NGL_FEEDBACK_SERVER' ) ) {
-			define( 'NGL_FEEDBACK_SERVER', 'https://memberhero.pro/' );
+			define( 'NGL_FEEDBACK_SERVER', 'https://newsletterglue.com' );
 		}
 	}
 
@@ -99,6 +97,8 @@ final class Newsletter_Glue {
 		require_once NGL_PLUGIN_DIR . 'includes/ajax-functions.php';
 		require_once NGL_PLUGIN_DIR . 'includes/functions.php';
 		require_once NGL_PLUGIN_DIR . 'includes/install.php';
+		require_once NGL_PLUGIN_DIR . 'includes/core.php';
+		require_once NGL_PLUGIN_DIR . 'includes/gutenberg.php';
 
 		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			require_once NGL_PLUGIN_DIR . 'includes/admin/admin-fields.php';
@@ -106,6 +106,7 @@ final class Newsletter_Glue {
 			require_once NGL_PLUGIN_DIR . 'includes/admin/admin-menu.php';
 			require_once NGL_PLUGIN_DIR . 'includes/admin/admin-notices.php';
 			require_once NGL_PLUGIN_DIR . 'includes/admin/admin-scripts.php';
+			require_once NGL_PLUGIN_DIR . 'includes/admin/blocks/blocks.php';
 			require_once NGL_PLUGIN_DIR . 'includes/admin/connect/connect.php';
 			require_once NGL_PLUGIN_DIR . 'includes/admin/meta-boxes.php';
 			require_once NGL_PLUGIN_DIR . 'includes/admin/onboarding/onboarding.php';
