@@ -116,12 +116,13 @@
 
 						),
 
-						el( PanelBody, { title: 'Customize data', initialOpen: true },
+						el( PanelBody, { title: 'Profile settings', initialOpen: true },
 
 							el( PanelRow, {},
 								el( MediaUpload, {
 									onSelect: onSelectImage,
 									type: 'image',
+									help: 'test',
 									render: function( obj ) {
 										return [
 
@@ -138,12 +139,16 @@
 											),
 											
 											el( 'a', { href: '#', onClick: removeImage },
-												'Remove'
-											),
+												'Reset'
+											)
 
 										];
 									}
 								} )
+							),
+
+							el( PanelRow, {},
+								'Ideal image size 100x100 pixels.'
 							),
 
 							el( PanelRow, {},
