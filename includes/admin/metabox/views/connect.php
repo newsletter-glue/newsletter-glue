@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="ngl-field">
 			<label>
 				<input type="checkbox" />
-				<?php _e( 'Send this blog post as an email newsletter.', 'newsletter-glue' ); ?>
+				<?php _e( 'Send this blog post as an email newsletter...', 'newsletter-glue' ); ?>
 			</label>
 		</div>
 	</div>

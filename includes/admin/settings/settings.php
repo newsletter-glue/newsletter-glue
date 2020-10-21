@@ -19,10 +19,16 @@ function newsletterglue_settings_page() {
 
 	// Load into memory.
 	if ( $app ) {
+
 		include_once newsletterglue_get_path( $app ) . '/init.php';
+
 		$classname 	= 'NGL_' . ucfirst( $app );
 		$api		= new $classname();
-		$api->connect();
+
+		if ( method_exists( $api, 'connect' ) ) {
+			$api->connect();
+		}
+
 	}
 
 	// Header.
@@ -39,6 +45,7 @@ function newsletterglue_settings_tabs() {
 
 	$tabs = array(
 		'defaults'	=> __( 'Email Defaults', 'newsletter-glue' ),
+		'theme'		=> __( 'Newsletter theme designer', 'newsletter-glue' ),
 		'css' 		=> __( 'Custom CSS', 'newsletter-glue' ),
 	);
 

@@ -11,7 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function newsletterglue_add_meta_box() {
 
-	add_meta_box( 'newsletter_glue_metabox', __( 'Newsletter Glue: Send as newsletter', 'newsletter-glue' ), 'newsletterglue_meta_box', 'post', 'normal', 'high' );
+	$post_types  = get_post_types();
+	$unsupported = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block' );
+
+	if ( is_array( $post_types ) ) {
+		foreach( $post_types as $post_type ) {
+			if ( ! in_array( $post_type, apply_filters( 'newsletterglue_unsupported_post_types', $unsupported ) ) ) {
+				add_meta_box( 'newsletter_glue_metabox', __( 'Newsletter Glue: Send as newsletter', 'newsletter-glue' ), 'newsletterglue_meta_box', $post_type, 'normal', 'high' );
+			}
+		}
+	}
 
 }
 add_action( 'add_meta_boxes', 'newsletterglue_add_meta_box', 1 );
@@ -44,7 +53,12 @@ function newsletterglue_save_meta_box( $post_id, $post ) {
 	}
 
 	// Avoid draft save.
-	if ( ! isset( $post->post_status ) || $post->post_status != 'publish' ) {
+	if ( ! isset( $post->post_status ) ) {
+		return;
+	}
+
+	// Only allow published and scheduled posts.
+	if ( ! in_array( $post->post_status, array( 'publish', 'future' ) ) ) {
 		return;
 	}
 
@@ -72,7 +86,16 @@ function newsletterglue_save_meta_box( $post_id, $post ) {
 	newsletterglue_save_data( $post_id, newsletterglue_sanitize( $_POST ) );
 
 	// Send it.
-	newsletterglue_send( $post_id );
+	if ( $post->post_status == 'future' ) {
+		update_post_meta( $post_id, '_ngl_future_send', 'yes' );
+	} else {
+		newsletterglue_send( $post_id );
+	}
+
+	// We did an action here.
+	if ( ! get_option( 'newsletterglue_did_action' ) ) {
+		update_option( 'newsletterglue_did_action', 'yes' );
+	}
 
 }
 add_action( 'save_post', 'newsletterglue_save_meta_box', 1, 2 );
@@ -105,126 +128,4 @@ function newsletterglue_meta_box() {
 
 	}
 
-}
-
-/**
- * Get form defaults.
- */
-function newsletterglue_get_form_defaults( $post = 0, $api = '' ) {
-	$d = new stdclass;
-
-	// Subject.
-	if ( $post->post_status === 'auto-draft' ) {
-		$subject = '';
-	} else {
-		$subject = get_the_title( $post->ID );
-	}
-
-	$app = newsletterglue_default_connection();
-
-	$d->from_name	= newsletterglue_get_option( 'from_name', $app );
-	$d->from_email 	= newsletterglue_get_option( 'from_email', $app );
-	$d->test_email	= newsletterglue_get_option( 'from_email', $app );
-	$d->subject     = $subject;
-
-	// Get options from API.
-	if ( method_exists( $api, 'get_form_defaults' ) ) {
-
-		$api_options = $api->get_form_defaults();
-
-		foreach( $api_options as $key => $value ) {
-			$d->{$key} = $value;
-		}
-
-	}
-
-	return $d;
-}
-
-/**
- * Save newsletter options as meta data.
- */
-function newsletterglue_save_data( $post_id, $data ) {
-	$meta = array();
-
-	foreach( $data as $key => $value ) {
-		if ( strstr( $key, 'ngl_' ) ) {
-			$key = str_replace( 'ngl_', '', $key );
-			$meta[ $key ] = $value;
-
-			if ( $key === 'when' ) {
-				$timestamp = strtotime( $value );
-				$meta[ 'timestamp' ] = $timestamp;
-			}
-		}
-	}
-
-	if ( isset( $meta ) && ! empty( $meta ) ) {
-		update_post_meta( $post_id, '_newsletterglue', $meta );
-	}
-}
-
-/**
- * Get newsletter options as meta data.
- */
-function newsletterglue_get_data( $post_id ) {
-
-	$data = get_post_meta( $post_id, '_newsletterglue', true );
-
-	$s = new stdclass;
-
-	if ( is_array( $data ) ) {
-		foreach( $data as $key => $value ) {
-			$s->{$key} = $value;
-		}
-	}
-
-	return $s;
-
-}
-
-/**
- * Send the newsletter and mark as sent.
- */
-function newsletterglue_send( $post_id = 0, $test = false ) {
-
-	$post = get_post( $post_id );
-	$data = get_post_meta( $post_id, '_newsletterglue', true );
-
-	if ( ! $test ) {
-		$data[ 'sent' ] = true;
-	}
-
-	update_post_meta( $post_id, '_newsletterglue', $data );
-
-	$app = $data[ 'app' ];
-
-	include_once newsletterglue_get_path( $app ) . '/init.php';
-
-	$classname = 'NGL_' . ucfirst( $app );
-
-	$api = new $classname();
-
-	// Send the newsletter.
-	$response = $api->send_newsletter( $post_id, $data, $test );
-
-	return $response;
-}
-
-/**
- * Mark a newsletter as unsent.
- */
-function newsletterglue_reset_newsletter( $post_id = 0 ) {
-
-	$data = get_post_meta( $post_id, '_newsletterglue', true );
-
-	// Allow campaign to be resent.
-	if ( isset( $data[ 'sent' ] ) ) {
-		unset( $data[ 'sent' ] );
-	}
-
-	// Cancel draft status.
-	$data[ 'schedule' ] = 'immediately';
-
-	update_post_meta( $post_id, '_newsletterglue', $data );
 }

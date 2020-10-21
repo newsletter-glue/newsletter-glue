@@ -18,16 +18,20 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 </nav>
 
-<div class="ngl ngl-wrap ngl-settings">
+<div class="ngl ngl-wrap ngl-settings <?php if ( $app ) echo 'ngl-settings-' . esc_attr( $app ); ?>">
 
 	<?php include( 'settings-' . $tab . '.php' ); ?>
 
 	<?php if ( $app || $tab == 'css' ) : ?>
 
+	<?php if ( $tab != 'theme' ) : ?>
 	<div class="ngl-metabox ngl-metabox-flex ngl-metabox-flex2">
 		<a href="#" class="ui button basic ngl-settings-save"><?php _e( 'Save', 'newsletter-glue' ); ?></a>
 	</div>
+	<?php endif; ?>
 
 	<?php endif; ?>
+
+	<?php echo newsletterglue_get_review_button_html(); ?>
 
 </div>

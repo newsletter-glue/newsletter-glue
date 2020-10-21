@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php esc_html_e( 'Email Defaults', 'newsletter-glue' ); ?>
 
-	<div class="sub header"><?php echo wp_kses_post( __( 'All newsletters will default to the details shown here.<br /> Change details for individual newsletters at the bottom of each new post.', 'newsletter-glue' ) ); ?></div>
+	<div class="sub header"><?php echo wp_kses_post( __( 'New newsletters will default to the details you&rsquo;ve chosen here.<br />Change details for individual newsletters at the bottom of each new post.', 'newsletter-glue' ) ); ?></div>
 
 </div>
 

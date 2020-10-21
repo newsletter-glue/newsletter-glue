@@ -37,6 +37,9 @@ function newsletterglue_manage_posts_custom_column( $column, $post_id ) {
 			if ( $results ) {
 				if ( count( $results ) == 1 ) {
 					foreach( $results as $time => $data ) {
+						if ( ! isset( $data['type'] ) ) {
+							continue;
+						}
 						if ( $data['type'] == 'error' ) {
 							$text .= '<span class="ngl-state ngl-error">' . $data[ 'message' ] . '</span>';
 						}
@@ -47,7 +50,7 @@ function newsletterglue_manage_posts_custom_column( $column, $post_id ) {
 							$text .= '<span class="ngl-state ngl-neutral">' . $data[ 'message' ] . '</span>';
 						}
 						$text .= '<span><a href="#" class="ngl-modal-log">' . __( 'View log', 'newsletter-glue' ) . '</a>';
-						if ( isset( $data['help'] ) ) {
+						if ( isset( $data['help'] ) && ! empty( $data['help'] ) ) {
 							$text .= ' | <span class="ngl-error"><a href="' . esc_url( $data[ 'help' ] ) . '">' . __( 'Get help', 'newsletter-glue' ) . '</a></span>';
 						}
 						$text .= '</span>';

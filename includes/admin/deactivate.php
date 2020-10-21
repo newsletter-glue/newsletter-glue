@@ -248,7 +248,7 @@ $newsletterglue_deactivate_nonce = wp_create_nonce( 'newsletterglue-deactivate-n
 
 		<h4><?php _e( 'Have more feedback about the plugin? Don&rsquo;t hold back.', 'newsletter-glue' ); ?></h4>
 		<textarea name="newsletterglue-feedback" id="newsletterglue-feedback"></textarea>
-		<br /><a href="mailto:hi@memberhero.pro"><?php _e( 'Or email us for support.', 'newsletter-glue' ); ?></a>
+		<br /><a href="mailto:support@newsletterglue.com"><?php _e( 'Or email us for support.', 'newsletter-glue' ); ?></a>
 
     </div>
     <div class="newsletterglue-popup-footer">
@@ -337,7 +337,7 @@ $(function() {
 			action        : 'newsletterglue_deactivate',
 			reason        : _reason,
 			reason_detail : _reason_details,
-			feedback		: _feedback,
+			feedback	  : _feedback,
 			security      : deactivate_nonce
 		};
 

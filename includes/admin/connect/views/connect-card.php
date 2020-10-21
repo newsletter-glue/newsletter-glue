@@ -12,19 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-card">
 
-		<!-- First screen -->
-		<div class="ngl-card-add">
-			<div class="ngl-big-action">
-				<span class="ngl-icon material-icons">add_circle_outline</span>
-				<span class="ngl-header"><?php esc_html_e( 'Add new connection', 'newsletter-glue' ); ?></span>
-			</div>
-		</div>
-
 		<!-- Software selection -->
-		<div class="ngl-card-add2 ngl-card-base ngl-hidden">
-			<div class="ngl-card-link-start">
-				<div class="ui basic noborder button ngl-back" data-screen="ngl-card-add"><i class="arrow left icon"></i><?php esc_html_e( 'Back', 'newsletter-glue' ); ?></div>
-			</div>
+		<div class="ngl-card-add ngl-card-base">
+
 			<div class="ngl-header"><?php esc_html_e( 'Add new connection', 'newsletter-glue' ); ?></div>
 			<?php
 				newsletterglue_select_field( array(
@@ -107,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				<a href="#" class="ngl-ajax-edit-connection"><?php echo __( 'Edit connection details', 'newsletter-glue' ); ?></a>
 			</div>
 			<div class="ngl-card-link-end">
-				<a href="https://docs.memberhero.pro/article/2-connect" class="ui basic noborder button" target="_blank"><i class="question circle outline icon"></i><?php esc_html_e( 'Get help', 'newsletter-glue' ); ?></a>
+				<a href="https://docs.newsletterglue.com/article/2-connect" class="ui basic noborder button" target="_blank"><i class="question circle outline icon"></i><?php esc_html_e( 'Get help', 'newsletter-glue' ); ?></a>
 			</div>
 		</div>
 

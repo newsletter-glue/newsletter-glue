@@ -21,6 +21,11 @@
 		var th = $( '.ngl-boarding:visible' ).attr( 'data-screen' );
 		var next = parseInt( th ) + 1;
 
+		// If steps are not meeting minimum.
+		if ( ! $( '.ngl-boarding[data-screen=' + next + ']' ).length ) {
+			next = next + 1;
+		}
+
 		$( '.ngl-boarding:visible' ).addClass( 'is-hidden' );
 		$( '.ngl-boarding[data-screen=' + next + ']' ).removeClass( 'is-hidden' );
 

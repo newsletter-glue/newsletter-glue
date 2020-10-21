@@ -12,9 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function newsletterglue_get_supported_apps() {
 
 	$apps = array(
-		'mailchimp'		=> __( 'Mailchimp', 'newsletter-glue' ),
-		'mailerlite'	=> __( 'MailerLite', 'newsletter-glue' ),
-		//'convertkit'	=> __( 'ConvertKit', 'newsletter-glue' ),
+		'campaignmonitor'	=> __( 'Campaign Monitor', 'newsletter-glue' ),
+		'mailchimp'			=> __( 'Mailchimp', 'newsletter-glue' ),
+		'mailerlite'		=> __( 'MailerLite', 'newsletter-glue' ),
+		'sendinblue'		=> __( 'Sendinblue', 'newsletter-glue' ),
 	);
 
 	return apply_filters( 'newsletterglue_get_supported_apps', $apps );
@@ -98,7 +99,7 @@ function newsletterglue_add_campaign_data( $post_id, $subject = '', $result = ''
 		update_post_meta( $post_id, '_ngl_last_result', $result );
 
 		// Store this as notice.
-		if ( $result['type'] === 'error' ) {
+		if ( isset( $result['type'] ) && $result['type'] === 'error' ) {
 
 			$result[ 'post_id' ] = $post_id;
 			$result[ 'time' ]    = $time;

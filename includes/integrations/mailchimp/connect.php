@@ -32,5 +32,5 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 </div>
 
 <div class="ngl-card-link-end">
-	<a href="https://docs.memberhero.pro/article/2-connect" target="_blank" class="ui basic noborder button"><?php esc_html_e( 'Learn more', 'newsletter-glue' ); ?></a>
+	<a href="https://docs.newsletterglue.com/article/2-connect" target="_blank" class="ui basic noborder button"><?php esc_html_e( 'Learn more', 'newsletter-glue' ); ?></a>
 </div>

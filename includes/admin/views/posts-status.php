@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</thead>
 
 	<tbody>
-		<?php foreach( $results as $time => $data ) : ?>
+		<?php foreach( $results as $time => $data ) : if ( ! isset( $data['type'] ) ) continue; ?>
 		<tr>
 			<td class="ngl_subject"><?php echo esc_html( $data[ 'subject' ] ); ?></td>
 			<td class="ngl_status">

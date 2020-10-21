@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_segments',
 					'legacy'		=> true,
-					'helper'		=> __( 'A specific group of subscribers.', 'newsletter-glue' ),
+					'helper'		=> sprintf( __( 'A specific group of subscribers. %s', 'newsletter-glue' ), '<a href="https://app.mailerlite.com/subscribers/segments" target="_blank">' . __( 'Create segment', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>' ),
 					'options'		=> $api->get_segments(),
 					'default'		=> explode( ',', $segments ),
 					'class'			=> 'ngl-ajax',
@@ -90,7 +90,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			<?php
 				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_from_name',
-					'helper'		=> __( 'Your subscribers will see this name in their inbox.', 'newsletter-glue' ),
+					'helper'		=> __( 'Subscribers will see this name in their inbox.', 'newsletter-glue' ),
 					'value'			=> newsletterglue_get_option( 'from_name', 'mailerlite' ),
 					'class'			=> 'ngl-ajax',
 				) );

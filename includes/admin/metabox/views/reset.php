@@ -6,9 +6,19 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+$hide = false;
+
+if ( ! isset( $settings->sent ) ) {
+	$hide = true;
+}
+
+if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
+	$hide = false;
+}
+
 ?>
 
-<div class="ngl-metabox ngl-reset <?php if ( ! isset( $settings->sent ) ) echo 'is-hidden'; ?>">
+<div class="ngl-metabox ngl-reset <?php if ( $hide ) echo 'is-hidden'; ?>">
 
 	<div class="ngl-metabox-flex ngl-metabox-alt">
 
@@ -27,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</div>
 
 	<div class="ngl-metabox-flex ngl-metabox-flex3">
-		<a href="#" class="ui button basic ngl-reset-newsletter" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php echo isset( $settings->schedule ) && $settings->schedule === 'draft' ? __( 'Create new newsletter', 'newsletter-glue' ) : __( 'Send another newsletter', 'newsletter-glue' ); ?></a>
+		<a href="#" class="ui button basic ngl-reset-newsletter" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php echo isset( $settings->schedule ) && $settings->schedule === 'draft' ? __( 'Create new newsletter', 'newsletter-glue' ) : __( 'Send newsletter again', 'newsletter-glue' ); ?></a>
 	</div>
 
 </div>

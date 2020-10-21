@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Install
  */
 function newsletterglue_install( $network_wide = false ) {
+
 	global $wpdb;
 
 	if ( is_multisite() && $network_wide ) {
@@ -66,6 +67,9 @@ function newsletterglue_run_install() {
 	// Set version.
 	update_option( 'newsletterglue_version', NGL_VERSION );
 
+	// Set featured image to show by default.
+	update_option( 'newsletterglue_add_featured', 1 );
+
 }
 
 /**
@@ -77,8 +81,7 @@ function newsletterglue_add_default_css() {
 
 $css = get_option( 'newsletterglue_css' );
 
-$css .= '
-.NGpurplebox {
+$css .= '.NGpurplebox {
 	padding: 30px;
 	background: #f1ecff;
 }
@@ -91,8 +94,7 @@ $css .= '
 .NGyellowbox {
 	padding: 30px;
 	background: #fffbdb;
-}
-';
+}';
 
 		update_option( 'newsletterglue_css', $css );
 	}

@@ -5,6 +5,16 @@
 	var ngl_back_screen;
 	var xhr;
 
+	// Close popup.
+	function ngl_close_popup() {
+		var block_id = $( '.ngl-popup-panel' ).find( '.ngl-popup-settings' ).attr( 'data-block' );
+		var block_id_demo = $( '.ngl-popup-panel' ).find( '.ngl-popup-demo' ).attr( 'data-block' );
+		$( '.ngl-popup-overlay' ).removeClass( 'ngl-active' );
+		$( 'body' ).removeClass( 'ngl-popup-hidden' );
+		$( '.ngl-popup-panel .ngl-popup-settings' ).appendTo( $( '.ngl-block[data-block=' + block_id + ']' ) );
+		$( '.ngl-popup-panel .ngl-popup-demo' ).appendTo( $( '.ngl-block[data-block=' + block_id_demo + ']' ) );
+	}
+
 	// Show different connect screens.
 	function ngl_show_first_screen() {
 		$( '.ngl-card-add' ).removeClass( 'ngl-hidden' );
@@ -104,6 +114,7 @@
 			$( '.ngl-not-ready' ).addClass( 'is-hidden' );
 			$( '.editor-post-publish-button__button.is-primary' ).removeAttr( 'disabled' );
 			$( '.ngl-newsletter-errors' ).remove();
+			$( '.ngl-top-checkbox' ).removeClass( 'disable-send' );
 		} else {
 			$( '.ngl-ready' ).addClass( 'is-hidden' );
 			$( '.ngl-not-ready' ).removeClass( 'is-hidden' );
@@ -111,11 +122,13 @@
 			if ( $( '.ngl-newsletter-errors' ).length == 0 ) {
 				$( '.edit-post-header__settings' ).prepend( '<span class="ngl-newsletter-errors">' + newsletterglue_params.publish_error + '</span>' );
 			}
+			$( '.ngl-top-checkbox' ).addClass( 'disable-send' );
 		}
 		
 		if ( ! $( '#ngl_send_newsletter' ).is( ':checked' ) ) {
 			$( '.ngl-newsletter-errors' ).remove();
 			$( '.editor-post-publish-button__button.is-primary' ).removeAttr( 'disabled' );
+			$( '.ngl-top-checkbox' ).removeClass( 'disable-send' );
 		}
 	}
 
@@ -322,11 +335,25 @@
 	// Toggle metabox options.
 	$( document ).on( 'change', '#ngl_send_newsletter', function() {
 		if ( $( this ).is( ':checked' ) ) {
+			if ( $( '.ngl-top-checkbox' ).hasClass( 'is-hidden' ) ) {
+				$( '.ngl-top-checkbox' ).removeClass( 'is-hidden' );
+			}
 			$( '.ngl-metabox-if-checked' ).removeClass( 'is-hidden' );
+			$( '#ngl_send_newsletter2' ).prop( 'checked', true );
 		} else {
 			$( '.ngl-metabox-if-checked' ).addClass( 'is-hidden' );
+			$( '#ngl_send_newsletter2' ).prop( 'checked', false );
 		}
 		ngl_validate_form();
+	} );
+
+	// Toggle for top send newsletter checkbox.
+	$( document ).on( 'change', '#ngl_send_newsletter2', function() {
+		if ( $( this ).is( ':checked' ) ) {
+			$( '#ngl_send_newsletter' ).prop( 'checked', true ).trigger( 'change' );
+		} else {
+			$( '#ngl_send_newsletter' ).prop( 'checked', false ).trigger( 'change' );
+		}
 	} );
 
 	// Revalidate email.
@@ -375,6 +402,17 @@
 		}
 	} );
 
+	// Review button.
+	$( document ).on( 'click', '.ngl-review-link', function( event ) {
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : 'action=newsletterglue_clicked_review_button&security=' + newsletterglue_params.ajaxnonce
+		} );
+
+	} );
+
 	// Reset newsletter.
 	$( document ).on( 'click', '.ngl-reset-newsletter', function( event ) {
 		event.preventDefault();
@@ -415,7 +453,7 @@
 		var data = 'action=newsletterglue_ajax_test_email&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id;
 
 		mb.find( 'input[type=text], select, input[type=hidden]' ).each( function() {
-			data = data + '&' + $( this ).attr( 'id' ) + '=' + $( this ).val();
+			data = data + '&' + $( this ).attr( 'id' ) + '=' + encodeURIComponent( $( this ).val() );
 		} );
 
 		mb.find( 'input[type=checkbox]' ).each( function() {
@@ -495,11 +533,21 @@
 
 	// Trigger newsletter sent message.
 	$( document ).on( 'click', '.editor-post-publish-button', function( event ) {
+
 		var metabox = $( '.ngl-send' );
+
+		// Just sent?
+		if ( $( '.ngl-reset-newsletter' ).is( ':visible' ) ) {
+			$( '#ngl_send_newsletter, #ngl_send_newsletter2' ).prop( 'checked', false );
+		}
+
+		// Add message box.
 		if ( metabox.find( '#ngl_send_newsletter' ).is( ':checked' ) ) {
 			metabox.addClass( 'is-hidden' );
 			$( '.ngl-msgbox-wrap' ).removeClass( 'is-hidden' );
+			$( '.ngl-top-checkbox' ).addClass( 'is-hidden' );
 		}
+
 	} );
 
 	// Textarea tab indent.
@@ -534,7 +582,11 @@
 	} );
 
 	// AJAX saving.
-	$( document ).on( 'change', '.ngl-settings input[type=text], .ngl-settings textarea, .ngl-settings input[type=checkbox], .ngl-settings select', function() {
+	$( document ).on( 'change', '.ngl-settings input[type=text], .ngl-settings textarea, .ngl-settings input[type=checkbox], .ngl-settings select, .ngl-boarding .ngl-metabox-segment select', function() {
+
+		if ( $( 'body' ).find( '.ngl-theme' ).length ) {
+			return;
+		}
 
 		var el 		= $( this ).parents( '.ngl-ajax-field' );
 		var savebtn = $( '.ngl-settings-save' );
@@ -548,6 +600,10 @@
 				value = 0;
 			}
 		}
+		
+		value = encodeURIComponent( value );
+
+		console.log( value );
 
 		var data = 'action=newsletterglue_ajax_save_field&security=' + newsletterglue_params.ajaxnonce + '&id=' + id + '&value=' + value;
 
@@ -607,4 +663,131 @@
 
 	} );
 
-} )( jQuery );
+	// Use all blocks.
+	$( document ).on( 'click', '.ngl-block-useall', function( event ) {
+		event.preventDefault();
+
+		$( '.ngl-block' ).each( function() {
+			$( this ).removeClass( 'ngl-block-unused' ).addClass( 'ngl-block-used' );
+			$( this ).find( 'input[type=checkbox]' ).prop( 'checked', true );
+		} );
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : 'action=newsletterglue_ajax_use_all_blocks&security=' + newsletterglue_params.ajaxnonce
+		} );
+
+		return false;
+	} );
+
+	// Disable all blocks.
+	$( document ).on( 'click', '.ngl-block-disableall', function( event ) {
+		event.preventDefault();
+
+		$( '.ngl-block' ).each( function() {
+			$( this ).removeClass( 'ngl-block-used' ).addClass( 'ngl-block-unused' );
+			$( this ).find( 'input[type=checkbox]' ).prop( 'checked', false );
+		} );
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : 'action=newsletterglue_ajax_disable_all_blocks&security=' + newsletterglue_params.ajaxnonce
+		} );
+
+		return false;
+	} );
+
+	// Change block state.
+	$( document ).on( 'change', '.ngl-block-use input[type=checkbox]', function( event ) {
+
+		var id = $( this ).attr( 'id' );
+
+		if ( $( this ).is( ':checked' ) ) {
+			var value = 'yes';
+			$( this ).parents( '.ngl-block' ).removeClass( 'ngl-block-unused' ).addClass( 'ngl-block-used' );
+		} else {
+			var value = 'no';
+			$( this ).parents( '.ngl-block' ).removeClass( 'ngl-block-used' ).addClass( 'ngl-block-unused' );
+		}
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : 'action=newsletterglue_ajax_use_block&security=' + newsletterglue_params.ajaxnonce + '&id=' + id + '&value=' + value
+		} );
+
+	} );
+
+	// Open block demo.
+	$( document ).on( 'click', '.ngl-block-demo', function( event ) {
+		event.preventDefault();
+		var block_id = $( this ).parents( '.ngl-block' ).attr( 'data-block' );
+		$( '.ngl-popup-overlay' ).addClass( 'ngl-active' );
+		$( 'body' ).addClass( 'ngl-popup-hidden' );
+		$( '.ngl-popup-overlay.ngl-active' ).find( '.ngl-popup-panel' ).empty();
+		$( '.ngl-popup-demo[data-block=' + block_id + ']' ).appendTo( $( '.ngl-popup-overlay.ngl-active' ).find( '.ngl-popup-panel' ) );
+		$( '.ngl-popup-overlay.ngl-active' ).addClass( 'ngl-popup-overlay-demo' );
+		$( '.ngl-popup-overlay.ngl-active' ).removeClass( 'ngl-popup-overlay-settings' );
+		return false;
+	} );
+
+	// Open block defaults.
+	$( document ).on( 'click', '.ngl-block-defaults a', function( event ) {
+		event.preventDefault();
+		var block_id = $( this ).parents( '.ngl-block' ).attr( 'data-block' );
+		$( '.ngl-popup-overlay' ).addClass( 'ngl-active' );
+		$( 'body' ).addClass( 'ngl-popup-hidden' );
+		$( '.ngl-popup-overlay.ngl-active' ).find( '.ngl-popup-panel' ).empty();
+		$( '.ngl-popup-settings[data-block=' + block_id + ']' ).appendTo( $( '.ngl-popup-overlay.ngl-active' ).find( '.ngl-popup-panel' ) );
+		$( '.ngl-popup-overlay.ngl-active' ).removeClass( 'ngl-popup-overlay-demo' );
+		$( '.ngl-popup-overlay.ngl-active' ).addClass( 'ngl-popup-overlay-settings' );
+		return false;
+	} );
+
+	// Close popup.
+	$( document ).on( 'click', '.ngl-popup-panel', function( event ) {
+		event.stopPropagation();
+	} );
+
+	// Close popup.
+	$( document ).click( function() {
+		ngl_close_popup();
+	} );
+
+	// Close popup with icon.
+	$( document ).on( 'click', '.ngl-popup-close', function( event ) {
+		event.preventDefault();
+		ngl_close_popup();
+	} );
+
+	// When block defaults are changed.
+	$( document ).on( 'change', '.ngl-popup-settings input[type=checkbox]', function( event ) {
+
+		var id  	= $( this ).parents( '.ngl-popup-settings' ).attr( 'data-block' );
+		var data 	= $( this ).parents( 'form' ).serialize() + '&action=newsletterglue_ajax_save_block&security=' + newsletterglue_params.ajaxnonce + '&id=' + id;
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data,
+			success: function( response ) {
+				console.log( response );
+			}
+		} );
+
+	} );
+	
+	$( document ).on( 'change', '.ngl-settings-mailchimp #ngl_audience, .ngl-mb-mailchimp #ngl_audience', function( event ) {
+
+	} );
+
+	// Show top toolbar checkbox.
+	$( window ).load( function () {
+		if ( $( '#ngl_send_newsletter' ).length ) {
+			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox is-hidden"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
+		}
+	} );
+
+} ) ( jQuery );

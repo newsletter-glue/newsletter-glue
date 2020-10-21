@@ -1,0 +1,61 @@
+.ngl-author {
+	display: flex;
+	padding: 20px 0;
+	align-items: center;
+	line-height: 1;
+}
+
+.ngl-author-pic {
+	width: 70px;
+	margin: 0 15px 0 0;
+}
+
+.ngl-author-pic img {
+	display: block;
+	overflow: hidden;
+	border-radius: 999px;
+}
+
+.ngl-author-name {
+	display: flex;
+	align-items: center;
+}
+
+.ngl-author-name-1 {
+	font-weight: bold;
+	margin: 0 15px 0 0;
+	font-size: 16px;
+}
+
+.ngl-author-cta a {
+	border-radius: 5px;
+	color: #fff;
+	text-decoration: none !important;
+	padding: 6px 12px;
+	display: inline-flex;
+	line-height: 1;
+	align-items: center;
+	font-size: 14px;
+}
+
+.ngl-author-cta a:hover {
+	color: #fff;
+}
+
+.ngl-author-cta img {
+	display: inline-block;
+    width: 16px;
+    height: 16px;
+	margin: 0 8px 0 0;
+}
+
+.ngl-author-bio {
+	margin: 12px 0 0;
+	font-size: 14px;
+}
+
+.ngl-author-twitter { background-color: rgb(29, 161, 242); }
+.ngl-author-instagram { background-color: #DD2A7B; }
+.ngl-author-facebook { background-color: #3b5998; }
+.ngl-author-twitch { background-color: #6441a5; }
+.ngl-author-tiktok { background-color: #EE1D52; }

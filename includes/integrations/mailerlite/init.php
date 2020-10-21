@@ -249,7 +249,15 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 		$segments	= isset( $data['segments'] ) && ! empty( trim( $data['segments'] ) ) && $data['segments'] != 'null' ? array_map( 'intval', explode( ',', $data['segments'] ) ) : '';
 		$schedule   = isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
 
-		$post = get_post( $post_id ); 
+		$post = get_post( $post_id );
+
+		// Empty content.
+		if ( $test && isset( $post->post_status ) && $post->post_status === 'auto-draft' ) {
+
+			$response['fail'] = $this->nothing_to_send();
+
+			return $response;
+		}
 
 		// Do test email.
 		if ( $test ) {
@@ -345,18 +353,6 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Test success.
-	 */
-	public function get_test_success_msg() {
-
-		$message = __( 'Your email is on its way!<br />Check your inbox in 3-5 minutes.', 'newsletter-glue' ) 
-		. '<br /><span style="color:rgba(0, 0, 0, 0.6) !important;">' . sprintf( __( 'Can&rsquo;t find your email? %s', 'newsletter-glue' ), '<a href="https://docs.memberhero.pro/article/11-email-delivery" target="_blank">' . __( 'Get help', 'newsletter-glue' ) . '</a>' ) . '.</span>';
-
-		return $message;
-
-	}
-
-	/**
 	 * Prepare result for plugin.
 	 */
 	public function prepare_message( $result ) {
@@ -380,6 +376,53 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 		return $output;
 
+	}
+
+	/**
+	 * Show test email section.
+	 */
+	public function show_test_email( $settings, $defaults, $post ) {
+		?>
+		<div class="ngl-metabox-flex">
+			<div class="ngl-metabox-header">
+				<?php esc_html_e( 'Send test email to', 'newsletter-glue' ); ?>
+			</div>
+			<div class="ngl-field">
+				<?php
+					newsletterglue_text_field( array(
+						'id' 			=> 'ngl_test_email',
+						'value'			=> isset( $settings->test_email ) ? $settings->test_email : $defaults->test_email,
+					) );
+				?>
+			</div>
+		</div>
+
+		<div class="ngl-metabox-flex no-padding">
+			<div class="ngl-metabox-header">
+			&nbsp;
+			</div>
+			<div class="ngl-field">
+				<div class="ngl-action">
+					<button class="ui primary button ngl-test-email ngl-is-default" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Send test now', 'newsletter-glue' ); ?></button>
+					<button class="ui primary button ngl-test-email ngl-alt ngl-is-sending" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><i class="sync alternate icon"></i><?php esc_html_e( 'Sending...', 'newsletter-glue' ); ?></button>
+					<button class="ui primary button ngl-test-email ngl-alt ngl-is-valid" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Sent!', 'newsletter-glue' ); ?></button>
+					<button class="ui primary button ngl-test-email ngl-alt ngl-is-invalid" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Could not send', 'newsletter-glue' ); ?></button>
+				</div>
+				<div class="ngl-action-link is-hidden">
+					<a href="#" class="ngl-link ngl-retest"><?php esc_html_e( 'Start again', 'newsletter-glue' ); ?></a>
+				</div>
+			</div>
+			<div class="ngl-test-notice">
+				<div class="ngl-test-notice-content"><?php _e( 'Sent by WordPress.<br />Might look slightly different to the final email sent to subscribers by MailerLite.', 'newsletter-glue' ); ?></div>
+				<div class="ngl-test-result ngl-is-valid is-hidden">
+
+				</div>
+				<div class="ngl-test-result ngl-is-invalid is-hidden">
+
+				</div>
+			</div>
+		</div>
+		<?php
 	}
 
 }

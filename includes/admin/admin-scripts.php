@@ -20,7 +20,6 @@ function newsletterglue_load_admin_scripts( $hook ) {
 
 	// Use minified libraries if SCRIPT_DEBUG is turned off
 	$suffix  = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	$suffix  = '';
 
 	// Register scripts.
 	wp_register_script( 'newsletterglue_semantic', $js_dir . 'semantic/semantic' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
@@ -28,7 +27,10 @@ function newsletterglue_load_admin_scripts( $hook ) {
 	wp_register_script( 'newsletterglue_admin', $js_dir . 'admin/admin' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
 	wp_register_script( 'newsletterglue_global', $js_dir . 'admin/global' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
 	wp_register_script( 'newsletterglue_onboarding', $js_dir . 'admin/onboarding' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
+	wp_register_script( 'jquery-spectrum', $js_dir . 'spectrum/spectrum' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
+	wp_register_script( 'newsletterglue_theme', $js_dir . 'admin/theme' . $suffix . '.js', array( 'jquery', 'jquery-spectrum' ), NGL_VERSION, true );
 
+	// Sitewide JS.
 	wp_enqueue_script( 'newsletterglue_global' );
 
 	// Register styles.
@@ -48,12 +50,17 @@ function newsletterglue_load_admin_scripts( $hook ) {
 		wp_enqueue_script( 'newsletterglue_admin' );
 		
 		wp_localize_script( 'newsletterglue_admin', 'newsletterglue_params', apply_filters( 'newsletterglue_admin_js_params', array(
-			'ajaxurl'    	=> newsletterglue_get_ajax_url(),
-			'ajaxnonce'		=> wp_create_nonce( 'newsletterglue-ajax-nonce' ),
-			'publish_error'	=> __( 'We can&rsquo;t publish yet. Your email newsletter is missing some important details.<br /><a href="#">Let&rsquo;s fix that.</a>', 'newsletter-glue' ),
-			'saving'		=> '<i class="sync alternate icon"></i>' . __( 'Saving...', 'newsletter-glue' ),
-			'saved'			=> '<i class="check circle outline icon"></i>' . __( 'Saved', 'newsletter-glue' ),
-			'save'			=> __( 'Save', 'newsletter-glue' ),
+			'ajaxurl'    		=> newsletterglue_get_ajax_url(),
+			'ajaxnonce'			=> wp_create_nonce( 'newsletterglue-ajax-nonce' ),
+			'publish_error'		=> __( 'Your newsletter is missing important details. <a href="#">Let&rsquo;s fix that.</a>', 'newsletter-glue' ),
+			'saving'			=> '<i class="sync alternate icon"></i>' . __( 'Saving...', 'newsletter-glue' ),
+			'saved'				=> '<i class="check circle outline icon"></i>' . __( 'Saved', 'newsletter-glue' ),
+			'save'				=> __( 'Save', 'newsletter-glue' ),
+			'image_size'		=> __( 'Ideal image width: 1200px', 'newsletter-glue' ),
+			'no_featured_image'	=> __( 'No featured image was selected.', 'newsletter-glue' ),
+			'select_image'		=> __( 'Select Image', 'newsletter-glue' ),
+			'no_image_set'		=> __( 'No image selected', 'newsletter-glue' ),
+			'send_newsletter'	=> sprintf( __( '<strong>Send as newsletter</strong> (%s)', 'newsletter-glue' ), '<a href="#newsletter_glue_metabox">' . __( 'check settings', 'newsletter-glue' ) . '</a>' ),
 		) ) );
 
 		wp_enqueue_style( 'newsletterglue_material_icons' );
@@ -65,6 +72,13 @@ function newsletterglue_load_admin_scripts( $hook ) {
 	if ( newsletterglue_is_onboarding_page() ) {
 		wp_enqueue_script( 'newsletterglue_onboarding' );
 		wp_enqueue_style( 'newsletterglue_onboarding_styles' );
+	}
+
+	// Add media scripts to settings page.
+	if ( 'newsletter-glue_page_ngl-settings' === $screen_id ) {
+		wp_enqueue_media();
+		wp_enqueue_script( 'newsletterglue_theme' );
+		wp_enqueue_style( 'wp-edit-blocks' );
 	}
 
 }

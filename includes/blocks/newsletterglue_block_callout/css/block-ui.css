@@ -1,0 +1,7 @@
+.wp-block-newsletterglue-callout {
+	padding: 0;
+}
+
+.wp-block-newsletterglue-callout p:last-child {
+	margin: 0 !important;
+}

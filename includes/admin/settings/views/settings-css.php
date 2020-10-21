@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php esc_html_e( 'Custom CSS', 'newsletter-glue' ); ?>
 
-	<div class="sub header"><?php echo wp_kses_post( sprintf( __( 'Add custom CSS to all your newsletters. %s', 'newsletter-glue' ), '<a href="https://docs.memberhero.pro/article/13-custom-css-email" target="_blank">' . __( 'Learn more.', 'newsletter-glue' ) . '</a>' ) ); ?></div>
+	<div class="sub header"><?php echo wp_kses_post( sprintf( __( 'Add custom CSS to all your newsletters. %s', 'newsletter-glue' ), '<a href="https://docs.newsletterglue.com/article/13-custom-css-email" target="_blank">' . __( 'Learn more.', 'newsletter-glue' ) . '</a>' ) ); ?></div>
 
 </div>
 
@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</span>
 
 		<div class="ngl-field">
-			<textarea name="ngl_custom_css" id="ngl_custom_css" class="widefat ngl-textarea" placeholder="<?php echo esc_attr_e( 'Enter custom CSS here...', 'newsletter-glue' ); ?>"><?php echo esc_textarea( get_option( 'newsletterglue_css' ) ); ?></textarea>
+			<textarea name="ngl_custom_css" id="ngl_custom_css" class="widefat ngl-textarea" placeholder="<?php echo esc_attr_e( 'Enter custom CSS here...', 'newsletter-glue' ); ?>"><?php echo wp_strip_all_tags( get_option( 'newsletterglue_css' ), array() ); ?></textarea>
 		</div>
 
 	</div>
