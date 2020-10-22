@@ -11,6 +11,7 @@
 }
 
 .ngl-author-pic img {
+	margin: 0 !important;
 	display: block;
 	overflow: hidden;
 	border-radius: 999px;
@@ -19,6 +20,7 @@
 .ngl-author-name {
 	display: flex;
 	align-items: center;
+	line-height: 32px;
 }
 
 .ngl-author-name-1 {
@@ -28,17 +30,17 @@
 }
 
 .ngl-author-cta a {
-	color: #fff;
+	color: #fff !important;
 	text-decoration: none !important;
 	padding: 6px 12px;
 	display: inline-flex;
-	line-height: 1;
+	line-height: 18px;
 	align-items: center;
 	font-size: 14px;
 }
 
 .ngl-author-cta a:hover {
-	color: #fff;
+	color: #fff !important;
 }
 
 .ngl-author-cta img {

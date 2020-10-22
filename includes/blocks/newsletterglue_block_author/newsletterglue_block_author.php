@@ -245,7 +245,6 @@ function newsletterglue_add_author_byline_css() { ?>
 }
 
 .ngl-author-cta a {
-	border-radius: 5px;
 	color: #fff !important;
 	text-decoration: none !important;
 	padding: 6px 12px;
