@@ -85,7 +85,7 @@ function newsletterglue_block_author_byline() {
 				'type'		=> 'string',
 			),
 			'border_radius' => array(
-				'type'		=> 'string',
+				'type'		=> 'number',
 			),
 			'button_style'  => array(
 				'type'		=> 'string',
@@ -269,6 +269,7 @@ function newsletterglue_add_author_byline_css() { ?>
 .ngl-author-bio {
 	margin: 12px 0 0;
 	font-size: 14px;
+	line-height: 22px;
 }
 
 .ngl-author-cta a.ngl-author-btn-outlined {
