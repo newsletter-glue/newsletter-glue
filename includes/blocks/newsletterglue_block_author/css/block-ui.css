@@ -28,7 +28,6 @@
 }
 
 .ngl-author-cta a {
-	border-radius: 5px;
 	color: #fff;
 	text-decoration: none !important;
 	padding: 6px 12px;
@@ -54,8 +53,22 @@
 	font-size: 14px;
 }
 
-.ngl-author-twitter { background-color: rgb(29, 161, 242); }
+.ngl-author-cta a.ngl-author-btn-outlined {
+	background-color: transparent !important;
+	border: 2px solid transparent;
+	color: #444 !important;
+}
+
+.ngl-author-twitter { background-color: #1da1f2; }
 .ngl-author-instagram { background-color: #DD2A7B; }
 .ngl-author-facebook { background-color: #3b5998; }
 .ngl-author-twitch { background-color: #6441a5; }
 .ngl-author-tiktok { background-color: #EE1D52; }
+.ngl-author-youtube { background-color: #c4302b; }
+
+.ngl-author-btn-outlined.ngl-author-twitter { border-color: #1da1f2 !important; }
+.ngl-author-btn-outlined.ngl-author-instagram { border-color: #DD2A7B !important; }
+.ngl-author-btn-outlined.ngl-author-facebook { border-color: #3b5998 !important; }
+.ngl-author-btn-outlined.ngl-author-twitch { border-color: #6441a5 !important; }
+.ngl-author-btn-outlined.ngl-author-tiktok { border-color: #EE1D52 !important; }
+.ngl-author-btn-outlined.ngl-author-youtube { border-color: #c4302b !important; }

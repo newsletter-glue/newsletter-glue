@@ -81,6 +81,15 @@ function newsletterglue_block_author_byline() {
 			'profile_pic'	=> array(
 				'type'		=> 'string',
 			),
+			'button_text'	=> array(
+				'type'		=> 'string',
+			),
+			'border_radius' => array(
+				'type'		=> 'string',
+			),
+			'button_style'  => array(
+				'type'		=> 'string',
+			),
 		),
 		'editor_script'   => 'newsletterglue-author-block',
 		'style'           => 'newsletterglue-author-block-style',
@@ -135,8 +144,16 @@ function newsletterglue_author_block_render( $attributes ) {
 	$social 		= isset( $attributes[ 'social' ] ) ? $attributes[ 'social' ] : '';
 	$social_user 	= isset( $attributes[ 'social_user' ] ) ? $attributes[ 'social_user' ] : '';
 	$profile_pic 	= isset( $attributes[ 'profile_pic' ] ) ? $attributes[ 'profile_pic' ] : '';
+	$button_text 	= isset( $attributes[ 'button_text' ] ) ? $attributes[ 'button_text' ] : __( 'Follow', 'newsletter-glue' );
+	$border_radius 	= isset( $attributes[ 'border_radius' ] ) ? $attributes[ 'border_radius' ] : 5;
+	$button_style 	= isset( $attributes[ 'button_style' ] ) ? $attributes[ 'button_style' ] : 'solid';
 	$social_url		= '';
 	$social_icon	= '';
+
+	$outline = '';
+	if ( $button_style === 'outlined' ) {
+		$outline = '-fill';
+	}
 
 	// Set social platform data.
 	if ( $social_user ) {
@@ -147,24 +164,27 @@ function newsletterglue_author_block_render( $attributes ) {
 		}
 		if ( $social == 'twitter' ) {
 			$social_url 	= 'https://twitter.com/' . $social_user;
-			$social_icon	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/twitter.png" />';
+			$social_icon	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/twitter' . $outline . '.png" />';
 		}
 		if ( $social == 'instagram' ) {
 			$social_url 	= 'https://instagram.com/' . $social_user;
-			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/instagram.png" />';
+			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/instagram' . $outline . '.png" />';
 		}
 		if ( $social == 'facebook' ) {
 			$social_url 	= 'https://facebook.com/' . $social_user;
-			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/facebook.png" />';
+			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/facebook' . $outline . '.png" />';
 		}
 		if ( $social == 'twitch' ) {
 			$social_url 	= 'https://twitch.tv/' . $social_user;
-			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/twitch.png" />';
+			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/twitch' . $outline . '.png" />';
 		}
 		if ( $social == 'tiktok' ) {
 			$social_url		= 'https://www.tiktok.com/@' . $social_user;
-			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/tiktok.png" />';
-
+			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/tiktok' . $outline . '.png" />';
+		}
+		if ( $social == 'youtube' ) {
+			$social_url		= 'https://www.youtube.com/user/' . $social_user;
+			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/youtube' . $outline . '.png" />';
 		}
 	}
 
@@ -251,11 +271,25 @@ function newsletterglue_add_author_byline_css() { ?>
 	font-size: 14px;
 }
 
-.ngl-author-twitter { background-color: rgb(29, 161, 242); }
+.ngl-author-cta a.ngl-author-btn-outlined {
+	background-color: transparent !important;
+	border: 2px solid transparent;
+	color: #444 !important;
+}
+
+.ngl-author-twitter { background-color: #1da1f2; }
 .ngl-author-instagram { background-color: #DD2A7B; }
 .ngl-author-facebook { background-color: #3b5998; }
 .ngl-author-twitch { background-color: #6441a5; }
 .ngl-author-tiktok { background-color: #EE1D52; }
+.ngl-author-youtube { background-color: #c4302b; }
+
+.ngl-author-btn-outlined.ngl-author-twitter { border-color: #1da1f2 !important; }
+.ngl-author-btn-outlined.ngl-author-instagram { border-color: #DD2A7B !important; }
+.ngl-author-btn-outlined.ngl-author-facebook { border-color: #3b5998 !important; }
+.ngl-author-btn-outlined.ngl-author-twitch { border-color: #6441a5 !important; }
+.ngl-author-btn-outlined.ngl-author-tiktok { border-color: #EE1D52 !important; }
+.ngl-author-btn-outlined.ngl-author-youtube { border-color: #c4302b !important; }
 
 <?php
 }

@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<?php if ( $social_url ) : ?>
 			<span class="ngl-author-cta">
-				<a href="<?php echo esc_url( $social_url ); ?>" class="ngl-author-<?php echo esc_attr( $social ); ?>" target="_blank"><?php echo $social_icon; ?> <?php _e( 'Follow', 'newsletter-glue' ); ?></a>
+				<a href="<?php echo esc_url( $social_url ); ?>" class="ngl-author-btn ngl-author-btn-<?php echo esc_attr( $button_style ); ?> ngl-author-<?php echo esc_attr( $social ); ?>" target="_blank" style="border-radius: <?php echo esc_attr( $border_radius ); ?>px"><?php echo $social_icon; ?> <?php echo esc_html( $button_text ); ?></a>
 			</span>
 			<?php endif; ?>
 
