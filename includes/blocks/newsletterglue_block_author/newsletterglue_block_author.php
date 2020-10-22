@@ -157,35 +157,33 @@ function newsletterglue_author_block_render( $attributes ) {
 
 	// Set social platform data.
 	if ( $social_user ) {
-		$social_user = esc_attr( $social_user );
+
 		if ( ! $social ) {
-			$social 		= 'twitter';
-			$social_icon	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/twitter' . $outline . '.png" />';
+			$social = 'twitter';
 		}
+
+		$social_user = esc_attr( $social_user );
+		$social_icon = '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/' . $social . $outline . '.png" />';
+
 		if ( $social == 'twitter' ) {
-			$social_url 	= 'https://twitter.com/' . $social_user;
-			$social_icon	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/twitter' . $outline . '.png" />';
+			$social_url = 'https://twitter.com/' . $social_user;
 		}
 		if ( $social == 'instagram' ) {
-			$social_url 	= 'https://instagram.com/' . $social_user;
-			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/instagram' . $outline . '.png" />';
+			$social_url = 'https://instagram.com/' . $social_user;
 		}
 		if ( $social == 'facebook' ) {
-			$social_url 	= 'https://facebook.com/' . $social_user;
-			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/facebook' . $outline . '.png" />';
+			$social_url = 'https://facebook.com/' . $social_user;
 		}
 		if ( $social == 'twitch' ) {
-			$social_url 	= 'https://twitch.tv/' . $social_user;
-			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/twitch' . $outline . '.png" />';
+			$social_url = 'https://twitch.tv/' . $social_user;
 		}
 		if ( $social == 'tiktok' ) {
-			$social_url		= 'https://www.tiktok.com/@' . $social_user;
-			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/tiktok' . $outline . '.png" />';
+			$social_url	= 'https://www.tiktok.com/@' . $social_user;
 		}
 		if ( $social == 'youtube' ) {
-			$social_url		= 'https://www.youtube.com/user/' . $social_user;
-			$social_icon 	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/youtube' . $outline . '.png" />';
+			$social_url	= 'https://www.youtube.com/user/' . $social_user;
 		}
+
 	}
 
 	// Auto generated data.
