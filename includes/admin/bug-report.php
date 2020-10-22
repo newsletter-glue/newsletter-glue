@@ -67,9 +67,9 @@ $(function() {
 		e.stopPropagation();
 	});
 
-	$(document).click(function(){
+	$( document ).on( 'click', function() {
 		close_popup();
-	});
+	} );
 
 	function close_popup() {
 		$('.newsletterglue-popup-overlay[data-overlay="bug-report"]').removeClass('newsletterglue-active');

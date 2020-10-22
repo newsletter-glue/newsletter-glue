@@ -287,9 +287,9 @@ $(function() {
 		e.stopPropagation();
 	});
 
-	$(document).click(function(){
+	$( document ).on( 'click', function() {
 		close_popup();
-	});
+	} );
 
 	$('.newsletterglue-reason label').on('click', function(){
 		if ( $(this).find('input[type="radio"]').is(':checked') ) {

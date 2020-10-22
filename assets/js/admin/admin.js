@@ -240,8 +240,6 @@
 			},
 			success: function( result ) {
 
-				console.log( result );
-
 				setTimeout( function() {
 					if ( result.response === 'invalid' ) {
 						ngl_show_not_connected_screen();
@@ -322,10 +320,11 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			success: function( result ) {
-				console.log( result );
+
 				setTimeout( function() {
 					ngl_show_first_screen();
 				}, 2000 );
+
 			}
 		} );
 
@@ -473,8 +472,6 @@
 			},
 			success: function( response ) {
 
-				console.log( response );
-
 				$( '.ngl-is-sending' ).hide();
 				$( '.ngl-action-link' ).show();
 				if  ( response.success ) {
@@ -484,6 +481,7 @@
 					$( '.ngl-is-invalid' ).show();
 					$( '.ngl-test-result.ngl-is-invalid' ).show().html( response.fail );
 				}
+
 			}
 		} );
 
@@ -602,8 +600,6 @@
 		}
 		
 		value = encodeURIComponent( value );
-
-		console.log( value );
 
 		var data = 'action=newsletterglue_ajax_save_field&security=' + newsletterglue_params.ajaxnonce + '&id=' + id + '&value=' + value;
 
@@ -752,7 +748,7 @@
 	} );
 
 	// Close popup.
-	$( document ).click( function() {
+	$( document ).on( 'click', function() {
 		ngl_close_popup();
 	} );
 
@@ -773,7 +769,7 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			success: function( response ) {
-				console.log( response );
+
 			}
 		} );
 
@@ -784,7 +780,7 @@
 	} );
 
 	// Show top toolbar checkbox.
-	$( window ).load( function () {
+	$( window ).on( 'load', function() {
 		if ( $( '#ngl_send_newsletter' ).length ) {
 			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox is-hidden"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
 		}
