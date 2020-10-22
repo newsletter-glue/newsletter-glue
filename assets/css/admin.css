@@ -2383,10 +2383,36 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 /* Gutenberg */
 .ngl-gutenberg-btn {
-	padding-left: 0;
-	padding-right: 0;
+	padding: 0;
+	display: flex;
+	align-items: center;
 }
 
 .ngl-gutenberg-btn svg {
 	margin: 0 8px 0 0;
+	fill: #0073aa;
+}
+
+.ngl-gutenberg-help {
+	font-size: 12px;
+	margin: 0 0 20px;
+}
+
+.ngl-gutenberg--fullwidth {
+	width: 100%;
+	margin: 0 0 8px;
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+}
+
+.ngl-gutenberg--fullwidth button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100% !important;
+}
+
+.ngl-gutenberg-base--fullwidth {
+	width: 100%;
 }
