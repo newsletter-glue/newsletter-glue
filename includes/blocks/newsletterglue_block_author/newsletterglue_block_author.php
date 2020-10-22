@@ -160,7 +160,7 @@ function newsletterglue_author_block_render( $attributes ) {
 		$social_user = esc_attr( $social_user );
 		if ( ! $social ) {
 			$social 		= 'twitter';
-			$social_icon	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/twitter.png" />';
+			$social_icon	= '<img src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/img/twitter' . $outline . '.png" />';
 		}
 		if ( $social == 'twitter' ) {
 			$social_url 	= 'https://twitter.com/' . $social_user;
