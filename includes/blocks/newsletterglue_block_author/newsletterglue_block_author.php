@@ -71,6 +71,27 @@ function newsletterglue_block_author_byline() {
  */
 function newsletterglue_author_block_render( $attributes, $content ) {
 
+	$defaults = get_option( 'newsletterglue_block_author' );
+	if ( ! $defaults ) {
+		$defaults = array(
+			'show_in_blog'	=> true,
+			'show_in_email'	=> true,
+		);
+	}
+
+	$show_in_blog  = isset( $attributes[ 'show_in_blog' ] ) ? $attributes[ 'show_in_blog' ] : $defaults[ 'show_in_blog' ];
+	$show_in_email = isset( $attributes[ 'show_in_email' ] ) ? $attributes[ 'show_in_email' ] : $defaults[ 'show_in_email' ];
+
+	// Hidden from blog.
+	if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
+		$content = '';
+	}
+
+	// Hidden from email.
+	if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
+		$content = '';
+	}
+
 	return $content;
 
 }
