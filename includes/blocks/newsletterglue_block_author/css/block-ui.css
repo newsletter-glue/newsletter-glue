@@ -7,6 +7,7 @@
 
 .ngl-author-pic {
 	width: 70px;
+	min-width: 70px;
 	margin: 0 15px 0 0;
 }
 
@@ -62,16 +63,16 @@
 	color: #444 !important;
 }
 
-.ngl-author-twitter { background-color: #1da1f2; }
-.ngl-author-instagram { background-color: #DD2A7B; }
-.ngl-author-facebook { background-color: #3b5998; }
-.ngl-author-twitch { background-color: #6441a5; }
-.ngl-author-tiktok { background-color: #EE1D52; }
-.ngl-author-youtube { background-color: #c4302b; }
+.ngl-author-twitter { background-color: #1DA1F2; }
+.ngl-author-instagram { background-color: #ed4956; }
+.ngl-author-facebook { background-color: #1877F2; }
+.ngl-author-twitch { background-color: #9047FF; }
+.ngl-author-tiktok { background-color: #fe2c55; }
+.ngl-author-youtube { background-color: #FF0000; }
 
-.ngl-author-btn-outlined.ngl-author-twitter { border-color: #1da1f2 !important; }
-.ngl-author-btn-outlined.ngl-author-instagram { border-color: #DD2A7B !important; }
-.ngl-author-btn-outlined.ngl-author-facebook { border-color: #3b5998 !important; }
-.ngl-author-btn-outlined.ngl-author-twitch { border-color: #6441a5 !important; }
-.ngl-author-btn-outlined.ngl-author-tiktok { border-color: #EE1D52 !important; }
-.ngl-author-btn-outlined.ngl-author-youtube { border-color: #c4302b !important; }
+.ngl-author-btn-outlined.ngl-author-twitter { border-color: #1DA1F2 !important; }
+.ngl-author-btn-outlined.ngl-author-instagram { border-color: #ed4956 !important; }
+.ngl-author-btn-outlined.ngl-author-facebook { border-color: #1877F2 !important; }
+.ngl-author-btn-outlined.ngl-author-twitch { border-color: #9047FF !important; }
+.ngl-author-btn-outlined.ngl-author-tiktok { border-color: #fe2c55 !important; }
+.ngl-author-btn-outlined.ngl-author-youtube { border-color: #FF0000 !important; }

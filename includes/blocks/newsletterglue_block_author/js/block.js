@@ -97,14 +97,35 @@
 				props.setAttributes( { button_style } );
 			}
 
-			return [
+			var platform = props.attributes.social ? props.attributes.social : 'twitter';
+			var username = props.attributes.social_user ? props.attributes.social_user : '';
 
-				el( ServerSideRender, {
-					block: 'newsletterglue/author',
-					attributes: props.attributes,
-				} ),
+			if ( platform == 'twitter' ) {
+				var followURL = 'https://twitter.com/' + username;
+			} else if ( platform == 'instagram' ) {
+				var followURL = 'https://instagram.com/' + username;
+			} else if ( platform == 'youtube' ) {
+				var followURL = 'https://youtube.com/user/' + username;
+			} else if ( platform == 'facebook' ) {
+				var followURL = 'https://facebook.com/' + username;
+			} else if ( platform == 'tiktok' ) {
+				var followURL = 'https://www.tiktok.com/@' + username;
+			} else if ( platform == 'twitch' ) {
+				var followURL = 'https://twitch.tv/' + username;
+			}
+
+			var userImage = props.attributes.profile_pic ? props.attributes.profile_pic :  newsletterglue_meta.profile_pic;
+
+			var showName = props.attributes.author_name ? props.attributes.author_name : newsletterglue_meta.author_name;
+			var showBio  = props.attributes.author_bio ? props.attributes.author_bio : newsletterglue_meta.author_bio;
+
+			var outline = props.attributes.button_style === 'solid' ? '' : '-fill';
+
+			return (
 
 				el( Fragment, {},
+
+					// This is block settings in sidebar.
 					el( InspectorControls, {},
 
 						el( PanelBody, { title: 'Profile settings', initialOpen: true },
@@ -249,13 +270,108 @@
 						),
 
 					),
+
+					// This is how the block is rendered in editor.
+					el( 'div', { className: 'ngl-author' },
+						el( 'div', { className: 'ngl-author-pic' },
+							el( 'img', { src: userImage, className: 'avatar avatar-80 photo' },
+							
+							)
+						),
+						el( 'div', { className: 'ngl-author-meta' },
+							el( 'div', { className: 'ngl-author-name' },
+								el( 'span', { className: 'ngl-author-name-1' },
+									showName
+								),
+								el( 'span', { className: 'ngl-author-cta' },
+									el( 'a', {
+										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
+										target: '_blank', 
+										style: { borderRadius: props.attributes.border_radius },
+										href: followURL,
+										rel: 'noopener noreferrer'
+									},
+										el( 'img', {
+											src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
+										} ),
+										props.attributes.button_text
+									)
+								)
+							),
+							el( 'div', { className: 'ngl-author-bio' },
+								showBio
+							)
+						)
+					)
+
 				)
-			];
+
+			)
+
 		} ),
 
-		// We're going to be rendering in PHP, so save() can just return null.
-		save: function() {
-			return null;
+		// This is how the block is rendered in frontend.
+		save: function( props, className ) {
+			
+			var platform = props.attributes.social ? props.attributes.social : 'twitter';
+			var username = props.attributes.social_user ? props.attributes.social_user : '';
+
+			if ( platform == 'twitter' ) {
+				var followURL = 'https://twitter.com/' + username;
+			} else if ( platform == 'instagram' ) {
+				var followURL = 'https://instagram.com/' + username;
+			} else if ( platform == 'youtube' ) {
+				var followURL = 'https://youtube.com/user/' + username;
+			} else if ( platform == 'facebook' ) {
+				var followURL = 'https://facebook.com/' + username;
+			} else if ( platform == 'tiktok' ) {
+				var followURL = 'https://www.tiktok.com/@' + username;
+			} else if ( platform == 'twitch' ) {
+				var followURL = 'https://twitch.tv/' + username;
+			}
+
+			var userImage = props.attributes.profile_pic ? props.attributes.profile_pic :  newsletterglue_meta.profile_pic;
+
+			var showName = props.attributes.author_name ? props.attributes.author_name : newsletterglue_meta.author_name;
+			var showBio  = props.attributes.author_bio ? props.attributes.author_bio : newsletterglue_meta.author_bio;
+
+			var outline = props.attributes.button_style === 'solid' ? '' : '-fill';
+
+			return (
+
+					el( 'div', { className: 'ngl-author' },
+						el( 'div', { className: 'ngl-author-pic' },
+							el( 'img', { src: userImage, className: 'avatar avatar-80 photo' },
+							
+							)
+						),
+						el( 'div', { className: 'ngl-author-meta' },
+							el( 'div', { className: 'ngl-author-name' },
+								el( 'span', { className: 'ngl-author-name-1' },
+									showName
+								),
+								el( 'span', { className: 'ngl-author-cta' },
+									el( 'a', {
+										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
+										target: '_blank', 
+										style: { borderRadius: props.attributes.border_radius },
+										href: followURL,
+										rel: 'noopener noreferrer'
+									},
+										el( 'img', {
+											src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
+										} ),
+										props.attributes.button_text
+									)
+								)
+							),
+							el( 'div', { className: 'ngl-author-bio' },
+								showBio
+							)
+						)
+					)
+			)
+
 		},
 
 	} );
