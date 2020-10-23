@@ -152,7 +152,7 @@
 											),
 
 											el( 'a', { href: '#', onClick: removeImage },
-												'Reset'
+												props.attributes.profile_pic ? 'Reset' : ''
 											)
 
 										];

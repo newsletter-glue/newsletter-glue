@@ -116,11 +116,12 @@ function newsletterglue_add_author_byline_css() { ?>
 .ngl-author-cta a {
 	color: #fff !important;
 	text-decoration: none !important;
-	padding: 6px 12px;
+	padding: 5px 12px;
 	display: inline-flex;
 	line-height: 18px;
 	align-items: center;
 	font-size: 14px;
+	border: 2px solid transparent;
 }
 
 .ngl-author-cta a:hover {
