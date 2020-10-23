@@ -132,7 +132,7 @@ function newsletterglue_add_author_byline_css() { ?>
 	font-weight: bold;
 	margin: 0 15px 0 0;
 	font-size: 16px;
-	min-width: 70px;
+	min-width: 20px;
 	display: inline-block;
 }
 
