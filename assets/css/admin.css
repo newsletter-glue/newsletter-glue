@@ -2395,7 +2395,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 .ngl-gutenberg-help {
 	font-size: 12px;
-	margin: 0 0 20px;
+	margin: 0;
 }
 
 .ngl-gutenberg--fullwidth {

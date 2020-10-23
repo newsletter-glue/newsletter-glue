@@ -2,7 +2,7 @@
 
 	const el = element.createElement;
     const { registerBlockType } = blocks;
-	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, MediaUpload } = editor;
+	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, MediaUpload, PlainText } = editor;
 	const { Fragment } = element;
 	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, RangeControl, BaseControl, ButtonGroup, Button } = components;
 	const ServerSideRender = wp.serverSideRender;
@@ -97,8 +97,24 @@
 				props.setAttributes( { button_style } );
 			}
 
+			function onChangeBio( value ) {
+				props.setAttributes( { author_bio: value } );
+			}
+
+			function onChangeName( value ) {
+				props.setAttributes( { author_name: value } );
+			}
+
+			function onChangeButtonText( value ) {
+				props.setAttributes( { button_text: value } );
+			}
+
 			var platform = props.attributes.social ? props.attributes.social : 'twitter';
 			var username = props.attributes.social_user ? props.attributes.social_user : '';
+			var userImage = props.attributes.profile_pic ? props.attributes.profile_pic : newsletterglue_meta.profile_pic;
+			var showName = props.attributes.author_name ? props.attributes.author_name : '';
+			var showBio  = props.attributes.author_bio ? props.attributes.author_bio : '';
+			var outline = props.attributes.button_style === 'solid' ? '' : '-fill';
 
 			if ( platform == 'twitter' ) {
 				var followURL = 'https://twitter.com/' + username;
@@ -113,13 +129,6 @@
 			} else if ( platform == 'twitch' ) {
 				var followURL = 'https://twitch.tv/' + username;
 			}
-
-			var userImage = props.attributes.profile_pic ? props.attributes.profile_pic :  newsletterglue_meta.profile_pic;
-
-			var showName = props.attributes.author_name ? props.attributes.author_name : newsletterglue_meta.author_name;
-			var showBio  = props.attributes.author_bio ? props.attributes.author_bio : newsletterglue_meta.author_bio;
-
-			var outline = props.attributes.button_style === 'solid' ? '' : '-fill';
 
 			return (
 
@@ -162,22 +171,6 @@
 
 							el( PanelRow, { className: 'ngl-gutenberg-help' },
 								'Ideal image size 100x100 pixels.'
-							),
-
-							el( PanelRow, {},
-								el( TextControl, {
-									label: 'Name',
-									value: props.attributes.author_name,
-									onChange: ( value ) => { props.setAttributes( { author_name: value } ); },
-								} )
-							),
-
-							el( PanelRow, {},
-								el( TextControl, {
-									label: 'Short bio',
-									value: props.attributes.author_bio,
-									onChange: ( value ) => { props.setAttributes( { author_bio: value } ); },
-								} )
 							)
 
 						),
@@ -204,13 +197,6 @@
 									label: 'Username',
 									value: props.attributes.social_user,
 									onChange: ( value ) => { props.setAttributes( { social_user: value } ); },
-								} )
-							),
-							el( PanelRow, {},
-								el( TextControl, {
-									label: 'Button text',
-									value: props.attributes.button_text,
-									onChange: ( value ) => { props.setAttributes( { button_text: value } ); },
 								} )
 							),
 
@@ -280,26 +266,42 @@
 						),
 						el( 'div', { className: 'ngl-author-meta' },
 							el( 'div', { className: 'ngl-author-name' },
-								el( 'span', { className: 'ngl-author-name-1' },
-									showName
-								),
+								el( RichText, {
+									tagName: 'span',
+									format: 'string',
+									className: 'ngl-author-name-1',
+									onChange: onChangeName,
+									value: showName,
+									placeholder: 'Enter name...',
+								} ),
 								el( 'span', { className: 'ngl-author-cta' },
-									el( 'a', {
+									el( 'span', {
 										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
-										target: '_blank', 
 										style: { borderRadius: props.attributes.border_radius },
-										href: followURL,
-										rel: 'noopener noreferrer'
 									},
 										el( 'img', {
 											src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
 										} ),
-										props.attributes.button_text
+										el( RichText, {
+											tagName: 'span',
+											format: 'string',
+											className: 'ngl-author-btn-text',
+											onChange: onChangeButtonText,
+											value: props.attributes.button_text,
+											placeholder: 'Enter button text...',
+										} )
 									)
 								)
 							),
 							el( 'div', { className: 'ngl-author-bio' },
-								showBio
+								el( RichText, {
+									tagName: 'span',
+									format: 'string',
+									className: 'ngl-author-bio-content',
+									onChange: onChangeBio,
+									value: showBio,
+									placeholder: 'Enter user description...',
+								} )
 							)
 						)
 					)
@@ -315,6 +317,10 @@
 			
 			var platform = props.attributes.social ? props.attributes.social : 'twitter';
 			var username = props.attributes.social_user ? props.attributes.social_user : '';
+			var userImage = props.attributes.profile_pic ? props.attributes.profile_pic : newsletterglue_meta.profile_pic;
+			var showName = props.attributes.author_name ? props.attributes.author_name : '';
+			var showBio  = props.attributes.author_bio ? props.attributes.author_bio : '';
+			var outline = props.attributes.button_style === 'solid' ? '' : '-fill';
 
 			if ( platform == 'twitter' ) {
 				var followURL = 'https://twitter.com/' + username;
@@ -330,13 +336,6 @@
 				var followURL = 'https://twitch.tv/' + username;
 			}
 
-			var userImage = props.attributes.profile_pic ? props.attributes.profile_pic :  newsletterglue_meta.profile_pic;
-
-			var showName = props.attributes.author_name ? props.attributes.author_name : newsletterglue_meta.author_name;
-			var showBio  = props.attributes.author_bio ? props.attributes.author_bio : newsletterglue_meta.author_bio;
-
-			var outline = props.attributes.button_style === 'solid' ? '' : '-fill';
-
 			return (
 
 					el( 'div', { className: 'ngl-author' },
@@ -347,9 +346,11 @@
 						),
 						el( 'div', { className: 'ngl-author-meta' },
 							el( 'div', { className: 'ngl-author-name' },
-								el( 'span', { className: 'ngl-author-name-1' },
-									showName
-								),
+								el( RichText.Content, {
+									tagName: 'span',
+									className: 'ngl-author-name-1',
+									value: showName
+								} ),
 								el( 'span', { className: 'ngl-author-cta' },
 									el( 'a', {
 										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
@@ -361,12 +362,20 @@
 										el( 'img', {
 											src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
 										} ),
-										props.attributes.button_text
+										el( RichText.Content, {
+											tagName: 'span',
+											className: 'ngl-author-btn-text',
+											value: props.attributes.button_text
+										} )
 									)
 								)
 							),
 							el( 'div', { className: 'ngl-author-bio' },
-								showBio
+								el( RichText.Content, {
+									tagName: 'span',
+									className: 'ngl-author-bio-content',
+									value: showBio
+								} )
 							)
 						)
 					)
