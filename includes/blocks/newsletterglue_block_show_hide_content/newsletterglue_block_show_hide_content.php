@@ -60,9 +60,6 @@ function newsletterglue_block_show_hide_content() {
 	wp_register_style( 'newsletterglue-group-block-style', $css_dir . 'block-ui' . $suffix . '.css', array(), time() );
 
 	register_block_type( 'newsletterglue/group', array(
-		'editor_script' 	=> 'newsletterglue-group-block',
-		'editor_style'  	=> 'newsletterglue-group-block',
-        'style'         	=> 'newsletterglue-group-block-style',
 		'attributes'		=> array(
 			'showblog'	=> array(
 				'type'	=> 'boolean',
@@ -71,32 +68,40 @@ function newsletterglue_block_show_hide_content() {
 				'type'	=> 'boolean'
 			),
 		),
-		'render_callback'	=> function( $attributes, $content ) {
-
-			$defaults = get_option( 'newsletterglue_block_show_hide_content' );
-			if ( ! $defaults ) {
-				$defaults = array(
-					'showemail'	=> true,
-					'showblog'	=> false,
-				);
-			}
-
-			$show_in_blog  = isset( $attributes[ 'showblog' ] ) ? $attributes[ 'showblog' ] : $defaults[ 'showblog' ];
-			$show_in_email = isset( $attributes[ 'showemail' ] ) ? $attributes[ 'showemail' ] : $defaults[ 'showemail' ];
-
-			// Hidden from blog.
-			if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
-				$content = '';
-			}
-
-			// Hidden from email.
-			if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
-				$content = '';
-			}
-
-			return $content;
-
-		}
+		'editor_script' 	=> 'newsletterglue-group-block',
+		'editor_style'  	=> 'newsletterglue-group-block',
+        'style'         	=> 'newsletterglue-group-block-style',
+		'render_callback'	=> 'newsletterglue_block_show_hide_content_render',
 	) );
+
+}
+
+/**
+ * Render the block.
+ */
+function newsletterglue_block_show_hide_content_render( $attributes, $content ) {
+
+	$defaults = get_option( 'newsletterglue_block_show_hide_content' );
+	if ( ! $defaults ) {
+		$defaults = array(
+			'showemail'	=> true,
+			'showblog'	=> false,
+		);
+	}
+
+	$show_in_blog  = isset( $attributes[ 'showblog' ] ) ? $attributes[ 'showblog' ] : $defaults[ 'showblog' ];
+	$show_in_email = isset( $attributes[ 'showemail' ] ) ? $attributes[ 'showemail' ] : $defaults[ 'showemail' ];
+
+	// Hidden from blog.
+	if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
+		$content = '';
+	}
+
+	// Hidden from email.
+	if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
+		$content = '';
+	}
+
+	return $content;
 
 }

@@ -60,9 +60,6 @@ function newsletterglue_block_callout() {
 	wp_register_style( 'newsletterglue-callout-block-style', $css_dir . 'block-ui' . $suffix . '.css', array(), time() );
 
 	register_block_type( 'newsletterglue/callout', array(
-		'attributes'      => array(
-
-		),
 		'editor_script'   => 'newsletterglue-callout-block',
 		'editor_style'    => 'newsletterglue-callout-block',
 		'style'           => 'newsletterglue-callout-block-style',

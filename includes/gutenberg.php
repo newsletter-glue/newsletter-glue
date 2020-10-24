@@ -44,38 +44,19 @@ function newsletterglue_get_blocks() {
 }
 
 /**
- * Register blocks.
- */
-function newsletterglue_register_blocks() {
-
-	$blocks = newsletterglue_get_blocks();
-
-	foreach( $blocks as $block_id => $params ) {
-		if ( $params[ 'use_block' ] === 'yes' ) {
-			if ( file_exists( NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/' . $block_id . '.php' ) ) {
-				include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/' . $block_id . '.php';
-			}
-			if ( isset( $params[ 'callback' ] ) && function_exists( $params[ 'callback' ] ) ) {
-				call_user_func( $params[ 'callback' ] );
-			}
-		}
-	}
-
-}
-add_action( 'init', 'newsletterglue_register_blocks' );
-
-/**
  * Add our block category.
  */
 function newsletterglue_add_block_category( $categories, $post ) {
+
 	return array_merge(
 		$categories,
 		array(
 			array(
-				'slug' => 'newsletterglue-blocks',
-				'title' => __( 'Newsletter Glue', 'newsletter-glue' ),
+				'slug' 		=> 'newsletterglue-blocks',
+				'title' 	=> __( 'Newsletter Glue', 'newsletter-glue' ),
 			),
 		)
 	);
+
 }
 add_filter( 'block_categories', 'newsletterglue_add_block_category', 10, 2 );
