@@ -105,13 +105,12 @@ function newsletterglue_add_author_byline_css() { ?>
 .ngl-author {
 	display: flex;
 	padding: 20px 0;
-	align-items: center;
 	line-height: 1;
 }
 
 .ngl-author-pic {
-	width: 70px;
-	min-width: 70px;
+	width: 60px;
+	min-width: 60px;
 	margin: 0 15px 0 0;
 }
 
@@ -124,7 +123,6 @@ function newsletterglue_add_author_byline_css() { ?>
 
 .ngl-author-name {
 	display: flex;
-	align-items: center;
 	line-height: 32px;
 }
 
@@ -163,7 +161,7 @@ function newsletterglue_add_author_byline_css() { ?>
 }
 
 .ngl-author-bio {
-	margin: 12px 0 0;
+	margin: 4px 0 0;
 	font-size: 14px;
 	line-height: 22px;
 }
