@@ -29,6 +29,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 	wp_register_script( 'newsletterglue_onboarding', $js_dir . 'admin/onboarding' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
 	wp_register_script( 'jquery-spectrum', $js_dir . 'spectrum/spectrum' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
 	wp_register_script( 'newsletterglue_theme', $js_dir . 'admin/theme' . $suffix . '.js', array( 'jquery', 'jquery-spectrum' ), NGL_VERSION, true );
+	wp_register_script( 'newsletterglue_meta', $js_dir . 'admin/gutenberg' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
 
 	// Sitewide JS.
 	wp_enqueue_script( 'newsletterglue_global' );
@@ -48,7 +49,8 @@ function newsletterglue_load_admin_scripts( $hook ) {
 		wp_enqueue_script( 'newsletterglue_semantic' );
 		wp_enqueue_script( 'newsletterglue_flatpickr' );
 		wp_enqueue_script( 'newsletterglue_admin' );
-		
+		wp_enqueue_script( 'newsletterglue_meta' );
+
 		wp_localize_script( 'newsletterglue_admin', 'newsletterglue_params', apply_filters( 'newsletterglue_admin_js_params', array(
 			'ajaxurl'    		=> newsletterglue_get_ajax_url(),
 			'ajaxnonce'			=> wp_create_nonce( 'newsletterglue-ajax-nonce' ),
@@ -83,3 +85,26 @@ function newsletterglue_load_admin_scripts( $hook ) {
 
 }
 add_action( 'admin_enqueue_scripts', 'newsletterglue_load_admin_scripts', 100 );
+
+/**
+ * Add custom meta as JS.
+ */
+function newsletterglue_js_data() {
+
+	global $post;
+
+	if ( isset( $post->ID ) ) {
+
+		$data = array(
+			'post_id'		=> $post->ID,
+			'profile_pic'	=> get_avatar_url( $post->post_author, 80 ),
+			'author_name'	=> get_the_author_meta( 'display_name', $post->post_author ),
+			'author_bio'	=> get_the_author_meta( 'description', $post->post_author ),
+		);
+
+		wp_localize_script( 'newsletterglue_meta', 'newsletterglue_meta', $data );
+
+	}
+
+}
+add_action( 'admin_footer', 'newsletterglue_js_data' );
