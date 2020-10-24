@@ -86,13 +86,12 @@ function newsletterglue_block_show_hide_content() {
 
 			// Hidden from blog.
 			if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
-				$content = preg_replace('#<section class="wp-block-newsletterglue-group">(.*?)</section>#s', '', $content );
+				$content = '';
 			}
 
 			// Hidden from email.
 			if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
-				$content = str_replace( 'wp-block-newsletterglue-group', 'wp-block-newsletterglue-group ngl-hide-in-email', $content );
-				$content = preg_replace('#<section class="wp-block-newsletterglue-group ngl-hide-in-email">(.*?)</section>#s', '', $content );
+				$content = '';
 			}
 
 			return $content;
