@@ -34,6 +34,13 @@ abstract class NGL_Abstract_Integration {
 	}
 
 	/**
+	 * Show subject.
+	 */
+	public function show_subject( $settings, $defaults, $post ) {
+		include NGL_PLUGIN_DIR . 'includes/admin/metabox/views/subject-line.php';
+	}
+
+	/**
 	 * Show from name/email options.
 	 */
 	public function show_from_options( $settings, $defaults, $post ) {
