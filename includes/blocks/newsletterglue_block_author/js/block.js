@@ -272,7 +272,7 @@
 									className: 'ngl-author-name-1',
 									onChange: onChangeName,
 									value: showName,
-									placeholder: 'Enter name...',
+									placeholder: newsletterglue_meta.author_name ? newsletterglue_meta.author_name : 'Enter name...',
 								} ),
 								el( 'span', { className: 'ngl-author-cta' },
 									el( 'span', {
@@ -300,7 +300,7 @@
 									className: 'ngl-author-bio-content',
 									onChange: onChangeBio,
 									value: showBio,
-									placeholder: 'Enter user description...',
+									placeholder: newsletterglue_meta.author_bio ? newsletterglue_meta.author_bio : 'Enter user description...',
 								} )
 							)
 						)
@@ -349,7 +349,7 @@
 								el( RichText.Content, {
 									tagName: 'span',
 									className: 'ngl-author-name-1',
-									value: showName
+									value: showName ? showName : newsletterglue_meta.author_name
 								} ),
 								el( 'span', { className: 'ngl-author-cta' },
 									el( 'a', {
@@ -374,7 +374,7 @@
 								el( RichText.Content, {
 									tagName: 'span',
 									className: 'ngl-author-bio-content',
-									value: showBio
+									value: showBio ? showBio : newsletterglue_meta.author_bio
 								} )
 							)
 						)
