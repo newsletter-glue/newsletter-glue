@@ -26,22 +26,7 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 
 	<div class="ngl-metabox-if-checked is-hidden">
 
-	<div class="ngl-metabox-flex">
-		<div class="ngl-metabox-header ngl-metabox-header-c">
-			<?php esc_html_e( 'Subject', 'newsletter-glue' ); ?>
-		</div>
-		<div class="ngl-field">
-			<?php
-				newsletterglue_text_field( array(
-					'id' 			=> 'ngl_subject',
-					'placeholder'	=> __( 'Example: Issue #3 It&rsquo;s raining cats, dogs, and skateboards', 'newsletter-glue' ),
-					'class'			=> 'large js-limit is-required',
-					'helper'		=> __( 'Short, catchy subject lines get more opens.', 'newsletter-glue' ),
-					'value'			=> isset( $settings->subject ) ? $settings->subject : $defaults->subject,
-				) );
-			?>
-		</div>
-	</div>
+	<?php $api->show_subject( $settings, $defaults, $post ); ?>
 
 	<div class="ngl-metabox-flex">
 	<div class="ngl-metabox-flex">

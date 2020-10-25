@@ -397,7 +397,9 @@
 	// Copy post title into newsletter subject.
 	$( document ).on( 'blur', '.editor-post-title__input', function() {
 		if ( $( this ).val() ) {
-			$( '#ngl_subject' ).val( $( this ).val() ).trigger( 'change' );
+			if ( $( '#ngl_subject' ).val() == '' ) {
+				$( '#ngl_subject' ).val( $( this ).val() ).trigger( 'change' );
+			}
 		}
 	} );
 
