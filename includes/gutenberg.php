@@ -21,13 +21,20 @@ function newsletterglue_get_blocks() {
 			'callback'		=> 'newsletterglue_block_show_hide_content',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_show_hide_content/icon/icon.svg',
 		),
+		'newsletterglue_block_form' => array(
+			'title'			=> __( 'Form', 'newsletter-glue' ),
+			'description'	=> __( 'Let users sign up to your newsletter.', 'newsletter-glue' ),
+			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_form' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_form' ] ) : 'no',
+			'callback'		=> 'newsletterglue_block_form',
+			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_form/icon/icon.svg',
+		),
 		'newsletterglue_block_author' => array(
 			'title'			=> __( 'Author byline', 'newsletter-glue' ),
 			'description'	=> __( 'Add an author byline and follow button to your newsletter.', 'newsletter-glue' ),
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_author' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_author' ] ) : 'no',
-			'callback'		=> 'newsletterglue_block_author_byline',
+			'callback'		=> 'newsletterglue_block_author',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/icon/icon.svg',
-			'pro'			=> 'yes',
+			'is_pro'		=> 'yes',
 		),
 		'newsletterglue_block_callout' => array(
 			'title'			=> __( 'Callout card', 'newsletter-glue' ),
@@ -35,7 +42,15 @@ function newsletterglue_get_blocks() {
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_callout' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_callout' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_callout',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_callout/icon/icon.svg',
-			'pro'			=> 'yes',
+			'is_pro'		=> 'yes',
+		),
+		'newsletterglue_block_metadata' => array(
+			'title'			=> __( 'Newsletter meta', 'newsletter-glue' ),
+			'description'	=> __( 'Let users add some standard meta data to each post.', 'newsletter-glue' ),
+			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_metadata' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_metadata' ] ) : 'no',
+			'callback'		=> 'newsletterglue_block_metadata',
+			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/icon/icon.svg',
+			'is_pro'		=> 'yes',
 		),
 	);
 
