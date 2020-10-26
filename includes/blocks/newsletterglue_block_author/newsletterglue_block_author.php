@@ -36,7 +36,7 @@ function newsletterglue_block_author_save() {
 /**
  * Author byline block.
  */
-function newsletterglue_block_author_byline() {
+function newsletterglue_block_author() {
 
 	$defaults = get_option( 'newsletterglue_block_author' );
 	if ( ! $defaults ) {
