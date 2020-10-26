@@ -56,12 +56,10 @@ function newsletterglue_block_callout() {
 	wp_register_script( 'newsletterglue-callout-block', $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ), time() );
 	wp_localize_script( 'newsletterglue-callout-block', 'newsletterglue_block_callout', $defaults );
 
-	wp_register_style( 'newsletterglue-callout-block', $css_dir . 'block' . $suffix . '.css', array(), time() );
 	wp_register_style( 'newsletterglue-callout-block-style', $css_dir . 'block-ui' . $suffix . '.css', array(), time() );
 
 	register_block_type( 'newsletterglue/callout', array(
 		'editor_script'   => 'newsletterglue-callout-block',
-		'editor_style'    => 'newsletterglue-callout-block',
 		'style'           => 'newsletterglue-callout-block-style',
 		'render_callback' => 'newsletterglue_callout_block_render',
 	) );
@@ -104,8 +102,23 @@ function newsletterglue_callout_block_render( $attributes, $content ) {
 add_action( 'newsletterglue_add_custom_styles', 'newsletterglue_add_callout_block_css' );
 function newsletterglue_add_callout_block_css() { ?>
 
+.wp-block-newsletterglue-callout {
+	padding-top: 26px !important;
+	padding-bottom: 1px !important;
+}
+
+.wp-block-newsletterglue-callout h1,
+.wp-block-newsletterglue-callout h2,
+.wp-block-newsletterglue-callout h3,
+.wp-block-newsletterglue-callout h4,
+.wp-block-newsletterglue-callout h5,
+.wp-block-newsletterglue-callout h6 {
+	margin: 0 0 14px !important;
+	padding: 0 !important;
+}
+
 .wp-block-newsletterglue-callout p {
-	margin: 0 !important;
+	margin: 0 0 25px !important;
 }
 
 <?php

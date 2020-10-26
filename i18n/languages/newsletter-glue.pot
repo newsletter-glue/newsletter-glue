@@ -572,7 +572,7 @@ msgstr ""
 #: includes/integrations/mailerlite/settings.php:71
 #: includes/integrations/sendinblue/onboarding.php:70
 #: includes/integrations/sendinblue/settings.php:47
-msgid "Subscribers will see this name in their inbox."
+msgid "Your subscribers will see this name in their inboxes."
 msgstr ""
 
 #: includes/admin/metabox/views/send-from-settings.php:31

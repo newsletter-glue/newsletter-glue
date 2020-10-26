@@ -65,18 +65,22 @@
 		attributes: {
 			border_color: {
 				'type' : 'string',
+				'default' : '#f9f9f9',
 			},
 			bg_color: {
 				'type' : 'string',
+				'default' : '#f9f9f9',
 			},
 			border_radius: {
 				'type' : 'number',
 			},
 			border_size: {
 				'type' : 'number',
+				'default' : 1,
 			},
 			border_style: {
 				'type' : 'string',
+				'default' : 'solid',
 			},
 			cta_padding: {
 				'type' : 'number',
@@ -104,10 +108,15 @@
 				borderRadius : props.attributes.border_radius,
 				borderStyle : props.attributes.border_style,
 				borderWidth : props.attributes.border_size,
-				padding : props.attributes.cta_padding,
+				paddingLeft : props.attributes.cta_padding,
+				paddingRight : props.attributes.cta_padding,
 				marginTop : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
 				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0
 			};
+
+			const blockTemplate = [
+				[ 'core/paragraph', { }, [] ],
+			];
 
 			return (
 
@@ -220,7 +229,9 @@
 							className: props.className,
 							style: formStyles
 						},
-						el( InnerBlocks )
+						el( InnerBlocks, { template: blockTemplate }
+						
+						)
 					)
 				)
 			);
@@ -234,7 +245,8 @@
 				borderRadius : props.attributes.border_radius,
 				borderStyle : props.attributes.border_style,
 				borderWidth : props.attributes.border_size,
-				padding : props.attributes.cta_padding,
+				paddingLeft : props.attributes.cta_padding,
+				paddingRight : props.attributes.cta_padding,
 				marginTop : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
 				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0
 			};
