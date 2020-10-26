@@ -275,6 +275,7 @@
 									onChange: onChangeName,
 									value: showName,
 									placeholder: newsletterglue_meta.author_name ? newsletterglue_meta.author_name : 'Enter name...',
+									multiline: '&nbsp;',
 								} ),
 								el( 'span', { className: 'ngl-author-cta' },
 									el( 'span', {
