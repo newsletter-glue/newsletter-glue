@@ -143,7 +143,6 @@
 								el( MediaUpload, {
 									onSelect: onSelectImage,
 									type: 'image',
-									help: 'test',
 									render: function( obj ) {
 										return [
 
