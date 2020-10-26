@@ -231,6 +231,8 @@
 									initialPosition: 5,
 									min: 0,
 									max: 50,
+									allowReset: true,
+									resetFallbackValue: 5,
 									onChange: ( value ) => { props.setAttributes( { border_radius: value } ); },
 								} ),
 							),
