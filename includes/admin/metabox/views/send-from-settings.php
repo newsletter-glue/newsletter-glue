@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			<?php
 				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_from_name',
-					'helper'		=> __( 'Subscribers will see this name in their inbox.', 'newsletter-glue' ),
+					'helper'		=> __( 'Your subscribers will see this name in their inboxes.', 'newsletter-glue' ),
 					'value'			=> isset( $settings->from_name ) ? $settings->from_name : $defaults->from_name,
 					'class'			=> 'is-required',
 				) );
