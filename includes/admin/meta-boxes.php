@@ -11,8 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function newsletterglue_add_meta_box() {
 
-	$post_types  = get_post_types();
-	$unsupported = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block' );
+	$unsupported = array();
+	$saved_types = get_option( 'newsletterglue_post_types' );
+
+	if ( ! empty( $saved_types ) ) {
+		$post_types = explode( ',', $saved_types );
+	} else {
+		$post_types  = get_post_types();
+	}
 
 	if ( is_array( $post_types ) ) {
 		foreach( $post_types as $post_type ) {
