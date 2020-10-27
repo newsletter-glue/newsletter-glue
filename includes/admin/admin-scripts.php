@@ -110,7 +110,7 @@ function newsletterglue_js_data() {
 add_action( 'admin_footer', 'newsletterglue_js_data' );
 
 /**
- * Fix conflict with MailPoet.
+ * Fix conflict with MailPoet css.
  */
 function newsletterglue_mailpoet_css_conflict( $styles ) {
 
@@ -120,3 +120,16 @@ function newsletterglue_mailpoet_css_conflict( $styles ) {
 
 }
 add_filter( 'mailpoet_conflict_resolver_whitelist_style', 'newsletterglue_mailpoet_css_conflict' );
+
+/**
+ * Fix conflict with MailPoet js.
+ */
+function newsletterglue_mailpoet_js_conflict( $scripts ) {
+
+	$scripts[] = 'newsletter-glue';
+
+	return $scripts;
+
+}
+
+add_filter( 'mailpoet_conflict_resolver_whitelist_script', 'newsletterglue_mailpoet_js_conflict' );
