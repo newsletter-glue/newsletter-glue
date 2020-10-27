@@ -963,8 +963,7 @@
 }
 
 .ngl-settings div.ui.selection.dropdown {
-	min-width: 250px !important;
-	max-width: 500px !important;
+	width: 250px !important;
 	box-sizing: border-box;
 	border-color: #aaa !important;
     border-radius: 6px;
@@ -995,6 +994,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-boarding div.ui.selection.dropdown {
 	min-width: 250px !important;
+	min-height: 40px;
 }
 
 .ngl-credits label {
@@ -1428,7 +1428,8 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	min-height: 40px;
 }
 
-.ngl-metabox .ui.selection.dropdown > .dropdown.icon {
+.ngl-metabox .ui.selection.dropdown > .dropdown.icon,
+.ngl-boarding .ui.selection.dropdown > .dropdown.icon {
 	height: 38px;
     padding: 0 .8em;
 }
