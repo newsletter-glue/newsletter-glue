@@ -108,3 +108,15 @@ function newsletterglue_js_data() {
 
 }
 add_action( 'admin_footer', 'newsletterglue_js_data' );
+
+/**
+ * Fix conflict with MailPoet.
+ */
+function newsletterglue_mailpoet_css_conflict( $styles ) {
+
+	$styles[] = 'newsletter-glue';
+
+	return $styles;
+
+}
+add_filter( 'mailpoet_conflict_resolver_whitelist_style', 'newsletterglue_mailpoet_css_conflict' );
