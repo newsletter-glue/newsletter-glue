@@ -399,7 +399,7 @@ function newsletterglue_ajax_save_field() {
 	$options = get_option( 'newsletterglue_options' );
 	$result  = array();
 
-	$single_options = apply_filters( 'newsletterglue_single_options', array( 'header_image', 'header_image_pos', 'credits' ) );
+	$single_options = apply_filters( 'newsletterglue_single_options', array( 'header_image', 'header_image_pos', 'credits', 'post_types' ) );
 
 	if ( in_array( $id, $single_options ) ) {
 

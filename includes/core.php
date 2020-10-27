@@ -420,3 +420,23 @@ function newsletterglue_review_button_start() {
 
 }
 add_action( 'init', 'newsletterglue_review_button_start' );
+
+/**
+ * Get post types.
+ */
+function newsletterglue_get_post_types() {
+
+	$post_types  = get_post_types();
+	$unsupported = array();
+
+	if ( is_array( $post_types ) ) {
+		foreach( $post_types as $post_type ) {
+			$object = get_post_type_object( $post_type );
+			if ( ! in_array( $post_type, apply_filters( 'newsletterglue_unsupported_post_types', $unsupported ) ) ) {
+				$types[ $post_type ] = $object->labels->name;
+			}
+		}
+	}
+
+	return apply_filters( 'newsletterglue_get_post_types', $types );
+}

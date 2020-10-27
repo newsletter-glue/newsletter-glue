@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php include( 'settings-' . $tab . '.php' ); ?>
 
-	<?php if ( $app || $tab == 'css' ) : ?>
+	<?php if ( $app || $tab == 'css' || $tab == 'additional' ) : ?>
 
 	<?php if ( $tab != 'theme' ) : ?>
 	<div class="ngl-metabox ngl-metabox-flex ngl-metabox-flex2">

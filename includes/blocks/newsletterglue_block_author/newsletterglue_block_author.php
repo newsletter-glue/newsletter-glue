@@ -123,7 +123,6 @@ function newsletterglue_add_author_byline_css() { ?>
 
 .ngl-author-name {
 	display: flex;
-	line-height: 32px;
 }
 
 .ngl-author-name-1 {
@@ -132,6 +131,7 @@ function newsletterglue_add_author_byline_css() { ?>
 	font-size: 16px;
 	min-width: 20px;
 	display: inline-block;
+	line-height: 40px;
 }
 
 .ngl-author-btn {
@@ -161,7 +161,7 @@ function newsletterglue_add_author_byline_css() { ?>
 }
 
 .ngl-author-bio {
-	margin: 4px 0 0;
+	margin: 0;
 	font-size: 14px;
 	line-height: 22px;
 }

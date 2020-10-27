@@ -22,8 +22,8 @@ function newsletterglue_get_blocks() {
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_show_hide_content/icon/icon.svg',
 		),
 		'newsletterglue_block_form' => array(
-			'title'			=> __( 'Form', 'newsletter-glue' ),
-			'description'	=> __( 'Let users sign up to your newsletter.', 'newsletter-glue' ),
+			'title'			=> __( 'Subscriber form', 'newsletter-glue' ),
+			'description'	=> __( 'New subscribers can sign up to your mailing list with this form.', 'newsletter-glue' ),
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_form' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_form' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_form',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_form/icon/icon.svg',
@@ -45,8 +45,8 @@ function newsletterglue_get_blocks() {
 			'is_pro'		=> 'yes',
 		),
 		'newsletterglue_block_metadata' => array(
-			'title'			=> __( 'Newsletter meta', 'newsletter-glue' ),
-			'description'	=> __( 'Let users add some standard meta data to each post.', 'newsletter-glue' ),
+			'title'			=> __( 'Newsletter meta data', 'newsletter-glue' ),
+			'description'	=> __( 'Add standard meta data to each post.', 'newsletter-glue' ),
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_metadata' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_metadata' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_metadata',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/icon/icon.svg',
