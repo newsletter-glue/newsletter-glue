@@ -1,4 +1,16 @@
 .ngl-metadata {
-	min-height: 40px;
-	background: #ddd;
+
+}
+
+.ngl-metadata > div {
+	display: inline-block;
+}
+
+.ngl-metadata > div {
+	padding: 0 6px;
+}
+
+.ngl-metadata .ngl-metadata-sep {
+	text-align: center;
+	width: 20px;
 }
