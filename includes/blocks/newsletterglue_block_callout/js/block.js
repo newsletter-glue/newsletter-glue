@@ -128,7 +128,7 @@
 
 							el( PanelRow, {},
 								el( RangeControl, {
-									label: 'Padding (pixels)',
+									label: 'Padding width (pixels)',
 									value: props.attributes.cta_padding,
 									initialPosition: 20,
 									min: 0,
