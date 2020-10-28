@@ -4,7 +4,7 @@
  */
 
 /**
- * Update the show/hide block.
+ * Update the block.
  */
 function newsletterglue_block_author_save() {
 
