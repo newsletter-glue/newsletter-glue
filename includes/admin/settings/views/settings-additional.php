@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_post_types',
 					'legacy'		=> true,
-					'class'			=> 'ngl-ajax',
+					'class'			=> 'ngl-ajax ngl-long-dropdown',
 					'options'		=> newsletterglue_get_post_types(),
 					'default'		=> $saved ? explode( ',', $saved ) : array_keys( newsletterglue_get_post_types() ),
 					'multiple'		=> true,
