@@ -1,4 +1,42 @@
 .ngl-form {
+	max-width: 400px !important;
+	margin-bottom: 30px !important;
+}
+
+.ngl-form h2 {
+	font-size: 24px !important;
+}
+
+.ngl-form-input-text {
+	border: 1px solid #aaa;
+	padding: 5px 14px;
+	border-radius: 0;
+	background: #fff;
+	height: 40px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ngl-form-field {
+	margin: 0 0 25px;
+}
+
+.ngl-form-label {
+	user-select: none;
+}
+
+.ngl-form-button {
+    background: #3400FF;
+    color: #fff;
+    border-radius: 0;
+    cursor: pointer;
+    outline: 0;
+    box-shadow: none;
+    border: none;
+    padding: 5px 24px;
 	min-height: 40px;
-	background: #ff3;
+	font-size: 16px;
+	text-decoration: none !important;
+	text-transform: none;
+	display: inline-block;
 }

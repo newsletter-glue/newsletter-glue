@@ -22,6 +22,20 @@
 		category: 'newsletterglue-blocks',
 		keywords: [ 'newsletter', 'glue', 'form', 'subscribe' ],
 		attributes: {
+			form_header: {
+				'type' : 'string',
+			},
+			form_description: {
+				'type' : 'string',
+			},
+			email_label: {
+				'type' : 'string',
+				'default' : 'Email',
+			},
+			button_text: {
+				'type' : 'string',
+				'default' : 'Subscribe',
+			},
 			show_in_blog: {
 				'type' : 'boolean',
 				'default' : newsletterglue_block_form.show_in_blog ? true : false
@@ -61,8 +75,47 @@
 					),
 
 					// This is how the block is rendered in editor.
-					el( 'div', { className: 'ngl-form' },
-						
+					el( 'div', { className: 'ngl-form', 'data-app' : newsletterglue_meta.app },
+						el( RichText, {
+							tagName: 'h2',
+							className: 'ngl-form-header',
+							value: props.attributes.form_header,
+							format: 'string',
+							onChange: ( value ) => { props.setAttributes( { form_header: value } ); },
+							placeholder: 'Enter heading...',
+						} ),
+						el( RichText, {
+							tagName: 'p',
+							className: 'ngl-form-description',
+							value: props.attributes.form_description,
+							format: 'string',
+							onChange: ( value ) => { props.setAttributes( { form_description: value } ); },
+							placeholder: 'Enter description...',
+						} ),
+						el( 'div', { className: 'ngl-form-field' },
+							el( RichText, {
+								tagName: 'label',
+								className: 'ngl-form-label',
+								value: props.attributes.email_label,
+								format: 'string',
+								onChange: ( value ) => { props.setAttributes( { email_label: value } ); },
+								placeholder: 'Email',
+							} ),
+							el( 'div', { className: 'ngl-form-input' },
+								el( 'div', { className: 'ngl-form-input-text' },
+								
+								)
+							)
+						),
+						el( RichText, {
+							tagName: 'div',
+							className: 'ngl-form-button',
+							value: props.attributes.button_text,
+							format: 'string',
+							onChange: ( value ) => { props.setAttributes( { button_text: value } ); },
+							placeholder: 'Subscribe',
+							multiline: '&nbsp;'
+						} ),
 					)
 
 				)
@@ -76,8 +129,35 @@
 
 			return (
 
-					el( 'div', { className: 'ngl-form' },
-						
+					el( 'form', { className: 'ngl-form', 'data-app' : newsletterglue_meta.app, action: '', method: 'post' },
+						el( RichText.Content, {
+							tagName: 'h2',
+							className: 'ngl-form-header',
+							value: props.attributes.form_header,
+						} ),
+						el( RichText.Content, {
+							tagName: 'p',
+							className: 'ngl-form-description',
+							value: props.attributes.form_description,
+						} ),
+						el( 'div', { className: 'ngl-form-field' },
+							el( RichText.Content, {
+								tagName: 'label',
+								className: 'ngl-form-label',
+								value: props.attributes.email_label ? props.attributes.email_label : 'Email',
+								'for' : 'ngl_email'
+							} ),
+							el( 'div', { className: 'ngl-form-input' },
+								el( 'input', { type: 'email', className: 'ngl-form-input-text', name: 'ngl_email', id: 'ngl_email' },
+								
+								)
+							)
+						),
+						el( RichText.Content, {
+							tagName: 'button',
+							className: 'ngl-form-button',
+							value: props.attributes.button_text,
+						} ),
 					)
 
 			)
