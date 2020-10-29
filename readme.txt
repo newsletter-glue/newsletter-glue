@@ -127,6 +127,11 @@ We're working on it! Stay tuned!
 
 == Changelog ==
 
+= 1.1.5, October 29, 2020 =
+
+* **Improvement:** You can now choose to **disable** Newsletter Glue on selected custom post types. Go to **Newsletter Glue > Settings > Additional** tab to do this.
+* Minor UI and copy improvements.
+
 = 1.1.4, October 13, 2020 =
 
 * **Bug fix:** Fixed bug causing our **show/hide content** blocks to "break" some CSS.
