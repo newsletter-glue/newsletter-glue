@@ -970,6 +970,11 @@
 	height: auto;
 }
 
+.ngl-settings div.ui.selection.dropdown.ngl-long-dropdown {
+	min-width: 500px !important;
+	width: auto !important;
+}
+
 .ngl-settings .ui.selection.active.dropdown .menu {
 	border-radius: 0 0 6px 6px;
 }
