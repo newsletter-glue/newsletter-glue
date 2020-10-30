@@ -111,7 +111,7 @@ function newsletterglue_add_author_byline_css() { ?>
 .ngl-author-pic {
 	width: 60px;
 	min-width: 60px;
-	margin: 0 15px 0 0;
+	margin: 0 12px 0 0;
 }
 
 .ngl-author-pic img {
@@ -131,7 +131,7 @@ function newsletterglue_add_author_byline_css() { ?>
 	font-size: 16px;
 	min-width: 20px;
 	display: inline-block;
-	line-height: 40px;
+	line-height: 38px;
 }
 
 .ngl-author-btn {

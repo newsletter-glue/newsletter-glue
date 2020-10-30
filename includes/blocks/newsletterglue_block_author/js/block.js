@@ -121,7 +121,7 @@
 			} else if ( platform == 'instagram' ) {
 				var followURL = 'https://instagram.com/' + username;
 			} else if ( platform == 'youtube' ) {
-				var followURL = 'https://youtube.com/user/' + username;
+				var followURL = 'https://youtube.com/channel/' + username;
 			} else if ( platform == 'facebook' ) {
 				var followURL = 'https://facebook.com/' + username;
 			} else if ( platform == 'tiktok' ) {
@@ -329,7 +329,7 @@
 			} else if ( platform == 'instagram' ) {
 				var followURL = 'https://instagram.com/' + username;
 			} else if ( platform == 'youtube' ) {
-				var followURL = 'https://youtube.com/user/' + username;
+				var followURL = 'https://youtube.com/channel/' + username;
 			} else if ( platform == 'facebook' ) {
 				var followURL = 'https://facebook.com/' + username;
 			} else if ( platform == 'tiktok' ) {
