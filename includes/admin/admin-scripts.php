@@ -100,6 +100,8 @@ function newsletterglue_js_data() {
 			'profile_pic'	=> get_avatar_url( $post->post_author, 80 ),
 			'author_name'	=> get_the_author_meta( 'display_name', $post->post_author ),
 			'author_bio'	=> get_the_author_meta( 'description', $post->post_author ),
+			'post_date'		=> date( 'l, j M Y', strtotime( $post->post_date ) ),
+			'app'			=> newsletterglue_default_connection(),
 		);
 
 		wp_localize_script( 'newsletterglue_meta', 'newsletterglue_meta', $data );
