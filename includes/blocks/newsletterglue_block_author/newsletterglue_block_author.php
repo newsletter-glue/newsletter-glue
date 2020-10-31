@@ -122,22 +122,24 @@ function newsletterglue_add_author_byline_css() { ?>
 }
 
 .ngl-author-name {
-	display: flex;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 16px;
+	min-width: 20px;
+	padding: 0 0 4px;
 }
 
-.ngl-author-name-1 {
-	font-weight: bold;
-	margin: 0 15px 0 0;
-	font-size: 16px;
-	min-width: 20px;
-	display: inline-block;
-	line-height: 38px;
+.ngl-author-bio {
+	margin: 0;
+	font-size: 14px;
+	line-height: 22px;
+	padding: 0 0 4px;
 }
 
 .ngl-author-btn {
 	color: #fff !important;
 	text-decoration: none !important;
-	padding: 4px 12px;
+	padding: 4px 8px;
 	display: inline-flex;
 	line-height: 18px;
 	align-items: center;
@@ -158,12 +160,6 @@ function newsletterglue_add_author_byline_css() { ?>
     width: 16px;
     height: 16px;
 	margin: 0 4px 0 0 !important;
-}
-
-.ngl-author-bio {
-	margin: 0;
-	font-size: 14px;
-	line-height: 22px;
 }
 
 .ngl-author-cta .ngl-author-btn-outlined {

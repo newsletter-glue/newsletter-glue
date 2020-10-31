@@ -266,44 +266,42 @@
 							)
 						),
 						el( 'div', { className: 'ngl-author-meta' },
-							el( 'div', { className: 'ngl-author-name' },
-								el( RichText, {
-									tagName: 'span',
-									format: 'string',
-									className: 'ngl-author-name-1',
-									onChange: onChangeName,
-									value: showName,
-									placeholder: newsletterglue_meta.author_name ? newsletterglue_meta.author_name : 'Enter name...',
-									multiline: '&nbsp;',
-								} ),
-								el( 'span', { className: 'ngl-author-cta' },
-									el( 'span', {
-										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
-										style: { borderRadius: props.attributes.border_radius },
-									},
-										el( 'img', {
-											src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
-										} ),
-										el( RichText, {
-											tagName: 'span',
-											format: 'string',
-											className: 'ngl-author-btn-text',
-											onChange: onChangeButtonText,
-											value: props.attributes.button_text,
-											placeholder: 'Enter button text...',
-										} )
-									)
-								)
-							),
+							el( RichText, {
+								tagName: 'div',
+								className: 'ngl-author-name',
+								value: showName,
+								format: 'string',
+								onChange: onChangeName,
+								placeholder: newsletterglue_meta.author_name ? newsletterglue_meta.author_name : 'Enter name...',
+								multiline: '&nbsp;',
+							} ),
 							el( 'div', { className: 'ngl-author-bio' },
 								el( RichText, {
 									tagName: 'span',
-									format: 'string',
-									className: 'ngl-author-bio-content',
-									onChange: onChangeBio,
 									value: showBio,
+									className: 'ngl-author-bio-content',
+									format: 'string',
+									onChange: onChangeBio,
 									placeholder: newsletterglue_meta.author_bio ? newsletterglue_meta.author_bio : 'Enter user description...',
 								} )
+							),
+							el( 'div', { className: 'ngl-author-cta' },
+								el( 'span', {
+										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
+										style: { borderRadius: props.attributes.border_radius },
+									},
+									el( 'img', {
+										src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
+									} ),
+									el( RichText, {
+										tagName: 'span',
+										value: props.attributes.button_text,
+										className: 'ngl-author-btn-text',
+										format: 'string',
+										onChange: onChangeButtonText,
+										placeholder: 'Enter button text...',
+									} )
+								)
 							)
 						)
 					)
@@ -347,40 +345,36 @@
 							)
 						),
 						el( 'div', { className: 'ngl-author-meta' },
-							el( 'div', { className: 'ngl-author-name' },
-								el( RichText.Content, {
-									tagName: 'span',
-									className: 'ngl-author-name-1',
-									value: showName ? showName : newsletterglue_meta.author_name
-								} ),
-								el( 'span', { className: 'ngl-author-cta' },
-									el( 'a', {
-										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
-										target: '_blank', 
-										style: { borderRadius: props.attributes.border_radius },
-										href: followURL,
-										rel: 'noopener noreferrer'
-									},
-										el( 'img', {
-											src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
-										} ),
-										el( RichText.Content, {
-											tagName: 'span',
-											className: 'ngl-author-btn-text',
-											value: props.attributes.button_text
-										} )
-									)
-								)
-							),
+							el( RichText.Content, {
+								tagName: 'div',
+								className: 'ngl-author-name',
+								value: showName? showName : newsletterglue_meta.author_name,
+							} ),
 							el( 'div', { className: 'ngl-author-bio' },
 								el( RichText.Content, {
 									tagName: 'span',
+									value: showBio ? showBio : newsletterglue_meta.author_bio,
 									className: 'ngl-author-bio-content',
-									value: showBio ? showBio : newsletterglue_meta.author_bio
 								} )
+							),
+							el( 'div', { className: 'ngl-author-cta' },
+								el( 'span', {
+										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
+										style: { borderRadius: props.attributes.border_radius },
+									},
+									el( 'img', {
+										src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
+									} ),
+									el( RichText.Content, {
+										tagName: 'span',
+										value: props.attributes.button_text,
+										className: 'ngl-author-btn-text',
+									} )
+								)
 							)
 						)
 					)
+
 			)
 
 		},
