@@ -160,7 +160,7 @@ p.ngl-credits a {
 	text-decoration: none;
 	background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?> !important;
 	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;
-	width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px !important;
+	min-width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px !important;
 	border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?> !important;
 	border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px !important;
 }
@@ -234,7 +234,7 @@ p.ngl-credits a {
 	}
 
 	.wp-block-button__link {
-		width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px !important;
+		min-width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px !important;
 	}
 
 	.ngl-logo img {

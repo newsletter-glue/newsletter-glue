@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		newsletterglue_setting_colour( 'btn_colour', __( 'Text', 'newsletter-glue' ) );
 
 		newsletterglue_setting_size( 'btn_radius', __( 'Border radius', 'newsletter-glue' ), 30 );
-		newsletterglue_setting_size( 'btn_width', __( 'Button width', 'newsletter-glue' ) );
+		newsletterglue_setting_size( 'btn_width', __( 'Minimum button width', 'newsletter-glue' ) );
 
 		echo '<div class="ngl-desktop">';
 		newsletterglue_setting_heading( __( 'Newsletter logo', 'newsletter-glue' ) );
