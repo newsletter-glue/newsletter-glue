@@ -282,7 +282,7 @@
 					),
 
 					// This is how the block is rendered in editor.
-					el( 'div', { className: 'ngl-form' + ' ' + isPortraitclass, 'data-app' : newsletterglue_meta.app },
+					el( 'div', { className: 'ngl-form' + ' ' + isPortraitclass },
 						addHeading,
 						addDescription,
 						addName,
@@ -377,7 +377,7 @@
 
 			return (
 
-					el( 'form', { className: 'ngl-form' + ' ' + isPortraitclass, 'data-app' : newsletterglue_meta.app, action: '', method: 'post' },
+					el( 'form', { className: 'ngl-form' + ' ' + isPortraitclass, action: '', method: 'post' },
 						formHeader,
 						formDescription,
 						formName,

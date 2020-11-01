@@ -75,3 +75,29 @@ function newsletterglue_add_block_category( $categories, $post ) {
 
 }
 add_filter( 'block_categories', 'newsletterglue_add_block_category', 10, 2 );
+
+/**
+ * Enqueues the required frontend scripts.
+ */
+function newsletterglue_load_frontend_scripts( $hook ) {
+	global $wp_scripts;
+
+	$js_dir  = NGL_PLUGIN_URL . 'assets/js/';
+	$css_dir = NGL_PLUGIN_URL . 'assets/css/';
+
+	// Use minified libraries if SCRIPT_DEBUG is turned off
+	$suffix  = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+	// Register scripts.
+	wp_register_script( 'newsletterglue_gutenberg', $js_dir . 'frontend/gutenberg' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
+	wp_enqueue_script( 'newsletterglue_gutenberg' );
+
+	wp_localize_script( 'newsletterglue_gutenberg', 'newsletterglue_gutenberg', apply_filters( 'newsletterglue_gutenberg_js_params',
+		array(
+			'ajaxurl'    		=> newsletterglue_get_ajax_url(),
+			'ajaxnonce'			=> wp_create_nonce( 'newsletterglue-ajax-nonce' ),
+		)
+	) );
+
+}
+add_action( 'wp_enqueue_scripts', 'newsletterglue_load_frontend_scripts', 100 );

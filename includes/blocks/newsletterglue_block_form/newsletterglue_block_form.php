@@ -90,6 +90,8 @@ function newsletterglue_form_block_render( $attributes, $content ) {
 		$content = '';
 	}
 
+	$content = str_replace( 'class="wp-block-newsletterglue-form', 'data-app="' . newsletterglue_default_connection() . '" class="wp-block-newsletterglue-form', $content );
+
 	return $content;
 
 }
@@ -102,3 +104,42 @@ function newsletterglue_add_form_css() { ?>
 
 <?php
 }
+
+/**
+ * Subscribe a user via a form.
+ */
+function newsletterglue_block_form_subscribe() {
+
+	$result = array();
+
+	check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+	// Get app.
+	$app 	= isset( $_POST['app'] ) ? sanitize_text_field( $_POST['app'] ) : '';
+	$email 	= isset( $_POST[ 'ngl_email' ] ) ? sanitize_email( $_POST[ 'ngl_email' ] ) : '';
+	$name 	= isset( $_POST[ 'ngl_name' ] ) ? sanitize_email( $_POST[ 'ngl_name' ] ) : '';
+
+	// App Instance.
+	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {
+		wp_die( -1 );
+	}
+
+	include_once newsletterglue_get_path( $app ) . '/init.php';
+
+	$classname 	= 'NGL_' . ucfirst( $app );
+	$api		= new $classname();
+
+	$userdata = array(
+		'name'	=> $name,
+		'email'	=> $email,
+	);
+
+	if ( method_exists( $api, 'add_user' ) ) {
+		$result = $api->add_user( $userdata );
+	}
+
+	wp_send_json( $result );
+
+}
+add_action( 'wp_ajax_newsletterglue_block_form_subscribe', 'newsletterglue_block_form_subscribe' );
+add_action( 'wp_ajax_nopriv_newsletterglue_block_form_subscribe', 'newsletterglue_block_form_subscribe' );
