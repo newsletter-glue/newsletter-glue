@@ -1,6 +1,7 @@
 .ngl-form {
 	max-width: 400px !important;
 	margin-bottom: 30px !important;
+	position: relative;
 }
 
 .ngl-form h2 {
@@ -42,6 +43,7 @@
 	display: inline-block;
 }
 
+/* Portrait */
 .ngl-form.ngl-portrait {
 	text-align: center;
 	margin-left: auto;
@@ -51,4 +53,68 @@
 .ngl-form.ngl-portrait .ngl-form-button {
 	width: 100%;
 	display: block;
+}
+
+/* Landscape */
+.ngl-form.ngl-landscape {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 600px !important;
+}
+
+.ngl-form.ngl-landscape .ngl-form-container {
+	display: flex;
+}
+
+.ngl-form.ngl-landscape label {
+	display: none !important;
+}
+
+.ngl-form.ngl-landscape .ngl-form-field {
+	margin-bottom: 0;
+	min-width: 66%;
+}
+
+.ngl-form.ngl-landscape .ngl-form-button {
+	flex: 1;
+	text-align: center;
+}
+
+/* SVG success */
+.ngl-message-overlay {
+	text-align: center;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    flex-direction: column;
+	opacity: 0;
+	transition: opacity 0.25s ease-in-out;
+	pointer-events: none;
+	visibility: hidden;
+	height: 0;
+}
+
+.ngl-message-overlay.ngl-show {
+	opacity: 1;
+	pointer-events: auto;
+	visibility: visible;
+	min-height: 200px;
+	height: auto;
+}
+
+.ngl-message-svg-wrap {
+	background: #5bca64;
+	width: 40px;
+	line-height: 40px;
+	height: 40px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ngl-message-overlay-text {
+	font-size: 18px;
+	margin: 14px 0 0;
 }

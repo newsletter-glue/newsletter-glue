@@ -440,9 +440,13 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 			'name' 		=> $name,
 		);
 
-		$addedSubscriber = $subscribersApi->create( $subscriber ); // returns added subscriber
+		$result = $subscribersApi->create( $subscriber ); // returns added subscriber
 
-		return $addedSubscriber;
+		if ( isset( $result->id ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -96,8 +96,12 @@ function newsletterglue_load_frontend_scripts( $hook ) {
 		array(
 			'ajaxurl'    		=> newsletterglue_get_ajax_url(),
 			'ajaxnonce'			=> wp_create_nonce( 'newsletterglue-ajax-nonce' ),
+			'please_wait'		=> __( 'Please wait...', 'newsletter-glue' ),
 		)
 	) );
+
+	wp_register_style( 'newsletterglue_gutenberg', $css_dir . 'gutenberg' . $suffix . '.css', array(), NGL_VERSION );
+	wp_enqueue_style( 'newsletterglue_gutenberg' );
 
 }
 add_action( 'wp_enqueue_scripts', 'newsletterglue_load_frontend_scripts', 100 );

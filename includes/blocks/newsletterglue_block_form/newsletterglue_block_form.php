@@ -136,9 +136,12 @@ function newsletterglue_block_form_subscribe() {
 
 	if ( method_exists( $api, 'add_user' ) ) {
 		$result = $api->add_user( $userdata );
+		if ( $result ) {
+			wp_send_json_success();
+		} else {
+			wp_send_json_error();
+		}
 	}
-
-	wp_send_json( $result );
 
 }
 add_action( 'wp_ajax_newsletterglue_block_form_subscribe', 'newsletterglue_block_form_subscribe' );

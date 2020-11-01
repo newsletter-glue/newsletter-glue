@@ -22,6 +22,10 @@
 		category: 'newsletterglue-blocks',
 		keywords: [ 'newsletter', 'glue', 'form', 'subscribe' ],
 		attributes: {
+			message_text: {
+				'type' : 'string',
+				'default' : 'Thank you for your subscription.',
+			},
 			form_header: {
 				'type' : 'string',
 			},
@@ -47,6 +51,10 @@
 			show_in_email: {
 				'type' : 'boolean',
 				'default' : newsletterglue_block_form.show_in_email ? true : false
+			},
+			toggle_success: {
+				'type' : 'boolean',
+				'default' : false,
 			},
 			add_name: {
 				'type' : 'boolean',
@@ -162,6 +170,11 @@
 				borderRadius : props.attributes.button_radius,
 			};
 
+			var isOverlayshown = '';
+			if ( props.attributes.toggle_success ) {
+				isOverlayshown = 'ngl-show';
+			}
+
 			return (
 
 				el( Fragment, {},
@@ -192,6 +205,14 @@
 									label: 'Add name field',
 									onChange: ( value ) => { props.setAttributes( { add_name: value } ); },
 									checked: props.attributes.add_name,
+								} )
+							),
+
+							el( PanelRow, {},
+								el( ToggleControl, {
+									label: 'Edit success message',
+									onChange: ( value ) => { props.setAttributes( { toggle_success: value } ); },
+									checked: props.attributes.toggle_success,
 								} )
 							),
 
@@ -285,18 +306,36 @@
 					el( 'div', { className: 'ngl-form' + ' ' + isPortraitclass },
 						addHeading,
 						addDescription,
-						addName,
-						addEmail,
-						el( RichText, {
-							tagName: 'div',
-							className: 'ngl-form-button',
-							value: props.attributes.button_text,
-							format: 'string',
-							onChange: ( value ) => { props.setAttributes( { button_text: value } ); },
-							placeholder: 'Subscribe',
-							multiline: '&nbsp;',
-							style: buttonStyles,
-						} ),
+						el( 'div', { className: 'ngl-form-container' },
+							addName,
+							addEmail,
+							el( RichText, {
+								tagName: 'div',
+								className: 'ngl-form-button',
+								value: props.attributes.button_text,
+								format: 'string',
+								onChange: ( value ) => { props.setAttributes( { button_text: value } ); },
+								placeholder: 'Subscribe',
+								multiline: '&nbsp;',
+								style: buttonStyles,
+							} )
+						),
+						el( 'div', { className: 'ngl-message-overlay' + ' ' + isOverlayshown },
+							el( 'div', { className: 'ngl-message-svg-wrap' },
+								el( 'svg', { viewBox: '0 0 24 24', width: '24', height: '24', strokeWidth: 2, stroke: '#fff', fill: 'none' },
+									el( 'polyline', {
+										points: '20 6 9 17 4 12',
+									} )
+								)
+							),
+							el( RichText, {
+								tagName: 'div',
+								className: 'ngl-message-overlay-text',
+								value: props.attributes.message_text,
+								format: 'string',
+								onChange: ( value ) => { props.setAttributes( { message_text: value } ); },
+							} ),
+						),
 					)
 
 				)
@@ -340,7 +379,7 @@
 								'for' : 'ngl_name'
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
-								el( 'input', { type: 'text', className: 'ngl-form-input-text', name: 'ngl_name', id: 'ngl_name' },
+								el( 'input', { type: 'text', className: 'ngl-form-input-text', name: 'ngl_name', id: 'ngl_name', placeholder: props.attributes.form_style === 'landscape' ? props.attributes.name_label : '' },
 								
 								)
 							)
@@ -358,7 +397,7 @@
 								'for' : 'ngl_email'
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
-								el( 'input', { type: 'email', className: 'ngl-form-input-text', name: 'ngl_email', id: 'ngl_email' },
+								el( 'input', { type: 'email', className: 'ngl-form-input-text', name: 'ngl_email', id: 'ngl_email', placeholder: props.attributes.form_style === 'landscape' ? props.attributes.email_label : '' },
 								
 								)
 							)
@@ -380,14 +419,30 @@
 					el( 'form', { className: 'ngl-form' + ' ' + isPortraitclass, action: '', method: 'post' },
 						formHeader,
 						formDescription,
-						formName,
-						formEmail,
-						el( RichText.Content, {
-							tagName: 'button',
-							className: 'ngl-form-button',
-							value: props.attributes.button_text,
-							style: buttonStyles,
-						} ),
+						el( 'div', { className: 'ngl-form-container' },
+							formName,
+							formEmail,
+							el( RichText.Content, {
+								tagName: 'button',
+								className: 'ngl-form-button',
+								value: props.attributes.button_text,
+								style: buttonStyles,
+							} )
+						),
+						el( 'div', { className: 'ngl-message-overlay' },
+							el( 'div', { className: 'ngl-message-svg-wrap' },
+								el( 'svg', { viewBox: '0 0 24 24', width: '24', height: '24', strokeWidth: 2, stroke: '#fff', fill: 'none' },
+									el( 'polyline', {
+										points: '20 6 9 17 4 12',
+									} )
+								)
+							),
+							el( RichText.Content, {
+								tagName: 'div',
+								className: 'ngl-message-overlay-text',
+								value: props.attributes.message_text,
+							} ),
+						),
 					)
 
 			)
