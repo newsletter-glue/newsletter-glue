@@ -2,7 +2,7 @@
 
 	const el = element.createElement;
     const { registerBlockType } = blocks;
-	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, MediaUpload, PlainText } = editor;
+	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, MediaUpload, PlainText, AlignmentToolbar, BlockControls } = editor;
 	const { Fragment } = element;
 	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, RangeControl, BaseControl, ButtonGroup, Button } = components;
 	const ServerSideRender = wp.serverSideRender;
@@ -185,6 +185,30 @@
 						el( PanelBody, { title: 'Form options', initialOpen: true },
 
 							el( PanelRow, {},
+								el( BaseControl, {
+										label: 'Form style',
+										className: 'ngl-gutenberg-base--fullwidth',
+									},
+									el( ButtonGroup, { className: 'ngl-gutenberg--fullwidth' },
+										el( Button, {
+											value: 'portrait',
+											isPrimary: ( props.attributes.form_style === 'portrait' ),
+											isSecondary: ( props.attributes.form_style !== 'portrait' ),
+											onClick: changeFormStyle,
+											label: 'Portrait',
+										}, 'Portrait' ),
+										el( Button, {
+											value: 'landscape',
+											isPrimary: ( props.attributes.form_style === 'landscape' ),
+											isSecondary: ( props.attributes.form_style !== 'landscape' ),
+											onClick: changeFormStyle,
+											label: 'Landscape'
+										}, 'Landscape' ),
+									)
+								)
+							),
+
+							el( PanelRow, {},
 								el( ToggleControl, {
 									label: 'Add form heading',
 									onChange: ( value ) => { props.setAttributes( { add_heading: value } ); },
@@ -214,30 +238,6 @@
 									onChange: ( value ) => { props.setAttributes( { toggle_success: value } ); },
 									checked: props.attributes.toggle_success,
 								} )
-							),
-
-							el( PanelRow, {},
-								el( BaseControl, {
-										label: 'Form style',
-										className: 'ngl-gutenberg-base--fullwidth',
-									},
-									el( ButtonGroup, { className: 'ngl-gutenberg--fullwidth' },
-										el( Button, {
-											value: 'portrait',
-											isPrimary: ( props.attributes.form_style === 'portrait' ),
-											isSecondary: ( props.attributes.form_style !== 'portrait' ),
-											onClick: changeFormStyle,
-											label: 'Portrait',
-										}, 'Portrait' ),
-										el( Button, {
-											value: 'landscape',
-											isPrimary: ( props.attributes.form_style === 'landscape' ),
-											isSecondary: ( props.attributes.form_style !== 'landscape' ),
-											onClick: changeFormStyle,
-											label: 'Landscape'
-										}, 'Landscape' ),
-									)
-								)
 							),
 
 						),
@@ -379,7 +379,7 @@
 								'for' : 'ngl_name'
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
-								el( 'input', { type: 'text', className: 'ngl-form-input-text', name: 'ngl_name', id: 'ngl_name', placeholder: props.attributes.form_style === 'landscape' ? props.attributes.name_label : '' },
+								el( 'input', { type: 'text', className: 'ngl-form-input-text', name: 'ngl_name', id: 'ngl_name' },
 								
 								)
 							)
@@ -397,7 +397,7 @@
 								'for' : 'ngl_email'
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
-								el( 'input', { type: 'email', className: 'ngl-form-input-text', name: 'ngl_email', id: 'ngl_email', placeholder: props.attributes.form_style === 'landscape' ? props.attributes.email_label : '' },
+								el( 'input', { type: 'email', className: 'ngl-form-input-text', name: 'ngl_email', id: 'ngl_email' },
 								
 								)
 							)

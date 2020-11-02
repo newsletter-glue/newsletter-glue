@@ -35,7 +35,7 @@
     outline: 0;
     box-shadow: none;
     border: none;
-    padding: 5px 24px;
+    padding: 5px 15px;
 	min-height: 40px;
 	font-size: 16px;
 	text-decoration: none !important;
@@ -64,20 +64,18 @@
 
 .ngl-form.ngl-landscape .ngl-form-container {
 	display: flex;
-}
-
-.ngl-form.ngl-landscape label {
-	display: none !important;
+	align-items: flex-end;
 }
 
 .ngl-form.ngl-landscape .ngl-form-field {
 	margin-bottom: 0;
-	min-width: 66%;
+	flex: auto;
 }
 
 .ngl-form.ngl-landscape .ngl-form-button {
-	flex: 1;
 	text-align: center;
+	height: 40px;
+	min-width: 180px;
 }
 
 /* SVG success */
