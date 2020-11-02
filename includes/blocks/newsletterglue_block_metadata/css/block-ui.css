@@ -1,5 +1,8 @@
 .ngl-metadata {
-
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 16px;
 }
 
 .ngl-metadata > div {
@@ -7,10 +10,27 @@
 }
 
 .ngl-metadata > div {
-	padding: 0 6px;
+	padding: 0 2px;
 }
 
 .ngl-metadata .ngl-metadata-sep {
 	text-align: center;
 	width: 20px;
+}
+
+.ngl-metadata-map-pin {
+	width: 16px;
+	display: inline-block;
+	margin: 0 2px !important;
+}
+
+.ngl-metadata-permalink-arrow {
+	width: 12px;
+	display: inline-block;
+	margin: 0 0 0 4px !important;
+}
+
+.ngl-metadata-permalink {
+	text-decoration: underline !important;
+	cursor: pointer;
 }

@@ -49,6 +49,8 @@ function newsletterglue_block_metadata() {
 	$js_dir    	= NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/js/';
 	$css_dir   	= NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/css/';
 
+	$defaults[ 'assets_uri' ] =  NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/';
+
 	$suffix  = '';
 
 	wp_register_script( 'newsletterglue-metadata-block', $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ), time() );

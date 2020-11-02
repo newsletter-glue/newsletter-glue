@@ -27,6 +27,10 @@
 			issue_title: {
 				type: 'string',
 			},
+			post_link: {
+				type: 'string',
+				'default' : 'Read online',
+			},
 			post_location: {
 				type: 'string',
 			},
@@ -84,6 +88,10 @@
 							newsletterglue_meta.post_date
 						),
 						el( 'div', { className: 'ngl-metadata-sep' }, '|' ),
+						el( 'img', {
+							className: 'ngl-metadata-map-pin',
+							src: newsletterglue_block_metadata.assets_uri + 'map-pin.png'
+						} ),
 						el( RichText, {
 							tagName: 'div',
 							format: 'string',
@@ -92,6 +100,20 @@
 							value: props.attributes.post_location,
 							placeholder: 'Location',
 							multiline: '&nbsp;'
+						} ),
+						el( 'div', { className: 'ngl-metadata-sep' }, '|' ),
+						el( RichText, {
+							tagName: 'div',
+							format: 'string',
+							className: 'ngl-metadata-permalink',
+							onChange: ( value ) => { props.setAttributes( { post_link: value } ); },
+							value: props.attributes.post_link,
+							placeholder: 'Read online',
+							multiline: '&nbsp;'
+						} ),
+						el( 'img', {
+							className: 'ngl-metadata-permalink-arrow',
+							src: newsletterglue_block_metadata.assets_uri + 'arrow.png'
 						} ),
 					)
 
@@ -117,10 +139,25 @@
 							newsletterglue_meta.post_date
 						),
 						el( 'div', { className: 'ngl-metadata-sep' }, '|' ),
+						el( 'img', {
+							className: 'ngl-metadata-map-pin',
+							src: newsletterglue_block_metadata.assets_uri + 'map-pin.png'
+						} ),
 						el( RichText.Content, {
 							tagName: 'div',
 							className: 'ngl-metadata-map',
 							value: props.attributes.post_location,
+						} ),
+						el( 'div', { className: 'ngl-metadata-sep' }, '|' ),
+						el( RichText.Content, {
+							tagName: 'a',
+							className: 'ngl-metadata-permalink',
+							value: props.attributes.post_link,
+							href: newsletterglue_meta.post_perma
+						} ),
+						el( 'img', {
+							className: 'ngl-metadata-permalink-arrow',
+							src: newsletterglue_block_metadata.assets_uri + 'arrow.png'
 						} ),
 					)
 

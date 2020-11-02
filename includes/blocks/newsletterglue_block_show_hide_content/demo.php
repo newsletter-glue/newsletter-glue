@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<div class="ngl-popup-header alt"><?php _e( 'Show/hide content', 'newsletter-glue' ); ?></div>
 
 	<div class="ngl-popup-video">
-		<iframe width="560" height="315" src="https://www.youtube.com/embed/iSZ_r-hbP-w?autoplay=1&modestbranding=1&autohide=1&showinfo=0&controls=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/MRfftUUzxVU?autoplay=1&modestbranding=1&autohide=1&showinfo=0&controls=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 	</div>
 
 </div>
