@@ -281,6 +281,10 @@
 							]
 						} ),
 
+						el( PanelBody, { title: newsletterglue_meta.app_name + ' integration', initialOpen: true },
+
+						),
+
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
 							el( PanelRow, {},

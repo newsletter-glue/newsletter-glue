@@ -20,12 +20,15 @@
 			},
 			success: function( response ) {
 
+				console.log( response );
+
 				btn.html( btn_text );
 
 				if ( response.success ) {
+
 					theform.find( '.ngl-form-container' ).hide();
 					theform.find( '.ngl-message-overlay' ).addClass( 'ngl-show' );
-					
+
 					setTimeout( function() {
 						theform.find( '.ngl-form-container' ).show();
 						theform.find( '.ngl-message-overlay' ).removeClass( 'ngl-show' );

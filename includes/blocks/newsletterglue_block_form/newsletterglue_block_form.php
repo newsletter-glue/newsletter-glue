@@ -42,7 +42,7 @@ function newsletterglue_block_form() {
 	if ( ! $defaults ) {
 		$defaults = array(
 			'show_in_blog'	=> true,
-			'show_in_email'	=> true,
+			'show_in_email'	=> false,
 		);
 	}
 
@@ -73,7 +73,7 @@ function newsletterglue_form_block_render( $attributes, $content ) {
 	if ( ! $defaults ) {
 		$defaults = array(
 			'show_in_blog'	=> true,
-			'show_in_email'	=> true,
+			'show_in_email'	=> false,
 		);
 	}
 
