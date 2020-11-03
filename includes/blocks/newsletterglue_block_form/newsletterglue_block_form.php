@@ -90,6 +90,10 @@ function newsletterglue_form_block_render( $attributes, $content ) {
 		$content = '';
 	}
 
+	if ( defined( 'NGL_IN_EMAIL' ) ) {
+		$content = str_replace( '<button', '<a href="{post_permalink}"', $content );
+	}
+
 	$content = str_replace( 'class="wp-block-newsletterglue-form', 'data-app="' . newsletterglue_default_connection() . '" class="wp-block-newsletterglue-form', $content );
 
 	return $content;
@@ -101,6 +105,124 @@ function newsletterglue_form_block_render( $attributes, $content ) {
  */
 add_action( 'newsletterglue_add_custom_styles', 'newsletterglue_add_form_css' );
 function newsletterglue_add_form_css() { ?>
+
+.ngl-form {
+	max-width: 100% !important;
+	margin-top: 25px !important;
+	margin-bottom: 25px !important;
+	position: relative;
+}
+
+.ngl-form h2 {
+	font-size: 24px !important;
+}
+
+.ngl-form-input-text {
+	border: 1px solid #aaa;
+	padding: 5px 14px;
+	border-radius: 0;
+	background: #fff;
+	height: 40px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ngl-form-field {
+	margin: 0 0 25px;
+	text-align: left !important;
+	display: none !important;
+}
+
+.ngl-form-label {
+	user-select: none;
+}
+
+.ngl-form-button {
+    background: #3400FF;
+    color: #fff;
+    border-radius: 0;
+    cursor: pointer;
+    outline: 0;
+    box-shadow: none;
+    border: none;
+    padding: 4px 25px;
+	font-size: 16px;
+	text-decoration: none !important;
+	text-transform: none;
+    width: auto !important;
+    min-width: 120px !important;
+    display: inline-block !important;
+	height: 30px !important;
+	line-height: 30px !important;
+	text-align: center !important;
+}
+
+.ngl-form.ngl-portrait {
+
+}
+
+.ngl-form.ngl-portrait .ngl-form-button {
+	width: 100%;
+	display: block;
+}
+
+.ngl-form.ngl-landscape {
+
+}
+
+.ngl-form.ngl-landscape .ngl-form-container {
+	display: flex;
+	align-items: flex-end;
+}
+
+.ngl-form.ngl-landscape .ngl-form-field {
+	margin-bottom: 0;
+	flex: auto;
+}
+
+.ngl-form.ngl-landscape .ngl-form-button {
+	text-align: center;
+	height: 40px;
+	min-width: 180px;
+}
+
+.ngl-message-overlay {
+	text-align: center;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    flex-direction: column;
+	opacity: 0;
+	transition: opacity 0.25s ease-in-out;
+	pointer-events: none;
+	visibility: hidden;
+	height: 0;
+}
+
+.ngl-message-overlay.ngl-show {
+	opacity: 1;
+	pointer-events: auto;
+	visibility: visible;
+	min-height: 200px;
+	height: auto;
+}
+
+.ngl-message-svg-wrap {
+	background: #5bca64;
+	width: 40px;
+	line-height: 40px;
+	height: 40px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ngl-message-overlay-text {
+	font-size: 18px;
+	margin: 14px 0 0;
+}
 
 <?php
 }

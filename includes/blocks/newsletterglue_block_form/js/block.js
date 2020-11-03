@@ -295,6 +295,7 @@
 									label: 'Show in email newsletter',
 									onChange: ( value ) => { props.setAttributes( { show_in_email: value } ); },
 									checked: props.attributes.show_in_email,
+									help: 'Only heading, description and button will be displayed. When clicked, button will take user to the form on the page.',
 								} )
 							)
 

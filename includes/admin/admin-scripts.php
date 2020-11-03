@@ -103,6 +103,7 @@ function newsletterglue_js_data() {
 			'author_bio'	=> get_the_author_meta( 'description', $post->post_author ),
 			'post_date'		=> date( 'l, j M Y', strtotime( $post->post_date ) ),
 			'app'			=> newsletterglue_default_connection(),
+			'app_name'		=> newsletterglue_get_name( newsletterglue_default_connection() ),
 		);
 
 		wp_localize_script( 'newsletterglue_meta', 'newsletterglue_meta', $data );

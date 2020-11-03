@@ -43,7 +43,6 @@
 	display: inline-block;
 }
 
-/* Portrait */
 .ngl-form.ngl-portrait {
 	text-align: center;
 	margin-left: auto;
@@ -55,7 +54,6 @@
 	display: block;
 }
 
-/* Landscape */
 .ngl-form.ngl-landscape {
 	margin-left: auto;
 	margin-right: auto;
@@ -78,7 +76,6 @@
 	min-width: 180px;
 }
 
-/* SVG success */
 .ngl-message-overlay {
 	text-align: center;
 	width: 100%;

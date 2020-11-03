@@ -67,7 +67,7 @@ p {
 }
 
 a {
-	color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?> !important;
+	color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?>;
 }
 
 figure {
