@@ -10,7 +10,7 @@ $defaults = get_option( 'newsletterglue_block_form' );
 if ( ! $defaults ) {
 	$defaults = array(
 		'show_in_blog' 	=> true,
-		'show_in_email' => true,
+		'show_in_email' => false,
 	);
 }
 
