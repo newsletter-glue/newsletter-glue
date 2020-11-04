@@ -104,6 +104,7 @@
 							format: 'string',
 							onChange: ( value ) => { props.setAttributes( { form_header: value } ); },
 							placeholder: 'Enter heading...',
+							allowedFormats: [ 'core/text-color', 'core/bold', 'core/italic', 'core/underline', 'core/subscript', 'core/superscript', 'core/strikethrough', 'core/link', 'core/code' ],
 						} );
 			} else {
 				var addHeading = '';
@@ -118,6 +119,7 @@
 							format: 'string',
 							onChange: ( value ) => { props.setAttributes( { form_description: value } ); },
 							placeholder: 'Enter description...',
+							allowedFormats: [ 'core/text-color', 'core/bold', 'core/italic', 'core/underline', 'core/subscript', 'core/superscript', 'core/strikethrough', 'core/link', 'core/code' ],
 						} );
 			} else {
 				var addDescription = '';
@@ -132,6 +134,7 @@
 								format: 'string',
 								onChange: ( value ) => { props.setAttributes( { name_label: value } ); },
 								placeholder: 'Name',
+								allowedFormats: [ 'core/text-color', 'core/bold', 'core/italic', 'core/underline' ],
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
 								el( 'div', { className: 'ngl-form-input-text' },
@@ -151,6 +154,7 @@
 								format: 'string',
 								onChange: ( value ) => { props.setAttributes( { email_label: value } ); },
 								placeholder: 'Email',
+								allowedFormats: [ 'core/text-color', 'core/bold', 'core/italic', 'core/underline' ],
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
 								el( 'div', { className: 'ngl-form-input-text' },
@@ -323,6 +327,7 @@
 								placeholder: 'Subscribe',
 								multiline: '&nbsp;',
 								style: buttonStyles,
+								allowedFormats: [ 'core/text-color', 'core/bold', 'core/italic', 'core/underline' ],
 							} )
 						),
 						el( 'div', { className: 'ngl-message-overlay' + ' ' + isOverlayshown },
