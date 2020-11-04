@@ -77,39 +77,40 @@
 }
 
 .ngl-message-overlay {
-	text-align: center;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-    flex-direction: column;
 	opacity: 0;
 	transition: opacity 0.25s ease-in-out;
 	pointer-events: none;
 	visibility: hidden;
 	height: 0;
+    align-items: center;
+	background: #e7ffe5;
+	border-radius: 999px;
+	border: 2px solid #309427;
+	padding: 8px 14px;
+	display: inline-flex;
+	margin: 25px 0 0;
 }
 
 .ngl-message-overlay.ngl-show {
 	opacity: 1;
 	pointer-events: auto;
 	visibility: visible;
-	min-height: 200px;
 	height: auto;
 }
 
 .ngl-message-svg-wrap {
-	background: #5bca64;
-	width: 40px;
-	line-height: 40px;
-	height: 40px;
+	background: #169620;
+	width: 32px;
+	line-height: 32px;
+	height: 32px;
     border-radius: 999px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+	margin: 0 10px 0 0;
 }
 
 .ngl-message-overlay-text {
-	font-size: 18px;
-	margin: 14px 0 0;
+	font-size: 16px;
+	display: inline-block;
 }

@@ -48,7 +48,7 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 					'options'		=> $api->get_groups(),
 					'default'		=> explode( ',', $groups ),
 					'multiple'		=> true,
-					'placeholder'	=> __( 'Everyone', 'newsletter-glue' ),
+					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),
 				) );
 			?>
 		</div>
@@ -73,7 +73,7 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 					'options'		=> $api->get_segments(),
 					'default'		=> explode( ',', $segments ),
 					'multiple'		=> true,
-					'placeholder'	=> __( 'Everyone', 'newsletter-glue' ),
+					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),
 				) );
 
 			?>

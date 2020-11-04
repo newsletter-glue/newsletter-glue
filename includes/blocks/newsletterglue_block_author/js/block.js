@@ -358,9 +358,11 @@
 								} )
 							),
 							el( 'div', { className: 'ngl-author-cta' },
-								el( 'span', {
+								el( 'a', {
 										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
 										style: { borderRadius: props.attributes.border_radius },
+										href: followURL,
+										target: '_blank',
 									},
 									el( 'img', {
 										src: newsletterglue_block_author.assets_uri + platform + outline + '.png'

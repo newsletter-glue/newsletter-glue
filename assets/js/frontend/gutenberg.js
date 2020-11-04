@@ -11,6 +11,8 @@
 		var btn		 = theform.find( 'button' );
 		var btn_text = btn.html();
 
+		console.log( data );
+
 		var xhr = $.ajax( {
 			type : 'post',
 			url : newsletterglue_gutenberg.ajaxurl,
@@ -26,11 +28,10 @@
 
 				if ( response.success ) {
 
-					theform.find( '.ngl-form-container' ).hide();
 					theform.find( '.ngl-message-overlay' ).addClass( 'ngl-show' );
+					theform.find( 'input' ).val( '' );
 
 					setTimeout( function() {
-						theform.find( '.ngl-form-container' ).show();
 						theform.find( '.ngl-message-overlay' ).removeClass( 'ngl-show' );
 					}, 3000 );
 
