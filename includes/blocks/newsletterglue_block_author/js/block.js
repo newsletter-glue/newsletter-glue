@@ -363,6 +363,7 @@
 										style: { borderRadius: props.attributes.border_radius },
 										href: followURL,
 										target: '_blank',
+										rel: 'noopener noreferrer'
 									},
 									el( 'img', {
 										src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
