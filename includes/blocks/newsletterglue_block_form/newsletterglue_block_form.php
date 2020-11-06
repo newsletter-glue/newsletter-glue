@@ -271,7 +271,7 @@ function newsletterglue_block_form_subscribe() {
 add_action( 'wp_ajax_newsletterglue_block_form_subscribe', 'newsletterglue_block_form_subscribe' );
 add_action( 'wp_ajax_nopriv_newsletterglue_block_form_subscribe', 'newsletterglue_block_form_subscribe' );
 
-add_action( 'init', 'test_stuff' );
+//add_action( 'init', 'test_stuff' );
 function test_stuff() {
 
 	$app = 'mailerlite';

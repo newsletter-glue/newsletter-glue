@@ -430,7 +430,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	 */
 	public function add_user( $data ) {
 		extract( $data );
-		
+
 		$this->api = new \MailerLiteApi\MailerLite( $this->api_key );
 
 		$subscriber = array(
