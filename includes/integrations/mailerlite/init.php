@@ -446,7 +446,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 			return true;
 		}
 
-		return false;
+		return -1;
 	}
 
 }

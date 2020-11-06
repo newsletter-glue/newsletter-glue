@@ -238,8 +238,6 @@ function newsletterglue_block_form_subscribe() {
 
 	// Get app.
 	$app 	= isset( $_POST['app'] ) ? sanitize_text_field( $_POST['app'] ) : '';
-	$email 	= isset( $_POST[ 'ngl_email' ] ) ? sanitize_email( $_POST[ 'ngl_email' ] ) : '';
-	$name 	= isset( $_POST[ 'ngl_name' ] ) ? sanitize_email( $_POST[ 'ngl_name' ] ) : '';
 
 	// App Instance.
 	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {
@@ -251,14 +249,18 @@ function newsletterglue_block_form_subscribe() {
 	$classname 	= 'NGL_' . ucfirst( $app );
 	$api		= new $classname();
 
-	$userdata = array(
-		'name'	=> $name,
-		'email'	=> $email,
-	);
+	// Prepare data to send to the ESP endpoint.
+	foreach( $_POST as $key => $value ) {
+		if ( strstr( $key, 'ngl_' ) ) {
+			$key 	= str_replace( 'ngl_', '', $key );
+			$value 	= sanitize_text_field( $_POST[ $key ] );
+			$data[ $key ] = $value;
+		}
+	}
 
 	if ( method_exists( $api, 'add_user' ) ) {
-		$result = $api->add_user( $userdata );
-		if ( $result ) {
+		$result = $api->add_user( $data );
+		if ( $result > 0 ) {
 			wp_send_json_success();
 		} else {
 			wp_send_json_error();
@@ -268,3 +270,23 @@ function newsletterglue_block_form_subscribe() {
 }
 add_action( 'wp_ajax_newsletterglue_block_form_subscribe', 'newsletterglue_block_form_subscribe' );
 add_action( 'wp_ajax_nopriv_newsletterglue_block_form_subscribe', 'newsletterglue_block_form_subscribe' );
+
+add_action( 'init', 'test_stuff' );
+function test_stuff() {
+
+	$app = 'mailerlite';
+
+	include_once newsletterglue_get_path( $app ) . '/init.php';
+
+	$classname 	= 'NGL_' . ucfirst( $app );
+	$api		= new $classname();
+	
+	$data = array(
+		'name' 		=> 'Abdo Elmasry',
+		'email' 	=> 'ahmedfouaddev@gmail.com',
+	);
+
+	$result = $api->add_user( $data );
+	die( print_r( $result ) );
+
+}
