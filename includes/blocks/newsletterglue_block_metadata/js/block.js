@@ -42,8 +42,40 @@
 				'type' : 'boolean',
 				'default' : newsletterglue_block_metadata.show_in_email ? true : false
 			},
+			text_color: {
+				'type' : 'string',
+				'default' : '#666666',
+			},
+			divider_style: {
+				'type' : 'string',
+				'default' : 'line',
+			},
 		},
-		edit: function( props ) {
+		edit: withColors( 'formColor' ) ( function( props ) {
+
+			var metaStyles = {
+				color: props.attributes.text_color,
+			};
+
+			var dividerStyles = [
+				{ value: 'line', label: 'Line' },
+				{ value: 'dot', label: 'Dot' }
+			];
+
+			var divider = props.attributes.divider_style == 'dot' ? '•' : '|';
+
+			var metaPic = '';
+			metaPic = [
+				el( 'div', { className: 'ngl-metadata-pic' },
+					el( 'img', { src: newsletterglue_meta.profile_pic, className: 'avatar avatar-32 photo' },
+
+					)
+				),
+				el( 'div', { className: 'ngl-metadata-author' },
+					newsletterglue_meta.author_name
+				),
+				el( 'div', { className: 'ngl-metadata-sep' }, divider )
+			];
 
 			return (
 
@@ -52,6 +84,31 @@
 					// This is block settings in sidebar.
 					el( InspectorControls, {},
 
+						el( PanelBody, { title: 'General options', initialOpen: true },
+
+							el( PanelRow, {},
+								el( SelectControl, {
+									label: 'Divider type',
+									value: props.attributes.divider_style,
+									onChange: ( value ) => { props.setAttributes( { divider_style: value } ); },
+									options: dividerStyles,
+								} )
+							),
+
+						),
+
+						el( PanelColorSettings, {
+							initialOpen: true,
+							title: 'Color options',
+							colorSettings: [
+								{
+									value: props.attributes.text_color,
+									label: 'Font color',
+									onChange: ( value ) => props.setAttributes( { text_color: value } ),
+								},
+							]
+						} ),
+	
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
 							el( PanelRow, {},
@@ -73,7 +130,8 @@
 					),
 
 					// This is how the block is rendered in editor.
-					el( 'div', { className: 'ngl-metadata' },
+					el( 'div', { className: 'ngl-metadata', style: metaStyles },
+						metaPic,
 						el( RichText, {
 							tagName: 'div',
 							format: 'string',
@@ -83,11 +141,11 @@
 							placeholder: 'Issue #',
 							multiline: '&nbsp;'
 						} ),
-						el( 'div', { className: 'ngl-metadata-sep' }, '|' ),
+						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
 						el( 'div', { className: 'ngl-metadata-date' },
 							newsletterglue_meta.post_date
 						),
-						el( 'div', { className: 'ngl-metadata-sep' }, '|' ),
+						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
 						el( 'img', {
 							className: 'ngl-metadata-map-pin',
 							src: newsletterglue_block_metadata.assets_uri + 'map-pin.png'
@@ -101,7 +159,7 @@
 							placeholder: 'Location',
 							multiline: '&nbsp;'
 						} ),
-						el( 'div', { className: 'ngl-metadata-sep' }, '|' ),
+						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
 						el( RichText, {
 							tagName: 'div',
 							format: 'string',
@@ -121,34 +179,75 @@
 
 			);
 
-		},
+		} ),
 
 		// This is how the block is rendered in frontend.
 		save: function( props ) {
 
+			var divider = props.attributes.divider_style == 'dot' ? '•' : '|';
+
+			var metaStyles = {
+				color: props.attributes.text_color,
+			};
+
+			var metaTitle = '';
+			if ( props.attributes.issue_title ) {
+				metaTitle = [
+					el( RichText.Content, {
+						tagName: 'div',
+						className: 'ngl-metadata-issue',
+						value: props.attributes.issue_title ? props.attributes.issue_title : ''
+					} ),
+					el( 'div', { className: 'ngl-metadata-sep' }, divider )
+				];
+			}
+
+			var metaDate = '';
+			if ( props ) {
+				metaDate = [
+					el( 'div', { className: 'ngl-metadata-date' },
+						newsletterglue_meta.post_date
+					),
+					el( 'div', { className: 'ngl-metadata-sep' }, divider )
+				];
+			}
+
+			var metaLocation = '';
+			if ( props.attributes.post_location ) {
+				metaLocation = [
+					el( 'img', {
+						className: 'ngl-metadata-map-pin',
+						src: newsletterglue_block_metadata.assets_uri + 'map-pin.png'
+					} ),
+					el( RichText.Content, {
+						tagName: 'div',
+						className: 'ngl-metadata-map',
+						value: props.attributes.post_location,
+					} ),
+					el( 'div', { className: 'ngl-metadata-sep' }, divider )
+				];
+			}
+
+			var metaPic = '';
+			metaPic = [
+				el( 'div', { className: 'ngl-metadata-pic' },
+					el( 'img', { src: newsletterglue_meta.profile_pic, className: 'avatar avatar-32 photo' },
+
+					)
+				),
+				el( 'div', { className: 'ngl-metadata-author' },
+					newsletterglue_meta.author_name
+				),
+				el( 'div', { className: 'ngl-metadata-sep' }, divider )
+			];
+
 			return (
 
-					el( 'div', { className: 'ngl-metadata' },
-						el( RichText.Content, {
-							tagName: 'div',
-							className: 'ngl-metadata-issue',
-							value: props.attributes.issue ? props.attributes.issue : ''
-						} ),
-						el( 'div', { className: 'ngl-metadata-sep' }, '|' ),
-						el( 'div', { className: 'ngl-metadata-date' },
-							newsletterglue_meta.post_date
-						),
-						el( 'div', { className: 'ngl-metadata-sep' }, '|' ),
-						el( 'img', {
-							className: 'ngl-metadata-map-pin',
-							src: newsletterglue_block_metadata.assets_uri + 'map-pin.png'
-						} ),
-						el( RichText.Content, {
-							tagName: 'div',
-							className: 'ngl-metadata-map',
-							value: props.attributes.post_location,
-						} ),
-						el( 'div', { className: 'ngl-metadata-sep' }, '|' ),
+					el( 'div', { className: 'ngl-metadata', style: metaStyles },
+						metaPic,
+						metaTitle,
+						metaDate,
+						metaLocation,
 						el( RichText.Content, {
 							tagName: 'a',
 							className: 'ngl-metadata-permalink',

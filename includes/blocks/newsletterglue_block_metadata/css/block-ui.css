@@ -3,6 +3,7 @@
 	align-items: center;
 	justify-content: center;
 	font-size: 12px;
+	padding: 20px 0;
 }
 
 .ngl-metadata > div {
@@ -34,4 +35,18 @@
 .ngl-metadata-permalink {
 	text-decoration: underline !important;
 	cursor: pointer;
+}
+
+.ngl-metadata-pic {
+	width: 36px;
+	height: 36px;
+}
+
+.ngl-metadata-pic img {
+	width: 30px;
+	height: 30px;
+	border-radius: 999px;
+	margin: 0 6px 0 0;
+	position: relative;
+	top: 2px;
 }

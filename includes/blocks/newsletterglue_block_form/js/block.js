@@ -87,8 +87,17 @@
 			button_radius: {
 				'type' : 'number',
 			},
+			spacing_size: {
+				'type' : 'number',
+				'default' : 25,
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
+
+			var fieldStyle = { marginBottom: props.attributes.spacing_size };
+			if ( props.attributes.form_style === 'landscape' ) {
+				fieldStyle = { marginRight: props.attributes.spacing_size };
+			}
 
 			function changeFormStyle( ev ) {
 				let form_style = ev.currentTarget.value;
@@ -124,7 +133,7 @@
 			}
 
 			if ( props.attributes.add_name ) {
-				var addName = el( 'div', { className: 'ngl-form-field' },
+				var addName = el( 'div', { className: 'ngl-form-field', style: fieldStyle },
 							el( RichText, {
 								tagName: 'label',
 								className: 'ngl-form-label',
@@ -143,7 +152,7 @@
 				var addName = '';
 			}
 
-			var addEmail = el( 'div', { className: 'ngl-form-field' },
+			var addEmail = el( 'div', { className: 'ngl-form-field', style: fieldStyle },
 							el( RichText, {
 								tagName: 'label',
 								className: 'ngl-form-label',
@@ -206,6 +215,19 @@
 										}, 'Landscape' ),
 									)
 								)
+							),
+
+							el( PanelRow, {},
+								el( RangeControl, {
+									label: 'Padding (pixels)',
+									value: props.attributes.spacing_size,
+									initialPosition: 25,
+									min: 0,
+									max: 100,
+									allowReset: true,
+									resetFallbackValue: 25,
+									onChange: ( value ) => { props.setAttributes( { spacing_size: value } ); },
+								} ),
 							),
 
 							el( PanelRow, {},
@@ -352,6 +374,11 @@
 		// This is how the block is rendered in frontend.
 		save: function( props, className ) {
 
+			var fieldStyle = { marginBottom: props.attributes.spacing_size };
+			if ( props.attributes.form_style === 'landscape' ) {
+				fieldStyle = { marginRight: props.attributes.spacing_size };
+			}
+
 			// Show header.
 			if ( props.attributes.form_header && props.attributes.add_heading ) {
 				var formHeader = el( RichText.Content, {
@@ -376,7 +403,7 @@
 
 			// Add name.
 			if ( props.attributes.add_name ) {
-				var formName = el( 'div', { className: 'ngl-form-field' },
+				var formName = el( 'div', { className: 'ngl-form-field', style: fieldStyle },
 							el( RichText.Content, {
 								tagName: 'label',
 								className: 'ngl-form-label',
@@ -394,7 +421,7 @@
 			}
 
 			// Email.
-			var formEmail = el( 'div', { className: 'ngl-form-field' },
+			var formEmail = el( 'div', { className: 'ngl-form-field', style: fieldStyle },
 							el( RichText.Content, {
 								tagName: 'label',
 								className: 'ngl-form-label',
