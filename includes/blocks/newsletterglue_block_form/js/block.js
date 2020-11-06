@@ -91,6 +91,12 @@
 				'type' : 'number',
 				'default' : 25,
 			},
+			name_placeholder: {
+				'type' : 'string',
+			},
+			email_placeholder: {
+				'type' : 'string',
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
 
@@ -143,9 +149,14 @@
 								placeholder: 'Name',
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
-								el( 'div', { className: 'ngl-form-input-text' },
-								
-								)
+								el( RichText, {
+									tagName: 'div',
+									className: 'ngl-form-input-text',
+									value: props.attributes.name_placeholder,
+									format: 'string',
+									onChange: ( value ) => { props.setAttributes( { name_placeholder: value } ); },
+									multiline: '&nbsp;'
+								} )
 							)
 						);
 			} else {
@@ -162,9 +173,14 @@
 								placeholder: 'Email',
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
-								el( 'div', { className: 'ngl-form-input-text' },
-								
-								)
+								el( RichText, {
+									tagName: 'div',
+									className: 'ngl-form-input-text',
+									value: props.attributes.email_placeholder,
+									format: 'string',
+									onChange: ( value ) => { props.setAttributes( { email_placeholder: value } ); },
+									multiline: '&nbsp;'
+								} )
 							)
 						);
 
@@ -411,7 +427,7 @@
 								'for' : 'ngl_name'
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
-								el( 'input', { type: 'text', className: 'ngl-form-input-text', name: 'ngl_name', id: 'ngl_name' },
+								el( 'input', { type: 'text', className: 'ngl-form-input-text', name: 'ngl_name', id: 'ngl_name', placeholder: props.attributes.name_placeholder },
 								
 								)
 							)
@@ -429,7 +445,7 @@
 								'for' : 'ngl_email'
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
-								el( 'input', { type: 'email', className: 'ngl-form-input-text', name: 'ngl_email', id: 'ngl_email' },
+								el( 'input', { type: 'email', className: 'ngl-form-input-text', name: 'ngl_email', id: 'ngl_email', placeholder: props.attributes.email_placeholder },
 								
 								)
 							)
