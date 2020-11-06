@@ -274,7 +274,7 @@ add_action( 'wp_ajax_nopriv_newsletterglue_block_form_subscribe', 'newsletterglu
 //add_action( 'init', 'test_stuff' );
 function test_stuff() {
 
-	$app = 'mailerlite';
+	$app = 'sendinblue';
 
 	include_once newsletterglue_get_path( $app ) . '/init.php';
 
