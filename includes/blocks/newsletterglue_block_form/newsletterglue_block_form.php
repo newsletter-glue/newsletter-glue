@@ -232,7 +232,7 @@ function newsletterglue_add_form_css() { ?>
  */
 function newsletterglue_block_form_subscribe() {
 
-	$result = array();
+	$result = 0;
 
 	check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
 
@@ -260,33 +260,17 @@ function newsletterglue_block_form_subscribe() {
 
 	if ( method_exists( $api, 'add_user' ) ) {
 		$result = $api->add_user( $data );
-		if ( $result > 0 ) {
-			wp_send_json_success();
-		} else {
-			wp_send_json_error();
-		}
+	}
+
+	// 3rd party hooks.
+	do_action( 'newsletterglue_form_block_signup', $app, $api, $data );
+
+	if ( $result > 0 ) {
+		wp_send_json_success();
+	} else {
+		wp_send_json_error();
 	}
 
 }
 add_action( 'wp_ajax_newsletterglue_block_form_subscribe', 'newsletterglue_block_form_subscribe' );
 add_action( 'wp_ajax_nopriv_newsletterglue_block_form_subscribe', 'newsletterglue_block_form_subscribe' );
-
-//add_action( 'init', 'test_stuff' );
-function test_stuff() {
-
-	$app = 'sendinblue';
-
-	include_once newsletterglue_get_path( $app ) . '/init.php';
-
-	$classname 	= 'NGL_' . ucfirst( $app );
-	$api		= new $classname();
-	
-	$data = array(
-		'name' 		=> 'Abdo Elmasry',
-		'email' 	=> 'ahmedfouaddev@gmail.com',
-	);
-
-	$result = $api->add_user( $data );
-	die( print_r( $result ) );
-
-}
