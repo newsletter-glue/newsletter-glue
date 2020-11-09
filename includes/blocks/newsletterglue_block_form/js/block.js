@@ -206,6 +206,7 @@
 			var app = newsletterglue_meta.app;
 
 			var SelectList = '';
+
 			if ( app == 'campaignmonitor' ) {
 				SelectList = el( SelectControl, {
 					label: 'Select a list',
@@ -213,6 +214,10 @@
 					onChange: ( value ) => { props.setAttributes( { list_id: value } ); },
 					options: newsletterglue_meta.the_lists,
 				} );
+			}
+
+			if (  ! props.attributes.list_id && newsletterglue_meta.the_lists[0]['value'] ) {
+				props.setAttributes( { list_id: newsletterglue_meta.the_lists[0]['value'] } );
 			}
 
 			return (
