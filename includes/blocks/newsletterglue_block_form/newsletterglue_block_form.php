@@ -250,6 +250,7 @@ function newsletterglue_add_form_css() { ?>
 function newsletterglue_block_form_subscribe() {
 
 	$result = 0;
+	$error  = '';
 
 	check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
 
@@ -275,17 +276,37 @@ function newsletterglue_block_form_subscribe() {
 		}
 	}
 
+	// No email.
+	if ( empty( $data[ 'email' ] ) ) {
+		$error = __( 'Please enter an email.', 'newsletter-glue' );
+	} else if ( ! is_email( $data[ 'email' ] ) ) {
+		$error = __( 'Please enter a valid email.', 'newsletter-glue' );
+	}
+
+	// Return any errors.
+	if ( $error ) {
+		wp_send_json( array(
+			'success'	=> false,
+			'message' 	=> $error
+		) );
+	}
+
+	// Load the ESP API to add a user and return a result.
 	if ( method_exists( $api, 'add_user' ) ) {
 		$result = $api->add_user( $data );
 	}
 
-	// 3rd party hooks.
+	// Do something after that. 3rd party hooks.
 	do_action( 'newsletterglue_form_block_signup', $app, $api, $data );
 
+	// Return result.
 	if ( $result > 0 ) {
 		wp_send_json_success();
 	} else {
-		wp_send_json_error();
+		wp_send_json( array(
+			'success'	=> false,
+			'message' 	=> __( 'We could not subscribe you at this time. Try again later.', 'newsletter-glue' )
+		) );
 	}
 
 }

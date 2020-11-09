@@ -103,6 +103,11 @@
 	height: auto;
 }
 
+.ngl-message-overlay-text {
+	font-size: 14px;
+	display: inline-block;
+}
+
 .ngl-message-svg-wrap {
 	background: #169620;
 	width: 32px;
@@ -113,9 +118,4 @@
     align-items: center;
     justify-content: center;
 	margin: 0 10px 0 0;
-}
-
-.ngl-message-overlay-text {
-	font-size: 14px;
-	display: inline-block;
 }
