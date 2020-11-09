@@ -41,11 +41,13 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 					$lists = newsletterglue_get_option( 'lists', $app );
 				}
 
+				$the_lists = $api->get_lists();
+
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_lists',
 					'legacy'		=> true,
 					'helper'		=> __( 'Who receives your email.', 'newsletter-glue' ),
-					'options'		=> $api->get_lists(),
+					'options'		=> $the_lists,
 					'default'		=> explode( ',', $lists ),
 					'multiple'		=> true,
 					'placeholder'	=> __( 'Select list(s)', 'newsletter-glue' ),

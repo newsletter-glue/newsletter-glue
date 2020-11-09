@@ -97,6 +97,9 @@
 			email_placeholder: {
 				'type' : 'string',
 			},
+			list_id: {
+				'type' : 'string',
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
 
@@ -198,6 +201,18 @@
 			var isOverlayshown = '';
 			if ( props.attributes.toggle_success ) {
 				isOverlayshown = 'ngl-show';
+			}
+
+			var app = newsletterglue_meta.app;
+
+			var SelectList = '';
+			if ( app == 'campaignmonitor' ) {
+				SelectList = el( SelectControl, {
+					label: 'Select a list',
+					value: props.attributes.list_id,
+					onChange: ( value ) => { props.setAttributes( { list_id: value } ); },
+					options: newsletterglue_meta.the_lists,
+				} );
 			}
 
 			return (
@@ -320,7 +335,11 @@
 						} ),
 
 						el( PanelBody, { title: newsletterglue_meta.app_name + ' integration', initialOpen: true },
+							el( PanelRow, {},
 
+								SelectList
+
+							),
 						),
 
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },

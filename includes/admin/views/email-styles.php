@@ -14,6 +14,8 @@ $font_family = newsletterglue_get_theme_option( 'font' );
 <html>
 <head>
 
+<?php do_action( 'newsletterglue_newsletter_head_tag' ); ?>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style type="text/css">
@@ -248,6 +250,8 @@ p.ngl-credits a {
 <?php do_action( 'newsletterglue_add_custom_styles' ); ?>
 
 </style>
+
+<?php do_action( 'newsletterglue_newsletter_closing_head_tag' ); ?>
 
 </head>
 <body>

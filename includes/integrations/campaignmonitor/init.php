@@ -492,6 +492,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		}
 
 		return -1;
+
 	}
 
 }

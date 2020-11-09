@@ -110,7 +110,7 @@ add_action( 'save_post', 'newsletterglue_save_meta_box', 1, 2 );
  * Shows the metabox content.
  */
 function newsletterglue_meta_box() {
-	global $post;
+	global $post, $the_lists;
 
 	if ( ! $app = newsletterglue_default_connection() ) {
 

@@ -69,6 +69,8 @@ function newsletterglue_block_form() {
  */
 function newsletterglue_form_block_render( $attributes, $content ) {
 
+	$inputs = '';
+
 	$defaults = get_option( 'newsletterglue_block_form' );
 	if ( ! $defaults ) {
 		$defaults = array(
@@ -95,6 +97,18 @@ function newsletterglue_form_block_render( $attributes, $content ) {
 	}
 
 	$content = str_replace( 'class="wp-block-newsletterglue-form', 'data-app="' . newsletterglue_default_connection() . '" class="wp-block-newsletterglue-form', $content );
+
+	if ( ! defined( 'NGL_IN_EMAIL' ) && $content ) {
+		if ( is_array( $attributes ) ) {
+			$list_id = isset( $attributes[ 'list_id' ] ) ? $attributes[ 'list_id' ] : '';
+			if ( $list_id ) {
+				$inputs .= '<input type="hidden" name="ngl_list_id" id="ngl_list_id" value="' . esc_attr( $list_id ) . '">';
+			}
+			if ( $inputs ) {
+				$content = str_replace( '</form>', $inputs . '</form>', $content );
+			}
+		}
+	}
 
 	return $content;
 
@@ -252,9 +266,9 @@ function newsletterglue_block_form_subscribe() {
 	// Prepare data to send to the ESP endpoint.
 	foreach( $_POST as $key => $value ) {
 		if ( strstr( $key, 'ngl_' ) ) {
-			$key 	= str_replace( 'ngl_', '', $key );
-			$value 	= sanitize_text_field( $_POST[ $key ] );
-			$data[ $key ] = $value;
+			$stripped_key 			= str_replace( 'ngl_', '', $key );
+			$value 					= sanitize_text_field( $_POST[ $key ] );
+			$data[ $stripped_key ] 	= $value;
 		}
 	}
 

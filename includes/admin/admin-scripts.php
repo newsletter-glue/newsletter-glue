@@ -91,9 +91,11 @@ add_action( 'admin_enqueue_scripts', 'newsletterglue_load_admin_scripts', 100 );
  */
 function newsletterglue_js_data() {
 
-	global $post;
+	global $post, $the_lists;
 
 	if ( isset( $post->ID ) ) {
+
+		$app = newsletterglue_default_connection();
 
 		$data = array(
 			'post_id'		=> $post->ID,
@@ -102,9 +104,20 @@ function newsletterglue_js_data() {
 			'author_name'	=> get_the_author_meta( 'display_name', $post->post_author ),
 			'author_bio'	=> get_the_author_meta( 'description', $post->post_author ),
 			'post_date'		=> date( 'l, j M Y', strtotime( $post->post_date ) ),
-			'app'			=> newsletterglue_default_connection(),
-			'app_name'		=> newsletterglue_get_name( newsletterglue_default_connection() ),
+			'app'			=> $app,
+			'app_name'		=> newsletterglue_get_name( $app ),
 		);
+
+		$use_blocks = get_option( 'newsletterglue_use_blocks' );
+		if ( isset( $use_blocks[ 'newsletterglue_block_form' ] ) && $use_blocks[ 'newsletterglue_block_form' ] === 'yes' ) {
+			if ( ! empty( $the_lists ) ) {
+				$lists = array();
+				foreach( $the_lists as $key => $value ) {
+					$lists[] = array( 'value' => $key, 'label' => $value );
+				}
+				$data[ 'the_lists' ] = $lists;
+			}
+		}
 
 		wp_localize_script( 'newsletterglue_meta', 'newsletterglue_meta', $data );
 
