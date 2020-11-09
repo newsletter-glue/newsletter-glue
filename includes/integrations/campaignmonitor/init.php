@@ -476,7 +476,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		$api = new CS_REST_Subscribers( $list_id, array( 'api_key' => $this->api_key ) );
 
 		$user = array(
-			'Name'										=> $name,
+			'Name'										=> ! empty( $name ) ? $name : '',
 			'EmailAddress'								=> $email,
 			'ConsentToTrack'							=> 'yes',
 			'Resubscribe'								=> true,
