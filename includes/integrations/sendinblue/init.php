@@ -418,4 +418,47 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 
 	}
 
+	/**
+	 * Add user to this ESP.
+	 */
+	public function add_user( $data ) {
+		extract( $data );
+
+		if ( empty( $email ) ) {
+			return -1;
+		}
+
+		$fname = '';
+		$lname = '';
+
+		if ( isset( $name ) ) {
+			$name_array = $array = explode( ' ', $name, 2 );
+			$fname = $name_array[0];
+			$lname = isset( $name_array[1] ) ? $name_array[1] : '';
+		}
+
+		$this->api  = new NGL_SendinblueApiClient( $this->api_key );
+
+		$attributes = new stdClass();
+		$attributes->FNAME = trim( $fname );
+		$attributes->LNAME = trim( $lname );
+
+		$user = array(
+			'email'				=> $email,
+			'updateEnabled'		=> true,
+			'attributes'		=> $attributes,
+		);
+
+		if ( ! empty( $list_id ) ) {
+			if ( ! is_array( $list_id ) ) {
+				$list_id = explode( ',', $list_id );
+			}
+			$user[ 'listIds' ] = $list_id;
+		}
+
+		$result = $this->api->createUser( $user );
+
+		return true;
+	}
+
 }

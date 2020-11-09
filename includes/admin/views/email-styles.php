@@ -14,6 +14,8 @@ $font_family = newsletterglue_get_theme_option( 'font' );
 <html>
 <head>
 
+<?php do_action( 'newsletterglue_newsletter_head_tag' ); ?>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style type="text/css">
@@ -67,7 +69,7 @@ p {
 }
 
 a {
-	color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?> !important;
+	color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?>;
 }
 
 figure {
@@ -160,7 +162,7 @@ p.ngl-credits a {
 	text-decoration: none;
 	background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?> !important;
 	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;
-	width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px !important;
+	min-width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px !important;
 	border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?> !important;
 	border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px !important;
 }
@@ -234,7 +236,7 @@ p.ngl-credits a {
 	}
 
 	.wp-block-button__link {
-		width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px !important;
+		min-width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px !important;
 	}
 
 	.ngl-logo img {
@@ -248,6 +250,8 @@ p.ngl-credits a {
 <?php do_action( 'newsletterglue_add_custom_styles' ); ?>
 
 </style>
+
+<?php do_action( 'newsletterglue_newsletter_closing_head_tag' ); ?>
 
 </head>
 <body>

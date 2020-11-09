@@ -31,6 +31,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		include_once 'lib/csrest_campaigns.php';
 		include_once 'lib/csrest_lists.php';
 		include_once 'lib/csrest_clients.php';
+		include_once 'lib/csrest_subscribers.php';
 
 		$this->get_api_key();
 
@@ -459,6 +460,38 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		}
 
 		return $output;
+
+	}
+
+	/**
+	 * Add user to this ESP.
+	 */
+	public function add_user( $data ) {
+		extract( $data );
+
+		if ( empty( $email ) || empty( $list_id ) ) {
+			return -1;
+		}
+
+		$api = new CS_REST_Subscribers( $list_id, array( 'api_key' => $this->api_key ) );
+
+		$user = array(
+			'Name'										=> ! empty( $name ) ? $name : '',
+			'EmailAddress'								=> $email,
+			'ConsentToTrack'							=> 'yes',
+			'Resubscribe'								=> true,
+			'RestartSubscriptionBasedAutoResponders'	=> true,
+		);
+
+		$result = $api->add( $user );
+
+		if ( isset( $result->http_status_code ) ) {
+			if ( $result->http_status_code == 201 ) {
+				return true;
+			}
+		}
+
+		return -1;
 
 	}
 

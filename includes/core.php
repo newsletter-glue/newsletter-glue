@@ -245,6 +245,8 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 	$html = str_replace( '{custom_css}', wp_strip_all_tags( get_option( 'newsletterglue_css' ) ), $html );
 	$html = preg_replace( '/<!--(.*)-->/Uis', '', $html );
 
+	$html = str_replace( '{post_permalink}', get_permalink( $post->ID ), $html );
+
 	return apply_filters( 'newsletterglue_generate_content', $html, $post );
 }
 

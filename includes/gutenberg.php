@@ -27,6 +27,7 @@ function newsletterglue_get_blocks() {
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_form' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_form' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_form',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_form/icon/icon.svg',
+			'is_pro'		=> 'yes',
 		),
 		'newsletterglue_block_author' => array(
 			'title'			=> __( 'Author byline', 'newsletter-glue' ),
@@ -34,7 +35,7 @@ function newsletterglue_get_blocks() {
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_author' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_author' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_author',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/icon/icon.svg',
-			'pro'			=> 'yes',
+			'is_pro'		=> 'yes',
 		),
 		'newsletterglue_block_callout' => array(
 			'title'			=> __( 'Callout card', 'newsletter-glue' ),
@@ -42,7 +43,7 @@ function newsletterglue_get_blocks() {
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_callout' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_callout' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_callout',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_callout/icon/icon.svg',
-			'pro'			=> 'yes',
+			'is_pro'		=> 'yes',
 		),
 		'newsletterglue_block_metadata' => array(
 			'title'			=> __( 'Newsletter meta data', 'newsletter-glue' ),
@@ -50,7 +51,7 @@ function newsletterglue_get_blocks() {
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_metadata' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_metadata' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_metadata',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/icon/icon.svg',
-			'pro'			=> 'yes',
+			'is_pro'		=> 'yes',
 		),
 	);
 
@@ -75,3 +76,33 @@ function newsletterglue_add_block_category( $categories, $post ) {
 
 }
 add_filter( 'block_categories', 'newsletterglue_add_block_category', 10, 2 );
+
+/**
+ * Enqueues the required frontend scripts.
+ */
+function newsletterglue_load_frontend_scripts( $hook ) {
+	global $wp_scripts;
+
+	$js_dir  = NGL_PLUGIN_URL . 'assets/js/';
+	$css_dir = NGL_PLUGIN_URL . 'assets/css/';
+
+	// Use minified libraries if SCRIPT_DEBUG is turned off
+	$suffix  = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+	// Register scripts.
+	wp_register_script( 'newsletterglue_gutenberg', $js_dir . 'frontend/gutenberg' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
+	wp_enqueue_script( 'newsletterglue_gutenberg' );
+
+	wp_localize_script( 'newsletterglue_gutenberg', 'newsletterglue_gutenberg', apply_filters( 'newsletterglue_gutenberg_js_params',
+		array(
+			'ajaxurl'    		=> newsletterglue_get_ajax_url(),
+			'ajaxnonce'			=> wp_create_nonce( 'newsletterglue-ajax-nonce' ),
+			'please_wait'		=> __( 'Please wait...', 'newsletter-glue' ),
+		)
+	) );
+
+	wp_register_style( 'newsletterglue_gutenberg', $css_dir . 'gutenberg' . $suffix . '.css', array(), NGL_VERSION );
+	wp_enqueue_style( 'newsletterglue_gutenberg' );
+
+}
+add_action( 'wp_enqueue_scripts', 'newsletterglue_load_frontend_scripts', 100 );

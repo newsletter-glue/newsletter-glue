@@ -425,4 +425,36 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 		<?php
 	}
 
+	/**
+	 * Add user to this ESP.
+	 */
+	public function add_user( $data ) {
+		extract( $data );
+
+		if ( empty( $email ) ) {
+			return -1;
+		}
+
+		$this->api = new \MailerLiteApi\MailerLite( $this->api_key );
+
+		$subscriber = array(
+			'email' 	=> $email,
+			'name' 		=> ! empty( $name ) ? $name : '',
+		);
+
+		if ( ! empty( $list_id ) ) {
+			$groupsApi	 	= $this->api->groups();
+			$result 		= $groupsApi->addSubscriber( $list_id, $subscriber );
+		} else {
+			$subscribersApi = $this->api->subscribers();
+			$result 		= $subscribersApi->create( $subscriber );
+		}
+
+		if ( isset( $result->id ) ) {
+			return true;
+		}
+
+		return -1;
+	}
+
 }

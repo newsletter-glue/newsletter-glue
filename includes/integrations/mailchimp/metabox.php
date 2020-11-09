@@ -47,12 +47,14 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 						}
 					}
 				}
+				
+				$the_lists = $defaults->audiences;
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_audience',
 					'legacy'		=> true,
 					'helper'		=> __( 'Who receives your email.', 'newsletter-glue' ),
 					'class'			=> 'is-required',
-					'options'		=> $defaults->audiences,
+					'options'		=> $the_lists,
 					'default'		=> $audience,
 				) );
 			?>

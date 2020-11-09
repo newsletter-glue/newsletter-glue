@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					'options'		=> $api->get_groups(),
 					'default'		=> explode( ',', $groups ),
 					'multiple'		=> true,
-					'placeholder'	=> __( 'Everyone', 'newsletter-glue' ),
+					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),
 				) );
 			?>
 		</div>
@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					'default'		=> explode( ',', $segments ),
 					'class'			=> 'ngl-ajax',
 					'multiple'		=> true,
-					'placeholder'	=> __( 'Everyone', 'newsletter-glue' ),
+					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),
 				) );
 
 			?>

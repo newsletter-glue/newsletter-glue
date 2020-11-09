@@ -54,7 +54,7 @@ if ( ! $logo_position ) {
 
 		<p class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;"><a href="#" style="color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?> !important"><?php _e( 'Snowball, Shel Silverstein', 'newsletter-glue' ); ?></a></p>
 
-		<div class="wp-block-button"><p><a class="wp-block-button__link" href="#" style="background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?>;border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px;border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?>;color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px;"><?php _e( 'Read more', 'newsleter-glue' ); ?></a></p></div>
+		<div class="wp-block-button"><p><a class="wp-block-button__link" href="#" style="background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?>;border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px;border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?>;color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;min-width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px;"><?php _e( 'Read more', 'newsleter-glue' ); ?></a></p></div>
 
 		<div class="ngl-credits is-hidden"><?php echo sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="https://wordpress.org/plugins/newsletter-glue/">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ); ?></div>
 
@@ -94,7 +94,7 @@ if ( ! $logo_position ) {
 
 		<p class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;"><a href="#" style="color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?> !important"><?php _e( 'Snowball, Shel Silverstein', 'newsletter-glue' ); ?></a></p>
 
-		<div class="wp-block-button"><p><a class="wp-block-button__link" href="#" style="background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?>;border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px;border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?>;color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px;"><?php _e( 'Read more', 'newsleter-glue' ); ?></a></p></div>
+		<div class="wp-block-button"><p><a class="wp-block-button__link" href="#" style="background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?>;border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px;border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?>;color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;min-width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px;"><?php _e( 'Read more', 'newsleter-glue' ); ?></a></p></div>
 
 		<div class="ngl-credits is-hidden"><?php echo sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="https://wordpress.org/plugins/newsletter-glue/">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ); ?></div>
 

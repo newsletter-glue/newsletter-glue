@@ -168,7 +168,7 @@
 			if ( value == 0 ) {
 				width = 'auto';
 			}
-			email.find( '.wp-block-button__link' ).css( { 'width' : width } );
+			email.find( '.wp-block-button__link' ).css( { 'min-width' : width } );
 		}
 
 		// container

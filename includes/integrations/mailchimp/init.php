@@ -520,4 +520,49 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 		return $response;
 	}
 
+	/**
+	 * Add user to this ESP.
+	 */
+	public function add_user( $data ) {
+		extract( $data );
+
+		$fname = '';
+		$lname = '';
+
+		if ( empty( $list_id ) || empty( $email ) ) {
+			return -1;
+		}
+
+		$this->api = new NGL_Mailchimp_API( $this->api_key );
+		$this->api->verify_ssl = false;
+
+		if ( isset( $name ) ) {
+			$name_array = $array = explode( ' ', $name, 2 );
+			$fname = $name_array[0];
+			$lname = isset( $name_array[1] ) ? $name_array[1] : '';
+		}
+
+		$hash 		= $this->api::subscriberHash( $email );
+		$batch		= $this->api->new_batch();
+		$batch->put( "op$list_id", "lists/$list_id/members/$hash", [
+				'email_address' 	=> $email,
+				'status'        	=> 'subscribed',
+				'status_if_new' 	=> 'subscribed',
+				'merge_fields' 	 	=> array(
+					'FNAME'	=> $fname,
+					'LNAME'	=> $lname
+				),
+		] );
+
+		$batch->execute();
+
+		$result = $batch->check_status();
+
+		if ( isset( $result[ 'id' ] ) ) {
+			return true;
+		}
+
+		return -1;
+	}
+
 }
