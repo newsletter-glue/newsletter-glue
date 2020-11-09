@@ -29,7 +29,7 @@
 				if ( response.success ) {
 
 					theform.find( '.ngl-message-overlay' ).addClass( 'ngl-show' );
-					theform.find( 'input' ).val( '' );
+					theform.find( 'input[type=text], input[type=email]' ).val( '' );
 
 					setTimeout( function() {
 						theform.find( '.ngl-message-overlay' ).removeClass( 'ngl-show' );

@@ -40,12 +40,12 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 				} else {
 					$groups = newsletterglue_get_option( 'groups', $app );
 				}
-
+				$the_lists = $api->get_groups();
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_groups',
 					'legacy'		=> true,
 					'helper'		=> __( 'Who receives your email.', 'newsletter-glue' ),
-					'options'		=> $api->get_groups(),
+					'options'		=> $the_lists,
 					'default'		=> explode( ',', $groups ),
 					'multiple'		=> true,
 					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),

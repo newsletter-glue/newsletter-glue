@@ -112,6 +112,9 @@ function newsletterglue_js_data() {
 		if ( isset( $use_blocks[ 'newsletterglue_block_form' ] ) && $use_blocks[ 'newsletterglue_block_form' ] === 'yes' ) {
 			if ( ! empty( $the_lists ) ) {
 				$lists = array();
+				if ( $app == 'mailerlite' ) {
+					$lists[] = array( 'label' => __( '― No group', 'newsletter-glue' ), 'value' => '' );
+				}
 				foreach( $the_lists as $key => $value ) {
 					$lists[] = array( 'value' => $key, 'label' => $value );
 				}

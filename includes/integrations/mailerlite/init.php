@@ -438,9 +438,9 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 			'name' 		=> $name,
 		);
 
-		if ( ! empty( $group_id ) ) {
+		if ( ! empty( $list_id ) ) {
 			$groupsApi	 	= $this->api->groups();
-			$result 		= $groupsApi->addSubscriber( $group_id, $subscriber );
+			$result 		= $groupsApi->addSubscriber( $list_id, $subscriber );
 		} else {
 			$subscribersApi = $this->api->subscribers();
 			$result 		= $subscribersApi->create( $subscriber );
