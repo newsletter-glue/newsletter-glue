@@ -223,6 +223,23 @@
 					options: newsletterglue_meta.the_lists,
 				} );
 			}
+			if ( app == 'mailchimp' ) {
+				SelectList = el( SelectControl, {
+					label: 'Select an audience',
+					value: props.attributes.list_id,
+					onChange: ( value ) => { props.setAttributes( { list_id: value } ); },
+					options: newsletterglue_meta.the_lists,
+				} );
+			}
+			if ( app == 'sendinblue' ) {
+				SelectList = el( SelectControl, {
+					label: 'Select list(s)',
+					value: props.attributes.list_id,
+					onChange: ( value ) => { props.setAttributes( { list_id: value } ); },
+					options: newsletterglue_meta.the_lists,
+					multiple: true,
+				} );
+			}
 
 			if (  ! props.attributes.list_id && newsletterglue_meta.the_lists[0]['value'] ) {
 				props.setAttributes( { list_id: newsletterglue_meta.the_lists[0]['value'] } );
@@ -336,7 +353,7 @@
 								},
 								{
 									value: props.attributes.button_outline,
-									label: 'Button fill',
+									label: 'Button outline',
 									onChange: ( value ) => props.setAttributes( { button_outline: value } ),
 								},
 								{

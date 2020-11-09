@@ -102,6 +102,9 @@ function newsletterglue_form_block_render( $attributes, $content ) {
 		if ( is_array( $attributes ) ) {
 			$list_id = isset( $attributes[ 'list_id' ] ) ? $attributes[ 'list_id' ] : '';
 			if ( $list_id ) {
+				if ( is_array( $list_id ) ) {
+					$list_id = implode( ',', $list_id );
+				}
 				$inputs .= '<input type="hidden" name="ngl_list_id" id="ngl_list_id" value="' . esc_attr( $list_id ) . '">';
 			}
 			if ( $inputs ) {

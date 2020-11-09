@@ -431,11 +431,15 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	public function add_user( $data ) {
 		extract( $data );
 
+		if ( empty( $email ) ) {
+			return -1;
+		}
+
 		$this->api = new \MailerLiteApi\MailerLite( $this->api_key );
 
 		$subscriber = array(
 			'email' 	=> $email,
-			'name' 		=> $name,
+			'name' 		=> ! empty( $name ) ? $name : '',
 		);
 
 		if ( ! empty( $list_id ) ) {

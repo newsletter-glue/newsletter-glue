@@ -449,8 +449,11 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 			'attributes'		=> $attributes,
 		);
 
-		if ( ! empty( $list_ids ) && is_array( $list_ids ) ) {
-			$user[ 'listIds' ] = $list_ids;
+		if ( ! empty( $list_id ) ) {
+			if ( ! is_array( $list_id ) ) {
+				$list_id = explode( ',', $list_id );
+			}
+			$user[ 'listIds' ] = $list_id;
 		}
 
 		$result = $this->api->createUser( $user );
