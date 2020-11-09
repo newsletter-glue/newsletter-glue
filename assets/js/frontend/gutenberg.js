@@ -18,13 +18,14 @@
 			url : newsletterglue_gutenberg.ajaxurl,
 			data : data,
 			beforeSend: function() {
-				btn.html( newsletterglue_gutenberg.please_wait );
+				btn.html( newsletterglue_gutenberg.please_wait ).addClass( 'ngl-working' );
 			},
 			success: function( response ) {
 
 				console.log( response );
 
-				btn.html( btn_text );
+				$( '.ngl-form-errors' ).remove();
+				btn.html( btn_text ).removeClass( 'ngl-working' );
 
 				if ( response.success ) {
 
@@ -36,6 +37,8 @@
 					}, 3000 );
 
 				} else {
+
+					$( '.ngl-form-container' ).before( '<div class="ngl-form-errors">' + response.message + '</div>' );
 
 				}
 
