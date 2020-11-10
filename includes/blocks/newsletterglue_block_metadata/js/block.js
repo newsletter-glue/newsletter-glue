@@ -2,7 +2,7 @@
 
 	const el = element.createElement;
     const { registerBlockType } = blocks;
-	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, MediaUpload, PlainText } = editor;
+	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, MediaUpload, PlainText, BlockControls, AlignmentToolbar } = editor;
 	const { Fragment } = element;
 	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, RangeControl, BaseControl, ButtonGroup, Button, ColorPicker } = components;
 
@@ -50,11 +50,16 @@
 				'type' : 'string',
 				'default' : 'line',
 			},
+			alignment: {
+				type: 'string',
+				'default' : 'center',
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
 
 			var metaStyles = {
 				color: props.attributes.text_color,
+				textAlign: props.attributes.alignment,
 			};
 
 			var dividerStyles = [
@@ -76,6 +81,10 @@
 				),
 				el( 'div', { className: 'ngl-metadata-sep' }, divider )
 			];
+
+			function onChangeAlignment( newAlignment ) {
+				props.setAttributes( { alignment: newAlignment } );
+			}
 
 			return (
 
@@ -127,6 +136,15 @@
 							)
 						),
 
+					),
+
+					el( BlockControls, {},
+						el( AlignmentToolbar,
+							{
+								value: props.attributes.alignment,
+								onChange: onChangeAlignment
+							}
+						)
 					),
 
 					// This is how the block is rendered in editor.
@@ -188,6 +206,7 @@
 
 			var metaStyles = {
 				color: props.attributes.text_color,
+				textAlign: props.attributes.alignment,
 			};
 
 			var metaTitle = '';
@@ -241,6 +260,13 @@
 				el( 'div', { className: 'ngl-metadata-sep' }, divider )
 			];
 
+			var metaPermalink = el( RichText.Content, {
+				tagName: 'a',
+				className: 'ngl-metadata-permalink',
+				value: props.attributes.post_link,
+				href: newsletterglue_meta.post_perma
+			} );
+
 			return (
 
 					el( 'div', { className: 'ngl-metadata', style: metaStyles },
@@ -248,12 +274,7 @@
 						metaTitle,
 						metaDate,
 						metaLocation,
-						el( RichText.Content, {
-							tagName: 'a',
-							className: 'ngl-metadata-permalink',
-							value: props.attributes.post_link,
-							href: newsletterglue_meta.post_perma
-						} ),
+						metaPermalink,
 						el( 'img', {
 							className: 'ngl-metadata-permalink-arrow',
 							src: newsletterglue_block_metadata.assets_uri + 'arrow.png'

@@ -1,17 +1,12 @@
 .ngl-metadata {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	font-size: 12px;
 	padding: 20px 0;
 }
 
 .ngl-metadata > div {
-	display: inline-block;
-}
-
-.ngl-metadata > div {
 	padding: 0 2px;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .ngl-metadata .ngl-metadata-sep {
@@ -23,13 +18,17 @@
 .ngl-metadata-map-pin {
 	width: 12px;
 	display: inline-block;
-	margin: 0 2px !important;
+	margin: 0 4px 0 0 !important;
+	position: relative;
+	top: 3px;
 }
 
 .ngl-metadata-permalink-arrow {
 	width: 10px;
 	display: inline-block;
 	margin: 0 0 0 4px !important;
+	position: relative;
+	top: 2px;
 }
 
 .ngl-metadata-permalink {
