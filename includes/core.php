@@ -94,6 +94,7 @@ function newsletterglue_get_form_defaults( $post = 0, $api = '' ) {
 	$defaults->test_email		= newsletterglue_get_option( 'from_email', $app );
 	$defaults->subject     		= $subject;
 	$defaults->add_featured 	= get_option( 'newsletterglue_add_featured' );
+	$defaults->preview_text		= '';
 
 	// Get options from API.
 	if ( method_exists( $api, 'get_form_defaults' ) ) {
@@ -203,6 +204,9 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 		define( 'NGL_IN_EMAIL', true );
 	}
 
+	$data 			= get_post_meta( $post->ID, '_newsletterglue', true );
+	$preview_text 	= isset( $data[ 'preview_text' ] ) ? esc_attr( $data[ 'preview_text' ] ) : '';
+
 	$position = get_option( 'newsletterglue_position_featured' );
 	if ( ! $position ) {
 		$position = 'below';
@@ -213,6 +217,11 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 	remove_filter( 'the_content', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
 
 	$the_content = '';
+
+	// Add preview text to email.
+	if ( ! empty( $preview_text ) ) {
+		$the_content .= '<div style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;font-family: sans-serif;">' . $preview_text . '</div>';
+	}
 
 	// Add logo.
 	$the_content .= newsletterglue_add_logo();
