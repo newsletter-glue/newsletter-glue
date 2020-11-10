@@ -109,8 +109,8 @@ function newsletterglue_add_author_byline_css() { ?>
 }
 
 .ngl-author-pic {
-	width: 60px;
-	min-width: 60px;
+	width: 50px;
+	min-width: 50px;
 	margin: 0 12px 0 0;
 }
 
