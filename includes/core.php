@@ -212,8 +212,10 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 		$position = 'below';
 	}
 
+	// Get the email template including css tags.
 	$html = newsletterglue_get_email_template( $post, $subject, $app );
 
+	// Remove auto embed.
 	remove_filter( 'the_content', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
 
 	$the_content = '';
@@ -228,7 +230,7 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 
 	$title = isset( $post ) && isset( $post->post_title ) ? $post->post_title : $subject;
 
-	// This is email content.
+	// Masthead and heading
 	if ( $position == 'above' ) {
 		$the_content .= newsletterglue_add_masthead_image( $post, 'above' );
 		$the_content .= '<h1>' . $title . '</h1>';
@@ -237,19 +239,16 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 		$the_content .= newsletterglue_add_masthead_image( $post, 'below' );
 	}
 
+	// Post content.
 	$the_content .= apply_filters( 'the_content', $post->post_content );
 
-	// If credits can be displayed.
+	// Credits.
 	if ( get_option( 'newsletterglue_credits' ) ) {
 		$the_content .= '<p class="ngl-credits">' . sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="https://wordpress.org/plugins/newsletter-glue/">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ) . '</p>';
 	}
 
-	// Add special app text.
-	if ( $app == 'mailerlite' ) {
-		$the_content .= '<p class="ngl-credits"><a href="{$unsubscribe}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a></p>';
-	}
-
 	// Allow 3rd party to customize content tag.
+	$the_content = apply_filters( 'newsletterglue_email_content_' . $app, $the_content, $post, $subject );
 	$the_content = apply_filters( 'newsletterglue_email_content', $the_content, $post, $subject, $app );
 
 	// Process content tags.

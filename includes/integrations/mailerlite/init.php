@@ -29,6 +29,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 		$this->get_api_key();
 
+		add_filter( 'newsletterglue_email_content_mailerlite', array( $this, 'newsletterglue_email_content_mailerlite' ), 10, 3 );
 	}
 
 	/**
@@ -455,6 +456,17 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 		}
 
 		return -1;
+	}
+
+	/**
+	 * Customize content.
+	 */
+	public function newsletterglue_email_content_mailerlite( $content, $post, $subject ) {
+
+		$content .= '<p class="ngl-credits"><a href="{$unsubscribe}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a></p>';;
+
+		return $content;
+
 	}
 
 }
