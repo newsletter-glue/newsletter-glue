@@ -276,7 +276,7 @@ function newsletterglue_add_logo() {
 	$logo_position 	= get_option( 'newsletterglue_position_logo' );
 
 	if ( ! $logo_position ) {
-		$logo_position = 'centre';
+		$logo_position = 'center';
 	}
 
 	if ( $logo ) {
@@ -361,6 +361,13 @@ function newsletterglue_get_theme_default( $key ) {
 		'h5_size'					=> 20,
 		'h6_size'					=> 18,
 		'p_size'					=> 18,
+		'h1_align'					=> 'left',
+		'h2_align'					=> 'left',
+		'h3_align'					=> 'left',
+		'h4_align'					=> 'left',
+		'h5_align'					=> 'left',
+		'h6_align'					=> 'left',
+		'p_align'					=> 'left',
 		'email_bg'					=> '#ffffff',
 		'container_bg'				=> '#ffffff',
 		'a_colour'					=> '#3400FF',

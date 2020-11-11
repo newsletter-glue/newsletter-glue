@@ -226,7 +226,7 @@
 		}
 
 		if ( id == 'ngl_position_logo' ) {
-			$( '.ngl-email-logo' ).removeClass( 'ngl-logo-left ngl-logo-centre ngl-logo-right ngl-logo-full' ).addClass( 'ngl-logo-' + value );
+			$( '.ngl-email-logo' ).removeClass( 'ngl-logo-left ngl-logo-center ngl-logo-right ngl-logo-full' ).addClass( 'ngl-logo-' + value );
 		}
 
 		console.log( data );

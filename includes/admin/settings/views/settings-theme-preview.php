@@ -17,7 +17,7 @@ $logo = get_option( 'newsletterglue_logo' );
 
 $logo_position = get_option( 'newsletterglue_position_logo' );
 if ( ! $logo_position ) {
-	$logo_position = 'centre';
+	$logo_position = 'center';
 }
 
 $title = get_option( 'newsletterglue_add_title' );

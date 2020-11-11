@@ -1858,7 +1858,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	display: inline-block !important;
 }
 
-.ngl-email-logo.ngl-logo-centre { text-align: center; }
+.ngl-email-logo.ngl-logo-center { text-align: center; }
 .ngl-email-logo.ngl-logo-left { text-align: left; }
 .ngl-email-logo.ngl-logo-right { text-align: right; }
 .ngl-email-logo.ngl-logo-full { text-align: center; }

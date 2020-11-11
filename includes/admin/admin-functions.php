@@ -180,8 +180,16 @@ function newsletterglue_setting_dropdown( $id = '', $title = '', $options = arra
  * Setting: Font colour and size.
  */
 function newsletterglue_setting_colour_size( $id = '', $title = '' ) {
+	$options = array(
+		'left'		=> __( 'Align left', 'newsletter-glue' ),
+		'center'	=> __( 'Align center', 'newsletter-glue' ),
+		'right'		=> __( 'Align right', 'newsletter-glue' ),
+	);
+
+	$selected = newsletterglue_get_theme_option( $id . '_align' );
+
 	?>
-	<div class="components-base-control">
+	<div class="components-base-control" data-option="<?php echo esc_attr( $id ); ?>_align">
 		<div class="components-base-control__field">
 			<div>
 				<label class="components-base-control__label" for="ngl_theme_<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $title ); ?></label>
@@ -192,6 +200,21 @@ function newsletterglue_setting_colour_size( $id = '', $title = '' ) {
 			<div>
 				<input class="components-font-size-picker__number ngl-theme-input ngl-desktop" type="number" min="1" value="<?php echo newsletterglue_get_theme_option( $id . '_size' ); ?>" data-option="<?php echo esc_attr( $id ); ?>_size" >
 				<input class="components-font-size-picker__number ngl-theme-input ngl-mobile" type="number" min="1" value="<?php echo newsletterglue_get_theme_option( 'mobile_' . $id . '_size' ); ?>" data-option="mobile_<?php echo esc_attr( $id ); ?>_size" >
+			</div>
+			<div>
+				<div class="ui selection dropdown ngl-theme-input">
+					<input type="hidden" name="<?php echo esc_attr( $id ); ?>_align" id="<?php echo esc_attr( $id ); ?>_align" value="<?php echo esc_attr( $selected ); ?>">
+					<div class="default text"><?php echo esc_html( $selected ); ?></div>
+					<i class="dropdown icon"></i>
+					<div class="menu">
+						<?php foreach( $options as $key => $value ) { ?>
+						<div class="item" data-value="<?php echo esc_attr( $key ); ?>">
+							<img class="ui avatar image" src="<?php echo NGL_PLUGIN_URL . 'assets/images/' . $key . '.png'; ?>" style="width:12px;height:12px;margin-top:0;">
+							<?php echo esc_html( $value ); ?>
+						</div>
+						<?php } ?>
+					</div>
+				</div>
 			</div>
 			<div>
 				<?php newsletterglue_show_save_text(); ?>

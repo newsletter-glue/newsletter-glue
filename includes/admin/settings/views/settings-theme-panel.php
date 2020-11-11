@@ -64,12 +64,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			__( 'Align', 'newsletter-glue' ),
 			array(
 				'left'		=> __( 'Align left', 'newsletter-glue' ),
-				'centre'	=> __( 'Align centre', 'newsletter-glue' ),
+				'center'	=> __( 'Align center', 'newsletter-glue' ),
 				'right'		=> __( 'Align right', 'newsletter-glue' ),
 				'full'		=> __( 'Full width', 'newsletter-glue' ),
 			),
 			null,
-			get_option( 'newsletterglue_position_logo' ) ? get_option( 'newsletterglue_position_logo' ) : 'centre'
+			get_option( 'newsletterglue_position_logo' ) ? get_option( 'newsletterglue_position_logo' ) : 'center'
 		);
 
 		newsletterglue_setting_heading( __( 'Featured image', 'newsletter-glue' ) );
