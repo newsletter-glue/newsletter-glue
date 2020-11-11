@@ -212,6 +212,9 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 		$position = 'below';
 	}
 
+	// Blog title.
+	$show_title = get_option( 'newsletterglue_add_title' );
+
 	// Get the email template including css tags.
 	$html = newsletterglue_get_email_template( $post, $subject, $app );
 
@@ -233,9 +236,13 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 	// Masthead and heading
 	if ( $position == 'above' ) {
 		$the_content .= newsletterglue_add_masthead_image( $post, 'above' );
-		$the_content .= '<h1>' . $title . '</h1>';
+		if ( $show_title !== 'no' ) {
+			$the_content .= '<h1>' . $title . '</h1>';
+		}
 	} else {
-		$the_content .= '<h1>' . $title . '</h1>';
+		if ( $show_title !== 'no' ) {
+			$the_content .= '<h1>' . $title . '</h1>';
+		}
 		$the_content .= newsletterglue_add_masthead_image( $post, 'below' );
 	}
 

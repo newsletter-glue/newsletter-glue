@@ -1657,6 +1657,7 @@ p.ngl-mobile {
 
 .ngl-theme div.ui.selection.dropdown {
 	min-width: 180px !important;
+	width: 60% !important;
 }
 
 div[data-value="arial"] { font-family: "Arial"; }

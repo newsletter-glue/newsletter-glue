@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_preview_text',
 					'class'			=> '',
-					'helper'		=> '',
+					'helper'		=> __( 'Snippet of text that appears after your subject in subscribers\' inboxes.', 'newsletter-glue' ),
 					'value'			=> isset( $settings->preview_text ) ? $settings->preview_text : $defaults->preview_text,
 				) );
 			?>

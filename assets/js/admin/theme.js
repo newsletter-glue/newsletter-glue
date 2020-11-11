@@ -191,6 +191,15 @@
 			}
 		}
 
+		// show/hide post title.
+		if ( id == 'ngl_add_title' ) {
+			if ( value == 1 ) {
+				$( '.ngl-email' ).find( 'h1:first' ).removeClass( 'is-hidden' );
+			} else {
+				$( '.ngl-email' ).find( 'h1:first' ).addClass( 'is-hidden' );
+			}
+		}
+
 		// show/hide featured image.
 		if ( id == 'ngl_add_featured' ) {
 			if ( value == 1 ) {
@@ -204,13 +213,13 @@
 			if ( value == 'above' ) {
 				$( '.ngl-email' ).each( function() {
 					var el = $( this ).find( '.ngl-masthead-below' );
-					el.insertBefore( $( this ).find( 'h1' ) );
+					el.insertBefore( $( this ).find( 'h1.ngl-primary-h' ) );
 					el.removeClass( 'ngl-masthead-below' ).addClass( 'ngl-masthead-above' );
 				} );
 			} else {
 				$( '.ngl-email' ).each( function() {
 					var el = $( this ).find( '.ngl-masthead-above' );
-					el.insertAfter( $( this ).find( 'h1' ) );
+					el.insertAfter( $( this ).find( 'h1.ngl-primary-h' ) );
 					el.removeClass( 'ngl-masthead-above' ).addClass( 'ngl-masthead-below' );
 				} );
 			}

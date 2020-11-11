@@ -20,6 +20,8 @@ if ( ! $logo_position ) {
 	$logo_position = 'centre';
 }
 
+$title = get_option( 'newsletterglue_add_title' );
+
 ?>
 
 <div class="ngl-email ngl-desktop" style="background-color: <?php echo newsletterglue_get_theme_option( 'email_bg' ); ?>; <?php if ( $font_family ) : ?>font-family: <?php echo $font_family; ?>;<?php endif; ?>">
@@ -34,7 +36,7 @@ if ( ! $logo_position ) {
 		<div class="ngl-desktop ngl-masthead ngl-masthead-above"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
 		<?php endif; ?>
 
-		<h1 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: Blog post title', 'newsletter-glue' ); ?></h1>
+		<h1 class="ngl-desktop ngl-primary-h <?php if ( $title === 'no' ) echo 'is-hidden'; ?>" style="font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: Blog post title', 'newsletter-glue' ); ?></h1>
 
 		<?php if ( $position == 'below' ) : ?>
 		<div class="ngl-desktop ngl-masthead ngl-masthead-below"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
@@ -76,7 +78,7 @@ if ( ! $logo_position ) {
 		<div class="ngl-mobile ngl-masthead ngl-masthead-above"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
 		<?php endif; ?>
 
-		<h1 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: Blog post title', 'newsletter-glue' ); ?></h1>
+		<h1 class="ngl-mobile ngl-primary-h <?php if ( $title === 'no' ) echo 'is-hidden'; ?>" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: Blog post title', 'newsletter-glue' ); ?></h1>
 
 		<?php if ( $position == 'below' ) : ?>
 		<div class="ngl-mobile ngl-masthead ngl-masthead-below"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
