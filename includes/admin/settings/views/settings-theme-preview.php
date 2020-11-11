@@ -17,8 +17,10 @@ $logo = get_option( 'newsletterglue_logo' );
 
 $logo_position = get_option( 'newsletterglue_position_logo' );
 if ( ! $logo_position ) {
-	$logo_position = 'centre';
+	$logo_position = 'center';
 }
+
+$title = get_option( 'newsletterglue_add_title' );
 
 ?>
 
@@ -34,25 +36,27 @@ if ( ! $logo_position ) {
 		<div class="ngl-desktop ngl-masthead ngl-masthead-above"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
 		<?php endif; ?>
 
-		<h1 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: This is a demo email newsletter', 'newsletter-glue' ); ?></h1>
+		<h1 class="ngl-desktop ngl-primary-h <?php if ( $title === 'no' ) echo 'is-hidden'; ?>" style="font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h1_align' ); ?>;"><?php _e( 'H1: Blog post title', 'newsletter-glue' ); ?></h1>
 
 		<?php if ( $position == 'below' ) : ?>
 		<div class="ngl-desktop ngl-masthead ngl-masthead-below"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
 		<?php endif; ?>
 
-		<h2 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h2_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h2_colour' ); ?>;"><?php _e( 'H2: I made myself a snowball', 'newsletter-glue' ); ?></h2>
+		<h1 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h1_align' ); ?>;"><?php _e( 'H1: I made myself a snowball', 'newsletter-glue' ); ?></h1>
 
-		<h3 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h3_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h3_colour' ); ?>;"><?php _e( 'H3: As perfect as could be.', 'newsletter-glue' ); ?></h3>
+		<h2 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h2_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h2_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h2_align' ); ?>;"><?php _e( 'H2: As perfect as could be.', 'newsletter-glue' ); ?></h2>
 
-		<p class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;"><?php _e( 'I thought I&rsquo;d keep it as a pet<br />And let it sleep with me.<br />I made it some pajamas', 'newsletter-glue' ); ?></p>
+		<h3 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h3_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h3_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h3_align' ); ?>;"><?php _e( 'H3: I thought I&rsquo;d keep it as a pet', 'newsletter-glue' ); ?></h3>
 
-		<h4 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h4_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h4_colour' ); ?>;"><?php _e( 'H4: And a pillow for its head.', 'newsletter-glue' ); ?></h4>
+		<p class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'p_align' ); ?>;"><?php _e( 'And let it sleep with me.<br />I made it some pajamas', 'newsletter-glue' ); ?></p>
 
-		<h5 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h5_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h5_colour' ); ?>;"><?php _e( 'H5: Then last night it ran away,', 'newsletter-glue' ); ?></h5>
+		<h4 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h4_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h4_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h4_align' ); ?>;"><?php _e( 'H4: And a pillow for its head.', 'newsletter-glue' ); ?></h4>
 
-		<h6 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h6_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h6_colour' ); ?>;"><?php _e( 'H6: But first it wet the bed.', 'newsletter-glue' ); ?></h6>
+		<h5 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h5_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h5_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h5_align' ); ?>;"><?php _e( 'H5: Then last night it ran away,', 'newsletter-glue' ); ?></h5>
 
-		<p class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;"><a href="#" style="color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?> !important"><?php _e( 'Snowball, Shel Silverstein', 'newsletter-glue' ); ?></a></p>
+		<h6 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h6_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h6_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h6_align' ); ?>;"><?php _e( 'H6: But first it wet the bed.', 'newsletter-glue' ); ?></h6>
+
+		<p class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'p_align' ); ?>;"><a href="#" style="color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?> !important"><?php _e( 'Snowball, Shel Silverstein', 'newsletter-glue' ); ?></a></p>
 
 		<div class="wp-block-button"><p><a class="wp-block-button__link" href="#" style="background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?>;border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px;border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?>;color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;min-width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px;"><?php _e( 'Read more', 'newsleter-glue' ); ?></a></p></div>
 
@@ -74,25 +78,27 @@ if ( ! $logo_position ) {
 		<div class="ngl-mobile ngl-masthead ngl-masthead-above"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
 		<?php endif; ?>
 
-		<h1 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: This is a demo email newsletter', 'newsletter-glue' ); ?></h1>
+		<h1 class="ngl-mobile ngl-primary-h <?php if ( $title === 'no' ) echo 'is-hidden'; ?>" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h1_align' ); ?>;"><?php _e( 'H1: Blog post title', 'newsletter-glue' ); ?></h1>
 
 		<?php if ( $position == 'below' ) : ?>
 		<div class="ngl-mobile ngl-masthead ngl-masthead-below"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
 		<?php endif; ?>
 
-		<h2 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h2_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h2_colour' ); ?>;"><?php _e( 'H2: I made myself a snowball', 'newsletter-glue' ); ?></h2>
+		<h1 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h1_align' ); ?>;"><?php _e( 'H1: I made myself a snowball', 'newsletter-glue' ); ?></h1>
 
-		<h3 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h3_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h3_colour' ); ?>;"><?php _e( 'H3: As perfect as could be.', 'newsletter-glue' ); ?></h3>
+		<h2 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h2_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h2_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h2_align' ); ?>;"><?php _e( 'H2: As perfect as could be.', 'newsletter-glue' ); ?></h2>
 
-		<p class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;"><?php _e( 'I thought I&rsquo;d keep it as a pet<br />And let it sleep with me.<br />I made it some pajamas', 'newsletter-glue' ); ?></p>
+		<h3 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h3_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h3_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h3_align' ); ?>;"><?php _e( 'H3: I thought I&rsquo;d keep it as a pet', 'newsletter-glue' ); ?></h3>
 
-		<h4 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h4_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h4_colour' ); ?>;"><?php _e( 'H4: And a pillow for its head.', 'newsletter-glue' ); ?></h4>
+		<p class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'p_align' ); ?>;"><?php _e( 'And let it sleep with me.<br />I made it some pajamas', 'newsletter-glue' ); ?></p>
 
-		<h5 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h5_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h5_colour' ); ?>;"><?php _e( 'H5: Then last night it ran away,', 'newsletter-glue' ); ?></h5>
+		<h4 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h4_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h4_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h4_align' ); ?>;"><?php _e( 'H4: And a pillow for its head.', 'newsletter-glue' ); ?></h4>
 
-		<h6 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h6_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h6_colour' ); ?>;"><?php _e( 'H6: But first it wet the bed.', 'newsletter-glue' ); ?></h6>
+		<h5 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h5_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h5_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h5_align' ); ?>;"><?php _e( 'H5: Then last night it ran away,', 'newsletter-glue' ); ?></h5>
 
-		<p class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;"><a href="#" style="color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?> !important"><?php _e( 'Snowball, Shel Silverstein', 'newsletter-glue' ); ?></a></p>
+		<h6 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h6_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h6_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h6_align' ); ?>;"><?php _e( 'H6: But first it wet the bed.', 'newsletter-glue' ); ?></h6>
+
+		<p class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'p_align' ); ?>;"><a href="#" style="color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?> !important"><?php _e( 'Snowball, Shel Silverstein', 'newsletter-glue' ); ?></a></p>
 
 		<div class="wp-block-button"><p><a class="wp-block-button__link" href="#" style="background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?>;border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px;border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?>;color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;min-width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px;"><?php _e( 'Read more', 'newsleter-glue' ); ?></a></p></div>
 

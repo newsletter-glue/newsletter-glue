@@ -124,6 +124,12 @@
 			}
 		}
 
+		// changing align.
+		if ( id == 'h1_align' || id == 'h2_align' || id == 'h3_align' || id == 'h4_align' || id == 'h5_align' || id == 'h6_align' || id == 'p_align' ) {
+			var attr = id.replace( '_align', '' );
+			$( '.ngl-email' ).find( attr ).css( { 'text-align' : value } );
+		}
+
 		// changing font-size.
 		if ( id == 'h1_size' || id == 'h2_size' || id == 'h3_size' || id == 'h4_size' || id == 'h5_size' || id == 'h6_size' || id == 'p_size' ) {
 			var attr = id.replace( '_size', '' );
@@ -191,6 +197,15 @@
 			}
 		}
 
+		// show/hide post title.
+		if ( id == 'ngl_add_title' ) {
+			if ( value == 1 ) {
+				$( '.ngl-email' ).find( 'h1:first' ).removeClass( 'is-hidden' );
+			} else {
+				$( '.ngl-email' ).find( 'h1:first' ).addClass( 'is-hidden' );
+			}
+		}
+
 		// show/hide featured image.
 		if ( id == 'ngl_add_featured' ) {
 			if ( value == 1 ) {
@@ -204,20 +219,20 @@
 			if ( value == 'above' ) {
 				$( '.ngl-email' ).each( function() {
 					var el = $( this ).find( '.ngl-masthead-below' );
-					el.insertBefore( $( this ).find( 'h1' ) );
+					el.insertBefore( $( this ).find( 'h1.ngl-primary-h' ) );
 					el.removeClass( 'ngl-masthead-below' ).addClass( 'ngl-masthead-above' );
 				} );
 			} else {
 				$( '.ngl-email' ).each( function() {
 					var el = $( this ).find( '.ngl-masthead-above' );
-					el.insertAfter( $( this ).find( 'h1' ) );
+					el.insertAfter( $( this ).find( 'h1.ngl-primary-h' ) );
 					el.removeClass( 'ngl-masthead-above' ).addClass( 'ngl-masthead-below' );
 				} );
 			}
 		}
 
 		if ( id == 'ngl_position_logo' ) {
-			$( '.ngl-email-logo' ).removeClass( 'ngl-logo-left ngl-logo-centre ngl-logo-right ngl-logo-full' ).addClass( 'ngl-logo-' + value );
+			$( '.ngl-email-logo' ).removeClass( 'ngl-logo-left ngl-logo-center ngl-logo-right ngl-logo-full' ).addClass( 'ngl-logo-' + value );
 		}
 
 		console.log( data );

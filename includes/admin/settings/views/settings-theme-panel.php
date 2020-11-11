@@ -64,12 +64,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			__( 'Align', 'newsletter-glue' ),
 			array(
 				'left'		=> __( 'Align left', 'newsletter-glue' ),
-				'centre'	=> __( 'Align centre', 'newsletter-glue' ),
+				'center'	=> __( 'Align center', 'newsletter-glue' ),
 				'right'		=> __( 'Align right', 'newsletter-glue' ),
 				'full'		=> __( 'Full width', 'newsletter-glue' ),
 			),
 			null,
-			get_option( 'newsletterglue_position_logo' ) ? get_option( 'newsletterglue_position_logo' ) : 'centre'
+			get_option( 'newsletterglue_position_logo' ) ? get_option( 'newsletterglue_position_logo' ) : 'center'
 		);
 
 		newsletterglue_setting_heading( __( 'Featured image', 'newsletter-glue' ) );
@@ -90,6 +90,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			),
 			null,
 			get_option( 'newsletterglue_position_featured' ) ? get_option( 'newsletterglue_position_featured' ) : 'below'
+		);
+
+		newsletterglue_setting_heading( __( 'Blog post title', 'newsletter-glue' ) );
+
+		newsletterglue_setting_checkbox(
+			'ngl_add_title',
+			__( 'Add blog post title', 'newsletter-glue' ),
+			__( 'Add blog post title to the top of each newsletter.<br />Remove it for more control over your newsletter design.', 'newsletter-glue' ),
+			get_option( 'newsletterglue_add_title' ) ? get_option( 'newsletterglue_add_title' ) : 'yes',
+			true
 		);
 
 		echo '</div>';

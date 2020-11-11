@@ -887,7 +887,7 @@ msgid "Align left"
 msgstr ""
 
 #: includes/admin/settings/views/settings-theme-panel.php:67
-msgid "Align centre"
+msgid "Align center"
 msgstr ""
 
 #: includes/admin/settings/views/settings-theme-panel.php:68

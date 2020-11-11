@@ -94,6 +94,7 @@ function newsletterglue_get_form_defaults( $post = 0, $api = '' ) {
 	$defaults->test_email		= newsletterglue_get_option( 'from_email', $app );
 	$defaults->subject     		= $subject;
 	$defaults->add_featured 	= get_option( 'newsletterglue_add_featured' );
+	$defaults->preview_text		= '';
 
 	// Get options from API.
 	if ( method_exists( $api, 'get_form_defaults' ) ) {
@@ -203,49 +204,65 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 		define( 'NGL_IN_EMAIL', true );
 	}
 
+	$data 			= get_post_meta( $post->ID, '_newsletterglue', true );
+	$preview_text 	= isset( $data[ 'preview_text' ] ) ? esc_attr( $data[ 'preview_text' ] ) : '';
+
 	$position = get_option( 'newsletterglue_position_featured' );
 	if ( ! $position ) {
 		$position = 'below';
 	}
 
+	// Blog title.
+	$show_title = get_option( 'newsletterglue_add_title' );
+
+	// Get the email template including css tags.
 	$html = newsletterglue_get_email_template( $post, $subject, $app );
 
+	// Remove auto embed.
 	remove_filter( 'the_content', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
 
 	$the_content = '';
+
+	// Add preview text to email.
+	if ( ! empty( $preview_text ) ) {
+		$the_content .= '<div style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;font-family: sans-serif;">' . $preview_text . '</div>';
+	}
 
 	// Add logo.
 	$the_content .= newsletterglue_add_logo();
 
 	$title = isset( $post ) && isset( $post->post_title ) ? $post->post_title : $subject;
 
-	// This is email content.
+	// Masthead and heading
 	if ( $position == 'above' ) {
 		$the_content .= newsletterglue_add_masthead_image( $post, 'above' );
-		$the_content .= '<h1>' . $title . '</h1>';
+		if ( $show_title !== 'no' ) {
+			$the_content .= '<h1>' . $title . '</h1>';
+		}
 	} else {
-		$the_content .= '<h1>' . $title . '</h1>';
+		if ( $show_title !== 'no' ) {
+			$the_content .= '<h1>' . $title . '</h1>';
+		}
 		$the_content .= newsletterglue_add_masthead_image( $post, 'below' );
 	}
 
+	// Post content.
 	$the_content .= apply_filters( 'the_content', $post->post_content );
 
-	// If credits can be displayed.
+	// Credits.
 	if ( get_option( 'newsletterglue_credits' ) ) {
 		$the_content .= '<p class="ngl-credits">' . sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="https://wordpress.org/plugins/newsletter-glue/">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ) . '</p>';
 	}
 
-	// Add special app text.
-	if ( $app == 'mailerlite' ) {
-		$the_content .= '<p class="ngl-credits"><a href="{$unsubscribe}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a></p>';
-	}
+	// Allow 3rd party to customize content tag.
+	$the_content = apply_filters( 'newsletterglue_email_content_' . $app, $the_content, $post, $subject );
+	$the_content = apply_filters( 'newsletterglue_email_content', $the_content, $post, $subject, $app );
 
-	// Process content.
+	// Process content tags.
 	$html = str_replace( '{content}', $the_content, $html );
 	$html = str_replace( '{custom_css}', wp_strip_all_tags( get_option( 'newsletterglue_css' ) ), $html );
-	$html = preg_replace( '/<!--(.*)-->/Uis', '', $html );
-
 	$html = str_replace( '{post_permalink}', get_permalink( $post->ID ), $html );
+	$html = preg_replace( '/<!--(.*)-->/Uis', '', $html );
 
 	return apply_filters( 'newsletterglue_generate_content', $html, $post );
 }
@@ -259,7 +276,7 @@ function newsletterglue_add_logo() {
 	$logo_position 	= get_option( 'newsletterglue_position_logo' );
 
 	if ( ! $logo_position ) {
-		$logo_position = 'centre';
+		$logo_position = 'center';
 	}
 
 	if ( $logo ) {
@@ -344,6 +361,13 @@ function newsletterglue_get_theme_default( $key ) {
 		'h5_size'					=> 20,
 		'h6_size'					=> 18,
 		'p_size'					=> 18,
+		'h1_align'					=> 'left',
+		'h2_align'					=> 'left',
+		'h3_align'					=> 'left',
+		'h4_align'					=> 'left',
+		'h5_align'					=> 'left',
+		'h6_align'					=> 'left',
+		'p_align'					=> 'left',
 		'email_bg'					=> '#ffffff',
 		'container_bg'				=> '#ffffff',
 		'a_colour'					=> '#3400FF',

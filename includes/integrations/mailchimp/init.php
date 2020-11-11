@@ -243,12 +243,13 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 			$data = get_post_meta( $post_id, '_newsletterglue', true );
 		}
 
-		$subject 	= isset( $data['subject'] ) ? urldecode( $data['subject'] ) : '';
-		$from_name	= isset( $data['from_name'] ) ? $data['from_name'] : '';
-		$from_email	= isset( $data['from_email'] ) ? $data['from_email'] : '';
-		$audience	= isset( $data['audience'] ) ? $data['audience'] : '';
-		$segment	= isset( $data['segment'] ) && $data['segment'] && ( $data['segment'] != '_everyone' ) ? $data['segment'] : '';
-		$schedule   = isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
+		$subject 		= isset( $data['subject'] ) ? urldecode( $data['subject'] ) : '';
+		$from_name		= isset( $data['from_name'] ) ? $data['from_name'] : '';
+		$from_email		= isset( $data['from_email'] ) ? $data['from_email'] : '';
+		$audience		= isset( $data['audience'] ) ? $data['audience'] : '';
+		$segment		= isset( $data['segment'] ) && $data['segment'] && ( $data['segment'] != '_everyone' ) ? $data['segment'] : '';
+		$schedule  	 	= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
+		$preview_text 	= isset( $data['preview_text'] ) ? esc_attr( $data[ 'preview_text' ] ) : '';
 
 		// API request.
 		$this->api = new NGL_Mailchimp_API( $this->api_key );
@@ -292,6 +293,10 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 			'reply_to' 		=> $from_email,
 			'from_name' 	=> $from_name,
 		);
+
+		if ( ! empty( $preview_text ) ) {
+			$settings[ 'preview_text' ] = $preview_text;
+		}
 
 		// Setup campaign array.
 		$campaign_array = array(
