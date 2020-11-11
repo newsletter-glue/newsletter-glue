@@ -34,17 +34,19 @@ if ( ! $logo_position ) {
 		<div class="ngl-desktop ngl-masthead ngl-masthead-above"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
 		<?php endif; ?>
 
-		<h1 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: This is a demo email newsletter', 'newsletter-glue' ); ?></h1>
+		<h1 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: Blog post title', 'newsletter-glue' ); ?></h1>
 
 		<?php if ( $position == 'below' ) : ?>
 		<div class="ngl-desktop ngl-masthead ngl-masthead-below"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
 		<?php endif; ?>
 
-		<h2 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h2_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h2_colour' ); ?>;"><?php _e( 'H2: I made myself a snowball', 'newsletter-glue' ); ?></h2>
+		<h1 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: I made myself a snowball', 'newsletter-glue' ); ?></h1>
 
-		<h3 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h3_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h3_colour' ); ?>;"><?php _e( 'H3: As perfect as could be.', 'newsletter-glue' ); ?></h3>
+		<h2 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h2_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h2_colour' ); ?>;"><?php _e( 'H2: As perfect as could be.', 'newsletter-glue' ); ?></h2>
 
-		<p class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;"><?php _e( 'I thought I&rsquo;d keep it as a pet<br />And let it sleep with me.<br />I made it some pajamas', 'newsletter-glue' ); ?></p>
+		<h3 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h3_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h3_colour' ); ?>;"><?php _e( 'H3: I thought I&rsquo;d keep it as a pet', 'newsletter-glue' ); ?></h3>
+
+		<p class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;"><?php _e( 'And let it sleep with me.<br />I made it some pajamas', 'newsletter-glue' ); ?></p>
 
 		<h4 class="ngl-desktop" style="font-size: <?php echo newsletterglue_get_theme_option( 'h4_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h4_colour' ); ?>;"><?php _e( 'H4: And a pillow for its head.', 'newsletter-glue' ); ?></h4>
 
@@ -74,17 +76,19 @@ if ( ! $logo_position ) {
 		<div class="ngl-mobile ngl-masthead ngl-masthead-above"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
 		<?php endif; ?>
 
-		<h1 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: This is a demo email newsletter', 'newsletter-glue' ); ?></h1>
+		<h1 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: Blog post title', 'newsletter-glue' ); ?></h1>
 
 		<?php if ( $position == 'below' ) : ?>
 		<div class="ngl-mobile ngl-masthead ngl-masthead-below"><img src="<?php echo newsletterglue()->assets_url(); ?>/email/header.jpg" alt="" /></div>
 		<?php endif; ?>
 
-		<h2 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h2_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h2_colour' ); ?>;"><?php _e( 'H2: I made myself a snowball', 'newsletter-glue' ); ?></h2>
+		<h1 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>;"><?php _e( 'H1: I made myself a snowball', 'newsletter-glue' ); ?></h1>
 
-		<h3 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h3_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h3_colour' ); ?>;"><?php _e( 'H3: As perfect as could be.', 'newsletter-glue' ); ?></h3>
+		<h2 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h2_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h2_colour' ); ?>;"><?php _e( 'H2: As perfect as could be.', 'newsletter-glue' ); ?></h2>
 
-		<p class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;"><?php _e( 'I thought I&rsquo;d keep it as a pet<br />And let it sleep with me.<br />I made it some pajamas', 'newsletter-glue' ); ?></p>
+		<h3 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h3_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h3_colour' ); ?>;"><?php _e( 'H3: I thought I&rsquo;d keep it as a pet', 'newsletter-glue' ); ?></h3>
+
+		<p class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;"><?php _e( 'And let it sleep with me.<br />I made it some pajamas', 'newsletter-glue' ); ?></p>
 
 		<h4 class="ngl-mobile" style="font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h4_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h4_colour' ); ?>;"><?php _e( 'H4: And a pillow for its head.', 'newsletter-glue' ); ?></h4>
 
