@@ -201,7 +201,7 @@ function newsletterglue_setting_colour_size( $id = '', $title = '' ) {
 				<input class="components-font-size-picker__number ngl-theme-input ngl-desktop" type="number" min="1" value="<?php echo newsletterglue_get_theme_option( $id . '_size' ); ?>" data-option="<?php echo esc_attr( $id ); ?>_size" >
 				<input class="components-font-size-picker__number ngl-theme-input ngl-mobile" type="number" min="1" value="<?php echo newsletterglue_get_theme_option( 'mobile_' . $id . '_size' ); ?>" data-option="mobile_<?php echo esc_attr( $id ); ?>_size" >
 			</div>
-			<div>
+			<div class="ngl-alignment-container">
 				<div class="ui selection dropdown ngl-theme-input">
 					<input type="hidden" name="<?php echo esc_attr( $id ); ?>_align" id="<?php echo esc_attr( $id ); ?>_align" value="<?php echo esc_attr( $selected ); ?>">
 					<div class="default text"><?php echo esc_html( $selected ); ?></div>

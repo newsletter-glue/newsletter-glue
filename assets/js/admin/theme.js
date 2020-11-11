@@ -124,6 +124,12 @@
 			}
 		}
 
+		// changing align.
+		if ( id == 'h1_align' || id == 'h2_align' || id == 'h3_align' || id == 'h4_align' || id == 'h5_align' || id == 'h6_align' || id == 'p_align' ) {
+			var attr = id.replace( '_align', '' );
+			$( '.ngl-email' ).find( attr ).css( { 'text-align' : value } );
+		}
+
 		// changing font-size.
 		if ( id == 'h1_size' || id == 'h2_size' || id == 'h3_size' || id == 'h4_size' || id == 'h5_size' || id == 'h6_size' || id == 'p_size' ) {
 			var attr = id.replace( '_size', '' );
