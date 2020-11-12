@@ -106,6 +106,7 @@ function newsletterglue_js_data() {
 			'post_date'		=> date( 'l, j M Y', strtotime( $post->post_date ) ),
 			'app'			=> $app,
 			'app_name'		=> newsletterglue_get_name( $app ),
+			'readtime'		=> newsletterglue_content_estimated_reading_time( $post->post_content ),
 		);
 
 		$use_blocks = get_option( 'newsletterglue_use_blocks' );
