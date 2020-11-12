@@ -51,6 +51,10 @@ function newsletterglue_block_form() {
 
 	$suffix  = '';
 
+	$defaults[ 'btn_bg' ] 		= newsletterglue_get_theme_option( 'btn_bg' );
+	$defaults[ 'btn_border' ] 	= newsletterglue_get_theme_option( 'btn_border' ) ? newsletterglue_get_theme_option( 'btn_border' ) : 'transparent';
+	$defaults[ 'btn_colour' ] 	= newsletterglue_get_theme_option( 'btn_colour' );
+
 	wp_register_script( 'newsletterglue-form-block', $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ), time() );
 	wp_localize_script( 'newsletterglue-form-block', 'newsletterglue_block_form', $defaults );
 

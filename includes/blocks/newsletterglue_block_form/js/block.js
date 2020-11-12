@@ -74,15 +74,15 @@
 			},
 			button_fill: {
 				'type' : 'string',
-				'default' : '#3400FF',
+				'default' : newsletterglue_block_form.btn_bg,
 			},
 			button_outline: {
 				'type' : 'string',
-				'default' : '#3400FF',
+				'default' : newsletterglue_block_form.btn_border,
 			},
 			button_text_color: {
 				'type' : 'string',
-				'default' : '#FFFFFF',
+				'default' : newsletterglue_block_form.btn_colour,
 			},
 			button_radius: {
 				'type' : 'number',
