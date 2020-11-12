@@ -2444,3 +2444,10 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 .ngl-gutenberg-base--fullwidth {
 	width: 100%;
 }
+
+.ngl-gutenberg-help p.components-base-control__help {
+	margin: 8px 0 0;
+	color: rgba( 0, 0, 0, 0.6 );
+	font-style: normal;
+	font-size: 0.9em;
+}

@@ -280,6 +280,19 @@
 
 							el( PanelRow, {},
 								el( RangeControl, {
+									label: 'Button and field radius (pixels)',
+									value: props.attributes.button_radius,
+									initialPosition: 0,
+									min: 0,
+									max: 50,
+									allowReset: true,
+									resetFallbackValue: 0,
+									onChange: ( value ) => { props.setAttributes( { button_radius: value } ); },
+								} ),
+							),
+
+							el( PanelRow, {},
+								el( RangeControl, {
 									label: 'Padding (pixels)',
 									value: props.attributes.spacing_size,
 									initialPosition: 25,
@@ -325,23 +338,6 @@
 
 						),
 
-						el( PanelBody, { title: 'Button options', initialOpen: true },
-
-							el( PanelRow, {},
-								el( RangeControl, {
-									label: 'Button radius (pixels)',
-									value: props.attributes.button_radius,
-									initialPosition: 0,
-									min: 0,
-									max: 50,
-									allowReset: true,
-									resetFallbackValue: 0,
-									onChange: ( value ) => { props.setAttributes( { button_radius: value } ); },
-								} ),
-							),
-
-						),
-
 						el( PanelColorSettings, {
 							initialOpen: true,
 							title: 'Color options',
@@ -381,7 +377,7 @@
 									checked: props.attributes.show_in_blog,
 								} )
 							),
-							el( PanelRow, {},
+							el( PanelRow, { className: 'ngl-gutenberg-help' },
 								el( ToggleControl, {
 									label: 'Show in email newsletter',
 									onChange: ( value ) => { props.setAttributes( { show_in_email: value } ); },
