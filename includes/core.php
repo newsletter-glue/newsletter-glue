@@ -468,3 +468,19 @@ function newsletterglue_get_post_types() {
 
 	return apply_filters( 'newsletterglue_get_post_types', $types );
 }
+
+/**
+ * Get post types.
+ */
+function newsletterglue_content_estimated_reading_time( $content = '', $words_per_minute = 200 ) {
+
+	$clean_content	= strip_shortcodes( $content );
+	$clean_content	= strip_tags( $clean_content );
+	$word_count		= str_word_count( $clean_content );
+	$time 			= ceil( $word_count / $words_per_minute );
+
+	$output = sprintf( __( '%s mins', 'newsletter-glue' ), $time );
+
+	return $output;
+
+}

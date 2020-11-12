@@ -34,6 +34,10 @@
 			post_location: {
 				type: 'string',
 			},
+			readtime: {
+				type: 'string',
+				'default' : newsletterglue_block_metadata.readtime
+			},
 			show_in_blog: {
 				'type' : 'boolean',
 				'default' : newsletterglue_block_metadata.show_in_blog ? true : false
@@ -181,6 +185,19 @@
 						el( RichText, {
 							tagName: 'div',
 							format: 'string',
+							className: 'ngl-metadata-readtime',
+							onChange: ( value ) => { props.setAttributes( { readtime: value } ); },
+							value: props.attributes.readtime,
+							placeholder: 'Reading time:',
+							multiline: '&nbsp;'
+						} ),
+						el( 'div', { className: 'ngl-metadata-readtime-ajax' },
+							newsletterglue_meta.readtime
+						),
+						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
+						el( RichText, {
+							tagName: 'div',
+							format: 'string',
 							className: 'ngl-metadata-permalink',
 							onChange: ( value ) => { props.setAttributes( { post_link: value } ); },
 							value: props.attributes.post_link,
@@ -267,6 +284,12 @@
 				href: newsletterglue_meta.post_perma
 			} );
 
+			var metaReadtime = el( RichText.Content, {
+				tagName: 'div',
+				className: 'ngl-metadata-readtime',
+				value: props.attributes.readtime,
+			} );
+
 			return (
 
 					el( 'div', { className: 'ngl-metadata', style: metaStyles },
@@ -274,6 +297,11 @@
 						metaTitle,
 						metaDate,
 						metaLocation,
+						metaReadtime,
+						el( 'div', { className: 'ngl-metadata-readtime-ajax' },
+							newsletterglue_meta.readtime
+						),
+						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
 						metaPermalink,
 						el( 'img', {
 							className: 'ngl-metadata-permalink-arrow',
