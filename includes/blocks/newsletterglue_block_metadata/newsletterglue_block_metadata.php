@@ -51,6 +51,7 @@ function newsletterglue_block_metadata() {
 
 	$defaults[ 'assets_uri' ] 	=  NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/';
 	$defaults[ 'readtime' ]		= __( 'Reading time:', 'newsletter-glue' );
+	$defaults[ 'read_online' ]  = __( 'Read online', 'newsletter-glue' );
 
 	$suffix  = '';
 

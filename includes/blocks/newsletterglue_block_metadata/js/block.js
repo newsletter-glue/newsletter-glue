@@ -25,17 +25,17 @@
 		category: 'newsletterglue-blocks',
 		attributes: {
 			issue_title: {
-				type: 'string',
+				'type': 'string',
 			},
 			post_link: {
-				type: 'string',
-				'default' : 'Read online',
+				'type': 'string',
+				'default' : newsletterglue_block_metadata.read_online,
 			},
 			post_location: {
-				type: 'string',
+				'type': 'string',
 			},
 			readtime: {
-				type: 'string',
+				'type': 'string',
 				'default' : newsletterglue_block_metadata.readtime
 			},
 			show_in_blog: {
@@ -55,7 +55,7 @@
 				'default' : 'line',
 			},
 			alignment: {
-				type: 'string',
+				'type' : 'string',
 				'default' : 'center',
 			},
 		},
