@@ -77,7 +77,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		newsletterglue_setting_checkbox(
 			'ngl_add_featured',
 			__( 'Add featured image', 'newsletter-glue' ),
-			__( 'Add featured image to the top of each newsletter.<br />Ideal image width: 1200px', 'newsletter-glue' ),
+			__( 'Add featured image to the top of each newsletter.<br /><br />Ideal image width: 1200px', 'newsletter-glue' ),
 			get_option( 'newsletterglue_add_featured' )
 		);
 
@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		newsletterglue_setting_checkbox(
 			'ngl_add_title',
 			__( 'Add blog post title', 'newsletter-glue' ),
-			__( 'Add blog post title to the top of each newsletter.<br />Remove it for more control over your newsletter design.', 'newsletter-glue' ),
+			__( 'Add blog post title to the top of each newsletter.<br /><br />Remove it for more control over your newsletter design.', 'newsletter-glue' ),
 			get_option( 'newsletterglue_add_title' ) ? get_option( 'newsletterglue_add_title' ) : 'yes',
 			true
 		);

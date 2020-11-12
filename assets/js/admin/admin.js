@@ -364,7 +364,7 @@
 	$( '.ngl-metabox input[type=text].js-limit' ).each( function( i, obj ) {
 		var str = $( this ).val();
 		$( this ).attr( 'data-value', str );
-		if ( str.length > 60 ) {
+		if ( str.length > 30 ) {
 			$( this ).parent().find( '.ngl-limit' ).show();
 		} else {
 			$( this ).parent().find( '.ngl-limit' ).hide();
@@ -382,7 +382,7 @@
 	$( document ).on( 'blur', '.ngl-metabox input[type=text].js-limit', function( event ) {
 		var str = $( this ).val();
 		$( this ).attr( 'data-value', str );
-		if ( str.length > 60 ) {
+		if ( str.length > 30 ) {
 			$( this ).parent().find( '.ngl-limit' ).show();
 		} else {
 			$( this ).parent().find( '.ngl-limit' ).hide();

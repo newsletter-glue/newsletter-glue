@@ -225,7 +225,9 @@ function newsletterglue_generate_content( $post, $subject, $app = '' ) {
 
 	// Add preview text to email.
 	if ( ! empty( $preview_text ) ) {
-		$the_content .= '<div style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;font-family: sans-serif;">' . $preview_text . '</div>';
+		if ( ! in_array( $app, array( 'mailchimp' ) ) ) {
+			$the_content .= '<div style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;font-family: sans-serif;">' . $preview_text . '</div>';
+		}
 	}
 
 	// Add logo.

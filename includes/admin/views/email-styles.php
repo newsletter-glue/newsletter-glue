@@ -7,7 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$font_family = newsletterglue_get_theme_option( 'font' );
+$font_family 	= newsletterglue_get_theme_option( 'font' );
+$border_color 	= newsletterglue_get_theme_option( 'btn_border' ) ? newsletterglue_get_theme_option( 'btn_border' ) : 'transparent';
 
 ?>
 
@@ -36,7 +37,7 @@ body {
 }
 
 #template_inner {
-	background: #fff;
+	background: <?php echo newsletterglue_get_theme_option( 'container_bg' ); ?>;
 	box-sizing: border-box;
 	padding: <?php echo newsletterglue_get_theme_option( 'container_padding1' ); ?>px <?php echo newsletterglue_get_theme_option( 'container_padding2' ); ?>px;
 	<?php if ( $font_family ) : ?>
@@ -164,7 +165,7 @@ p.ngl-credits a {
 	background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?> !important;
 	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;
 	min-width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px !important;
-	border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?> !important;
+	border: 1px solid <?php echo $border_color; ?> !important;
 	border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px !important;
 }
 

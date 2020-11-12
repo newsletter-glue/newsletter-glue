@@ -775,8 +775,8 @@
 	width: 25px;
 	height: 25px;
 	font-size: 20px;
-	top: 3px;
-	right: 5px;
+	top: 1px;
+	left: 170px;
 	color: #444;
 }
 
@@ -2443,4 +2443,11 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 .ngl-gutenberg-base--fullwidth {
 	width: 100%;
+}
+
+.ngl-gutenberg-help p.components-base-control__help {
+	margin: 8px 0 0;
+	color: rgba( 0, 0, 0, 0.6 );
+	font-style: normal;
+	font-size: 0.9em;
 }
