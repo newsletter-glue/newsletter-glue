@@ -235,11 +235,10 @@
 			}
 			if ( app == 'sendinblue' ) {
 				SelectList = el( SelectControl, {
-					label: 'Select list(s)',
+					label: 'Select a list',
 					value: props.attributes.list_id,
 					onChange: ( value ) => { props.setAttributes( { list_id: value } ); },
 					options: newsletterglue_meta.the_lists,
-					multiple: true,
 				} );
 			}
 

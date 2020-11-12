@@ -116,7 +116,7 @@ function newsletterglue_js_data() {
 					$lists[] = array( 'label' => __( '― No group', 'newsletter-glue' ), 'value' => '' );
 				}
 				if ( $app == 'sendinblue' ) {
-					$lists[] = array( 'label' => '', 'value' => '' );
+					$lists[] = array( 'label' => __( '― No list', 'newsletter-glue' ), 'value' => '' );
 				}
 				foreach( $the_lists as $key => $value ) {
 					$lists[] = array( 'value' => $key, 'label' => $value );
