@@ -84,7 +84,7 @@
 				'type' : 'string',
 				'default' : newsletterglue_block_form.btn_colour,
 			},
-			button_radius: {
+			form_radius: {
 				'type' : 'number',
 			},
 			spacing_size: {
@@ -158,7 +158,8 @@
 									value: props.attributes.name_placeholder,
 									format: 'string',
 									onChange: ( value ) => { props.setAttributes( { name_placeholder: value } ); },
-									multiline: '&nbsp;'
+									multiline: '&nbsp;',
+									style: { borderRadius: props.attributes.form_radius }
 								} )
 							)
 						);
@@ -182,7 +183,8 @@
 									value: props.attributes.email_placeholder,
 									format: 'string',
 									onChange: ( value ) => { props.setAttributes( { email_placeholder: value } ); },
-									multiline: '&nbsp;'
+									multiline: '&nbsp;',
+									style: { borderRadius: props.attributes.form_radius }
 								} )
 							)
 						);
@@ -195,7 +197,7 @@
 				borderWidth: '1px',
 				borderStyle: 'solid',
 				color: props.attributes.button_text_color,
-				borderRadius : props.attributes.button_radius,
+				borderRadius : props.attributes.form_radius,
 			};
 
 			var isOverlayshown = '';
@@ -281,13 +283,13 @@
 							el( PanelRow, {},
 								el( RangeControl, {
 									label: 'Button and field radius (pixels)',
-									value: props.attributes.button_radius,
+									value: props.attributes.form_radius,
 									initialPosition: 0,
 									min: 0,
 									max: 50,
 									allowReset: true,
 									resetFallbackValue: 0,
-									onChange: ( value ) => { props.setAttributes( { button_radius: value } ); },
+									onChange: ( value ) => { props.setAttributes( { form_radius: value } ); },
 								} ),
 							),
 
@@ -472,7 +474,7 @@
 								'for' : 'ngl_name'
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
-								el( 'input', { type: 'text', className: 'ngl-form-input-text', name: 'ngl_name', id: 'ngl_name', placeholder: props.attributes.name_placeholder },
+								el( 'input', { type: 'text', className: 'ngl-form-input-text', name: 'ngl_name', id: 'ngl_name', placeholder: props.attributes.name_placeholder, style: { borderRadius: props.attributes.form_radius } },
 								
 								)
 							)
@@ -490,7 +492,7 @@
 								'for' : 'ngl_email'
 							} ),
 							el( 'div', { className: 'ngl-form-input' },
-								el( 'input', { type: 'email', className: 'ngl-form-input-text', name: 'ngl_email', id: 'ngl_email', placeholder: props.attributes.email_placeholder },
+								el( 'input', { type: 'email', className: 'ngl-form-input-text', name: 'ngl_email', id: 'ngl_email', placeholder: props.attributes.email_placeholder, style: { borderRadius: props.attributes.form_radius } },
 								
 								)
 							)
@@ -504,7 +506,7 @@
 				borderWidth: '1px',
 				borderStyle: 'solid',
 				color: props.attributes.button_text_color,
-				borderRadius : props.attributes.button_radius,
+				borderRadius : props.attributes.form_radius,
 			};
 
 			return (
