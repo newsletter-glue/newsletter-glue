@@ -4,7 +4,7 @@ Plugin name: Newsletter Glue - Email posts to subscribers, connect Mailchimp Mai
 Contributors: newsletterglue, lesleysim, ahmedfouade
 Donate link: https://paypal.me/newsletterglue
 Tags: newsletter, email, mailchimp, mailerlite, sendinblue
-Requires at least: 5.2
+Requires at least: 5.3
 Tested up to: 5.5
 Requires PHP: 7.0
 Stable Tag: 1.1.6
