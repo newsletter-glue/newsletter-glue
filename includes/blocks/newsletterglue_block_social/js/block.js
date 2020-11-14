@@ -7,12 +7,31 @@
 	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, RangeControl, BaseControl, ButtonGroup, Button } = components;
 	const ServerSideRender = wp.serverSideRender;
 
-	const icon = el( 'svg', { width: 24, height: 24, viewBox: '0 0 43.403 34.722' }, 
-		el( 'path', {
-			fill: '#3400ff',
-			d: 'M42.063,6H7.34a4.335,4.335,0,0,0-4.319,4.34L3,36.382a4.353,4.353,0,0,0,4.34,4.34H42.063a4.353,4.353,0,0,0,4.34-4.34V10.34A4.353,4.353,0,0,0,42.063,6Zm0,8.681L24.7,25.531,7.34,14.681V10.34L24.7,21.191,42.063,10.34Z',
-			transform: 'translate(-3 -6)'
-		} )
+	const icon = el( 'svg', { width: 24, height: 24, viewBox: '0 0 47 47' }, 
+		el( 'g', { transform: 'translate(-1547 -1156)' },
+			el( 'g', {
+				transform: 'translate(1547 1156)',
+				fill: '#fff',
+				stroke: '#dd3714',
+				strokeWidth: '4px'
+			},
+				el( 'rect', {
+					width: 47,
+					height: 47
+				} ),
+				el( 'rect', {
+					x: 2,
+					y: 2,
+					width: 43,
+					height: 43
+				} )
+			),
+			el( 'path', {
+				fill: '#dd3714',
+				d: 'M19.923,24.1l2.892,2.892,9.64-9.64-9.64-9.64L19.923,10.6l6.748,6.748ZM16.067,10.6,13.175,7.712l-9.64,9.64,9.64,9.64L16.067,24.1,9.319,17.352Z',
+				transform: 'translate(1552.465 1162.288)'
+			} )
+		)
 	);
 
 	registerBlockType( 'newsletterglue/social', {
@@ -31,11 +50,14 @@
 				'default' : newsletterglue_block_social.show_in_email ? true : false
 			},
 		},
-		edit: withColors( 'formColor' ) ( function( props ) {
+		edit: function( props ) {
 
-			return (
-
-				el( Fragment, {},
+			return [
+	
+					el( ServerSideRender, {
+						block: 'newsletterglue/social',
+						attributes: props.attributes,
+					} ),
 
 					// This is block settings in sidebar.
 					el( InspectorControls, {},
@@ -59,22 +81,15 @@
 
 						),
 
-					),
-
-					// This is how the block is rendered in editor.
-					el( 'div', { className: 'ngl-social-embed' },
-
 					)
 
-				)
+			]
 
-			)
-
-		} ),
+		},
 
 		// This is how the block is rendered in frontend.
 		save: function( props, className ) {
-
+			return null
 		},
 
 	} );

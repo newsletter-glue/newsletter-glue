@@ -60,6 +60,16 @@ function newsletterglue_block_social() {
 		'editor_script'   => 'newsletterglue-social-block',
 		'style'           => 'newsletterglue-social-block-style',
 		'render_callback' => 'newsletterglue_social_block_render',
+		'attributes'	  => array(
+			'show_in_blog' => array(
+				'type' 		=> 'boolean',
+				'default' 	=> $defaults[ 'show_in_blog' ],
+			),
+			'show_in_email' => array(
+				'type' 		=> 'boolean',
+				'default' 	=> $defaults[ 'show_in_email' ],
+			),
+		),
 	) );
 
 }
@@ -69,30 +79,17 @@ function newsletterglue_block_social() {
  */
 function newsletterglue_social_block_render( $attributes, $content ) {
 
-	$inputs = '';
+	ob_start();
 
-	$defaults = get_option( 'newsletterglue_block_social' );
-	if ( ! $defaults ) {
-		$defaults = array(
-			'show_in_blog'	=> true,
-			'show_in_email'	=> true,
-		);
-	}
+	$supported_embeds = array(
+		'twitter' => array(
+			'icon'	=> '<svg width="100" height="100" viewBox="0 0 32 32"><path d="M2 4c4 4 8 8 13 7a6 6 0 0 1 7-7 6 6 0 0 1 4 2 8 8 0 0 0 5-2 8 8 0 0 1-3 4 8 8 0 0 0 4-1 8 8 0 0 1-4 4 18 18 0 0 1-18 19 18 18 0 0 1-10-3 12 12 0 0 0 8-3 8 8 0 0 1-5-4 8 8 0 0 0 3-.5A8 8 0 0 1 0 12a8 8 0 0 0 3 1 8 8 0 0 1-1-9"/></svg>'
+		),
+	);
 
-	$show_in_blog  = isset( $attributes[ 'show_in_blog' ] ) ? $attributes[ 'show_in_blog' ] : $defaults[ 'show_in_blog' ];
-	$show_in_email = isset( $attributes[ 'show_in_email' ] ) ? $attributes[ 'show_in_email' ] : $defaults[ 'show_in_email' ];
+	include_once NGL_PLUGIN_DIR . 'includes/blocks/newsletterglue_block_social/templates/embed.php';
 
-	// Hidden from blog.
-	if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
-		$content = '';
-	}
-
-	// Hidden from email.
-	if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
-		$content = '';
-	}
-
-	return $content;
+	return ob_get_clean();
 
 }
 
