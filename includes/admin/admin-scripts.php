@@ -126,6 +126,21 @@ function newsletterglue_js_data() {
 			}
 		}
 
+		// Post dates.
+		$dates = array(
+			date( 'l, j M Y', strtotime( $post->post_date ) ),
+			date( 'F j, Y', strtotime( $post->post_date ) ),
+			date( 'Y-m-d', strtotime( $post->post_date ) ),
+			date( 'm/d/Y', strtotime( $post->post_date ) ),
+			date( 'd/m/Y', strtotime( $post->post_date ) ),
+		);
+
+		$date_formats = array();
+		foreach( $dates as $date ) {
+			$date_formats[] = array( 'value' => $date, 'label' => $date );
+		}
+		$data[ 'date_formats' ] = $date_formats;
+
 		wp_localize_script( 'newsletterglue_meta', 'newsletterglue_meta', $data );
 
 	}

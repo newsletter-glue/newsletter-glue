@@ -58,6 +58,9 @@
 				'type' : 'string',
 				'default' : 'center',
 			},
+			date_format: {
+				'type' : 'string',
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
 
@@ -90,14 +93,27 @@
 				props.setAttributes( { alignment: newAlignment } );
 			}
 
+			var dateFormats = newsletterglue_meta.date_formats;
+
+			var the_post_date = props.attributes.date_format ? props.attributes.date_format : dateFormats[0]['value'];
+
 			return (
 
-				el( Fragment, {},
+				el( Fragment, { },
 
 					// This is block settings in sidebar.
 					el( InspectorControls, {},
 
 						el( PanelBody, { title: 'General options', initialOpen: true },
+
+							el( PanelRow, {},
+								el( SelectControl, {
+									label: 'Date format',
+									value: props.attributes.date_format,
+									onChange: ( value ) => { props.setAttributes( { date_format: value } ); },
+									options: dateFormats,
+								} )
+							),
 
 							el( PanelRow, {},
 								el( SelectControl, {
@@ -165,7 +181,7 @@
 						} ),
 						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
 						el( 'div', { className: 'ngl-metadata-date' },
-							newsletterglue_meta.post_date
+							the_post_date
 						),
 						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
 						el( 'img', {
@@ -219,6 +235,10 @@
 		// This is how the block is rendered in frontend.
 		save: function( props ) {
 
+			var dateFormats = newsletterglue_meta.date_formats;
+
+			var the_post_date = props.attributes.date_format ? props.attributes.date_format : dateFormats[0]['value'];
+
 			var divider = props.attributes.divider_style == 'dot' ? '•' : '|';
 
 			var metaStyles = {
@@ -242,7 +262,7 @@
 			if ( props ) {
 				metaDate = [
 					el( 'div', { className: 'ngl-metadata-date' },
-						newsletterglue_meta.post_date
+						the_post_date
 					),
 					el( 'div', { className: 'ngl-metadata-sep' }, divider )
 				];
