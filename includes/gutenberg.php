@@ -29,6 +29,14 @@ function newsletterglue_get_blocks() {
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_form/icon/icon.svg',
 			'is_pro'		=> 'yes',
 		),
+		'newsletterglue_block_social' => array(
+			'title'			=> __( 'Social embed', 'newsletter-glue' ),
+			'description'	=> __( 'Embed posts from social media by pasting a link.', 'newsletter-glue' ),
+			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_social' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_social' ] ) : 'no',
+			'callback'		=> 'newsletterglue_block_social',
+			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_social/icon/icon.svg',
+			'is_pro'		=> 'yes',
+		),
 		'newsletterglue_block_author' => array(
 			'title'			=> __( 'Author byline', 'newsletter-glue' ),
 			'description'	=> __( 'Add an author byline and follow button to your newsletter.', 'newsletter-glue' ),
