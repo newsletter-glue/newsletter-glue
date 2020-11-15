@@ -129,9 +129,9 @@ We're working on it! Stay tuned!
 
 = 1.1.6, November 12, 2020 =
 
-* **New feature:** Add preview text to each newsletter. Find it next to the **Subject** field in the **Send as newsletter** section. Preview text shows up next to your Subject line in inboxes. It's a great way to give subscribers a sneak peek of your email and convince them to open it.
+* **New feature:** Add preview text to each newsletter. Preview text shows up next to your Subject line in inboxes. It's a great way to give subscribers a sneak peek of your email and convince them to open it. Find it next to the **Subject** field in the **Send as newsletter** section.
 * **New feature:** You can now choose if you want to add the blog post's title to the top of each newsletter. Previously, every newsletter automatically added the blog post title. This gives you more flexibility and control over your newsletter's layout. Find this feature at the bottom of the Newsletter Theme Designer (Newsletter Glue > Settings > Newsletter Theme Designer).
-* **New feature:** You can now choose if you want to add the blog post's title to the top of each newsletter. Previously, every newsletter automatically added the blog post title. This gives you more flexibility and control over your newsletter's layout. Find this feature at the bottom of the Newsletter Theme Designer (Newsletter Glue > Settings > Newsletter Theme Designer).
+* **New feature:** Alignment options (left, center, right) for headers and paragraph text can now be found in the Newsletter Theme Designer. Note this will only show up in your newsletter. It will not affect or appear in your published blog post or in your block editor.
 
 = 1.1.5, October 29, 2020 =
 
