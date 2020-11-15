@@ -69,6 +69,9 @@ function newsletterglue_block_social() {
 				'type' 		=> 'boolean',
 				'default' 	=> $defaults[ 'show_in_email' ],
 			),
+			'block_id'		=> array(
+				'type'		=> 'string',
+			),
 		),
 	) );
 
@@ -87,6 +90,8 @@ function newsletterglue_social_block_render( $attributes, $content ) {
 		),
 	);
 
+	$block_id = isset( $attributes[ 'block_id' ] ) ? $attributes[ 'block_id' ] : '';
+
 	include_once NGL_PLUGIN_DIR . 'includes/blocks/newsletterglue_block_social/templates/embed.php';
 
 	return ob_get_clean();
@@ -100,4 +105,15 @@ add_action( 'newsletterglue_add_custom_styles', 'newsletterglue_add_social_embed
 function newsletterglue_add_social_embed_css() { ?>
 
 <?php
+}
+
+/**
+ * Get embed by block ID.
+ */
+function newsletterglue_get_embed( $block_id ) {
+
+	$html = get_option( 'ngl_embed_' . str_replace( '-', '_', $block_id ) );
+
+	return $html;
+
 }

@@ -49,8 +49,15 @@
 				'type' : 'boolean',
 				'default' : newsletterglue_block_social.show_in_email ? true : false
 			},
+			block_id: {
+				'type' : 'string',
+			},
 		},
 		edit: function( props ) {
+
+			if ( ! props.attributes.block_id ) {
+				props.setAttributes( { block_id: props.clientId } );
+			}
 
 			return [
 	
