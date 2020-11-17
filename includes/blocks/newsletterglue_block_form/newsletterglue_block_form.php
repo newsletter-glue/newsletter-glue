@@ -159,7 +159,7 @@ function newsletterglue_add_form_css() { ?>
 }
 
 .ngl-form-button {
-    background: #3400FF;
+    background: #DD3714;
     color: #fff;
     border-radius: 0;
     cursor: pointer;

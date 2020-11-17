@@ -132,8 +132,8 @@ function newsletterglue_add_author_byline_css() { ?>
 .ngl-author-bio {
 	margin: 0;
 	padding: 0 0 4px;
-	font-size: 12px;
-	line-height: 16px;
+	font-size: 14px;
+	line-height: 18px;
 }
 
 .ngl-author-btn {

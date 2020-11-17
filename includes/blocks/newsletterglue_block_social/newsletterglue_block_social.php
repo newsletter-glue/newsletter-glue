@@ -90,7 +90,23 @@ function newsletterglue_social_block_render( $attributes, $content ) {
 		),
 	);
 
-	$block_id = isset( $attributes[ 'block_id' ] ) ? $attributes[ 'block_id' ] : '';
+	$block_id 	= isset( $attributes[ 'block_id' ] ) ? $attributes[ 'block_id' ] : '';
+	$url		= newsletterglue_get_embed_url( $block_id );
+	$content    = newsletterg_get_platform_embed( $url );
+	$html		= null;
+
+	if ( ! empty( $content[ 'html' ] ) ) {
+		$html = $content[ 'html' ];
+	}
+
+	// On frontend. no html.
+	if ( ! is_admin() && ! defined( 'REST_REQUEST' ) && ! $html ) {
+		return ob_get_clean();
+	}
+
+	if ( ! empty( $content[ 'error' ] ) ) {
+		$html = $content[ 'error' ];
+	}
 
 	include_once NGL_PLUGIN_DIR . 'includes/blocks/newsletterglue_block_social/templates/embed.php';
 
@@ -115,5 +131,100 @@ function newsletterglue_get_embed( $block_id ) {
 	$html = get_option( 'ngl_embed_' . str_replace( '-', '_', $block_id ) );
 
 	return $html;
+
+}
+
+/**
+ * Get embed URL by block ID.
+ */
+function newsletterglue_get_embed_url( $block_id ) {
+
+	$url = get_option( 'ngl_embed_url_' . str_replace( '-', '_', $block_id ) );
+
+	return $url;
+
+}
+
+/**
+ * Get embed with AJAX.
+ */
+function newsletterglue_ajax_get_embed() {
+
+	$error = '';
+
+	check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+	$url 		= isset( $_REQUEST[ 'url' ] ) ? sanitize_text_field( $_REQUEST[ 'url' ] ) : '';
+	$block_id 	= isset( $_REQUEST[ 'block_id' ] ) ? sanitize_text_field( $_REQUEST[ 'block_id' ] ) : '';
+	$block_id	= str_replace( '-', '_', $block_id );
+
+	if ( empty( $block_id ) ) {
+		wp_die( -1 );
+	}
+
+	if ( filter_var( $url, FILTER_VALIDATE_URL ) === FALSE || esc_url_raw( $url ) !== $url ) {
+		$error = __( 'Please enter a valid URL.', 'newsletter-glue' );
+	}
+
+	if ( ! empty( $error ) ) {
+		delete_option( 'ngl_embed_' . $block_id );
+		delete_option( 'ngl_embed_url_' . $block_id );
+
+		wp_send_json( array( 'error' => $error ) );
+	}
+
+	$result = newsletterg_get_platform_embed( $url );
+
+	if ( ! empty( $result[ 'html' ] ) ) {
+		update_option( 'ngl_embed_' . $block_id, $result[ 'html' ] );
+		update_option( 'ngl_embed_url_' . $block_id, $url );
+	}
+
+	if ( ! $result ) {
+		$result[ 'error' ] = __( 'An error has occured.', 'newsletter-glue' );
+	}
+
+	wp_send_json( $result );
+
+}
+add_action( 'wp_ajax_newsletterglue_ajax_get_embed', 'newsletterglue_ajax_get_embed' );
+add_action( 'wp_ajax_nopriv_newsletterglue_ajax_get_embed', 'newsletterglue_ajax_get_embed' );
+
+/**
+ * Get platform embed by URL.
+ */
+function newsletterg_get_platform_embed( $url ) {
+
+	$result = false;
+
+	// Twitter embed.
+	if ( strstr( $url, 'twitter' ) ) {
+		$result = newsletterglue_get_twitter_embed( $url );
+	}
+
+	return $result;
+
+}
+
+/**
+ * Twitter.
+ */
+function newsletterglue_get_twitter_embed( $url ) {
+
+	$response 	= array();
+
+	$request 	= wp_remote_get( 'https://publish.twitter.com/oembed?url=' . urlencode( $url ) . '&omit_script=false' );
+
+	if ( is_wp_error( $request ) ) {
+		$response[ 'error' ] = __( 'An error has occured.', 'newsletter-glue' );
+		return $response;
+	}
+
+	$result 	= json_decode( $request[ 'body' ] );
+	$html   	= isset( $result->html ) ? $result->html : '';
+
+	$response[ 'html' ] = $html;
+
+	return $response;
 
 }

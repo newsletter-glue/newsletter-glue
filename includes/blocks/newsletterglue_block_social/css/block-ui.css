@@ -32,3 +32,8 @@
 	height: 20px;
 	fill: #888;
 }
+
+.ngl-embed-frontend {
+	border: none;
+	padding: 0;
+}
