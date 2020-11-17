@@ -55,7 +55,7 @@
 /* Top bar */
 .ngl-bar {
     min-height: 60px;
-    background: #F3ECFB;
+    background: #FFF2EF;
     margin-left: -20px;
     box-shadow: 0 1px 2px #e4d4f7;
 	display: flex;
@@ -1127,7 +1127,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-block-top {
 	height: 125px;
-	background: #F3ECFB;
+	background: #FFF2EF;
 	position: relative;
 	background-position: center;
 	background-repeat: no-repeat;
