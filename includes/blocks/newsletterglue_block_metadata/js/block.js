@@ -61,8 +61,52 @@
 			date_format: {
 				'type' : 'string',
 			},
+			author_name: {
+				'type' : 'string',
+			},
+    		profile_pic: {
+    			type: 'string',
+    		},
+			show_author: {
+				'type' : 'boolean',
+				'default' : true,
+			},
+			show_issue: {
+				'type' : 'boolean',
+				'default' : true,
+			},
+			show_date: {
+				'type' : 'boolean',
+				'default' : true,
+			},
+			show_location: {
+				'type' : 'boolean',
+				'default' : true,
+			},
+			show_readtime: {
+				'type' : 'boolean',
+				'default' : true,
+			},
+			show_readonline: {
+				'type' : 'boolean',
+				'default' : true,
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
+
+			var onSelectImage = function( media ) {
+				return props.setAttributes( {
+					profile_pic: media.url
+				} );
+			};
+
+			var removeImage = function() {
+				props.setAttributes( {
+					profile_pic: ''
+				} );
+			};
+
+			var userImage = props.attributes.profile_pic ? props.attributes.profile_pic : newsletterglue_meta.profile_pic;
 
 			var metaStyles = {
 				color: props.attributes.text_color,
@@ -77,25 +121,115 @@
 			var divider = props.attributes.divider_style == 'dot' ? '•' : '|';
 
 			var metaPic = '';
-			metaPic = [
-				el( 'div', { className: 'ngl-metadata-pic' },
-					el( 'img', { src: newsletterglue_meta.profile_pic, className: 'avatar avatar-32 photo' },
+			if ( props.attributes.show_author ) {
+				metaPic = [
+					el( 'div', { className: 'ngl-metadata-pic' },
+						el( 'img', { src: userImage, className: 'avatar avatar-32 photo' },
 
-					)
-				),
-				el( 'div', { className: 'ngl-metadata-author' },
-					newsletterglue_meta.author_name
-				),
-				el( 'div', { className: 'ngl-metadata-sep' }, divider )
-			];
+						)
+					),
+					el( RichText, {
+						tagName: 'div',
+						format: 'string',
+						className: 'ngl-metadata-author',
+						onChange: ( value ) => { props.setAttributes( { author_name: value } ); },
+						value: props.attributes.author_name,
+						placeholder: newsletterglue_meta.author_name,
+						multiline: '&nbsp;'
+					} ),
+					el( 'div', { className: 'ngl-metadata-sep' }, divider )
+				];
+			}
+
+			var metaLocation = '';
+			if ( props.attributes.show_location ) {
+				metaLocation = [
+					el( 'img', {
+						className: 'ngl-metadata-map-pin',
+						src: newsletterglue_block_metadata.assets_uri + 'map-pin.png'
+					} ),
+					el( RichText, {
+						tagName: 'div',
+						format: 'string',
+						className: 'ngl-metadata-map',
+						onChange: ( value ) => { props.setAttributes( { post_location: value } ); },
+						value: props.attributes.post_location,
+						placeholder: 'Location',
+						multiline: '&nbsp;'
+					} ),
+					el( 'div', { className: 'ngl-metadata-sep' }, divider )
+				];
+			}
+
+			var dateFormats = newsletterglue_meta.date_formats;
+			var the_post_date = props.attributes.date_format ? props.attributes.date_format : dateFormats[0]['value'];
+			var metaDate = '';
+			if ( props.attributes.show_date ) {
+				metaDate = [
+					el( 'div', { className: 'ngl-metadata-date' },
+						the_post_date
+					),
+					el( 'div', { className: 'ngl-metadata-sep' }, divider )
+				];
+			}
+
+			var metaIssue = '';
+			if ( props.attributes.show_issue ) {
+				metaIssue = [
+					el( RichText, {
+						tagName: 'div',
+						format: 'string',
+						className: 'ngl-metadata-issue',
+						onChange: ( value ) => { props.setAttributes( { issue_title: value } ); },
+						value: props.attributes.issue_title,
+						placeholder: 'Issue #',
+						multiline: '&nbsp;'
+					} ),
+					el( 'div', { className: 'ngl-metadata-sep' }, divider )
+				];
+			}
+
+			var metaPermalink = '';
+			if ( props.attributes.show_readonline ) {
+				metaPermalink = [
+					el( RichText, {
+							tagName: 'div',
+							format: 'string',
+							className: 'ngl-metadata-permalink',
+							onChange: ( value ) => { props.setAttributes( { post_link: value } ); },
+							value: props.attributes.post_link,
+							placeholder: 'Read online',
+							multiline: '&nbsp;'
+					} ),
+					el( 'img', {
+						className: 'ngl-metadata-permalink-arrow',
+						src: newsletterglue_block_metadata.assets_uri + 'arrow.png'
+					} )
+				];
+			}
+
+			var metaReadtime = '';
+			if ( props.attributes.show_readtime ) {
+				metaReadtime = [
+					el( RichText, {
+						tagName: 'div',
+						format: 'string',
+						className: 'ngl-metadata-readtime',
+						onChange: ( value ) => { props.setAttributes( { readtime: value } ); },
+						value: props.attributes.readtime,
+						placeholder: 'Reading time:',
+						multiline: '&nbsp;'
+					} ),
+					el( 'div', { className: 'ngl-metadata-readtime-ajax' },
+						newsletterglue_meta.readtime
+					),
+					el( 'div', { className: 'ngl-metadata-sep' }, divider )
+				];
+			}
 
 			function onChangeAlignment( newAlignment ) {
 				props.setAttributes( { alignment: newAlignment } );
 			}
-
-			var dateFormats = newsletterglue_meta.date_formats;
-
-			var the_post_date = props.attributes.date_format ? props.attributes.date_format : dateFormats[0]['value'];
 
 			return (
 
@@ -104,7 +238,81 @@
 					// This is block settings in sidebar.
 					el( InspectorControls, {},
 
+						el( PanelBody, { title: 'Show/hide elements', initialOpen: true },
+							el( PanelRow, {},
+								el( ToggleControl, {
+									label: 'Author details',
+									onChange: ( value ) => { props.setAttributes( { show_author: value } ); },
+									checked: props.attributes.show_author,
+								} )
+							),
+							el( PanelRow, {},
+								el( ToggleControl, {
+									label: 'Issue number',
+									onChange: ( value ) => { props.setAttributes( { show_issue: value } ); },
+									checked: props.attributes.show_issue,
+								} )
+							),
+							el( PanelRow, {},
+								el( ToggleControl, {
+									label: 'Date',
+									onChange: ( value ) => { props.setAttributes( { show_date: value } ); },
+									checked: props.attributes.show_date,
+								} )
+							),
+							el( PanelRow, {},
+								el( ToggleControl, {
+									label: 'Location',
+									onChange: ( value ) => { props.setAttributes( { show_location: value } ); },
+									checked: props.attributes.show_location,
+								} )
+							),
+							el( PanelRow, {},
+								el( ToggleControl, {
+									label: 'Reading time',
+									onChange: ( value ) => { props.setAttributes( { show_readtime: value } ); },
+									checked: props.attributes.show_readtime,
+								} )
+							),
+							el( PanelRow, {},
+								el( ToggleControl, {
+									label: 'Read online',
+									onChange: ( value ) => { props.setAttributes( { show_readonline: value } ); },
+									checked: props.attributes.show_readonline,
+								} )
+							),
+						),
+
 						el( PanelBody, { title: 'General options', initialOpen: true },
+
+							el( PanelRow, {},
+								el( MediaUpload, {
+									onSelect: onSelectImage,
+									type: 'image',
+									render: function( obj ) {
+										return [
+
+											el( 'a', {
+													href: '#',
+													className: 'ngl-gutenberg-btn',
+													onClick: obj.open
+												},
+												el( 'svg', { className: '', width: '20', height: '20', viewBox: '0 0 24 24' },
+													el( 'path', { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z" } )
+												),
+												el( 'span', {},
+													'Change profile image'
+												),
+											),
+
+											el( 'a', { href: '#', onClick: removeImage },
+												props.attributes.profile_pic ? 'Reset' : ''
+											)
+
+										];
+									}
+								} )
+							),
 
 							el( PanelRow, {},
 								el( SelectControl, {
@@ -170,60 +378,11 @@
 					// This is how the block is rendered in editor.
 					el( 'div', { className: 'ngl-metadata', style: metaStyles },
 						metaPic,
-						el( RichText, {
-							tagName: 'div',
-							format: 'string',
-							className: 'ngl-metadata-issue',
-							onChange: ( value ) => { props.setAttributes( { issue_title: value } ); },
-							value: props.attributes.issue_title,
-							placeholder: 'Issue #',
-							multiline: '&nbsp;'
-						} ),
-						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
-						el( 'div', { className: 'ngl-metadata-date' },
-							the_post_date
-						),
-						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
-						el( 'img', {
-							className: 'ngl-metadata-map-pin',
-							src: newsletterglue_block_metadata.assets_uri + 'map-pin.png'
-						} ),
-						el( RichText, {
-							tagName: 'div',
-							format: 'string',
-							className: 'ngl-metadata-map',
-							onChange: ( value ) => { props.setAttributes( { post_location: value } ); },
-							value: props.attributes.post_location,
-							placeholder: 'Location',
-							multiline: '&nbsp;'
-						} ),
-						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
-						el( RichText, {
-							tagName: 'div',
-							format: 'string',
-							className: 'ngl-metadata-readtime',
-							onChange: ( value ) => { props.setAttributes( { readtime: value } ); },
-							value: props.attributes.readtime,
-							placeholder: 'Reading time:',
-							multiline: '&nbsp;'
-						} ),
-						el( 'div', { className: 'ngl-metadata-readtime-ajax' },
-							newsletterglue_meta.readtime
-						),
-						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
-						el( RichText, {
-							tagName: 'div',
-							format: 'string',
-							className: 'ngl-metadata-permalink',
-							onChange: ( value ) => { props.setAttributes( { post_link: value } ); },
-							value: props.attributes.post_link,
-							placeholder: 'Read online',
-							multiline: '&nbsp;'
-						} ),
-						el( 'img', {
-							className: 'ngl-metadata-permalink-arrow',
-							src: newsletterglue_block_metadata.assets_uri + 'arrow.png'
-						} ),
+						metaIssue,
+						metaDate,
+						metaLocation,
+						metaReadtime,
+						metaPermalink
 					)
 
 				)
@@ -246,9 +405,9 @@
 				textAlign: props.attributes.alignment,
 			};
 
-			var metaTitle = '';
-			if ( props.attributes.issue_title ) {
-				metaTitle = [
+			var metaIssue = '';
+			if ( props.attributes.issue_title && props.attributes.show_issue ) {
+				metaIssue = [
 					el( RichText.Content, {
 						tagName: 'div',
 						className: 'ngl-metadata-issue',
@@ -259,7 +418,7 @@
 			}
 
 			var metaDate = '';
-			if ( props ) {
+			if ( props.attributes.show_date ) {
 				metaDate = [
 					el( 'div', { className: 'ngl-metadata-date' },
 						the_post_date
@@ -269,7 +428,7 @@
 			}
 
 			var metaLocation = '';
-			if ( props.attributes.post_location ) {
+			if ( props.attributes.post_location && props.attributes.show_location ) {
 				metaLocation = [
 					el( 'img', {
 						className: 'ngl-metadata-map-pin',
@@ -284,49 +443,66 @@
 				];
 			}
 
+			var showName = props.attributes.author_name ? props.attributes.author_name : '';
+			var userImage = props.attributes.profile_pic ? props.attributes.profile_pic : newsletterglue_meta.profile_pic;
+
 			var metaPic = '';
-			metaPic = [
-				el( 'div', { className: 'ngl-metadata-pic' },
-					el( 'img', { src: newsletterglue_meta.profile_pic, className: 'avatar avatar-32 photo' },
+			if ( props.attributes.show_author ) {
+				metaPic = [
+					el( 'div', { className: 'ngl-metadata-pic' },
+						el( 'img', { src: userImage, className: 'avatar avatar-32 photo' },
 
-					)
-				),
-				el( 'div', { className: 'ngl-metadata-author' },
-					newsletterglue_meta.author_name
-				),
-				el( 'div', { className: 'ngl-metadata-sep' }, divider )
-			];
+						)
+					),
+					el( RichText.Content, {
+						tagName: 'div',
+						className: 'ngl-metadata-author',
+						value: showName? showName : newsletterglue_meta.author_name,
+					} ),
+					el( 'div', { className: 'ngl-metadata-sep' }, divider )
+				];
+			}
 
-			var metaPermalink = el( RichText.Content, {
-				tagName: 'a',
-				className: 'ngl-metadata-permalink',
-				value: props.attributes.post_link,
-				href: newsletterglue_meta.post_perma
-			} );
+			var metaPermalink = '';
+			if ( props.attributes.show_readonline ) {
+				metaPermalink = [
+					el( RichText.Content, {
+						tagName: 'a',
+						className: 'ngl-metadata-permalink',
+						value: props.attributes.post_link,
+						href: newsletterglue_meta.post_perma
+					} ),
+					el( 'img', {
+						className: 'ngl-metadata-permalink-arrow',
+						src: newsletterglue_block_metadata.assets_uri + 'arrow.png'
+					} )
+				];
+			}
 
-			var metaReadtime = el( RichText.Content, {
-				tagName: 'div',
-				className: 'ngl-metadata-readtime',
-				value: props.attributes.readtime,
-			} );
+			var metaReadtime = '';
+			if ( props.attributes.show_readtime ) {
+				metaReadtime = [
+					el( RichText.Content, {
+						tagName: 'div',
+						className: 'ngl-metadata-readtime',
+						value: props.attributes.readtime,
+					} ),
+					el( 'div', { className: 'ngl-metadata-readtime-ajax' },
+						newsletterglue_meta.readtime
+					),
+					el( 'div', { className: 'ngl-metadata-sep' }, divider )
+				];
+			}
 
 			return (
 
 					el( 'div', { className: 'ngl-metadata', style: metaStyles },
 						metaPic,
-						metaTitle,
+						metaIssue,
 						metaDate,
 						metaLocation,
 						metaReadtime,
-						el( 'div', { className: 'ngl-metadata-readtime-ajax' },
-							newsletterglue_meta.readtime
-						),
-						el( 'div', { className: 'ngl-metadata-sep' }, divider ),
-						metaPermalink,
-						el( 'img', {
-							className: 'ngl-metadata-permalink-arrow',
-							src: newsletterglue_block_metadata.assets_uri + 'arrow.png'
-						} ),
+						metaPermalink
 					)
 
 			);
