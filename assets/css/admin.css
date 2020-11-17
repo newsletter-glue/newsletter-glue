@@ -152,7 +152,7 @@
 }
 
 .ngl .ui.large.header .sub.header a:hover {
-	color: #2d00dc;
+	color: #c72402;
 }
 
 /* Box */
@@ -720,7 +720,7 @@
 }
 
 .ngl-test-result.ngl-is-valid .ngl-test-limit a:hover {
-	color: #2d00dc !important;
+	color: #c72402 !important;
 }
 
 .ngl-test-notice-content {
@@ -1030,7 +1030,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 .ngl-settings a:hover {
-	color: #2d00dc;
+	color: #c72402;
 }
 
 .ngl-settings a.ngl-lighter {
