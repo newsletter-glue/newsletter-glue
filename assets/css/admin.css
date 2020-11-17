@@ -55,14 +55,14 @@
 /* Top bar */
 .ngl-bar {
     min-height: 60px;
-    background: #F3ECFB;
+    background: #FFF2EF;
     margin-left: -20px;
     box-shadow: 0 1px 2px #e4d4f7;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	font-size: 14px;
-	color: #3400FF;
+	color: #DD3714;
 }
 
 .ngl-bar a {
@@ -86,7 +86,7 @@
 }
 
 .ngl-label {
-	color: #4B00F4;
+	color: #DD3714;
 	font-weight: 500;
 }
 
@@ -110,7 +110,7 @@
 .ngl-icon-link:visited {
 	display: flex;
 	align-items: center;
-	color: #3400FF;
+	color: #DD3714;
 	font-size: 13px;
 	font-weight: 500;
 	padding: 0 5px;
@@ -118,7 +118,7 @@
 
 .ngl-icon-link:hover,
 .ngl-icon-link:focus {
-	color: #2f00e4;
+	color: #c72402;
 }
 
 .ngl-icon-link span {
@@ -147,12 +147,12 @@
 }
 
 .ngl .ui.large.header .sub.header a {
-	color: #3400FF;
+	color: #DD3714;
 	box-shadow: none;
 }
 
 .ngl .ui.large.header .sub.header a:hover {
-	color: #2d00dc;
+	color: #c72402;
 }
 
 /* Box */
@@ -230,7 +230,7 @@
 .ngl-card-add2 {
 	background: #fff;
     flex-direction: column;
-	border: 1px solid #4B00F4;
+	border: 1px solid #DD3714;
 	justify-content: center;
 	z-index: 50;
 }
@@ -249,7 +249,7 @@
 .ngl-card-view {
 	background: #fff;
     flex-direction: column;
-	border: 1px solid #4B00F4;
+	border: 1px solid #DD3714;
 	z-index: 40;
 }
 
@@ -282,7 +282,7 @@
 /* Screens */
 .ngl-card-state {
 	background: #f8f3ff;
-	color: #4B00F4;
+	color: #DD3714;
 	flex-direction: column;
 	padding-top: 130px;
 	z-index: 100;
@@ -462,19 +462,19 @@
 	display: block;
 	padding: 0.75em 1.5em;
 	line-height: 1;
-	background-color: #4B00F4;
+	background-color: #DD3714;
 	border-radius: 8px;
 	height: auto;
 }
 
 .ngl-btn button.ui.primary.button:hover,
 .ngl-btn a.ui.primary.button:hover {
-	background-color: #4300da;
+	background-color: #c72402;
 }
 
 .ngl-btn button.ui.primary.button:focus,
 .ngl-btn a.ui.primary.button:focus {
-	background-color: #3900b9;
+	background-color: #c72402;
 }
 
 .ngl-btn button.ui.primary.button i.icon,
@@ -712,15 +712,15 @@
 }
 
 .ngl-test-limit {
-	color: #3400FF;
+	color: #DD3714;
 }
 
 .ngl-test-result.ngl-is-valid .ngl-test-limit a {
-	color: #3400FF !important;
+	color: #DD3714 !important;
 }
 
 .ngl-test-result.ngl-is-valid .ngl-test-limit a:hover {
-	color: #2d00dc !important;
+	color: #c72402 !important;
 }
 
 .ngl-test-notice-content {
@@ -737,7 +737,7 @@
 	padding: 0.645em 0;
 	margin: 0;
 	line-height: 1;
-	background-color: #4B00F4;
+	background-color: #DD3714;
 	border-radius: 8px;
 	width: 160px;
 	text-align: center;
@@ -759,11 +759,11 @@
 .ngl-action .ui.primary.button.ngl-alt.ngl-is-invalid { color: #EF0000 !important; }
 
 .ngl-action .ui.primary.button:hover {
-	background-color: #4300da;
+	background-color: #c72402;
 }
 
 .ngl-action .ui.primary.button:focus {
-	background-color: #3900b9;
+	background-color: #c72402;
 }
 
 .ngl-limit {
@@ -836,11 +836,11 @@
 }
 
 .ngl-msgbox-link a {
-	color: #4B00F4 !important;
+	color: #DD3714 !important;
 }
 
 .ngl-msgbox-link a:hover {
-	color: #4300da !important;
+	color: #c72402 !important;
 }
 
 .ngl-get-help {
@@ -848,7 +848,7 @@
 	right: 10px;
 	bottom: 5px;
 	font-size: 13px;
-	color: #4B00F4 !important;
+	color: #DD3714 !important;
 	font-weight: 400;
 	text-decoration: none;
 	box-shadow: none !important;
@@ -857,7 +857,7 @@
 }
 
 .ngl-get-help:hover {
-	color: #4300da !important;
+	color: #c72402 !important;
 }
 
 .ngl-metabox-loading {
@@ -882,7 +882,7 @@
 .ngl-process {
 	display: flex;
 	font-size: 12px;
-	color: #3400FF;
+	color: #DD3714;
 	padding: 5px 0 0;
 }
 
@@ -1025,12 +1025,12 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 .ngl-settings a {
-	color: #3400FF;
+	color: #DD3714;
 	box-shadow: none !important;
 }
 
 .ngl-settings a:hover {
-	color: #2d00dc;
+	color: #c72402;
 }
 
 .ngl-settings a.ngl-lighter {
@@ -1094,13 +1094,13 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-block-global a {
 	margin: 0 0 0 25px;
-	color: #3400FF;
+	color: #DD3714;
 	font-size: 14px;
 	box-shadow: none;
 }
 
 .ngl-block-global a:hover {
-	color: #2f00e4;
+	color: #c72402;
 }
 
 .ngl-block {
@@ -1127,7 +1127,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-block-top {
 	height: 125px;
-	background: #F3ECFB;
+	background: #FFF2EF;
 	position: relative;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -1219,7 +1219,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	position: absolute;
 	right: 20px;
 	bottom: 15px;
-	color: #3400FF;
+	color: #DD3714;
 }
 
 .ngl-block-use input[type=checkbox] {
@@ -1253,7 +1253,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 .ngl-block-use input[type=checkbox]:checked+.ngl-block-use-switch {
-    background-color: #3400FF;
+    background-color: #DD3714;
 }
 
 .ngl-block-use-switch:before {
@@ -1316,8 +1316,8 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	font-size: 14px !important;
 	background-color: #fff !important;
 	border-radius: 8px;
-	border: 1px solid #3400FF !important;
-	color: #3400FF !important;
+	border: 1px solid #DD3714 !important;
+	color: #DD3714 !important;
 	font-weight: 500;
 	box-shadow: none !important;
 	height: auto;
@@ -1325,8 +1325,8 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-metabox .ui.basic.button:hover,
 .ngl-metabox .ui.basic.button:focus {
-	border: 1px solid #3414b1 !important;
-	color: #3414b1 !important;
+	border: 1px solid #c72402 !important;
+	color: #c72402 !important;
 	outline: none !important;
 }
 
@@ -1377,17 +1377,17 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	border: none;
 	box-shadow: none;
 	background: transparent !important;
-	color: #4B00F4 !important;
+	color: #DD3714 !important;
 	margin: 0;
 	font-weight: 400;
 }
 
 .ngl .ui.basic.noborder.button:hover {
-	color: #4300da !important;
+	color: #c72402 !important;
 }
 
 .ngl .ui.basic.noborder.button:focus {
-	color: #3900b9 !important;
+	color: #c72402 !important;
 }
 
 .ngl .ui.basic.noborder.button i.icon {
@@ -1750,7 +1750,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	top: 0;
 	left: 0;
 	height: 100%;
-	background: #3400ff;
+	background: #DD3714;
 	border-radius: 999px;
 	width: 80px;
 	box-sizing: border-box;
@@ -1806,7 +1806,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 }
 
 .ngl-theme-upload .ui.button {
-	background-color: #3400FF;
+	background-color: #DD3714;
 	padding: 11px 14px;
 	font-size: 13px;
 	font-weight: 500;
@@ -1814,7 +1814,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 .ngl-theme-upload .ui.button:hover,
 .ngl-theme-upload .ui.button:focus {
-	background-color: #2e00e2;
+	background-color: #c72402;
 }
 
 .ngl-theme-upload-name a {

@@ -27,7 +27,15 @@ function newsletterglue_get_blocks() {
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_form' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_form' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_form',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_form/icon/icon.svg',
-			'pro'			=> 'yes',
+			'is_pro'		=> 'yes',
+		),
+		'newsletterglue_block_social' => array(
+			'title'			=> __( 'Social embed', 'newsletter-glue' ),
+			'description'	=> __( 'Embed posts from social media by pasting a link.', 'newsletter-glue' ),
+			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_social' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_social' ] ) : 'no',
+			'callback'		=> 'newsletterglue_block_social',
+			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_social/icon/icon.svg',
+			'is_pro'		=> 'yes',
 		),
 		'newsletterglue_block_author' => array(
 			'title'			=> __( 'Author byline', 'newsletter-glue' ),
@@ -35,7 +43,7 @@ function newsletterglue_get_blocks() {
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_author' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_author' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_author',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/icon/icon.svg',
-			'pro'			=> 'yes',
+			'is_pro'		=> 'yes',
 		),
 		'newsletterglue_block_callout' => array(
 			'title'			=> __( 'Callout card', 'newsletter-glue' ),
@@ -43,7 +51,7 @@ function newsletterglue_get_blocks() {
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_callout' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_callout' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_callout',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_callout/icon/icon.svg',
-			'pro'			=> 'yes',
+			'is_pro'		=> 'yes',
 		),
 		'newsletterglue_block_metadata' => array(
 			'title'			=> __( 'Newsletter meta data', 'newsletter-glue' ),
@@ -51,7 +59,7 @@ function newsletterglue_get_blocks() {
 			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_metadata' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_metadata' ] ) : 'no',
 			'callback'		=> 'newsletterglue_block_metadata',
 			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/icon/icon.svg',
-			'pro'			=> 'yes',
+			'is_pro'		=> 'yes',
 		),
 	);
 
