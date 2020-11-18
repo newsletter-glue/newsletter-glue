@@ -36,16 +36,18 @@
 
 	let blockLoaded = false;
 	let blockLoadedInterval = setInterval(function() {
-		var element = document.getElementById('ngl_embed_url');
+		var element = document.getElementById( 'ngl_embed_url' );
 		if ( element ) {
-			var event = new Event('change', { bubbles: true });
-			element.dispatchEvent( event );
+			if ( element.value != '' ) {
+				var event = new Event( 'change', { bubbles: true } );
+				element.dispatchEvent( event );
+			}
 			blockLoaded = true;
 		}
 		if ( blockLoaded ) {
 			clearInterval( blockLoadedInterval );
 		}
-	}, 500);
+	}, 500 );
 
 	registerBlockType( 'newsletterglue/social', {
 		title: 'NG: Social embed',

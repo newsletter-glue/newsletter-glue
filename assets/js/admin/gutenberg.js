@@ -16,9 +16,8 @@
 				container.empty();
 			},
 			success: function( response ) {
-				console.log( response );
 				if ( response.error ) {
-					container.html( response.error );
+					container.html( '<div class="ngl-embed-error">' + response.error + '</div>' );
 				}
 				if ( response.html ) {
 					container.html( response.html );
@@ -36,6 +35,18 @@
 	$( document ).on( 'keyup', '#ngl_embed_url', function( event ) {
 		if ( event.key === 'Enter' || event.keyCode === 13 ) {
 			ngl_get_embed( $( this ) );
+		}
+	} );
+
+	// Triggered when embed url is focused.
+	$( document ).on( 'focus', '#ngl_embed_url', function( event ) {
+		$( this ).removeClass( 'ngl-embed-input-small' );
+	} );
+
+	// Triggered when embed url is blured.
+	$( document ).on( 'blur', '#ngl_embed_url', function( event ) {
+		if ( $( this ).val() != '' ) {
+			$( this ).addClass( 'ngl-embed-input-small' );
 		}
 	} );
 

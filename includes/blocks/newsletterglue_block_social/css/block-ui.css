@@ -4,16 +4,6 @@
 	border: 1px solid #bbb;
 }
 
-.ngl-embed input[type=text] {
-	border: none !important;
-	box-shadow: none !important;
-	font-size: 26px;
-	padding: 0 !important;
-	width: 100% !important;
-	margin: 0 !important;
-	background: transparent !important;
-}
-
 .ngl-embed-support {
 	display: flex;
 	justify-content: flex-end;
@@ -28,12 +18,35 @@
 
 .ngl-embed-support svg {
 	display: block;
-	width: 20px;
-	height: 20px;
+	width: 16px;
+	height: 16px;
 	fill: #888;
+}
+
+.ngl-embed input[type=text] {
+	border: none !important;
+	box-shadow: none !important;
+	font-size: 26px;
+	padding: 0 !important;
+	width: 100% !important;
+	margin: 0 !important;
+	background: transparent !important;
+}
+
+.ngl-embed input[type=text].ngl-embed-input-small {
+	font-size: 12px;
 }
 
 .ngl-embed-frontend {
 	border: none;
 	padding: 0;
+}
+
+.ngl-embed-error {
+    font-size: 14px;
+    color: #d44444;
+    padding: 4px 12px;
+    border-radius: 4px;
+    background: #ffecec;
+    margin: 20px 0 0;
 }
