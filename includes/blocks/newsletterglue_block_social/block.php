@@ -160,7 +160,9 @@ class NGL_Block_Social {
 			wp_die( -1 );
 		}
 
-		if ( filter_var( $url, FILTER_VALIDATE_URL ) === FALSE || esc_url_raw( $url ) !== $url ) {
+		if ( empty( $url ) ) {
+			$error = __( 'Please enter URL first.', 'newsletter-glue' );
+		} else if ( filter_var( $url, FILTER_VALIDATE_URL ) === FALSE || esc_url_raw( $url ) !== $url ) {
 			$error = __( 'Please enter a valid URL.', 'newsletter-glue' );
 		}
 
@@ -182,6 +184,10 @@ class NGL_Block_Social {
 
 		if ( ! $result ) {
 			$result[ 'error' ] = __( 'An error has occured.', 'newsletter-glue' );
+		}
+
+		if ( isset( $result[ 'html' ] ) && empty( $result[ 'html' ] ) ) {
+			$result[ 'error' ] = __( 'We could not retrieve any content from the provided URL.', 'newsletter-glue' );
 		}
 
 		wp_send_json( $result );

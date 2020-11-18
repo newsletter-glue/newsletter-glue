@@ -33,10 +33,6 @@
 	background: transparent !important;
 }
 
-.ngl-embed input[type=text].ngl-embed-input-small {
-	font-size: 12px;
-}
-
 .ngl-embed-frontend {
 	border: none;
 	padding: 0;
@@ -44,9 +40,6 @@
 
 .ngl-embed-error {
     font-size: 14px;
-    color: #d44444;
-    padding: 4px 12px;
-    border-radius: 4px;
-    background: #ffecec;
+    color: #772c2c;
     margin: 20px 0 0;
 }
