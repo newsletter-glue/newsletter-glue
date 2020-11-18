@@ -34,6 +34,19 @@
 		)
 	);
 
+	let blockLoaded = false;
+	let blockLoadedInterval = setInterval(function() {
+		var element = document.getElementById('ngl_embed_url');
+		if ( element ) {
+			var event = new Event('change', { bubbles: true });
+			element.dispatchEvent( event );
+			blockLoaded = true;
+		}
+		if ( blockLoaded ) {
+			clearInterval( blockLoadedInterval );
+		}
+	}, 500);
+
 	registerBlockType( 'newsletterglue/social', {
 		title: 'NG: Social embed',
 		description: 'Embed posts from social media by pasting a link.',

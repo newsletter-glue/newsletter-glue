@@ -3,9 +3,9 @@
  * Gutenberg.
  */
 
-class NGL_Block_Callout {
+class NGL_Block_Article {
 
-	public $id = 'newsletterglue_block_callout';
+	public $id = 'newsletterglue_block_article';
 
 	/**
 	 * Construct.
@@ -38,15 +38,28 @@ class NGL_Block_Callout {
 
 		$suffix  = '';
 
+		$defaults[ 'name' ]			= __( 'NG: Article embeds', 'newsletter-glue' );
+		$defaults[ 'description' ] 	= __( 'Bulk embed articles and customise their layout.', 'newsletter-glue' );
+
 		wp_register_script( $this->asset_id, $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ), time() );
 		wp_localize_script( $this->asset_id, $this->id, $defaults );
 
 		wp_register_style( $this->asset_id . '-style', $css_dir . 'block-ui' . $suffix . '.css', array(), time() );
 
-		register_block_type( 'newsletterglue/callout', array(
+		register_block_type( 'newsletterglue/article', array(
 			'editor_script'   => $this->asset_id,
 			'style'           => $this->asset_id . '-style',
 			'render_callback' => array( $this, 'render_block' ),
+			'attributes'	  => array(
+				'show_in_blog' => array(
+					'type' 		=> 'boolean',
+					'default' 	=> $defaults[ 'show_in_blog' ],
+				),
+				'show_in_email' => array(
+					'type' 		=> 'boolean',
+					'default' 	=> $defaults[ 'show_in_email' ],
+				),
+			),
 		) );
 
 	}
@@ -56,29 +69,11 @@ class NGL_Block_Callout {
 	 */
 	public function render_block( $attributes, $content ) {
 
-		$defaults = get_option( $this->id );
+		ob_start();
+		
+		echo '<div class="newsletterglue-articles">output here</div>';
 
-		if ( ! $defaults ) {
-			$defaults = array(
-				'show_in_blog'	=> true,
-				'show_in_email'	=> true,
-			);
-		}
-
-		$show_in_blog  = isset( $attributes[ 'show_in_blog' ] ) ? $attributes[ 'show_in_blog' ] : $defaults[ 'show_in_blog' ];
-		$show_in_email = isset( $attributes[ 'show_in_email' ] ) ? $attributes[ 'show_in_email' ] : $defaults[ 'show_in_email' ];
-
-		// Hidden from blog.
-		if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
-			$content = '';
-		}
-
-		// Hidden from email.
-		if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
-			$content = '';
-		}
-
-		return $content;
+		return ob_get_clean();
 
 	}
 
@@ -117,28 +112,9 @@ class NGL_Block_Callout {
 	 * CSS.
 	 */
 	public function email_css() {
-		?>
-		.wp-block-newsletterglue-callout {
-			padding-top: 26px !important;
-			padding-bottom: 1px !important;
-		}
 
-		.wp-block-newsletterglue-callout h1,
-		.wp-block-newsletterglue-callout h2,
-		.wp-block-newsletterglue-callout h3,
-		.wp-block-newsletterglue-callout h4,
-		.wp-block-newsletterglue-callout h5,
-		.wp-block-newsletterglue-callout h6 {
-			margin: 0 0 14px !important;
-			padding: 0 !important;
-		}
-
-		.wp-block-newsletterglue-callout p {
-			margin: 0 0 25px !important;
-		}
-		<?php
 	}
 
 }
 
-return new NGL_Block_Callout;
+return new NGL_Block_Article;

@@ -239,7 +239,7 @@
 
 						),
 
-						el( PanelBody, { title: 'Show/hide - author byline block', initialOpen: true },
+						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
 							el( PanelRow, {},
 								el( ToggleControl, {

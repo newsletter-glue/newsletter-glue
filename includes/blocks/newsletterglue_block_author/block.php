@@ -12,6 +12,8 @@ class NGL_Block_Author {
 	 */
 	public function __construct() {
 
+		$this->asset_id = str_replace( '_', '-', $this->id );
+
 		add_action( 'init', array( $this, 'register_block' ) );
 
 		add_action( 'newsletterglue_add_custom_styles', array( $this, 'email_css' ) );
@@ -23,6 +25,7 @@ class NGL_Block_Author {
 	public function register_block() {
 
 		$defaults = get_option( $this->id );
+
 		if ( ! $defaults ) {
 			$defaults = array(
 				'show_in_blog'	=> true,
@@ -40,14 +43,14 @@ class NGL_Block_Author {
 		$defaults[ 'description' ] 	= __( 'Add an author byline and follow button to your newsletter.', 'newsletter-glue' );
 		$defaults[ 'button_text' ]	= __( 'Follow', 'newsletter-glue' );
 
-		wp_register_script( 'newsletterglue-author-block', $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ), time() );
-		wp_localize_script( 'newsletterglue-author-block', $this->id, $defaults );
+		wp_register_script( $this->asset_id, $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ), time() );
+		wp_localize_script( $this->asset_id, $this->id, $defaults );
 
-		wp_register_style( 'newsletterglue-author-block-style', $css_dir . 'block-ui' . $suffix . '.css', array(), time() );
+		wp_register_style( $this->asset_id . '-style', $css_dir . 'block-ui' . $suffix . '.css', array(), time() );
 
 		register_block_type( 'newsletterglue/author', array(
-			'editor_script'   => 'newsletterglue-author-block',
-			'style'           => 'newsletterglue-author-block-style',
+			'editor_script'   => $this->asset_id,
+			'style'           => $this->asset_id . '-style',
 			'render_callback' => array( $this, 'render_block' ),
 		) );
 

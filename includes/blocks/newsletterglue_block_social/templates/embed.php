@@ -24,7 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<?php endif; ?>
 
 	<div class="ngl-embed-content">
+		<?php if ( ! is_admin() && ! defined( 'REST_REQUEST' ) ) : ?>
 		<?php echo $html; ?>
+		<?php endif; ?>
 	</div>
 
 </div>
