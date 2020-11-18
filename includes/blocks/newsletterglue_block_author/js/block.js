@@ -1,5 +1,6 @@
 ( function( blocks, editor, element, components ) {
 
+	const block = newsletterglue_block_author;
 	const el = element.createElement;
     const { registerBlockType } = blocks;
 	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, MediaUpload, PlainText } = editor;
@@ -35,8 +36,8 @@
 	);
 
 	registerBlockType( 'newsletterglue/author', {
-		title: 'NG: Author byline',
-		description: 'Add an author byline and follow button to your newsletter.',
+		title: block.name,
+		description: block.description,
 		icon: icon,
 		category: 'newsletterglue-blocks',
 		keywords: [ 'newsletter', 'glue', 'byline', 'author' ],
@@ -56,18 +57,18 @@
 			},
 			show_in_blog: {
 				'type' : 'boolean',
-				'default' : newsletterglue_block_author.show_in_blog ? true : false,
+				'default' : block.show_in_blog ? true : false,
 			},
 			show_in_email: {
 				'type' : 'boolean',
-				'default' : newsletterglue_block_author.show_in_email ? true : false,
+				'default' : block.show_in_email ? true : false,
 			},
     		profile_pic: {
-    			type: 'string',
+    			'type' : 'string',
     		},
 			button_text: {
 				'type' : 'string',
-				'default' : 'Follow',
+				'default' : block.button_text,
 			},
 			border_radius: {
 				'type' : 'number',
@@ -291,7 +292,7 @@
 										style: { borderRadius: props.attributes.border_radius },
 									},
 									el( 'img', {
-										src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
+										src: block.assets_uri + platform + outline + '.png'
 									} ),
 									el( RichText, {
 										tagName: 'span',
@@ -366,7 +367,7 @@
 										rel: 'noopener noreferrer'
 									},
 									el( 'img', {
-										src: newsletterglue_block_author.assets_uri + platform + outline + '.png'
+										src: block.assets_uri + platform + outline + '.png'
 									} ),
 									el( RichText.Content, {
 										tagName: 'span',
