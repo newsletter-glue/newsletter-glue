@@ -16,7 +16,6 @@
 				container.empty();
 			},
 			success: function( response ) {
-				console.log( response );
 				if ( response.error ) {
 					container.html( '<div class="ngl-embed-error">' + response.error + '</div>' );
 				}
@@ -38,5 +37,21 @@
 			ngl_get_embed( $( this ) );
 		}
 	} );
+
+	// Trigger embed URL.
+	if ( $( '.ngl-embed-url' ).length ) {
+		var blockLoaded = false;
+		var blockLoadedInterval = setInterval( function() {
+			var element = $( '.ngl-embed-url' );
+			element.each( function() {
+				var el	= $( this );
+				var div = $( this ).parents( '.ngl-embed' ).find( '.ngl-embed-content' );
+				var err = $( this ).parents( '.ngl-embed' ).find( '.ngl-embed-error' );
+				if ( el.val() != '' && ! err.length && ! $.trim( div.html() ).length  ) {
+					el.trigger( 'change' );
+				}
+			} );
+		}, 500 );
+	}
 
 } )( jQuery );

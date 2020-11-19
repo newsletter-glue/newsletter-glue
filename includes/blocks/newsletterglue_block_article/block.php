@@ -70,7 +70,35 @@ class NGL_Block_Article {
 	public function render_block( $attributes, $content ) {
 
 		ob_start();
-		
+
+		$defaults = get_option( $this->id );
+
+		if ( ! $defaults ) {
+			$defaults = array(
+				'show_in_blog'	=> true,
+				'show_in_email'	=> true,
+			);
+		}
+
+		$show_in_blog  = isset( $attributes[ 'show_in_blog' ] ) ? $attributes[ 'show_in_blog' ] : $defaults[ 'show_in_blog' ];
+		$show_in_email = isset( $attributes[ 'show_in_email' ] ) ? $attributes[ 'show_in_email' ] : $defaults[ 'show_in_email' ];
+
+		// Hidden from blog.
+		if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
+			if ( ! defined( 'REST_REQUEST' ) ) {
+				echo '';
+				return ob_get_clean();
+			}
+		}
+
+		// Hidden from email.
+		if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
+			if ( ! defined( 'REST_REQUEST' ) ) {
+				echo '';
+				return ob_get_clean();
+			}
+		}
+
 		echo '<div class="newsletterglue-articles">output here</div>';
 
 		return ob_get_clean();

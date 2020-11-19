@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php if ( is_admin() || defined( 'REST_REQUEST' ) && REST_REQUEST ) : ?>
 	<div class="ngl-embed-input">
-		<input type="text" name="ngl_embed_url" id="ngl_embed_url" placeholder="<?php echo __( 'Paste link here', 'newsletter-glue' ); ?>" value="<?php echo $url; ?>" />
+		<input type="text" name="ngl_embed_url" id="ngl_embed_url" class="ngl-embed-url" placeholder="<?php echo __( 'Paste link here', 'newsletter-glue' ); ?>" value="<?php echo $url; ?>" />
 	</div>
 
 	<div class="ngl-embed-support">

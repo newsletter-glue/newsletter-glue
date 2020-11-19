@@ -75,6 +75,34 @@ class NGL_Block_Social {
 
 		ob_start();
 
+		$defaults = get_option( $this->id );
+
+		if ( ! $defaults ) {
+			$defaults = array(
+				'show_in_blog'	=> true,
+				'show_in_email'	=> true,
+			);
+		}
+
+		$show_in_blog  = isset( $attributes[ 'show_in_blog' ] ) ? $attributes[ 'show_in_blog' ] : $defaults[ 'show_in_blog' ];
+		$show_in_email = isset( $attributes[ 'show_in_email' ] ) ? $attributes[ 'show_in_email' ] : $defaults[ 'show_in_email' ];
+
+		// Hidden from blog.
+		if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
+			if ( ! defined( 'REST_REQUEST' ) ) {
+				echo '';
+				return ob_get_clean();
+			}
+		}
+
+		// Hidden from email.
+		if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
+			if ( ! defined( 'REST_REQUEST' ) ) {
+				echo '';
+				return ob_get_clean();
+			}
+		}
+
 		$supported_embeds = array(
 			'twitter' => array(
 				'icon'	=> '<svg viewBox="0 0 32 32"><path d="M2 4c4 4 8 8 13 7a6 6 0 0 1 7-7 6 6 0 0 1 4 2 8 8 0 0 0 5-2 8 8 0 0 1-3 4 8 8 0 0 0 4-1 8 8 0 0 1-4 4 18 18 0 0 1-18 19 18 18 0 0 1-10-3 12 12 0 0 0 8-3 8 8 0 0 1-5-4 8 8 0 0 0 3-.5A8 8 0 0 1 0 12a8 8 0 0 0 3 1 8 8 0 0 1-1-9"/></svg>'
