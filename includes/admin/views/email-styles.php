@@ -8,7 +8,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $font_family 	= newsletterglue_get_theme_option( 'font' );
-$border_color 	= newsletterglue_get_theme_option( 'btn_border' ) ? newsletterglue_get_theme_option( 'btn_border' ) : 'transparent';
+$email_bg		= newsletterglue_get_theme_option( 'email_bg' );
+$container_bg	= newsletterglue_get_theme_option( 'container_bg' );
+$border_color 	= newsletterglue_get_theme_option( 'btn_border' );
 
 ?>
 
@@ -27,7 +29,7 @@ body {
 }
 
 #wrapper {
-	background: <?php echo newsletterglue_get_theme_option( 'email_bg' ); ?>;
+	background: <?php echo $email_bg; ?>;
 	padding: 0;
 	padding-top: <?php echo newsletterglue_get_theme_option( 'container_margin' ); ?>px;
 	padding-bottom: <?php echo newsletterglue_get_theme_option( 'container_margin' ); ?>px;
@@ -37,7 +39,7 @@ body {
 }
 
 #template_inner {
-	background: <?php echo newsletterglue_get_theme_option( 'container_bg' ); ?>;
+	background: <?php echo $container_bg; ?>;
 	box-sizing: border-box;
 	padding: <?php echo newsletterglue_get_theme_option( 'container_padding1' ); ?>px <?php echo newsletterglue_get_theme_option( 'container_padding2' ); ?>px;
 	<?php if ( $font_family ) : ?>
@@ -152,7 +154,7 @@ p.ngl-credits a {
 }
 
 .wp-block-button {
-	padding: 20px 0;
+	padding: 0 0 25px;
 }
 
 .wp-block-button__link {

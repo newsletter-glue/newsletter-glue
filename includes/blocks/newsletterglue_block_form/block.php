@@ -89,6 +89,7 @@ class NGL_Block_Form {
 
 		if ( defined( 'NGL_IN_EMAIL' ) ) {
 			$content = str_replace( '<button', '<a href="{post_permalink}"', $content );
+			$content = str_replace( '</button>', '</a>', $content );
 		}
 
 		$content = str_replace( 'class="wp-block-newsletterglue-form', 'data-app="' . newsletterglue_default_connection() . '" class="wp-block-newsletterglue-form', $content );
@@ -150,7 +151,7 @@ class NGL_Block_Form {
 		?>
 		.ngl-form {
 			max-width: 100% !important;
-			margin-top: 25px !important;
+			margin-top: 0 !important;
 			margin-bottom: 25px !important;
 			position: relative;
 		}

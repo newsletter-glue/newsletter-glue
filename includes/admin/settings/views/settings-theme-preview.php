@@ -22,13 +22,15 @@ if ( ! $logo_position ) {
 
 $title = get_option( 'newsletterglue_add_title' );
 
-$border_color = newsletterglue_get_theme_option( 'btn_border' ) ? newsletterglue_get_theme_option( 'btn_border' ) : 'transparent';
+$email_bg		= newsletterglue_get_theme_option( 'email_bg' );
+$container_bg	= newsletterglue_get_theme_option( 'container_bg' );
+$border_color 	= newsletterglue_get_theme_option( 'btn_border' );
 
 ?>
 
-<div class="ngl-email ngl-desktop" style="background-color: <?php echo newsletterglue_get_theme_option( 'email_bg' ); ?>; <?php if ( $font_family ) : ?>font-family: <?php echo $font_family; ?>;<?php endif; ?>">
+<div class="ngl-email ngl-desktop" style="background-color: <?php echo $email_bg ?>; <?php if ( $font_family ) : ?>font-family: <?php echo $font_family; ?>;<?php endif; ?>">
 
-	<div class="ngl-email-container" style="margin-top: <?php echo (int) newsletterglue_get_theme_option( 'container_margin' ); ?>px;margin-bottom: <?php echo (int) newsletterglue_get_theme_option( 'container_margin' ); ?>px;padding: <?php echo (int) newsletterglue_get_theme_option( 'container_padding1' ); ?>px <?php echo (int) newsletterglue_get_theme_option( 'container_padding2' ); ?>px;background-color: <?php echo newsletterglue_get_theme_option( 'container_bg' ); ?>">
+	<div class="ngl-email-container" style="margin-top: <?php echo (int) newsletterglue_get_theme_option( 'container_margin' ); ?>px;margin-bottom: <?php echo (int) newsletterglue_get_theme_option( 'container_margin' ); ?>px;padding: <?php echo (int) newsletterglue_get_theme_option( 'container_padding1' ); ?>px <?php echo (int) newsletterglue_get_theme_option( 'container_padding2' ); ?>px;background-color: <?php echo $container_bg; ?>">
 	
 		<div class="ngl-email-logo ngl-desktop ngl-logo-<?php echo esc_attr( $logo_position ); ?> <?php if ( ! $logo ) echo 'is-hidden'; ?>">
 			<img src="<?php echo esc_url( $logo ); ?>" alt="" />
@@ -68,9 +70,9 @@ $border_color = newsletterglue_get_theme_option( 'btn_border' ) ? newsletterglue
 
 </div>
 
-<div class="ngl-email ngl-mobile" style="background-color: <?php echo newsletterglue_get_theme_option( 'email_bg' ); ?>; <?php if ( $font_family ) : ?>font-family: <?php echo $font_family; ?>;<?php endif; ?>">
+<div class="ngl-email ngl-mobile" style="background-color: <?php echo $email_bg; ?>; <?php if ( $font_family ) : ?>font-family: <?php echo $font_family; ?>;<?php endif; ?>">
 
-	<div class="ngl-email-container" style="margin-top: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;margin-bottom: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;padding: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_padding1' ); ?>px <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_padding2' ); ?>px;background-color: <?php echo newsletterglue_get_theme_option( 'container_bg' ); ?>">
+	<div class="ngl-email-container" style="margin-top: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;margin-bottom: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;padding: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_padding1' ); ?>px <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_padding2' ); ?>px;background-color: <?php echo $container_bg; ?>">
 
 		<div class="ngl-email-logo ngl-mobile ngl-logo-<?php echo esc_attr( $logo_position ); ?> <?php if ( ! $logo ) echo 'is-hidden'; ?>">
 			<img src="<?php echo esc_url( $logo ); ?>" alt="" />
