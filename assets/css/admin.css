@@ -2451,3 +2451,8 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	font-style: normal;
 	font-size: 0.9em;
 }
+
+.ngl-gutenberg-greyed {
+	opacity: 0.5;
+	pointer-events: none;
+}
