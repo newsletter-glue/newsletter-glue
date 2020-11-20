@@ -1131,6 +1131,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	position: relative;
 	background-position: center;
 	background-repeat: no-repeat;
+	background-size: 40px 40px;
 }
 
 .ngl-block-upgrade-icon {
