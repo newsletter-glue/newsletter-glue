@@ -100,6 +100,10 @@
 			list_id: {
 				'type' : 'string',
 			},
+			double_optin: {
+				'type' : 'boolean',
+				'default' : true,
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
 
@@ -208,6 +212,7 @@
 			var app = newsletterglue_meta.app;
 
 			var SelectList = '';
+			var DoubleOptin = '';
 
 			if ( app == 'campaignmonitor' ) {
 				SelectList = el( SelectControl, {
@@ -232,6 +237,14 @@
 					onChange: ( value ) => { props.setAttributes( { list_id: value } ); },
 					options: newsletterglue_meta.the_lists,
 				} );
+				DoubleOptin = el( PanelRow, { className: 'ngl-gutenberg-help' },
+					el( ToggleControl, {
+						label: 'Double opt-in',
+						onChange: ( value ) => { props.setAttributes( { double_optin: value } ); },
+						checked: props.attributes.double_optin,
+						help: 'Automatically email new subscribers to confirm they want to receive emails from you. This creates less spam addresses and higher quality subscribers.',
+					} )
+				);
 			}
 			if ( app == 'sendinblue' ) {
 				SelectList = el( SelectControl, {
@@ -362,11 +375,12 @@
 						} ),
 
 						el( PanelBody, { title: newsletterglue_meta.app_name + ' integration', initialOpen: true },
+
 							el( PanelRow, {},
-
 								SelectList
-
 							),
+
+							DoubleOptin
 						),
 
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },

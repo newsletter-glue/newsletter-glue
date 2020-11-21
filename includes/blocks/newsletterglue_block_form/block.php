@@ -96,13 +96,15 @@ class NGL_Block_Form {
 
 		if ( ! defined( 'NGL_IN_EMAIL' ) && $content ) {
 			if ( is_array( $attributes ) ) {
-				$list_id = isset( $attributes[ 'list_id' ] ) ? $attributes[ 'list_id' ] : '';
+				$list_id 		= isset( $attributes[ 'list_id' ] ) ? $attributes[ 'list_id' ] : '';
+				$double_optin 	= isset( $attributes[ 'double_optin' ] ) ? 'no' : 'yes';
 				if ( $list_id ) {
 					if ( is_array( $list_id ) ) {
 						$list_id = implode( ',', $list_id );
 					}
 					$inputs .= '<input type="hidden" name="ngl_list_id" id="ngl_list_id" value="' . esc_attr( $list_id ) . '">';
 				}
+				$inputs .= '<input type="hidden" name="ngl_double_optin" id="ngl_double_optin" value="' . esc_attr( $double_optin ) . '">';
 				if ( $inputs ) {
 					$content = str_replace( '</form>', $inputs . '</form>', $content );
 				}
