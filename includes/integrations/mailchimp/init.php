@@ -547,12 +547,14 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 			$lname = isset( $name_array[1] ) ? $name_array[1] : '';
 		}
 
+		$double_optin = isset( $double_optin ) && $double_optin == 'no' ? 'subscribed' : 'pending';
+
 		$hash 		= $this->api::subscriberHash( $email );
 		$batch		= $this->api->new_batch();
 		$batch->put( "op$list_id", "lists/$list_id/members/$hash", [
 				'email_address' 	=> $email,
-				'status'        	=> 'subscribed',
-				'status_if_new' 	=> 'subscribed',
+				'status'        	=> $double_optin,
+				'status_if_new' 	=> $double_optin,
 				'merge_fields' 	 	=> array(
 					'FNAME'	=> $fname,
 					'LNAME'	=> $lname

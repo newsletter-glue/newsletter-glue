@@ -7,6 +7,22 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Returns true if free version is being used.
+ */
+function newsletterglue_is_free_version() {
+
+	$plugin_data = get_plugin_data( NGL_PLUGIN_FILE );
+
+	if ( isset( $plugin_data[ 'Name' ] ) ) {
+		if ( stristr( $plugin_data[ 'Name' ], 'PRO' ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
  * Send newsletter when post is finally published.
  */
 function newsletterglue_publish_future_post( $post_id ) {
@@ -334,6 +350,22 @@ function newsletterglue_get_theme_option( $id = '', $theme = null ) {
 
 	// Get theme option.
 	if ( isset( $theme[ $id ] ) ) {
+		
+		if ( empty( $theme[ $id ] ) ) {
+			if ( in_array( $id, array( 'email_bg', 'container_bg', 'btn_border' ) ) ) {
+				return 'transparent';
+			}
+			if ( in_array( $id, array( 'h1_colour', 'h2_colour', 'h3_colour', 'h4_colour', 'h5_colour', 'h6_colour', 'p_colour', 'a_colour' ) ) ) {
+				return 'inherit';
+			}
+			if ( in_array( $id, array( 'btn_bg' ) ) ) {
+				return '#32373c';
+			}
+			if ( in_array( $id, array( 'btn_colour' ) ) ) {
+				return '#fff';
+			}
+		}
+
 		return $theme[ $id ];
 	}
 

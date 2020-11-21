@@ -6,7 +6,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$defaults = get_option( 'newsletterglue_block_show_hide_content' );
+$defaults = get_option( $this->id );
 if ( ! $defaults ) {
 	$defaults = array(
 		'showemail'	=> true,
@@ -21,7 +21,7 @@ if ( ! $defaults ) {
 	<a href="#" class="ngl-popup-close"><span class="dashicons dashicons-no-alt"></span></a>
 
 	<div class="ngl-popup-header">
-		<?php _e( 'Show/hide content', 'newsletter-glue' ); ?>
+		<?php echo $this->get_label(); ?>
 		<span><?php _e( 'Customise how this block shows up in the post editor.', 'newsletter-glue' ); ?></span>
 	</div>
 

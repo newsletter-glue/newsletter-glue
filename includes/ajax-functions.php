@@ -33,11 +33,14 @@ function newsletterglue_ajax_save_block() {
 		wp_die( -1 );
 	}
 
-	$block_id = isset( $_POST[ 'id' ] ) ? sanitize_text_field( $_POST[ 'id' ] ) : '';
+	$block_id 	= isset( $_POST[ 'id' ] ) ? sanitize_text_field( $_POST[ 'id' ] ) : '';
+	$block		= str_replace( 'newsletterglue_block_', '', $block_id );
+	$classname 	= 'NGL_Block_' . ucfirst( $block );
 
-	$function = $block_id . '_save';
-
-	wp_send_json( call_user_func( $function ) );
+	if ( class_exists( $classname ) ) {
+		$instance = new $classname;
+		wp_send_json( call_user_func( array( $instance, 'save_settings' ) ) );
+	}
 
 	die();
 

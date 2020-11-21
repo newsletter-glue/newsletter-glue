@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: Newsletter Glue
+ * Plugin Name: Newsletter Glue (PRO)
  * Plugin URI: https://newsletterglue.com/
  * Description: Email posts to subscribers from the WordPress editor. Works with Mailchimp, MailerLite, Sendinblue…
  * Author: Newsletter Glue
  * Author URI: https://newsletterglue.com
- * Version: 1.1.6
+ * Version: 1.0.0
  * Text Domain: newsletter-glue
  * Domain Path: /i18n/languages/
  */
@@ -65,7 +65,7 @@ final class Newsletter_Glue {
 
 		// Plugin version.
 		if ( ! defined( 'NGL_VERSION' ) ) {
-			define( 'NGL_VERSION', '1.1.6' );
+			define( 'NGL_VERSION', '1.0.0' );
 		}
 
 		// Plugin Folder Path.
@@ -117,13 +117,8 @@ final class Newsletter_Glue {
 		// Load blocks.
 		$blocks = newsletterglue_get_blocks();
 		foreach( $blocks as $block_id => $params ) {
-			if ( $params[ 'use_block' ] === 'yes' ) {
-				if ( file_exists( NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/' . $block_id . '.php' ) ) {
-					include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/' . $block_id . '.php';
-				}
-				if ( isset( $params[ 'callback' ] ) && function_exists( $params[ 'callback' ] ) ) {
-					add_action( 'init', $params[ 'callback' ] );
-				}
+			if ( file_exists( NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/block.php' ) ) {
+				include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/block.php';
 			}
 		}
 
