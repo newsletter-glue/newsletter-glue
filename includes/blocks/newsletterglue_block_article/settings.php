@@ -21,8 +21,8 @@ if ( ! $defaults ) {
 	<a href="#" class="ngl-popup-close"><span class="dashicons dashicons-no-alt"></span></a>
 
 	<div class="ngl-popup-header">
-		<?php _e( 'Article embeds', 'newsletter-glue' ); ?>
-		<span><?php _e( 'Bulk embed articles and customise their layout.', 'newsletter-glue' ); ?></span>
+		<?php echo $this->get_label(); ?>
+		<span><?php _e( 'Customise how this block shows up in the post editor.', 'newsletter-glue' ); ?></span>
 	</div>
 
 	<div class="ngl-popup-field-header"><?php _e( 'Show/hide block', 'newsletter-glue' ); ?></div>
