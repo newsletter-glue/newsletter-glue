@@ -25,7 +25,7 @@ if ( ! $defaults ) {
 		<span><?php _e( 'Customise how this block shows up in the post editor.', 'newsletter-glue' ); ?></span>
 	</div>
 
-	<div class="ngl-popup-field-header"><?php _e( 'Show/hide - newsletter block', 'newsletter-glue' ); ?></div>
+	<div class="ngl-popup-field-header"><?php _e( 'Show/hide block', 'newsletter-glue' ); ?></div>
 
 	<div class="ngl-popup-field">
 		<label for="showblog">
