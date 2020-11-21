@@ -23,7 +23,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			<a href="#" class="ngl-block-disableall"><?php _e( 'Disable all', 'newsletter-glue' ); ?></a>
 		</div>
 
-		<?php foreach( $blocks as $block_id => $params ) : $classname = ucfirst( str_replace( 'newsletterglue_block_', 'NGL_Block_', $block_id ) ); $block = new $classname; ?>
+		<?php
+			foreach( $blocks as $block_id => $params ) :
+				$classname = ucfirst( str_replace( 'newsletterglue_block_', 'NGL_Block_', $block_id ) );
+				if ( ! class_exists( $classname ) ) {
+					continue;
+				}
+				$block = new $classname;
+		?>
 		<div class="ngl-block <?php echo ( $block->use_block() === 'yes' ) ? 'ngl-block-used' : 'ngl-block-unused'; ?> <?php echo ( isset( $params['pro'] ) && $params['pro'] === 'yes' ) ? 'ngl-block-locked' : ''; ?>" data-block="<?php echo esc_attr( $block_id ); ?>">
 			<div class="ngl-block-top" style="<?php if ( $block->get_icon_url() ) : ?>background-image: url( <?php echo $block->get_icon_url(); ?> )<?php endif; ?>">
 				<?php if ( $block->is_pro ) : ?>
