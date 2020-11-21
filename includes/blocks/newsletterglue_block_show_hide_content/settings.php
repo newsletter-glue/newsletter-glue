@@ -6,14 +6,6 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$defaults = get_option( $this->id );
-if ( ! $defaults ) {
-	$defaults = array(
-		'showemail'	=> true,
-		'showblog'	=> false,
-	);
-}
-
 ?>
 
 <form action="" class="ngl-popup-settings" data-block="<?php echo esc_attr( $block_id ); ?>">

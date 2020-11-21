@@ -52,6 +52,18 @@ class NGL_Block_Show_Hide_Content extends NGL_Abstract_Block {
 	}
 
 	/**
+	 * Get defaults.
+	 */
+	public function get_defaults() {
+
+		return array(
+			'showemail'	=> true,
+			'showblog'	=> false,
+		);
+
+	}
+
+	/**
 	 * Register the block.
 	 */
 	public function register_block() {

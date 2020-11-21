@@ -26,10 +26,23 @@ abstract class NGL_Abstract_Block {
 		$include 	= apply_filters( 'newsletterglue_include_block_settings', $file_url, $block_id );
 		$include 	= apply_filters( $block_id . '_settings_template', $include );
 
+		$defaults = get_option( $this->id );
+
+		if ( ! $defaults ) {
+			$defaults = $this->get_defaults();
+		}
+
 		if ( file_exists( $include ) ) {
 			include_once( $include );
 		}
 
+	}
+
+	/**
+	 * Get defaults.
+	 */
+	public function get_defaults() {
+		return array();
 	}
 
 	/**

@@ -40,6 +40,18 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	}
 
 	/**
+	 * Get defaults.
+	 */
+	public function get_defaults() {
+
+		return array(
+			'show_in_blog' 	=> true,
+			'show_in_email' => true,
+		);
+
+	}
+
+	/**
 	 * Register the block.
 	 */
 	public function register_block() {
