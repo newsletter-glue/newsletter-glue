@@ -11,57 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function newsletterglue_get_blocks() {
 
-	$use_blocks = get_option( 'newsletterglue_use_blocks' );
-
 	$blocks = array(
-		'newsletterglue_block_show_hide_content' => array(
-			'title'			=> __( 'Show/hide content', 'newsletter-glue' ),
-			'description'	=> __( 'Hide selected content from your blog/newsletter.', 'newsletter-glue' ),
-			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_show_hide_content' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_show_hide_content' ] ) : 'yes',
-			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_show_hide_content/icon/icon.svg',
-		),
-		'newsletterglue_block_form' => array(
-			'title'			=> __( 'Subscriber form', 'newsletter-glue' ),
-			'description'	=> __( 'New subscribers can sign up to your mailing list with this form.', 'newsletter-glue' ),
-			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_form' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_form' ] ) : 'no',
-			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_form/icon/icon.svg',
-			'is_pro'		=> 'yes',
-		),
-		'newsletterglue_block_social' => array(
-			'title'			=> __( 'Social embed', 'newsletter-glue' ),
-			'description'	=> __( 'Embed posts from social media by pasting a link.', 'newsletter-glue' ),
-			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_social' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_social' ] ) : 'no',
-			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_social/icon/icon.svg',
-			'is_pro'		=> 'yes',
-		),
-		'newsletterglue_block_article' => array(
-			'title'			=> __( 'Article embeds', 'newsletter-glue' ),
-			'description'	=> __( 'Bulk embed articles and customise their layout.', 'newsletter-glue' ),
-			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_article' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_article' ] ) : 'no',
-			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_article/icon/icon.svg',
-			'is_pro'		=> 'yes',
-		),
-		'newsletterglue_block_author' => array(
-			'title'			=> __( 'Author byline', 'newsletter-glue' ),
-			'description'	=> __( 'Add an author byline and follow button to your newsletter.', 'newsletter-glue' ),
-			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_author' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_author' ] ) : 'no',
-			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_author/icon/icon.svg',
-			'is_pro'		=> 'yes',
-		),
-		'newsletterglue_block_callout' => array(
-			'title'			=> __( 'Callout card', 'newsletter-glue' ),
-			'description'	=> __( 'Customise the background and border of this card to help its content stand out.', 'newsletter-glue' ),
-			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_callout' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_callout' ] ) : 'no',
-			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_callout/icon/icon.svg',
-			'is_pro'		=> 'yes',
-		),
-		'newsletterglue_block_metadata' => array(
-			'title'			=> __( 'Newsletter meta data', 'newsletter-glue' ),
-			'description'	=> __( 'Add standard meta data to each post.', 'newsletter-glue' ),
-			'use_block'		=> isset( $use_blocks[ 'newsletterglue_block_metadata' ] ) ? sanitize_text_field( $use_blocks[ 'newsletterglue_block_metadata' ] ) : 'no',
-			'icon'			=> NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/icon/icon.svg',
-			'is_pro'		=> 'yes',
-		),
+		'newsletterglue_block_show_hide_content' 	=> array(),
+		'newsletterglue_block_form' 				=> array(),
+		'newsletterglue_block_social' 				=> array(),
+		'newsletterglue_block_article' 				=> array(),
+		'newsletterglue_block_author' 				=> array(),
+		'newsletterglue_block_callout' 				=> array(),
+		'newsletterglue_block_metadata' 			=> array(),
 	);
 
 	return apply_filters( 'newsletterglue_get_blocks', $blocks );

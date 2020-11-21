@@ -3,7 +3,11 @@
  * Gutenberg.
  */
 
-class NGL_Block_Metadata {
+if ( ! class_exists( 'NGL_Abstract_Block', false ) ) {
+	include_once NGL_PLUGIN_DIR . 'includes/abstract-block.php';
+}
+
+class NGL_Block_Metadata extends NGL_Abstract_Block {
 
 	public $id = 'newsletterglue_block_metadata';
 
@@ -14,9 +18,25 @@ class NGL_Block_Metadata {
 
 		$this->asset_id = str_replace( '_', '-', $this->id );
 
-		add_action( 'init', array( $this, 'register_block' ) );
+		if ( $this->use_block() === 'yes' ) {
+			add_action( 'init', array( $this, 'register_block' ) );
+			add_action( 'newsletterglue_add_custom_styles', array( $this, 'email_css' ) );
+		}
 
-		add_action( 'newsletterglue_add_custom_styles', array( $this, 'email_css' ) );
+	}
+
+	/**
+	 * Block label.
+	 */
+	public function get_label() {
+		return __( 'Newsletter meta data', 'newsletter-glue' );
+	}
+
+	/**
+	 * Block label.
+	 */
+	public function get_description() {
+		return __( 'Add standard meta data to each post.', 'newsletter-glue' );
 	}
 
 	/**

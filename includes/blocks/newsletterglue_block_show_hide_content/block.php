@@ -3,9 +3,15 @@
  * Gutenberg.
  */
 
-class NGL_Block_Show_Hide_Content {
+if ( ! class_exists( 'NGL_Abstract_Block', false ) ) {
+	include_once NGL_PLUGIN_DIR . 'includes/abstract-block.php';
+}
+
+class NGL_Block_Show_Hide_Content extends NGL_Abstract_Block {
 
 	public $id = 'newsletterglue_block_show_hide_content';
+
+	public $is_pro = false;
 
 	/**
 	 * Construct.
@@ -14,9 +20,35 @@ class NGL_Block_Show_Hide_Content {
 
 		$this->asset_id = str_replace( '_', '-', $this->id );
 
-		add_action( 'init', array( $this, 'register_block' ) );
+		if ( $this->use_block() === 'yes' ) {
+			add_action( 'init', array( $this, 'register_block' ) );
+			add_action( 'newsletterglue_add_custom_styles', array( $this, 'email_css' ) );
+		}
 
-		add_action( 'newsletterglue_add_custom_styles', array( $this, 'email_css' ) );
+	}
+
+	/**
+	 * Block label.
+	 */
+	public function get_label() {
+		return __( 'Show/hide content', 'newsletter-glue' );
+	}
+
+	/**
+	 * Block label.
+	 */
+	public function get_description() {
+		return __( 'Hide selected content from your blog/newsletter.', 'newsletter-glue' );
+	}
+
+	/**
+	 * Use block.
+	 */
+	public function use_block() {
+
+		$use_blocks = get_option( 'newsletterglue_use_blocks' );
+
+		return isset( $use_blocks[ $this->id ] ) ? sanitize_text_field( $use_blocks[ $this->id ] ) : 'yes';
 	}
 
 	/**

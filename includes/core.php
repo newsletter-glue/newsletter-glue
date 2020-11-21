@@ -7,6 +7,22 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Returns true if free version is being used.
+ */
+function newsletterglue_is_free_version() {
+
+	$plugin_data = get_plugin_data( NGL_PLUGIN_FILE );
+
+	if ( isset( $plugin_data[ 'Name' ] ) ) {
+		if ( stristr( $plugin_data[ 'Name' ], 'PRO' ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
  * Send newsletter when post is finally published.
  */
 function newsletterglue_publish_future_post( $post_id ) {

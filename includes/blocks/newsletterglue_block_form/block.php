@@ -3,7 +3,11 @@
  * Gutenberg.
  */
 
-class NGL_Block_Form {
+if ( ! class_exists( 'NGL_Abstract_Block', false ) ) {
+	include_once NGL_PLUGIN_DIR . 'includes/abstract-block.php';
+}
+
+class NGL_Block_Form extends NGL_Abstract_Block {
 
 	public $id = 'newsletterglue_block_form';
 
@@ -14,13 +18,29 @@ class NGL_Block_Form {
 
 		$this->asset_id = str_replace( '_', '-', $this->id );
 
-		add_action( 'init', array( $this, 'register_block' ) );
+		if ( $this->use_block() === 'yes' ) {
+			add_action( 'init', array( $this, 'register_block' ) );
+			add_action( 'newsletterglue_add_custom_styles', array( $this, 'email_css' ) );
 
-		add_action( 'newsletterglue_add_custom_styles', array( $this, 'email_css' ) );
+			// Ajax hooks.
+			add_action( 'wp_ajax_newsletterglue_block_form_subscribe', array( $this, 'subscribe' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_block_form_subscribe', array( $this, 'subscribe' ) );
+		}
 
-		// Ajax hooks.
-		add_action( 'wp_ajax_newsletterglue_block_form_subscribe', array( $this, 'subscribe' ) );
-		add_action( 'wp_ajax_nopriv_newsletterglue_block_form_subscribe', array( $this, 'subscribe' ) );
+	}
+
+	/**
+	 * Block label.
+	 */
+	public function get_label() {
+		return __( 'Subscriber form', 'newsletter-glue' );
+	}
+
+	/**
+	 * Block label.
+	 */
+	public function get_description() {
+		return __( 'New subscribers can sign up to your mailing list with this form.', 'newsletter-glue' );
 	}
 
 	/**

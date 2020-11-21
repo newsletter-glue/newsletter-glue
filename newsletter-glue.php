@@ -117,10 +117,8 @@ final class Newsletter_Glue {
 		// Load blocks.
 		$blocks = newsletterglue_get_blocks();
 		foreach( $blocks as $block_id => $params ) {
-			if ( $params[ 'use_block' ] === 'yes' ) {
-				if ( file_exists( NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/block.php' ) ) {
-					include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/block.php';
-				}
+			if ( file_exists( NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/block.php' ) ) {
+				include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/block.php';
 			}
 		}
 

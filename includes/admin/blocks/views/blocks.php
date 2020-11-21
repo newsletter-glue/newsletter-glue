@@ -23,16 +23,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			<a href="#" class="ngl-block-disableall"><?php _e( 'Disable all', 'newsletter-glue' ); ?></a>
 		</div>
 
-		<?php foreach( $blocks as $block_id => $params ) : ?>
-		<div class="ngl-block <?php echo ( $params['use_block'] === 'yes' ) ? 'ngl-block-used' : 'ngl-block-unused'; ?> <?php echo ( isset( $params['pro'] ) && $params['pro'] === 'yes' ) ? 'ngl-block-locked' : ''; ?>" data-block="<?php echo esc_attr( $block_id ); ?>">
-			<div class="ngl-block-top" style="<?php if ( isset( $params['icon'] ) ) : ?>background-image: url( <?php echo $params['icon']; ?> )<?php endif; ?>">
-				<?php if ( ( isset( $params['pro'] ) && $params['pro'] === 'yes' ) || isset( $params[ 'is_pro' ] ) ) : ?>
-				<div class="ngl-block-upgrade-icon"><?php if ( ! isset( $params[ 'is_pro' ] ) ) : ?><i class="lock icon"></i><?php endif; ?><?php _e( 'Pro', 'newsletter-glue' ); ?></div>
+		<?php foreach( $blocks as $block_id => $params ) : $classname = ucfirst( str_replace( 'newsletterglue_block_', 'NGL_Block_', $block_id ) ); $block = new $classname; ?>
+		<div class="ngl-block <?php echo ( $block->use_block() === 'yes' ) ? 'ngl-block-used' : 'ngl-block-unused'; ?> <?php echo ( isset( $params['pro'] ) && $params['pro'] === 'yes' ) ? 'ngl-block-locked' : ''; ?>" data-block="<?php echo esc_attr( $block_id ); ?>">
+			<div class="ngl-block-top" style="<?php if ( $block->get_icon_url() ) : ?>background-image: url( <?php echo $block->get_icon_url(); ?> )<?php endif; ?>">
+				<?php if ( $block->is_pro ) : ?>
+				<div class="ngl-block-upgrade-icon"><?php if ( newsletterglue_is_free_version() ) : ?><i class="lock icon"></i><?php endif; ?><?php _e( 'Pro', 'newsletter-glue' ); ?></div>
 				<?php endif; ?>
 				<a href="#" class="ngl-block-demo"><?php _e( 'See demo', 'newsletter-glue' ); ?></a>
 			</div>
-			<div class="ngl-block-title"><?php echo esc_html( $params['title'] ); ?></div>
-			<div class="ngl-block-desc"><?php echo esc_html( $params['description'] ); ?></div>
+			<div class="ngl-block-title"><?php echo esc_html( $block->get_label() ); ?></div>
+			<div class="ngl-block-desc"><?php echo esc_html( $block->get_description() ); ?></div>
 			<div class="ngl-block-defaults"><a href="#"><?php _e( 'Set defaults', 'newsletter-glue' ); ?></a></div>
 
 			<?php if ( isset( $params['pro'] ) && $params['pro'] === 'yes' ) : ?>
@@ -43,14 +43,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			<div class="ngl-block-use">
 				<label for="<?php echo esc_attr( $block_id ); ?>">
 					<span class="ngl-block-use-label"><?php _e( 'Use block', 'newsletter-glue' ); ?></span>
-					<input type="checkbox" id="<?php echo esc_attr( $block_id ); ?>" name="<?php echo esc_attr( $block_id ); ?>" value="yes" <?php echo $params['use_block'] === 'yes' ? 'checked' : ''; ?> >
+					<input type="checkbox" id="<?php echo esc_attr( $block_id ); ?>" name="<?php echo esc_attr( $block_id ); ?>" value="yes" <?php echo $block->use_block() === 'yes' ? 'checked' : ''; ?> >
 					<span class="ngl-block-use-switch"></span>
 				</label>
 			</div>
 			<?php endif; ?>
 			<?php
-				newsletterglue_include_block_settings( $block_id );
-				newsletterglue_include_block_demo( $block_id );
+				$block->load_settings();
+				$block->load_demo();
 			?>
 		</div>
 		<?php endforeach; ?>

@@ -3,7 +3,11 @@
  * Gutenberg.
  */
 
-class NGL_Block_Social {
+if ( ! class_exists( 'NGL_Abstract_Block', false ) ) {
+	include_once NGL_PLUGIN_DIR . 'includes/abstract-block.php';
+}
+
+class NGL_Block_Social extends NGL_Abstract_Block {
 
 	public $id = 'newsletterglue_block_social';
 
@@ -14,13 +18,29 @@ class NGL_Block_Social {
 
 		$this->asset_id = str_replace( '_', '-', $this->id );
 
-		add_action( 'init', array( $this, 'register_block' ) );
+		if ( $this->use_block() === 'yes' ) {
+			add_action( 'init', array( $this, 'register_block' ) );
+			add_action( 'newsletterglue_add_custom_styles', array( $this, 'email_css' ) );
 
-		add_action( 'newsletterglue_add_custom_styles', array( $this, 'email_css' ) );
+			// Ajax hooks.
+			add_action( 'wp_ajax_newsletterglue_ajax_get_embed', array( $this, 'ajax_get_embed' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_get_embed', array( $this, 'ajax_get_embed' ) );
+		}
 
-		// Ajax hooks.
-		add_action( 'wp_ajax_newsletterglue_ajax_get_embed', array( $this, 'ajax_get_embed' ) );
-		add_action( 'wp_ajax_nopriv_newsletterglue_ajax_get_embed', array( $this, 'ajax_get_embed' ) );
+	}
+
+	/**
+	 * Block label.
+	 */
+	public function get_label() {
+		return __( 'Social embed', 'newsletter-glue' );
+	}
+
+	/**
+	 * Block label.
+	 */
+	public function get_description() {
+		return __( 'Embed posts from social media by pasting a link.', 'newsletter-glue' );
 	}
 
 	/**

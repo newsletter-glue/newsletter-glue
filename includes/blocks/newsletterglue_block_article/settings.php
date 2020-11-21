@@ -6,7 +6,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$defaults = get_option( 'newsletterglue_block_article' );
+$defaults = get_option( $this->id );
 if ( ! $defaults ) {
 	$defaults = array(
 		'show_in_blog' 	=> true,
