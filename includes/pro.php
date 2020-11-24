@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 class NGL_Pro {
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 
 		$this->includes();
@@ -21,6 +24,9 @@ class NGL_Pro {
 
 	}
 
+	/**
+	 * Includes.
+	 */
 	public function includes() {
 		require_once NGL_PLUGIN_DIR . 'includes/libraries/license-handler.php';
 	}
