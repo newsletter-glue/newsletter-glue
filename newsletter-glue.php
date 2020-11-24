@@ -99,6 +99,7 @@ final class Newsletter_Glue {
 		require_once NGL_PLUGIN_DIR . 'includes/install.php';
 		require_once NGL_PLUGIN_DIR . 'includes/core.php';
 		require_once NGL_PLUGIN_DIR . 'includes/gutenberg.php';
+		require_once NGL_PLUGIN_DIR . 'includes/libraries/license-handler.php';
 
 		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			require_once NGL_PLUGIN_DIR . 'includes/admin/admin-fields.php';
@@ -122,6 +123,10 @@ final class Newsletter_Glue {
 			} else if ( file_exists( NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/block.php' ) ) {
 				include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $block_id . '/block.php';
 			}
+		}
+
+		if ( class_exists( 'NGL_License' ) ) {
+			$ngl_license = new NGL_License( 'newsletterglue_founding_member_license', '1.0.0', 1261, 'Founding Member', __FILE__ );
 		}
 
 	}
