@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			<?php if ( $block->is_pro && newsletterglue_is_free_version() ) : ?>
 			<div class="ngl-block-upgrade">
-				<a href=""><?php _e( 'Upgrade to unlock', 'newsletter-glue' ); ?></a>
+				<a href="https://newsletterglue.com/pricing/"><?php _e( 'Upgrade to unlock', 'newsletter-glue' ); ?></a>
 			</div>
 			<?php else : ?>
 			<div class="ngl-block-use">
