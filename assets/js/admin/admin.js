@@ -19,6 +19,9 @@
 	function ngl_show_first_screen() {
 		$( '.ngl-card-add' ).removeClass( 'ngl-hidden' );
 		$( '.ngl-card-state, .ngl-card-add2, .ngl-card-view' ).addClass( 'ngl-hidden' );
+		if ( $( '.ngl-card-license-form' ).length ) {
+			$( '.ngl-card-license-form' ).removeClass( 'ngl-hidden' );
+		}
 	}
 
 	function ngl_show_testing_screen() {
@@ -39,7 +42,11 @@
 		if ( $( '.ngl-card-view' ).length ) {
 			setTimeout( function() {
 				$( '.ngl-card-state, .ngl-card-add2' ).addClass( 'ngl-hidden' );
-				$( '.ngl-card-view-' + ngl_app ).removeClass( 'ngl-hidden' );
+				if ( $( '.ngl-card-view-' + ngl_app ).length ) {
+					$( '.ngl-card-view-' + ngl_app ).removeClass( 'ngl-hidden' );
+				} else {
+					$( '.ngl-card-view' ).removeClass( 'ngl-hidden' );
+				}
 			}, 2000 );
 		} else {
 			// We are in onboarding.
@@ -209,6 +216,55 @@
 		}
 	} );
 
+	// License form.
+	$( document ).on( 'submit', '.ngl-license-form', function( event ) {
+		event.preventDefault();
+
+		var theform = $( this );
+		var data 	= theform.serialize() + '&action=newsletterglue_check_license&security=' + newsletterglue_params.ajaxnonce;
+
+		var stop_form = false;
+		theform.find( 'input[type=text]:visible' ).each( function() {
+			if ( $( this ).val() == '' ) {
+				$( this ).addClass( 'error' ).focus();
+				stop_form = true;
+			}
+		} );
+
+		if ( stop_form ) {
+			return false;
+		}
+
+		xhr = $.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data,
+			beforeSend: function() {
+				ngl_show_testing_screen();
+			},
+			success: function( result ) {
+				
+				console.log( result );
+
+				setTimeout( function() {
+					if ( result.status === 'invalid' ) {
+						theform.parents( '.ngl-cards' ).find( '.ngl-card-state.is-invalid .ngl-card-state-text' ).html( result.message );
+						ngl_show_not_connected_screen();
+					}
+					if ( result.status === 'valid' ) {
+						ngl_show_connected_screen();
+					}
+				}, 1000 );
+
+			},
+			error: function() {
+				ngl_show_not_connected_screen();
+			}
+		} );
+
+		return false;
+	} );
+
 	// Connection form.
 	$( document ).on( 'submit', '.ngl-fields form', function( event ) {
 		event.preventDefault();
@@ -266,15 +322,28 @@
 	// Test connection.
 	$( document ).on( 'click', '.ngl-ajax-test-connection', function( event ) {
 		event.preventDefault();
+
 		ngl_app = $( this ).parents( '.ngl-card-view' ).attr( 'data-app' );
-		$( '.ngl-card-add2.ngl-card-' + ngl_app + ' .ngl-fields form' ).trigger( 'submit' );
+
+		if ( ngl_app ) {
+			$( '.ngl-card-add2.ngl-card-' + ngl_app + ' .ngl-fields form' ).trigger( 'submit' );
+		} else {
+			$( '.ngl-card-add2 .ngl-license-form' ).trigger( 'submit' );
+		}
+
 		return false;
+
 	} );
 
 	// Test again.
 	$( document ).on( 'click', '.ngl-ajax-test-again', function( event ) {
 		event.preventDefault();
-		$( '.ngl-card-add2 .ngl-fields form' ).trigger( 'submit' );
+		if ( $( '.ngl-card-add2 .ngl-fields form' ).length ) {
+			$( '.ngl-card-add2 .ngl-fields form' ).trigger( 'submit' );
+		}
+		if ( $( '.ngl-card-add2 .ngl-license-form' ).length ) {
+			$( '.ngl-card-add2 .ngl-license-form' ).trigger( 'submit' );
+		}
 		return false;
 	} );
 
@@ -293,7 +362,11 @@
 			ngl_app = $( this ).parents( '.ngl-card-view' ).attr( 'data-app' );
 			ngl_back_screen = $( this ).parents( '.ngl-card-view-' + ngl_app );
 		}
-		$( '.ngl-card-add2.ngl-card-' + ngl_app ).removeClass( 'ngl-hidden' );
+		if ( ngl_app ) {
+			$( '.ngl-card-add2.ngl-card-' + ngl_app ).removeClass( 'ngl-hidden' );
+		} else {
+			$( '.ngl-card-add2.ngl-hidden' ).removeClass( 'ngl-hidden' );
+		}
 		return false;
 	} );
 
@@ -309,11 +382,23 @@
 	// Confirm remove connection.
 	$( document ).on( 'click', '.ngl-ajax-remove', function( event ) {
 		event.preventDefault();
+
 		$( '.ngl-card-state.confirm-remove' ).addClass( 'ngl-hidden' );
 		$( '.ngl-card-state.is-removed' ).removeClass( 'ngl-hidden' );
 		$( '.ngl-app' ).dropdown( 'clear' );
 
-		var data = 'action=newsletterglue_ajax_remove_api&security=' + newsletterglue_params.ajaxnonce + '&app=' + $( this ).attr( 'data-ngl_app' );
+		var app = $( this ).attr( 'data-ngl_app' );
+		if ( app ) {
+			var action = 'newsletterglue_ajax_remove_api';
+		} else {
+			var action = 'newsletterglue_deactivate_license';
+		}
+
+		if ( app ) {
+			var data = 'action=' + action + '&security=' + newsletterglue_params.ajaxnonce + '&app=' + app;
+		} else {
+			var data = 'action=' + action + '&security=' + newsletterglue_params.ajaxnonce;
+		}
 
 		$.ajax( {
 			type : 'post',

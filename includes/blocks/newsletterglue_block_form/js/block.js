@@ -1,5 +1,6 @@
 ( function( blocks, editor, element, components ) {
 
+	const block = newsletterglue_block_form;
 	const el = element.createElement;
     const { registerBlockType } = blocks;
 	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, MediaUpload, PlainText, AlignmentToolbar, BlockControls } = editor;
@@ -46,11 +47,11 @@
 			},
 			show_in_blog: {
 				'type' : 'boolean',
-				'default' : newsletterglue_block_form.show_in_blog ? true : false
+				'default' : block.show_in_blog ? true : false
 			},
 			show_in_email: {
 				'type' : 'boolean',
-				'default' : newsletterglue_block_form.show_in_email ? true : false
+				'default' : block.show_in_email ? true : false
 			},
 			toggle_success: {
 				'type' : 'boolean',
@@ -74,15 +75,15 @@
 			},
 			button_fill: {
 				'type' : 'string',
-				'default' : newsletterglue_block_form.btn_bg,
+				'default' : block.btn_bg,
 			},
 			button_outline: {
 				'type' : 'string',
-				'default' : newsletterglue_block_form.btn_border,
+				'default' : block.btn_border,
 			},
 			button_text_color: {
 				'type' : 'string',
-				'default' : newsletterglue_block_form.btn_colour,
+				'default' : block.btn_colour,
 			},
 			form_radius: {
 				'type' : 'number',
@@ -255,8 +256,61 @@
 				} );
 			}
 
-			if (  ! props.attributes.list_id && newsletterglue_meta.the_lists[0]['value'] ) {
+			if ( app && ! props.attributes.list_id && newsletterglue_meta.the_lists[0]['value'] ) {
 				props.setAttributes( { list_id: newsletterglue_meta.the_lists[0]['value'] } );
+			}
+
+			if ( ! app ) {
+				var showForm = el( 'div', { className: 'ngl-form-unready' },
+					el( 'a', { href: block.connect_url }, block.connect_esp )
+				);
+			} else {
+				var showForm = el( 'div', { className: 'ngl-form' + ' ' + isPortraitclass },
+						addHeading,
+						addDescription,
+						el( 'div', { className: 'ngl-form-container' },
+							addName,
+							addEmail,
+							el( RichText, {
+								tagName: 'div',
+								className: 'ngl-form-button',
+								value: props.attributes.button_text,
+								format: 'string',
+								onChange: ( value ) => { props.setAttributes( { button_text: value } ); },
+								placeholder: 'Subscribe',
+								multiline: '&nbsp;',
+								style: buttonStyles,
+							} )
+						),
+						el( 'div', { className: 'ngl-message-overlay' + ' ' + isOverlayshown },
+							el( 'div', { className: 'ngl-message-svg-wrap' },
+								el( 'svg', { viewBox: '0 0 24 24', width: '24', height: '24', strokeWidth: 2, stroke: '#fff', fill: 'none' },
+									el( 'polyline', {
+										points: '20 6 9 17 4 12',
+									} )
+								)
+							),
+							el( RichText, {
+								tagName: 'div',
+								className: 'ngl-message-overlay-text',
+								value: props.attributes.message_text,
+								format: 'string',
+								onChange: ( value ) => { props.setAttributes( { message_text: value } ); },
+							} ),
+						),
+					);
+			}
+
+			var showESP = '';
+			if ( app ) {
+				showESP = [
+					el( PanelRow, {},
+						SelectList
+					),
+					DoubleOptin
+				];
+			} else {
+				showESP = el( PanelRow, {}, el( 'a', { href: block.connect_url }, block.connect_esp ) );
 			}
 
 			return (
@@ -368,19 +422,14 @@
 								},
 								{
 									value: props.attributes.button_text_color,
-									label: 'Button text color',
+									label: 'Button text',
 									onChange: ( value ) => props.setAttributes( { button_text_color: value } ),
 								},
 							]
 						} ),
 
-						el( PanelBody, { title: newsletterglue_meta.app_name + ' integration', initialOpen: true },
-
-							el( PanelRow, {},
-								SelectList
-							),
-
-							DoubleOptin
+						el( PanelBody, { title: newsletterglue_meta.app_name, initialOpen: true },
+							showESP
 						),
 
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
@@ -397,7 +446,7 @@
 									label: 'Show in email newsletter',
 									onChange: ( value ) => { props.setAttributes( { show_in_email: value } ); },
 									checked: props.attributes.show_in_email,
-									help: 'Only heading, description and button will be displayed. When clicked, button will take user to the form on the page.',
+									help: 'Only heading, description and button will be displayed in email newsletter. When clicked, button will take user to the form on the page.',
 								} )
 							)
 
@@ -406,40 +455,7 @@
 					),
 
 					// This is how the block is rendered in editor.
-					el( 'div', { className: 'ngl-form' + ' ' + isPortraitclass },
-						addHeading,
-						addDescription,
-						el( 'div', { className: 'ngl-form-container' },
-							addName,
-							addEmail,
-							el( RichText, {
-								tagName: 'div',
-								className: 'ngl-form-button',
-								value: props.attributes.button_text,
-								format: 'string',
-								onChange: ( value ) => { props.setAttributes( { button_text: value } ); },
-								placeholder: 'Subscribe',
-								multiline: '&nbsp;',
-								style: buttonStyles,
-							} )
-						),
-						el( 'div', { className: 'ngl-message-overlay' + ' ' + isOverlayshown },
-							el( 'div', { className: 'ngl-message-svg-wrap' },
-								el( 'svg', { viewBox: '0 0 24 24', width: '24', height: '24', strokeWidth: 2, stroke: '#fff', fill: 'none' },
-									el( 'polyline', {
-										points: '20 6 9 17 4 12',
-									} )
-								)
-							),
-							el( RichText, {
-								tagName: 'div',
-								className: 'ngl-message-overlay-text',
-								value: props.attributes.message_text,
-								format: 'string',
-								onChange: ( value ) => { props.setAttributes( { message_text: value } ); },
-							} ),
-						),
-					)
+					showForm
 
 				)
 

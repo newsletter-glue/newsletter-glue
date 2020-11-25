@@ -391,16 +391,19 @@
 }
 
 /* Fields */
-.ngl-fields {
+.ngl-fields,
+.ngl-misc-fields {
 	text-align: left;
 }
 
-.ngl-fields form {
+.ngl-fields form,
+.ngl-misc-fields form {
 	display: flex;
     flex-direction: column;
 }
 
-.ngl-fields .ngl-helper {
+.ngl-fields .ngl-helper,
+.ngl-misc-fields .ngl-helper {
 	text-align: left;
 }
 
@@ -481,6 +484,48 @@
 .ngl-btn a.ui.primary.button i.icon {
 	background: transparent;
 	opacity: 1;
+}
+
+.ngl-card-license .ngl-card-view .ngl-card-heading {
+    background: #FFF2EF;
+    width: 100%;
+    min-height: 150px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 0 20px;
+}
+
+.ngl-card-license .ui.input {
+	flex-direction: column;
+}
+
+.ngl-card-license .ngl-title {
+	color: rgba(34, 36, 38, 0.55);
+	margin: 0 0 6px;
+}
+
+.ngl-card-license .ngl-helper a {
+	color: rgba(34, 36, 38, 0.55);
+}
+
+.ngl-card-license .ngl-helper a:hover,
+.ngl-card-license .ngl-helper a:focus {
+	color: rgba(34, 36, 38, 0.75);
+}
+
+.ngl-card-license .ngl-helper a.ngl-helper-alert {
+	color: #ce2114;
+}
+
+.ngl-card-license .ngl-helper a.ngl-helper-alert:hover {
+	color: #b91408;
+}
+
+.ngl-card-heading {
+	font-size: 15px;
+	font-weight: bold;
+	margin: 0 0 35px;
 }
 
 /* Metabox */

@@ -1,5 +1,6 @@
 ( function( blocks, editor, element, components ) {
 
+	const block = newsletterglue_block_metadata;
 	const el = element.createElement;
     const { registerBlockType } = blocks;
 	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, MediaUpload, PlainText, BlockControls, AlignmentToolbar } = editor;
@@ -29,22 +30,22 @@
 			},
 			post_link: {
 				'type': 'string',
-				'default' : newsletterglue_block_metadata.read_online,
+				'default' : block.read_online,
 			},
 			post_location: {
 				'type': 'string',
 			},
 			readtime: {
 				'type': 'string',
-				'default' : newsletterglue_block_metadata.readtime
+				'default' : block.readtime
 			},
 			show_in_blog: {
 				'type' : 'boolean',
-				'default' : newsletterglue_block_metadata.show_in_blog ? true : false
+				'default' : block.show_in_blog ? true : false
 			},
 			show_in_email: {
 				'type' : 'boolean',
-				'default' : newsletterglue_block_metadata.show_in_email ? true : false
+				'default' : block.show_in_email ? true : false
 			},
 			text_color: {
 				'type' : 'string',
@@ -146,7 +147,7 @@
 				metaLocation = [
 					el( 'img', {
 						className: 'ngl-metadata-map-pin',
-						src: newsletterglue_block_metadata.assets_uri + 'map-pin.png'
+						src: block.assets_uri + 'map-pin.png'
 					} ),
 					el( RichText, {
 						tagName: 'div',
@@ -203,7 +204,7 @@
 					} ),
 					el( 'img', {
 						className: 'ngl-metadata-permalink-arrow',
-						src: newsletterglue_block_metadata.assets_uri + 'arrow.png'
+						src: block.assets_uri + 'arrow.png'
 					} )
 				];
 			}
@@ -432,7 +433,7 @@
 				metaLocation = [
 					el( 'img', {
 						className: 'ngl-metadata-map-pin',
-						src: newsletterglue_block_metadata.assets_uri + 'map-pin.png'
+						src: block.assets_uri + 'map-pin.png'
 					} ),
 					el( RichText.Content, {
 						tagName: 'div',
@@ -474,7 +475,7 @@
 					} ),
 					el( 'img', {
 						className: 'ngl-metadata-permalink-arrow',
-						src: newsletterglue_block_metadata.assets_uri + 'arrow.png'
+						src: block.assets_uri + 'arrow.png'
 					} )
 				];
 			}

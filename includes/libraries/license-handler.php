@@ -118,28 +118,25 @@ class NGL_License {
 
 					case 'disabled' :
 					case 'revoked' :
-						$message = __( 'Your license key has been disabled.', 'newsletter-glue' );
+						$message = __( 'Disabled license', 'newsletter-glue' );
 					break;
 
 					case 'missing' :
-						$message = __( 'Invalid license.', 'newsletter-glue' );
+					case 'item_name_mismatch' :
+						$message = __( 'Invalid license', 'newsletter-glue' );
 					break;
 
 					case 'invalid' :
 					case 'site_inactive' :
-						$message = __( 'Your license is not active for this URL.', 'newsletter-glue' );
-					break;
-
-					case 'item_name_mismatch' :
-						$message = sprintf( __( 'This appears to be an invalid license key for %s.', 'newsletter-glue' ), $this->item_name );
+						$message = __( 'Inactive license', 'newsletter-glue' );
 					break;
 
 					case 'no_activations_left':
-						$message = __( 'Your license key has reached its activation limit.', 'newsletter-glue' );
+						$message = __( 'Reached activation limit', 'newsletter-glue' );
 					break;
 
 					default :
-						$message = __( 'An error occurred, please try again.', 'newsletter-glue' );
+						$message = __( 'An error occurred', 'newsletter-glue' );
 					break;
 				}
 			}
