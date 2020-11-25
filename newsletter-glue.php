@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: Newsletter Glue
+ * Plugin Name: Newsletter Glue Pro (Beta)
  * Plugin URI: https://newsletterglue.com/
  * Description: Email posts to subscribers from the WordPress editor. Works with Mailchimp, MailerLite, Sendinblue…
  * Author: Newsletter Glue
  * Author URI: https://newsletterglue.com
- * Version: 1.1.6
+ * Version: 1.0.0
  * Text Domain: newsletter-glue
  * Domain Path: /i18n/languages/
  */
@@ -65,7 +65,7 @@ final class Newsletter_Glue {
 
 		// Plugin version.
 		if ( ! defined( 'NGL_VERSION' ) ) {
-			define( 'NGL_VERSION', '1.1.6' );
+			define( 'NGL_VERSION', '1.0.0' );
 		}
 
 		// Plugin Folder Path.
@@ -99,6 +99,7 @@ final class Newsletter_Glue {
 		require_once NGL_PLUGIN_DIR . 'includes/install.php';
 		require_once NGL_PLUGIN_DIR . 'includes/core.php';
 		require_once NGL_PLUGIN_DIR . 'includes/gutenberg.php';
+		require_once NGL_PLUGIN_DIR . 'includes/pro.php';
 
 		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			require_once NGL_PLUGIN_DIR . 'includes/admin/admin-fields.php';

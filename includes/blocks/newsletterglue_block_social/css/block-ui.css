@@ -1,0 +1,45 @@
+.ngl-embed {
+	padding: 20px;
+	border-radius: 4px;
+	border: 1px solid #bbb;
+}
+
+.ngl-embed-support {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	font-size: 12px;
+}
+
+.ngl-embed-support span {
+	padding: 0 4px;
+	color: #888;
+}
+
+.ngl-embed-support svg {
+	display: block;
+	width: 16px;
+	height: 16px;
+	fill: #888;
+}
+
+.ngl-embed input[type=text] {
+	border: none !important;
+	box-shadow: none !important;
+	font-size: 26px;
+	padding: 0 !important;
+	width: 100% !important;
+	margin: 0 !important;
+	background: transparent !important;
+}
+
+.ngl-embed-frontend {
+	border: none;
+	padding: 0;
+}
+
+.ngl-embed-error {
+    font-size: 14px;
+    color: #772c2c;
+    margin: 20px 0 0;
+}

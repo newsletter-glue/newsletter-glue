@@ -105,7 +105,7 @@ function newsletterglue_js_data() {
 			'author_bio'	=> get_the_author_meta( 'description', $post->post_author ),
 			'post_date'		=> date( 'l, j M Y', strtotime( $post->post_date ) ),
 			'app'			=> $app,
-			'app_name'		=> newsletterglue_get_name( $app ),
+			'app_name'		=> newsletterglue_get_name( $app ) ? sprintf( __( '%s integration', 'newsletter-glue' ), newsletterglue_get_name( $app ) ) : __( 'Email integration', 'newsletter-glue' ),
 			'readtime'		=> newsletterglue_content_estimated_reading_time( $post->post_content ),
 		);
 

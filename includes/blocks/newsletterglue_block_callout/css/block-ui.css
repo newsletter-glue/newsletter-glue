@@ -1,0 +1,19 @@
+.wp-block-newsletterglue-callout {
+	padding-top: 26px !important;
+	padding-bottom: 1px !important;
+}
+
+.wp-block-newsletterglue-callout h1,
+.wp-block-newsletterglue-callout h2,
+.wp-block-newsletterglue-callout h3,
+.wp-block-newsletterglue-callout h4,
+.wp-block-newsletterglue-callout h5,
+.wp-block-newsletterglue-callout h6 {
+	margin: 0 0 14px !important;
+	padding: 0 !important;
+}
+
+.wp-block-newsletterglue-callout figure,
+.wp-block-newsletterglue-callout p {
+	margin: 0 0 25px !important;
+}

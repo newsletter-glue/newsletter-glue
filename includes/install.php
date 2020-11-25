@@ -152,6 +152,12 @@ function newsletterglue_install_roles_on_network() {
 		newsletterglue_install_roles();
 	}
 
+	if ( isset( $_REQUEST[ 'uninstall-newsletterglue' ] ) ) {
+		if ( current_user_can( 'manage_newsletterglue' ) ) {
+			newsletterglue_uninstall();
+		}
+	}
+
 }
 add_action( 'admin_init', 'newsletterglue_install_roles_on_network' );
 

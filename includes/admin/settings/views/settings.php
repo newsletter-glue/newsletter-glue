@@ -20,15 +20,21 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 <div class="ngl ngl-wrap ngl-settings <?php if ( $app ) echo 'ngl-settings-' . esc_attr( $app ); ?>">
 
-	<?php include( 'settings-' . $tab . '.php' ); ?>
+	<?php
+		$file = 'settings-' . $tab . '.php';
+		if ( file_exists( NGL_PLUGIN_DIR . 'includes/admin/settings/views/' . $file ) ) {
+			include( NGL_PLUGIN_DIR . 'includes/admin/settings/views/' . $file );
+		}
+		do_action( "newsletterglue_settings_tab_{$tab}" );
+	?>
 
 	<?php if ( $app || $tab == 'css' || $tab == 'additional' ) : ?>
 
-	<?php if ( $tab != 'theme' ) : ?>
-	<div class="ngl-metabox ngl-metabox-flex ngl-metabox-flex2">
-		<a href="#" class="ui button basic ngl-settings-save"><?php _e( 'Save', 'newsletter-glue' ); ?></a>
-	</div>
-	<?php endif; ?>
+		<?php if ( $tab != 'theme' && apply_filters( "newsletterglue_settings_tab_{$tab}_save_button", true ) ) : ?>
+		<div class="ngl-metabox ngl-metabox-flex ngl-metabox-flex2">
+			<a href="#" class="ui button basic ngl-settings-save"><?php _e( 'Save', 'newsletter-glue' ); ?></a>
+		</div>
+		<?php endif; ?>
 
 	<?php endif; ?>
 
