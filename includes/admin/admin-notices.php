@@ -59,7 +59,7 @@ add_action( 'admin_notices', 'newsletterglue_admin_notices', 99 );
 /**
  * Remove a custom notice.
  */
-function newsletterglue_remove_notice( $key = 0 ) {
+function newsletterglue_remove_notice( $key = 0, $sanitized = '' ) {
 
 	if ( ! current_user_can( 'manage_newsletterglue' ) ) {
 		return;
@@ -72,4 +72,7 @@ function newsletterglue_remove_notice( $key = 0 ) {
 	}
 
 	update_option( 'newsletterglue_notices', $notices );
+
+	update_user_meta( get_current_user_id(), '_ngl_remove_' . $sanitized, 'yes' );
+
 }

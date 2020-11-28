@@ -38,6 +38,8 @@ class NGL_Pro {
 		add_action( 'wp_ajax_newsletterglue_deactivate_license', array( $this, 'deactivate_license' ) );
 		add_action( 'wp_ajax_nopriv_newsletterglue_deactivate_license', array( $this, 'deactivate_license' ) );
 
+		// Admin notice.
+		add_action( 'admin_notices', array( $this, 'admin_notice' ), 120 );
 	}
 
 	/**
@@ -271,6 +273,25 @@ class NGL_Pro {
 
 		}
 
+	}
+
+	/**
+	 * Show admin notice.
+	 */
+	public function admin_notice() {
+		if ( $this->has_valid_license() ) {
+			return;
+		}
+
+		if ( get_user_meta( get_current_user_id(), '_ngl_remove_license_notice', true ) ) {
+			return;
+		}
+		?>
+		<div class="ngl-notice welcome notice is-dismissible" data-key="license_notice">
+			<p class="ngl-notice-logo"><?php _e( 'Thanks for purchasing Newsletter Glue! Get frequent updates as we improve the plugin.', 'newsletter-glue' ); ?></p>
+			<p><a href="<?php echo admin_url( 'admin.php?page=ngl-settings&tab=license' ); ?>"><?php _e( 'Add license key to get updates', 'newsletter-glue' ); ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://newsletterglue.com/account"><?php _e( 'Get license key', 'newsletter-glue' ); ?></a></p>
+		</div>
+		<?php
 	}
 
 }
