@@ -101,7 +101,7 @@ class NGL_Pro {
 								newsletterglue_text_field( array(
 									'id' 			=> $this->id,
 									'label'			=> __( 'License key', 'newsletter-glue' ),
-									'helper'		=> '<a href="https://newsletterglue.com/pricing/" target="_blank">' . __( 'Get license key', 'newsletter-glue' ) . '</a>',
+									'helper'		=> '<a href="https://newsletterglue.com/account/" target="_blank">' . __( 'Get license key', 'newsletter-glue' ) . '</a>',
 									'value'			=> get_option( $this->id ),
 								) );
 							?>
