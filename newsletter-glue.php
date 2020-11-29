@@ -13,6 +13,10 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( function_exists( 'newsletterglue' ) ) :
+	deactivate_plugins( plugin_basename( NGL_PLUGIN_FILE ) );
+endif;
+
 if ( ! class_exists( 'Newsletter_Glue' ) ) :
 
 /**
@@ -193,8 +197,10 @@ endif; // End if class_exists check.
 /**
  * The main function.
  */
-function newsletterglue() {
-	return Newsletter_Glue::instance();
+if ( ! function_exists( 'newsletterglue' ) ) {
+	function newsletterglue() {
+		return Newsletter_Glue::instance();
+	}
 }
 
 // Get Running.
