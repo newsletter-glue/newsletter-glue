@@ -117,6 +117,12 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 
 		$content = str_replace( '{post_permalink}', get_permalink( $post_id ), $content );
 
+		// Only in blog.
+		if ( ! defined( 'NGL_IN_EMAIL' ) ) {
+			$content = preg_replace( '~<a([^>]*)(class\\s*=\\s*["\']ngl-metadata-permalink["\'])([^>]*)>(.*?)</a>~i', '', $content );
+			$content = preg_replace( '~<img([^>]*)(class\\s*=\\s*["\']ngl-metadata-permalink-arrow["\'])([^>]*)>(.*?)~i', '', $content );
+		}
+
 		return $content;
 
 	}

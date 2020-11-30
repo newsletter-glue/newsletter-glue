@@ -43,6 +43,9 @@
 				'type' : 'string',
 				'default' : '#f9f9f9',
 			},
+			font_color: {
+				'type' : 'string',
+			},
 			border_radius: {
 				'type' : 'number',
 			},
@@ -76,6 +79,7 @@
 
 			var formStyles = {
 				backgroundColor : props.attributes.bg_color,
+				color: props.attributes.font_color,
 				borderColor : props.attributes.border_color,
 				borderRadius : props.attributes.border_radius,
 				borderStyle : props.attributes.border_style,
@@ -179,6 +183,11 @@
 									label: 'Background color',
 									onChange: ( value ) => props.setAttributes( { bg_color: value } ),
 								},
+								{
+									value: props.attributes.font_color,
+									label: 'Font color',
+									onChange: ( value ) => props.setAttributes( { font_color: value } ),
+								},
 							]
 						} ),
 
@@ -221,6 +230,7 @@
 
 			var formStyles = {
 				backgroundColor : props.attributes.bg_color,
+				color: props.attributes.font_color,
 				borderColor : props.attributes.border_color,
 				borderRadius : props.attributes.border_radius,
 				borderStyle : props.attributes.border_style,
