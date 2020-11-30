@@ -19,40 +19,12 @@
 		{ value: 'hidden', label: 'hidden' },
 	];
 
-	const icon = el( 'svg', { width: 24, height: 24, viewBox: '0 0 47 36' },
-		el( 'g',
+	const icon = el( 'svg', { width: 24, height: 24, viewBox: '0 0 24 24' },
+		el( 'path',
 			{ 
-				transform: 'translate(-783 -315.935)'
-			},
-			el( 'rect',
-			{
-				fill: '#DD3714',
-				width: 38,
-				height: 27,
-				rx: 3,
-				transform: 'translate(783 315.935)'
-			} ),
-			el( 'g',
-			{
-				transform: 'translate(793 324.935)',
-				fill: '#fff',
-				stroke: '#DD3714',
-				strokeWidth: '2px',
-				strokeDasharray: '2 2'
-			},
-				el( 'rect', {
-					width: 37,
-					height: 27,
-					rx: 3
-				} ),
-				el( 'rect', {
-					width: 35,
-					height: 25,
-					x: 1,
-					y: 1,
-					rx: 2
-				} )
-			)
+				d: 'M21 15V18H24V20H21V23H19V20H16V18H19V15H21M14 18H3V6H19V13H21V6C21 4.89 20.11 4 19 4H3C1.9 4 1 4.89 1 6V18C1 19.11 1.9 20 3 20H14V18Z',
+				fill: '#DD3714'
+			}
 		)
 	);
 
