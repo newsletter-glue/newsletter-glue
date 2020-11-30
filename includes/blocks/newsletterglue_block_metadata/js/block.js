@@ -95,8 +95,13 @@
 			post_id: {
 				'type' : 'number',
 			},
+			readingtime: {
+				'type' : 'string',
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
+
+			props.setAttributes( { readingtime: newsletterglue_meta.readtime } );
 
 			var onSelectImage = function( media ) {
 				return props.setAttributes( {
@@ -225,7 +230,7 @@
 						multiline: '&nbsp;'
 					} ),
 					el( 'div', { className: 'ngl-metadata-readtime-ajax' },
-						newsletterglue_meta.readtime
+						props.attributes.readingtime
 					),
 					el( 'div', { className: 'ngl-metadata-sep' }, divider )
 				];
@@ -494,7 +499,7 @@
 						value: props.attributes.readtime,
 					} ),
 					el( 'div', { className: 'ngl-metadata-readtime-ajax' },
-						newsletterglue_meta.readtime
+						props.attributes.readingtime
 					),
 					el( 'div', { className: 'ngl-metadata-sep' }, divider )
 				];
