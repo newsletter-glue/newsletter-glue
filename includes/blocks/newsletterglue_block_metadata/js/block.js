@@ -92,6 +92,9 @@
 				'type' : 'boolean',
 				'default' : true,
 			},
+			post_id: {
+				'type' : 'number',
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
 
@@ -395,6 +398,8 @@
 		// This is how the block is rendered in frontend.
 		save: function( props ) {
 
+			props.attributes.post_id = jQuery( '#post_ID' ).val();
+
 			var dateFormats = newsletterglue_meta.date_formats;
 
 			var the_post_date = props.attributes.date_format ? props.attributes.date_format : dateFormats[0]['value'];
@@ -471,7 +476,7 @@
 						tagName: 'a',
 						className: 'ngl-metadata-permalink',
 						value: props.attributes.post_link,
-						href: newsletterglue_meta.post_perma
+						href: '{post_permalink}'
 					} ),
 					el( 'img', {
 						className: 'ngl-metadata-permalink-arrow',

@@ -103,6 +103,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 
 		$show_in_blog  = isset( $attributes[ 'show_in_blog' ] ) ? $attributes[ 'show_in_blog' ] : $defaults[ 'show_in_blog' ];
 		$show_in_email = isset( $attributes[ 'show_in_email' ] ) ? $attributes[ 'show_in_email' ] : $defaults[ 'show_in_email' ];
+		$post_id	   = isset( $attributes[ 'post_id' ] ) ? absint( $attributes[ 'post_id' ] ) : '';
 
 		// Hidden from blog.
 		if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
@@ -113,6 +114,8 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
 			$content = '';
 		}
+
+		$content = str_replace( '{post_permalink}', get_permalink( $post_id ), $content );
 
 		return $content;
 
