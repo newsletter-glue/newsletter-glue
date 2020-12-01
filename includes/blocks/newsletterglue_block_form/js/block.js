@@ -256,7 +256,7 @@
 				} );
 			}
 
-			if ( app && ! props.attributes.list_id && newsletterglue_meta.the_lists[0]['value'] ) {
+			if ( app && newsletterglue_meta.the_lists && ! props.attributes.list_id && newsletterglue_meta.the_lists[0]['value'] ) {
 				props.setAttributes( { list_id: newsletterglue_meta.the_lists[0]['value'] } );
 			}
 

@@ -109,21 +109,19 @@ function newsletterglue_js_data() {
 			'readtime'		=> newsletterglue_content_estimated_reading_time( $post->post_content ),
 		);
 
-		$use_blocks = get_option( 'newsletterglue_use_blocks' );
-		if ( isset( $use_blocks[ 'newsletterglue_block_form' ] ) && $use_blocks[ 'newsletterglue_block_form' ] === 'yes' ) {
-			if ( ! empty( $the_lists ) ) {
-				$lists = array();
-				if ( $app == 'mailerlite' ) {
-					$lists[] = array( 'label' => __( '― No group', 'newsletter-glue' ), 'value' => '' );
-				}
-				if ( $app == 'sendinblue' ) {
-					$lists[] = array( 'label' => __( '― No list', 'newsletter-glue' ), 'value' => '' );
-				}
-				foreach( $the_lists as $key => $value ) {
-					$lists[] = array( 'value' => $key, 'label' => $value );
-				}
-				$data[ 'the_lists' ] = $lists;
+		// Add lists.
+		if ( ! empty( $the_lists ) ) {
+			$lists = array();
+			if ( $app == 'mailerlite' ) {
+				$lists[] = array( 'label' => __( '― No group', 'newsletter-glue' ), 'value' => '' );
 			}
+			if ( $app == 'sendinblue' ) {
+				$lists[] = array( 'label' => __( '― No list', 'newsletter-glue' ), 'value' => '' );
+			}
+			foreach( $the_lists as $key => $value ) {
+				$lists[] = array( 'value' => $key, 'label' => $value );
+			}
+			$data[ 'the_lists' ] = $lists;
 		}
 
 		// Post dates.

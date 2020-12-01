@@ -357,11 +357,12 @@
 	
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
-							el( PanelRow, {},
+							el( PanelRow, { className: 'ngl-gutenberg-help' },
 								el( ToggleControl, {
 									label: 'Show in blog post',
 									onChange: ( value ) => { props.setAttributes( { show_in_blog: value } ); },
 									checked: props.attributes.show_in_blog,
+									help: '"Read online" element will never show up in the blog.',
 								} )
 							),
 							el( PanelRow, {},
