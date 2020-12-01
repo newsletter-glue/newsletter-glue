@@ -309,6 +309,11 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			font-size: 18px;
 			margin: 14px 0 0;
 		}
+		
+		.ngl-form-checkbox, .ngl-form-text {
+			display: none !important;
+			visibility: hidden !important;
+		}
 		<?php
 	}
 

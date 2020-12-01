@@ -89,15 +89,12 @@
 			},
 			button_fill: {
 				'type' : 'string',
-				'default' : block.btn_bg,
 			},
 			button_outline: {
 				'type' : 'string',
-				'default' : block.btn_border,
 			},
 			button_text_color: {
 				'type' : 'string',
-				'default' : block.btn_colour,
 			},
 			form_radius: {
 				'type' : 'number',
@@ -124,6 +121,16 @@
 			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
+
+			if ( ! props.attributes.button_fill ) {
+				props.setAttributes( { button_fill: block.btn_bg } );
+			}
+			if ( ! props.attributes.button_outline ) {
+				props.setAttributes( { button_outline: block.btn_border } );
+			}
+			if ( ! props.attributes.button_text_color ) {
+				props.setAttributes( { button_text_color: block.btn_colour } );
+			}
 
 			var fieldStyle = { marginBottom: props.attributes.spacing_size };
 			if ( props.attributes.form_style === 'landscape' ) {
@@ -250,7 +257,7 @@
 				borderColor: props.attributes.button_outline,
 				borderWidth: '1px',
 				borderStyle: 'solid',
-				color: props.attributes.button_text_color,
+				color: props.attributes.button_text_color + ' !important',
 				borderRadius : props.attributes.form_radius,
 			};
 
@@ -641,7 +648,7 @@
 				borderColor: props.attributes.button_outline,
 				borderWidth: '1px',
 				borderStyle: 'solid',
-				color: props.attributes.button_text_color,
+				color: props.attributes.button_text_color + ' !important',
 				borderRadius : props.attributes.form_radius,
 			};
 
