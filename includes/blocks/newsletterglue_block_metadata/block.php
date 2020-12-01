@@ -70,6 +70,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 
 		$defaults[ 'assets_uri' ] 	=  NGL_PLUGIN_URL . 'includes/blocks/' . $this->id . '/img/';
 		$defaults[ 'readtime' ]		= __( 'Reading time:', 'newsletter-glue' );
+		$defaults[ 'issue_title' ]  = __( 'Issue #', 'newsletter-glue' );
 		$defaults[ 'read_online' ]  = __( 'Read online', 'newsletter-glue' );
 
 		$suffix  = '';

@@ -27,6 +27,7 @@
 		attributes: {
 			issue_title: {
 				'type': 'string',
+				'default' : block.issue_title,
 			},
 			post_link: {
 				'type': 'string',
