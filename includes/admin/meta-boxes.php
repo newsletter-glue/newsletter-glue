@@ -84,7 +84,7 @@ function newsletterglue_save_meta_box( $post_id, $post ) {
 	}
 
 	// The "Send" checkbox is not checked.
-	if ( ! isset( $_POST[ 'ngl_send_newsletter' ] ) || ! isset( $_POST[ 'ngl_double_optin' ] ) ) {
+	if ( ! isset( $_POST[ 'ngl_double_confirm' ] ) || $_POST[ 'ngl_double_confirm' ] !== 'yes' ) {
 		return;
 	}
 
