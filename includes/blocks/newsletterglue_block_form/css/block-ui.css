@@ -132,3 +132,27 @@
 .ngl-form-unready a {
 	color: #444;
 }
+
+.ngl-form-text {
+	padding: 20px 0 0;
+	font-size: 14px;
+}
+
+p.ngl-form-checkbox {
+	text-align: left;
+	line-height: 1 !important;
+    margin-top: 0 !important;
+}
+
+p.ngl-form-checkbox input[type=checkbox] {
+	margin: 0;
+}
+
+.ngl-form-checkbox-text {
+	font-weight: normal;
+	margin-left: 12px;
+}
+
+.block-editor-writing-flow .ngl-form-checkbox-text {
+	font-family: "Inter var", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
+}	

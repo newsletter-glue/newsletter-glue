@@ -122,6 +122,12 @@ function newsletterglue_js_data() {
 				$lists[] = array( 'value' => $key, 'label' => $value );
 			}
 			$data[ 'the_lists' ] = $lists;
+
+			$extra_lists[] = array( 'value' => '', 'label' => '' );
+			foreach( $the_lists as $key => $value ) {
+				$extra_lists[] = array( 'value' => $key, 'label' => $value );
+			}
+			$data[ 'extra_lists' ] = $extra_lists;
 		}
 
 		// Post dates.

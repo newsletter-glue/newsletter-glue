@@ -33,6 +33,12 @@
 			form_description: {
 				'type' : 'string',
 			},
+			form_text: {
+				'type' : 'string',
+			},
+			checkbox_text: {
+				'type' : 'string',
+			},
 			email_label: {
 				'type' : 'string',
 				'default' : 'Email',
@@ -69,6 +75,14 @@
 				'type' : 'boolean',
 				'default' : false,
 			},
+			add_text: {
+				'type' : 'boolean',
+				'default' : false,
+			},
+			add_checkbox: {
+				'type' : 'boolean',
+				'default' : false,
+			},
 			form_style: {
 				'type' : 'string',
 				'default' : 'portrait',
@@ -99,6 +113,9 @@
 				'type' : 'string',
 			},
 			list_id: {
+				'type' : 'string',
+			},
+			extra_list_id: {
 				'type' : 'string',
 			},
 			double_optin: {
@@ -172,6 +189,38 @@
 				var addName = '';
 			}
 
+			if ( props.attributes.add_text ) {
+				var addText = el( RichText, {
+							tagName: 'div',
+							className: 'ngl-form-text',
+							value: props.attributes.form_text,
+							format: 'string',
+							onChange: ( value ) => { props.setAttributes( { form_text: value } ); },
+							placeholder: 'Enter text...',
+						} );
+			} else {
+				var addText = '';
+			}
+
+			if ( props.attributes.add_checkbox ) {
+				var addCheckbox = el( 'p', { className: 'ngl-form-checkbox' },
+					el( 'label', { },
+						el( 'input', { type: 'checkbox', name: 'ngl_extra_list', id: 'ngl_extra_list' } ),
+						el( RichText, {
+							tagName: 'span',
+							className: 'ngl-form-checkbox-text',
+							value: props.attributes.checkbox_text,
+							format: 'string',
+							onChange: ( value ) => { props.setAttributes( { checkbox_text: value } ); },
+							placeholder: 'Enter text for checkbox...',
+							multiline: '&nbsp;'
+						} )
+					)
+				);
+			} else {
+				var addCheckbox = '';
+			}
+
 			var addEmail = el( 'div', { className: 'ngl-form-field', style: fieldStyle },
 							el( RichText, {
 								tagName: 'label',
@@ -213,6 +262,7 @@
 			var app = newsletterglue_meta.app;
 
 			var SelectList = '';
+			var ExtraList = '';
 			var DoubleOptin = '';
 
 			if ( app == 'campaignmonitor' ) {
@@ -260,6 +310,17 @@
 				props.setAttributes( { list_id: newsletterglue_meta.the_lists[0]['value'] } );
 			}
 
+			if ( app && newsletterglue_meta.extra_lists && props.attributes.add_checkbox ) {
+				ExtraList = el( PanelRow, {},
+						el( SelectControl, {
+						label: 'Select additional list for checkbox (optional)',
+						value: props.attributes.extra_list_id,
+						onChange: ( value ) => { props.setAttributes( { extra_list_id: value } ); },
+						options: newsletterglue_meta.extra_lists,
+					} )
+				);
+			}
+
 			if ( ! app ) {
 				var showForm = el( 'div', { className: 'ngl-form-unready' },
 					el( 'a', { href: block.connect_url }, block.connect_esp )
@@ -271,6 +332,7 @@
 						el( 'div', { className: 'ngl-form-container' },
 							addName,
 							addEmail,
+							addCheckbox,
 							el( RichText, {
 								tagName: 'div',
 								className: 'ngl-form-button',
@@ -280,7 +342,8 @@
 								placeholder: 'Subscribe',
 								multiline: '&nbsp;',
 								style: buttonStyles,
-							} )
+							} ),
+							addText
 						),
 						el( 'div', { className: 'ngl-message-overlay' + ' ' + isOverlayshown },
 							el( 'div', { className: 'ngl-message-svg-wrap' },
@@ -307,6 +370,7 @@
 					el( PanelRow, {},
 						SelectList
 					),
+					ExtraList,
 					DoubleOptin
 				];
 			} else {
@@ -393,6 +457,22 @@
 									label: 'Add name field',
 									onChange: ( value ) => { props.setAttributes( { add_name: value } ); },
 									checked: props.attributes.add_name,
+								} )
+							),
+
+							el( PanelRow, {},
+								el( ToggleControl, {
+									label: 'Add text beneath button',
+									onChange: ( value ) => { props.setAttributes( { add_text: value } ); },
+									checked: props.attributes.add_text,
+								} )
+							),
+
+							el( PanelRow, {},
+								el( ToggleControl, {
+									label: 'Add checkbox',
+									onChange: ( value ) => { props.setAttributes( { add_checkbox: value } ); },
+									checked: props.attributes.add_checkbox,
 								} )
 							),
 
@@ -512,6 +592,33 @@
 				var formName = '';
 			}
 
+			// Add text below button.
+			if ( props.attributes.add_text && props.attributes.form_text ) {
+				var formText = el( RichText.Content, {
+							tagName: 'p',
+							className: 'ngl-form-text',
+							value: props.attributes.form_text,
+						} );
+			} else {
+				var formText = '';
+			}
+
+			// Add checkbox.
+			if ( props.attributes.add_checkbox ) {
+				var formCheckbox = el( 'p', { className: 'ngl-form-checkbox' },
+					el( 'label', { },
+						el( 'input', { type: 'checkbox', name: 'ngl_extra_list', id: 'ngl_extra_list' } ),
+						el( RichText.Content, {
+							tagName: 'span',
+							className: 'ngl-form-checkbox-text',
+							value: props.attributes.checkbox_text
+						} )
+					)
+				);
+			} else {
+				var formCheckbox = '';
+			}
+
 			// Email.
 			var formEmail = el( 'div', { className: 'ngl-form-field', style: fieldStyle },
 							el( RichText.Content, {
@@ -546,12 +653,14 @@
 						el( 'div', { className: 'ngl-form-container' },
 							formName,
 							formEmail,
+							formCheckbox,
 							el( RichText.Content, {
 								tagName: 'button',
 								className: 'ngl-form-button',
 								value: props.attributes.button_text,
 								style: buttonStyles,
-							} )
+							} ),
+							formText
 						),
 						el( 'div', { className: 'ngl-message-overlay' },
 							el( 'div', { className: 'ngl-message-svg-wrap' },
