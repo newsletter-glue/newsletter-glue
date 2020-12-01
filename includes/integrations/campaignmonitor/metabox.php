@@ -87,9 +87,9 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 
 	<?php $api->show_schedule_and_image_options( $settings, $defaults, $post ); ?>
 
-	<?php $api->show_states( $post ); ?>
-
 	<?php $api->show_test_email( $settings, $defaults, $post ); ?>
+
+	<?php $api->show_states( $post ); ?>
 
 	</div>
 

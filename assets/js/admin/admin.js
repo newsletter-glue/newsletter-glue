@@ -115,6 +115,12 @@
 			}
 		} );
 
+		if ( f.find( '#ngl_send_newsletter' ).is( ':checked' ) && f.find( '#ngl_double_optin' ).is( ':checked' ) ) {
+			$( '#ngl_send_newsletter2' ).prop( 'checked', true );
+		} else {
+			$( '#ngl_send_newsletter2' ).prop( 'checked', false );
+		}
+
 		// Is form ready?
 		if ( ready ) {
 			$( '.ngl-ready' ).removeClass( 'is-hidden' );
@@ -417,18 +423,32 @@
 	} );
 
 	// Toggle metabox options.
+	$( document ).on( 'change', '#ngl_double_optin', function() {
+		if ( $( this ).is( ':checked' ) ) {
+			if ( $( '.ngl-top-checkbox' ).hasClass( 'is-hidden' ) ) {
+				$( '.ngl-top-checkbox' ).removeClass( 'is-hidden' );
+			}
+			$( '#ngl_send_newsletter2' ).prop( 'checked', true );
+		} else {
+			$( '#ngl_send_newsletter2' ).prop( 'checked', false );
+		}
+		ngl_validate_form();
+	} );
+
+	// Toggle metabox options.
 	$( document ).on( 'change', '#ngl_send_newsletter', function() {
 		if ( $( this ).is( ':checked' ) ) {
 			if ( $( '.ngl-top-checkbox' ).hasClass( 'is-hidden' ) ) {
 				$( '.ngl-top-checkbox' ).removeClass( 'is-hidden' );
 			}
 			$( '.ngl-metabox-if-checked' ).removeClass( 'is-hidden' );
-			$( '#ngl_send_newsletter2' ).prop( 'checked', true );
 		} else {
 			$( '.ngl-metabox-if-checked' ).addClass( 'is-hidden' );
-			$( '#ngl_send_newsletter2' ).prop( 'checked', false );
 		}
 		ngl_validate_form();
+		if ( ! $( this ).is( ':checked' ) ) {
+			$( '#ngl_send_newsletter2' ).prop( 'checked', false );
+		}
 	} );
 
 	// Toggle for top send newsletter checkbox.

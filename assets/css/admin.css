@@ -674,8 +674,13 @@
 	border-color: #EF0000 !important;
 }
 
+.ngl-metabox-cols {
+	display: flex;
+	align-items: center;
+}
+
 .ngl-metabox-msg {
-	margin: 0 0 0 20px;
+	margin: 0 20px;
 	border-radius: 999px;
 	background: #C9F8C9;
 	border: 1px solid #00A332;
