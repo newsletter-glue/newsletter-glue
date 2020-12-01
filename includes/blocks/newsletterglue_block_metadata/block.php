@@ -124,6 +124,8 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			$content = preg_replace( '~<img([^>]*)(class\\s*=\\s*["\']ngl-metadata-permalink-arrow["\'])([^>]*)>(.*?)~i', '', $content );
 		}
 
+		$content = str_replace( '<div class="ngl-metadata-sep">|</div></div>', '</div>', $content );
+
 		return $content;
 
 	}
