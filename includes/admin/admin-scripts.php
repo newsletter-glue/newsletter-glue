@@ -109,21 +109,25 @@ function newsletterglue_js_data() {
 			'readtime'		=> newsletterglue_content_estimated_reading_time( $post->post_content ),
 		);
 
-		$use_blocks = get_option( 'newsletterglue_use_blocks' );
-		if ( isset( $use_blocks[ 'newsletterglue_block_form' ] ) && $use_blocks[ 'newsletterglue_block_form' ] === 'yes' ) {
-			if ( ! empty( $the_lists ) ) {
-				$lists = array();
-				if ( $app == 'mailerlite' ) {
-					$lists[] = array( 'label' => __( '― No group', 'newsletter-glue' ), 'value' => '' );
-				}
-				if ( $app == 'sendinblue' ) {
-					$lists[] = array( 'label' => __( '― No list', 'newsletter-glue' ), 'value' => '' );
-				}
-				foreach( $the_lists as $key => $value ) {
-					$lists[] = array( 'value' => $key, 'label' => $value );
-				}
-				$data[ 'the_lists' ] = $lists;
+		// Add lists.
+		if ( ! empty( $the_lists ) ) {
+			$lists = array();
+			if ( $app == 'mailerlite' ) {
+				$lists[] = array( 'label' => __( '― No group', 'newsletter-glue' ), 'value' => '' );
 			}
+			if ( $app == 'sendinblue' ) {
+				$lists[] = array( 'label' => __( '― No list', 'newsletter-glue' ), 'value' => '' );
+			}
+			foreach( $the_lists as $key => $value ) {
+				$lists[] = array( 'value' => $key, 'label' => $value );
+			}
+			$data[ 'the_lists' ] = $lists;
+
+			$extra_lists[] = array( 'value' => '', 'label' => '' );
+			foreach( $the_lists as $key => $value ) {
+				$extra_lists[] = array( 'value' => $key, 'label' => $value );
+			}
+			$data[ 'extra_lists' ] = $extra_lists;
 		}
 
 		// Post dates.
@@ -147,28 +151,3 @@ function newsletterglue_js_data() {
 
 }
 add_action( 'admin_footer', 'newsletterglue_js_data' );
-
-/**
- * Fix conflict with MailPoet css.
- */
-function newsletterglue_mailpoet_css_conflict( $styles ) {
-
-	$styles[] = 'newsletter-glue';
-
-	return $styles;
-
-}
-add_filter( 'mailpoet_conflict_resolver_whitelist_style', 'newsletterglue_mailpoet_css_conflict' );
-
-/**
- * Fix conflict with MailPoet js.
- */
-function newsletterglue_mailpoet_js_conflict( $scripts ) {
-
-	$scripts[] = 'newsletter-glue';
-
-	return $scripts;
-
-}
-
-add_filter( 'mailpoet_conflict_resolver_whitelist_script', 'newsletterglue_mailpoet_js_conflict' );

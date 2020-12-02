@@ -42,16 +42,6 @@ class NGL_Block_Show_Hide_Content extends NGL_Abstract_Block {
 	}
 
 	/**
-	 * Use block.
-	 */
-	public function use_block() {
-
-		$use_blocks = get_option( 'newsletterglue_use_blocks' );
-
-		return isset( $use_blocks[ $this->id ] ) ? sanitize_text_field( $use_blocks[ $this->id ] ) : 'yes';
-	}
-
-	/**
 	 * Get defaults.
 	 */
 	public function get_defaults() {

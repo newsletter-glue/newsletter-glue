@@ -150,3 +150,17 @@ td.ngl_datetime {
 	font-size: 1.8em;
 	font-weight: 500;
 }
+
+.ngl-notice.welcome {
+	border-right: 0;
+	border-top: 0;
+	border-bottom: 0;
+	border-color: #DD3714;
+	padding: 12px 20px;
+}
+
+p.ngl-notice-logo {
+	background: url(../images/menu.png) no-repeat left 2px;
+	background-size: 20px 20px;
+	padding-left: 28px;
+}

@@ -469,29 +469,29 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	public function add_user( $data ) {
 		extract( $data );
 
-		if ( empty( $email ) || empty( $list_id ) ) {
+		if ( empty( $email ) ) {
 			return -1;
 		}
 
-		$api = new CS_REST_Subscribers( $list_id, array( 'api_key' => $this->api_key ) );
-
 		$user = array(
 			'Name'										=> ! empty( $name ) ? $name : '',
-			'EmailAddress'								=> $email,
+			'EmailAddress'								=> ! empty( $email ) ? $email : '',
 			'ConsentToTrack'							=> 'yes',
 			'Resubscribe'								=> true,
 			'RestartSubscriptionBasedAutoResponders'	=> true,
 		);
 
-		$result = $api->add( $user );
-
-		if ( isset( $result->http_status_code ) ) {
-			if ( $result->http_status_code == 201 ) {
-				return true;
-			}
+		if ( $email && ! empty( $list_id ) ) {
+			$api 	= new CS_REST_Subscribers( $list_id, array( 'api_key' => $this->api_key ) );
+			$result = $api->add( $user );
 		}
 
-		return -1;
+		if ( $email && isset( $extra_list ) && ! empty( $extra_list_id ) ) {
+			$api 	= new CS_REST_Subscribers( $extra_list_id, array( 'api_key' => $this->api_key ) );
+			$result = $api->add( $user );
+		}
+
+		return true;
 
 	}
 

@@ -73,7 +73,7 @@ p {
 }
 
 a {
-	color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?>;
+	color: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?> !important;
 }
 
 figure {

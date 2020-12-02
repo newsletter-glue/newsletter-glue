@@ -11,11 +11,27 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <div class="ngl-metabox-flex ngl-ready is-hidden">
 
 	<?php if ( $post->post_status != 'publish' ) : ?>
-	<div class="ngl-metabox-msg"><?php _e( 'Your email is ready to publish.' ,'newsletter-glue' ); ?></div>
+	<div class="ngl-metabox-cols">
+		<div class="ngl-metabox-msg"><?php _e( 'Your email is ready to publish.' ,'newsletter-glue' ); ?></div>
+		<div class="ngl-metabox-optin">
+			<label>
+				<input type="checkbox" name="ngl_double_optin" id="ngl_double_optin" value="1" checked />
+				<?php _e( 'Send email when post is published.', 'newsletter-glue' ); ?>
+			</label>
+		</div>
+	</div>
 	<?php endif; ?>
 
 	<?php if ( $post->post_status == 'publish' ) : ?>
-	<div class="ngl-metabox-msg"><?php _e( 'Your email is ready to publish. <strong>Update</strong> this post to send it.' ,'newsletter-glue' ); ?></div>
+	<div class="ngl-metabox-cols">
+		<div class="ngl-metabox-msg"><?php _e( 'Your email is ready to publish.' ,'newsletter-glue' ); ?></div>
+		<div class="ngl-metabox-optin">
+			<label>
+				<input type="checkbox" name="ngl_double_optin" id="ngl_double_optin" value="1" />
+				<?php _e( 'Send email when post is updated.', 'newsletter-glue' ); ?>
+			</label>
+		</div>
+	</div>
 	<?php endif; ?>
 
 </div>

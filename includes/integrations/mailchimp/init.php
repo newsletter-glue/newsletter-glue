@@ -531,12 +531,12 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	public function add_user( $data ) {
 		extract( $data );
 
-		$fname = '';
-		$lname = '';
-
-		if ( empty( $list_id ) || empty( $email ) ) {
+		if ( empty( $email ) ) {
 			return -1;
 		}
+
+		$fname = '';
+		$lname = '';
 
 		$this->api = new NGL_Mailchimp_API( $this->api_key );
 		$this->api->verify_ssl = false;
@@ -551,25 +551,37 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 		$hash 		= $this->api::subscriberHash( $email );
 		$batch		= $this->api->new_batch();
-		$batch->put( "op$list_id", "lists/$list_id/members/$hash", [
-				'email_address' 	=> $email,
-				'status'        	=> $double_optin,
-				'status_if_new' 	=> $double_optin,
-				'merge_fields' 	 	=> array(
-					'FNAME'	=> $fname,
-					'LNAME'	=> $lname
-				),
-		] );
+		
+		if ( ! empty( $list_id ) ) {
+			$batch->put( "op$list_id", "lists/$list_id/members/$hash", [
+					'email_address' 	=> $email,
+					'status'        	=> $double_optin,
+					'status_if_new' 	=> $double_optin,
+					'merge_fields' 	 	=> array(
+						'FNAME'	=> $fname,
+						'LNAME'	=> $lname
+					),
+			] );
+		}
+
+		if ( isset( $extra_list ) && ! empty( $extra_list_id ) ) {
+			$batch->put( "op$extra_list_id", "lists/$extra_list_id/members/$hash", [
+					'email_address' 	=> $email,
+					'status'        	=> $double_optin,
+					'status_if_new' 	=> $double_optin,
+					'merge_fields' 	 	=> array(
+						'FNAME'	=> $fname,
+						'LNAME'	=> $lname
+					),
+			] );
+		}
 
 		$batch->execute();
 
 		$result = $batch->check_status();
 
-		if ( isset( $result[ 'id' ] ) ) {
-			return true;
-		}
+		return true;
 
-		return -1;
 	}
 
 }

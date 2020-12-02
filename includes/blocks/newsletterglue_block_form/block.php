@@ -131,12 +131,19 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		if ( ! defined( 'NGL_IN_EMAIL' ) && $content ) {
 			if ( is_array( $attributes ) ) {
 				$list_id 		= isset( $attributes[ 'list_id' ] ) ? $attributes[ 'list_id' ] : '';
+				$extra_list_id  = isset( $attributes[ 'extra_list_id' ] ) ? $attributes[ 'extra_list_id' ] : '';
 				$double_optin 	= isset( $attributes[ 'double_optin' ] ) ? 'no' : 'yes';
 				if ( $list_id ) {
 					if ( is_array( $list_id ) ) {
 						$list_id = implode( ',', $list_id );
 					}
 					$inputs .= '<input type="hidden" name="ngl_list_id" id="ngl_list_id" value="' . esc_attr( $list_id ) . '">';
+				}
+				if ( $extra_list_id ) {
+					if ( is_array( $extra_list_id ) ) {
+						$extra_list_id = implode( ',', $extra_list_id );
+					}
+					$inputs .= '<input type="hidden" name="ngl_extra_list_id" id="ngl_extra_list_id" value="' . esc_attr( $extra_list_id ) . '">';
 				}
 				$inputs .= '<input type="hidden" name="ngl_double_optin" id="ngl_double_optin" value="' . esc_attr( $double_optin ) . '">';
 				if ( $inputs ) {
@@ -301,6 +308,11 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		.ngl-message-overlay-text {
 			font-size: 18px;
 			margin: 14px 0 0;
+		}
+		
+		.ngl-form-checkbox, .ngl-form-text {
+			display: none !important;
+			visibility: hidden !important;
 		}
 		<?php
 	}

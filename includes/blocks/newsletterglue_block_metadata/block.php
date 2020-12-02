@@ -70,6 +70,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 
 		$defaults[ 'assets_uri' ] 	=  NGL_PLUGIN_URL . 'includes/blocks/' . $this->id . '/img/';
 		$defaults[ 'readtime' ]		= __( 'Reading time:', 'newsletter-glue' );
+		$defaults[ 'issue_title' ]  = __( 'Issue #', 'newsletter-glue' );
 		$defaults[ 'read_online' ]  = __( 'Read online', 'newsletter-glue' );
 
 		$suffix  = '';
@@ -103,6 +104,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 
 		$show_in_blog  = isset( $attributes[ 'show_in_blog' ] ) ? $attributes[ 'show_in_blog' ] : $defaults[ 'show_in_blog' ];
 		$show_in_email = isset( $attributes[ 'show_in_email' ] ) ? $attributes[ 'show_in_email' ] : $defaults[ 'show_in_email' ];
+		$post_id	   = isset( $attributes[ 'post_id' ] ) ? absint( $attributes[ 'post_id' ] ) : '';
 
 		// Hidden from blog.
 		if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
@@ -113,6 +115,16 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
 			$content = '';
 		}
+
+		$content = str_replace( '{post_permalink}', get_permalink( $post_id ), $content );
+
+		// Only in blog.
+		if ( ! defined( 'NGL_IN_EMAIL' ) ) {
+			$content = preg_replace( '~<a([^>]*)(class\\s*=\\s*["\']ngl-metadata-permalink["\'])([^>]*)>(.*?)</a>~i', '', $content );
+			$content = preg_replace( '~<img([^>]*)(class\\s*=\\s*["\']ngl-metadata-permalink-arrow["\'])([^>]*)>(.*?)~i', '', $content );
+		}
+
+		$content = str_replace( '<div class="ngl-metadata-sep">|</div></div>', '</div>', $content );
 
 		return $content;
 

@@ -68,7 +68,7 @@ abstract class NGL_Abstract_Block {
 
 		$use_blocks = get_option( 'newsletterglue_use_blocks' );
 
-		return isset( $use_blocks[ $this->id ] ) ? sanitize_text_field( $use_blocks[ $this->id ] ) : 'no';
+		return isset( $use_blocks[ $this->id ] ) ? sanitize_text_field( $use_blocks[ $this->id ] ) : 'yes';
 	}
 
 	/**

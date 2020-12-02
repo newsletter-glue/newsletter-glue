@@ -221,7 +221,7 @@ function newsletterglue_ajax_remove_notice() {
 
 	$key = isset( $_REQUEST[ 'key' ] ) ? absint( $_REQUEST[ 'key' ] ) : '';
 
-	newsletterglue_remove_notice( $key );
+	newsletterglue_remove_notice( $key, sanitize_text_field( $_REQUEST[ 'key' ]) );
 
 	die();
 

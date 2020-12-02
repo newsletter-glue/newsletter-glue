@@ -451,11 +451,13 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 			$result 		= $subscribersApi->create( $subscriber );
 		}
 
-		if ( isset( $result->id ) ) {
-			return true;
+		if ( isset( $extra_list ) && ! empty( $extra_list_id ) ) {
+			$groupsApi	 	= $this->api->groups();
+			$result 		= $groupsApi->addSubscriber( $extra_list_id, $subscriber );
 		}
 
-		return -1;
+		return true;
+
 	}
 
 	/**
