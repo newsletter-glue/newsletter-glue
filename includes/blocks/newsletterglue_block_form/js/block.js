@@ -320,7 +320,7 @@
 			if ( app && newsletterglue_meta.extra_lists && props.attributes.add_checkbox ) {
 				ExtraList = el( PanelRow, {},
 						el( SelectControl, {
-						label: 'Select additional list for checkbox (optional)',
+						label: 'Select list for checkbox (optional)',
 						value: props.attributes.extra_list_id,
 						onChange: ( value ) => { props.setAttributes( { extra_list_id: value } ); },
 						options: newsletterglue_meta.extra_lists,

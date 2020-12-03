@@ -289,7 +289,7 @@
 									label: 'Read online',
 									onChange: ( value ) => { props.setAttributes( { show_readonline: value } ); },
 									checked: props.attributes.show_readonline,
-									help: '"Read online" element will never show up in the blog.',
+									help: '"Read online" only appears in your newsletter. It is always hidden in your blog.',
 								} )
 							),
 						),

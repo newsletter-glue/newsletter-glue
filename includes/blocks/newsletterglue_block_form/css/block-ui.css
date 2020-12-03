@@ -146,6 +146,7 @@ p.ngl-form-checkbox {
 
 p.ngl-form-checkbox input[type=checkbox] {
 	margin: 0;
+	border-radius: 0 !important;
 }
 
 .ngl-form-checkbox-text {
