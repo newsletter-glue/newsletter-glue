@@ -127,6 +127,18 @@ We're working on it! Stay tuned!
 
 == Changelog ==
 
+= 1.1.7, December 3, 2020 =
+
+* **New feature:** We've added a double confirmation when sending *updated* newsletters. Next to **Your email is ready to publish** notification, you'll now see an additional checkbox.
+
+Your workflow when **publishing** a new newsletter will remain the same. This new checkbox is automatically checked for you, but you can uncheck it.
+
+However, your **updating** workflow is now improved. This new checkbox is **un-checked** for posts that are being updated. This solves the problem of saving an updated post and accidentally sending out a newsletter. Only check this box once you're ready.
+
+* **Bug fix:** If a post was previously published then duplicated using the Yoast Duplicate Post plugin, its published status will also show up in the duplicated post. This is now fixed.
+* **Bug fix:** Link colour chosen in newsletter theme designer not showing up in emails for Mailchimp.
+* **Improvement:** Remove CPTs that are obviously not for posting content. Like oEmbeds, menus, custom CSS, custom fields, blocks, forms etc...
+
 = 1.1.6, November 12, 2020 =
 
 * **New feature:** Add preview text to each newsletter. Preview text shows up next to your Subject line in inboxes. It's a great way to give subscribers a sneak peek of your email and convince them to open it. Find it next to the **Subject** field in the **Send as newsletter** section.
