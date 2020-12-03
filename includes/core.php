@@ -487,7 +487,7 @@ add_action( 'init', 'newsletterglue_review_button_start' );
 function newsletterglue_get_post_types() {
 
 	$post_types  = get_post_types();
-	$unsupported = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block' );
+	$unsupported = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'scheduled-action' );
 
 	if ( is_array( $post_types ) ) {
 		foreach( $post_types as $post_type ) {
