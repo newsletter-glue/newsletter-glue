@@ -928,6 +928,18 @@
 .ngl-metabox-loading img {
 }
 
+.ngl-new-tag {
+    background: #ffcf64;
+    color: #272727;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    display: inline-block;
+    font-size: 10px;
+    border-radius: 4px;
+    margin: 0 0 0 10px;
+}
+
 /* Ajax inline validation */
 .ngl-process {
 	display: flex;
