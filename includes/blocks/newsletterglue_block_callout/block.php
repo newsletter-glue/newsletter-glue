@@ -155,6 +155,10 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 			padding-bottom: 1px !important;
 		}
 
+		.wp-block-newsletterglue-callout * {
+			color: inherit !important;
+		}
+
 		.wp-block-newsletterglue-callout h1,
 		.wp-block-newsletterglue-callout h2,
 		.wp-block-newsletterglue-callout h3,

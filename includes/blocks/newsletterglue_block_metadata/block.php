@@ -105,6 +105,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		$show_in_blog  = isset( $attributes[ 'show_in_blog' ] ) ? $attributes[ 'show_in_blog' ] : $defaults[ 'show_in_blog' ];
 		$show_in_email = isset( $attributes[ 'show_in_email' ] ) ? $attributes[ 'show_in_email' ] : $defaults[ 'show_in_email' ];
 		$post_id	   = isset( $attributes[ 'post_id' ] ) ? absint( $attributes[ 'post_id' ] ) : '';
+		$post 			= get_post( $post_id );
 
 		// Hidden from blog.
 		if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
@@ -125,6 +126,12 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		}
 
 		$content = str_replace( '<div class="ngl-metadata-sep">|</div></div>', '</div>', $content );
+
+		// Recalculate reading time.
+		if ( strstr( $content, 'ngl-metadata-readtime-ajax' ) ) {
+			$read_time 	= newsletterglue_content_estimated_reading_time( $post->post_content );
+			$content 	= preg_replace( '/<div class=\"ngl-metadata-readtime-ajax\">[^<]+<\/div>/', '<div class="ngl-metadata-readtime-ajax">' . $read_time . '</div>', $content );
+		}
 
 		return $content;
 

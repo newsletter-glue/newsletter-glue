@@ -504,7 +504,7 @@ function newsletterglue_get_post_types() {
 /**
  * Get post types.
  */
-function newsletterglue_content_estimated_reading_time( $content = '', $words_per_minute = 200 ) {
+function newsletterglue_content_estimated_reading_time( $content = '', $words_per_minute = 150 ) {
 
 	$clean_content	= strip_shortcodes( $content );
 	$clean_content	= strip_tags( $clean_content );
