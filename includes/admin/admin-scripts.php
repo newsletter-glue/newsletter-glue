@@ -91,7 +91,7 @@ add_action( 'admin_enqueue_scripts', 'newsletterglue_load_admin_scripts', 100 );
  */
 function newsletterglue_js_data() {
 
-	global $post, $the_lists;
+	global $post;
 
 	if ( isset( $post->ID ) ) {
 
@@ -110,6 +110,7 @@ function newsletterglue_js_data() {
 		);
 
 		// Add lists.
+		$the_lists = newsletterglue()::$the_lists;
 		if ( ! empty( $the_lists ) ) {
 			$lists = array();
 			if ( $app == 'mailerlite' ) {

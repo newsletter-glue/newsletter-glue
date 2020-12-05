@@ -30,6 +30,8 @@ final class Newsletter_Glue {
 	 */
 	private static $instance;
 
+	public static $the_lists = null;
+
 	/**
 	 * Main Instance.
 	 */

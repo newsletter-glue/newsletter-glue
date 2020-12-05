@@ -40,7 +40,8 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 					$lists = newsletterglue_get_option( 'lists', $app );
 				}
 
-				$the_lists = $api->get_lists();
+				newsletterglue()::$the_lists = $api->get_lists();
+				$the_lists = newsletterglue()::$the_lists;
 
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_lists',
