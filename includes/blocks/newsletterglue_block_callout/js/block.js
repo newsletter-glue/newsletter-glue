@@ -2,7 +2,7 @@
 
 	const el = element.createElement;
     const { registerBlockType } = blocks;
-	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors } = editor;
+	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, BlockControls, AlignmentToolbar } = editor;
 	const { Fragment } = element;
 	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, ServerSideRender, RangeControl } = components;
 
@@ -35,6 +35,10 @@
 		category: 'newsletterglue-blocks',
 		keywords: [ 'newsletter', 'glue', 'card', 'callout' ],
 		attributes: {
+			alignment: {
+				'type' : 'string',
+				'default' : 'left',
+			},
 			border_color: {
 				'type' : 'string',
 				'default' : '#f9f9f9',
@@ -87,8 +91,13 @@
 				paddingLeft : props.attributes.cta_padding,
 				paddingRight : props.attributes.cta_padding,
 				marginTop : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
-				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0
+				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
+				textAlign: props.attributes.alignment
 			};
+
+			function onChangeAlignment( newAlignment ) {
+				props.setAttributes( { alignment: newAlignment } );
+			}
 
 			const blockTemplate = [
 				[ 'core/paragraph', { }, [] ],
@@ -210,7 +219,16 @@
 						),
 
 					),
-		 
+
+					el( BlockControls, {},
+						el( AlignmentToolbar,
+							{
+								value: props.attributes.alignment,
+								onChange: onChangeAlignment
+							}
+						)
+					),
+
 					/*  
 					 * Here will be your block markup 
 					 */
