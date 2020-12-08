@@ -150,10 +150,11 @@
 
 		// changing backgrounds.
 		if ( id == 'email_bg' ) {
-			email.css( { 'background-color' : value } );
+			$( '.ngl-email' ).css( { 'background-color' : value } );
 		}
 		if ( id == 'container_bg' ) {
 			email.find( '.ngl-email-container' ).css( { 'background-color' : value } );
+			$( '.ngl-email-container' ).css( { 'background-color' : value } );
 		}
 
 		// button colour.

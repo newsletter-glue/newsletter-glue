@@ -1,0 +1,38 @@
+.ngl-articles {
+	min-height: 100px;
+	padding: 20px;
+}
+
+.ngl-article img {
+	display: block;
+	overflow: hidden;
+}
+
+.ngl-articles-full img {
+	width: 100%;
+	height: auto;
+}
+
+.ngl-article {
+	font-size: 14px;
+	margin: 0 0 30px;
+}
+
+.ngl-article-title {
+	margin: 0 0 4px;
+}
+
+.ngl-article-title a {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.ngl-article-featured {
+	margin: 0 0 14px;
+}
+
+.ngl-article-date {
+	margin: 8px 0 0;
+	font-size: 13px;
+	opacity: 0.7;
+}

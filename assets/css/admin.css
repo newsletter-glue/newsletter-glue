@@ -1545,13 +1545,17 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	margin: auto;
 }
 
+.ngl-theme.ngl-mobile .ngl-email-container {
+	margin: 0 10px;
+}
+
 .ngl-theme.ngl-mobile .ngl-email {
-	border-left: 1px solid #aaa;
-	border-right: 1px solid #aaa;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
 }
 
 .ngl-theme.ngl-mobile .ngl-theme-preview {
-	background: #eee;
+
 }
 
 h1.ngl-mobile,

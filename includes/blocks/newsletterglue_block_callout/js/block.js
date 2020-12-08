@@ -1,5 +1,6 @@
 ( function( blocks, editor, element, components ) {
 
+	const block = newsletterglue_block_callout;
 	const el = element.createElement;
     const { registerBlockType } = blocks;
 	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, BlockControls, AlignmentToolbar } = editor;
@@ -71,11 +72,11 @@
 			},
 			show_in_blog: {
 				'type' : 'boolean',
-				'default' : newsletterglue_block_callout.show_in_blog ? true : false
+				'default' : block.show_in_blog ? true : false
 			},
 			show_in_email: {
 				'type' : 'boolean',
-				'default' : newsletterglue_block_callout.show_in_email ? true : false
+				'default' : block.show_in_email ? true : false
 			},
 		},
 
@@ -256,7 +257,8 @@
 				paddingLeft : props.attributes.cta_padding,
 				paddingRight : props.attributes.cta_padding,
 				marginTop : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
-				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0
+				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
+				textAlign: props.attributes.alignment
 			};
 
             return (

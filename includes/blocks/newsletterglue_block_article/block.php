@@ -74,21 +74,13 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$defaults[ 'description' ] 	= __( 'Bulk embed articles and customise their layout.', 'newsletter-glue' );
 
 		// Post dates.
-		$dates = array(
-			date( 'l, j M Y', current_time( 'timestamp' ) ),
-			date( 'F j, Y', current_time( 'timestamp' ) ),
-			date( 'Y-m-d', current_time( 'timestamp' ) ),
-			date( 'm/d/Y', current_time( 'timestamp' ) ),
-			date( 'd/m/Y', current_time( 'timestamp' ) ),
-		);
-
+		$formats = array( 'l, j M Y', 'F j, Y', 'Y-m-d', 'm/d/Y', 'd/m/Y' );
 		$date_formats = array();
-		foreach( $dates as $date ) {
-			$date_formats[] = array( 'value' => $date, 'label' => $date );
+		foreach( $formats as $format ) {
+			$date_formats[] = array( 'value' => $format, 'label' => date( $format, current_time( 'timestamp' ) ) );
 		}
 		$defaults[ 'date_formats' ] = $date_formats;
-		
-		
+
 		wp_register_script( $this->asset_id, $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ), time() );
 		wp_localize_script( $this->asset_id, $this->id, $defaults );
 
@@ -98,68 +90,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'editor_script'   => $this->asset_id,
 			'style'           => $this->asset_id . '-style',
 			'render_callback' => array( $this, 'render_block' ),
-			'attributes'	  => array(
-				'show_in_blog' => array(
-					'type' 		=> 'boolean',
-					'default' 	=> $defaults[ 'show_in_blog' ],
-				),
-				'show_in_email' => array(
-					'type' 		=> 'boolean',
-					'default' 	=> $defaults[ 'show_in_email' ],
-				),
-				'border_color' => array(
-					'type' 		=> 'string',
-				),
-				'background_color' => array(
-					'type' 		=> 'string',
-				),
-				'border_style' => array(
-					'type' 		=> 'string',
-				),
-				'border_size' => array(
-					'type' 		=> 'number',
-					'default' 	=> 0,
-				),
-				'border_radius' => array(
-					'type' 		=> 'number',
-					'default'	=> 0,
-				),
-				'show_image' 	=> array(
-					'type' 		=> 'boolean',
-					'default' 	=> true,
-				),
-				'show_date' 	=> array(
-					'type' 		=> 'boolean',
-					'default' 	=> true,
-				),
-				'show_tags' 	=> array(
-					'type' 		=> 'boolean',
-					'default' 	=> true,
-				),
-				'image_radius' 	=> array(
-					'type' 		=> 'number',
-					'default'	=> 0,
-				),
-				'date_format'	=> array(
-					'type'		=> 'string',
-				),
-				'new_window' 	=> array(
-					'type' 		=> 'boolean',
-					'default' 	=> false,
-				),
-				'nofollow' 		=> array(
-					'type' 		=> 'boolean',
-					'default' 	=> false,
-				),
-				'image_position' => array(
-					'type'		=> 'string',
-					'default'	=> 'left',
-				),
-				'table_ratio'	 => array(
-					'type'		=> 'string',
-					'default'	=> 'full',
-				),
-			),
 		) );
 
 	}
@@ -168,8 +98,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	 * Render the block.
 	 */
 	public function render_block( $attributes, $content ) {
-
-		ob_start();
 
 		$defaults = get_option( $this->id );
 
@@ -185,23 +113,15 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		// Hidden from blog.
 		if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
-			if ( ! defined( 'REST_REQUEST' ) ) {
-				echo '';
-				return ob_get_clean();
-			}
+			$content = '';
 		}
 
 		// Hidden from email.
 		if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
-			if ( ! defined( 'REST_REQUEST' ) ) {
-				echo '';
-				return ob_get_clean();
-			}
+			$content = '';
 		}
 
-		echo '<div class="newsletterglue-articles">output here</div>';
-
-		return ob_get_clean();
+		return $content;
 
 	}
 

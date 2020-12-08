@@ -662,6 +662,11 @@
 			$( '.ngl-top-checkbox' ).addClass( 'is-hidden' );
 		}
 
+		// Remove the checkbox check anyway.
+		if ( ! $( '#ngl_send_newsletter2' ).is( ':checked' ) ) {
+			$( '#ngl_double_optin' ).prop( 'checked', false );
+		}
+
 	} );
 
 	// Textarea tab indent.

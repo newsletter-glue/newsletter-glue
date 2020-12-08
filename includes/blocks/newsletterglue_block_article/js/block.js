@@ -99,10 +99,20 @@
 				'type' : 'string',
 				'default' : 'full',
 			},
+			thepostdata: {
+				'type' : 'array',
+				'default' : [],
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
 
 			var dateFormats = block.date_formats;
+			var postdata = [];
+
+			function htmlDecode(input) {
+				var doc = new DOMParser().parseFromString(input, "text/html");
+				return doc.documentElement.textContent.replace( '[…]', '...' );
+			}
 
 			function changeImagePosition( ev ) {
 				let image_position = ev.currentTarget.value;
@@ -116,12 +126,79 @@
 
 			var placementclass = props.attributes.table_ratio === 'full' || ! props.attributes.show_image ? 'ngl-gutenberg-greyed' : '';
 
-			return [
-	
-					el( ServerSideRender, {
-						block: 'newsletterglue/article',
-						attributes: props.attributes,
-					} ),
+			var articlesRatio = props.attributes.table_ratio ? props.attributes.table_ratio : 'full';
+			var articlesClass = 'ngl-articles ngl-articles-' + articlesRatio;
+
+			var articlesStyles = {
+				backgroundColor: props.attributes.background_color ? props.attributes.background_color : 'transparent'
+			};
+
+			var articles = [];
+
+			if ( props.attributes.thepostdata.length == 0 ) {
+				var items = wp.data.select( 'core' ).getEntityRecords( 'postType', 'post', { _embed: true, per_page: -1, include: [ 1598, 1601, 1604 ] } );
+				if ( items ) {
+					items.forEach( post => {
+						var excerpt = post.excerpt.rendered;
+						postdata.push( { thumbnail: post._embedded["wp:featuredmedia"][0]["source_url"], permalink: post.link, title: post.title.rendered, excerpt: excerpt, date: post.date } );
+					} );
+					props.setAttributes( { thepostdata: postdata } );
+				}
+			} else {
+				postdata = props.attributes.thepostdata;
+			}
+
+			if ( postdata.length ) {
+				postdata.forEach( post => {
+
+					var showImage = '';
+					if ( props.attributes.show_image ) {
+						showImage = el( 'div', { className: 'ngl-article-featured' },
+							el( 'img', { src: post.thumbnail, style: { borderRadius: props.attributes.image_radius } } )
+						);
+					}
+
+					var showDate = '';
+					if ( props.attributes.show_date ) {
+						showDate = el( 'div', { className: 'ngl-article-date' }, 
+							post.date
+						);
+					}
+
+					var articleStyles = {
+						borderWidth: props.attributes.border_size,
+						borderStyle: props.attributes.border_style,
+						borderColor: props.attributes.border_color ? props.attributes.border_color : 'transparent',
+						borderRadius: props.attributes.border_radius,
+						padding: props.attributes.border_size > 0 ? '20px' : '0'
+					};
+
+					var linkRel = props.attributes.nofollow ? 'nofollow' : 'follow';
+					var linkTarget = props.attributes.new_window ? '_blank' : '_self';
+
+					var thisel = el( 'div', { className: 'ngl-article', style: articleStyles },
+						showImage,
+						el( 'div', { className: 'ngl-article-title' },
+							el( 'a', {
+								href: post.permalink,
+								rel: linkRel,
+								target: linkTarget
+							},
+								post.title
+							)
+						),
+						el( 'div', { className: 'ngl-article-excerpt' },
+							htmlDecode( post.excerpt )
+						),
+						showDate
+					);
+					articles.push( thisel );
+				} );
+			}
+
+			return (
+
+				el( Fragment, { },
 
 					// This is block settings in sidebar.
 					el( InspectorControls, {},
@@ -333,15 +410,22 @@
 
 						),
 
+					),
+
+					// Rendering.
+					el( 'div', { className: articlesClass, style: articlesStyles },
+						articles
 					)
 
-			]
+				)
+
+			);
 
 		} ),
 
 		// This is how the block is rendered in frontend.
 		save: function( props, className ) {
-			return null
+			return null;
 		},
 
 	} );

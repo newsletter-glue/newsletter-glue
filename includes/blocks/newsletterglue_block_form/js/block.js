@@ -356,7 +356,7 @@
 							el( 'div', { className: 'ngl-message-svg-wrap' },
 								el( 'svg', { viewBox: '0 0 24 24', width: '24', height: '24', strokeWidth: 2, stroke: '#fff', fill: 'none' },
 									el( 'polyline', {
-										points: '20 6 9 17 4 12',
+										points: '20 6 9 17 4 12'
 									} )
 								)
 							),
@@ -673,7 +673,7 @@
 							el( 'div', { className: 'ngl-message-svg-wrap' },
 								el( 'svg', { viewBox: '0 0 24 24', width: '24', height: '24', strokeWidth: 2, stroke: '#fff', fill: 'none' },
 									el( 'polyline', {
-										points: '20 6 9 17 4 12',
+										points: '20 6 9 17 4 12'
 									} )
 								)
 							),
