@@ -589,8 +589,8 @@ body {
 #wrapper {
 	background: <?php echo newsletterglue_get_theme_option( 'email_bg' ); ?>;
 	padding: 0 10px;
-	padding-top: <?php echo newsletterglue_get_theme_option( 'container_margin' ); ?>px;
-	padding-bottom: <?php echo newsletterglue_get_theme_option( 'container_margin' ); ?>px;
+	padding-top: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
+	padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
 	font-family: <?php echo newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ); ?>;
 	<?php endif; ?>
