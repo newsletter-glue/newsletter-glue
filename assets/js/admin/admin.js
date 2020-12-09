@@ -88,6 +88,8 @@
 	function ngl_validate_form() {
 		var f = $( '.ngl-metabox' );
 
+		var app = f.find( '#ngl_app' ).val();
+
 		if ( f.length == 0 ) {
 			return false;
 		}
@@ -124,11 +126,23 @@
 			$( '#ngl_double_confirm' ).val( 'no' );
 		}
 
+		// Campaign Monitor.
+		if ( app === 'campaignmonitor' ) {
+			var lists = $( '#ngl_lists' ).parent().dropdown( 'get value' );
+			var segments = $( '#ngl_segments' ).parent().dropdown( 'get value' );
+			if ( lists.length == 0 && segments.length == 0 ) {
+				ready = false;
+				$( '#ngl_lists, #ngl_segments' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
+			} else {
+				$( '#ngl_lists, #ngl_segments' ).parents( '.ngl-metabox-flex' ).removeClass( 'is-error' );
+			}
+		}
+
 		// Is form ready?
 		if ( ready ) {
 			$( '.ngl-ready' ).removeClass( 'is-hidden' );
 			$( '.ngl-not-ready' ).addClass( 'is-hidden' );
-			$( '.editor-post-publish-button__button.is-primary' ).removeAttr( 'disabled' );
+			$( '.editor-post-publish-button__button.is-primary' ).prop( 'disabled', false );
 			$( '.ngl-newsletter-errors' ).remove();
 			$( '.ngl-top-checkbox' ).removeClass( 'disable-send' );
 		} else {
@@ -143,7 +157,7 @@
 		
 		if ( ! $( '#ngl_send_newsletter' ).is( ':checked' ) ) {
 			$( '.ngl-newsletter-errors' ).remove();
-			$( '.editor-post-publish-button__button.is-primary' ).removeAttr( 'disabled' );
+			$( '.editor-post-publish-button__button.is-primary' ).prop( 'disabled', false );
 			$( '.ngl-top-checkbox' ).removeClass( 'disable-send' );
 		}
 	}
@@ -172,7 +186,7 @@
 						$( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
 					}
 					$( '#ngl_from_email' ).parent().parent().parent().removeClass( 'is-error' );
-					$( '#ngl_from_email' ).removeAttr( 'data-force-unready' );
+					$( '#ngl_from_email' ).attr( 'data-force-unready', false );
 				} else {
 					$( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
 					$( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
