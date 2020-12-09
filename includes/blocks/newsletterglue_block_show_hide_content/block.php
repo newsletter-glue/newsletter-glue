@@ -122,6 +122,11 @@ class NGL_Block_Show_Hide_Content extends NGL_Abstract_Block {
 			$content = '';
 		}
 
+		if ( defined( 'NGL_IN_EMAIL' ) ) {
+			$content = str_replace( '<section', '<div', $content );
+			$content = str_replace( '/section>', '/div>', $content );
+		}
+
 		return $content;
 
 	}

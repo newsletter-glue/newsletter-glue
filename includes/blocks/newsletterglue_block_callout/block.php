@@ -110,6 +110,11 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 			$content = '';
 		}
 
+		if ( defined( 'NGL_IN_EMAIL' ) ) {
+			$content = str_replace( '<section', '<div', $content );
+			$content = str_replace( '/section>', '/div>', $content );
+		}
+
 		return $content;
 
 	}
@@ -163,6 +168,7 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 		.wp-block-newsletterglue-callout h6 {
 			margin: 0 0 14px !important;
 			padding: 0 !important;
+			color: inherit !important;
 		}
 
 		.wp-block-newsletterglue-callout p {

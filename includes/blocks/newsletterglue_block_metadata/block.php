@@ -186,7 +186,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 
 		.ngl-metadata .ngl-metadata-sep {
 			text-align: center;
-			width: 14px;
+			width: 2px;
 			color: #aaa;
 		}
 

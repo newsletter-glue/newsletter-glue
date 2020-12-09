@@ -140,7 +140,12 @@
 				if ( items ) {
 					items.forEach( post => {
 						var excerpt = post.excerpt.rendered;
-						postdata.push( { thumbnail: post._embedded["wp:featuredmedia"][0]["source_url"], permalink: post.link, title: post.title.rendered, excerpt: excerpt, date: post.date } );
+						if ( post._embedded["wp:featuredmedia"] ) {
+							var thumbnail = post._embedded["wp:featuredmedia"][0]["source_url"];
+						} else {
+							var thumbnail = '';
+						}
+						postdata.push( { thumbnail: thumbnail, permalink: post.link, title: post.title.rendered, excerpt: excerpt, date: post.date } );
 					} );
 					props.setAttributes( { thepostdata: postdata } );
 				}

@@ -669,7 +669,8 @@
 
 .ngl-metabox-flex.is-error .ui.dropdown,
 .ngl-metabox-flex.is-error .ui.selection.active.dropdown,
-.ngl-metabox-flex.is-error .ui.selection.active.dropdown .menu
+.ngl-metabox-flex.is-error .ui.selection.active.dropdown .menu,
+.ngl-settings.ngl-metabox-flex.is-error div.ui.selection.dropdown
 {
 	border-color: #EF0000 !important;
 }
@@ -1002,6 +1003,10 @@
 
 .ngl-settings .ngl-metabox-msg {
 	margin: 0;
+}
+
+.ngl-settings h3 {
+	margin: 1em 0 0;
 }
 
 .ngl-settings-save {

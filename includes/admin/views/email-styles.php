@@ -6,24 +6,25 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 ?>
 <html>
 <head>
-
-	<?php do_action( 'newsletterglue_start_head_tag' ); ?>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<style type="text/css">
 
-		<?php do_action( 'newsletterglue_email_styles' ); ?>
+		<?php
 
-		<?php do_action( 'newsletterglue_add_custom_styles' ); ?>
+			// CSS added by theme designer, custom css tab.
+			do_action( 'newsletterglue_email_styles' );
+
+			// CSS added by plugin blocks.
+			do_action( 'newsletterglue_add_custom_styles' );
+
+		?>
 
 	</style>
-
-	<?php do_action( 'newsletterglue_end_head_tag' ); ?>
 
 </head>
 <body>

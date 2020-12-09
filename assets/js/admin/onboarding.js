@@ -40,6 +40,20 @@
 
 		$( '.ngl-boarding-next' ).removeClass( 'ready' );
 
+		var modal = $( this ).parents( '.ngl-modal' );
+		var app   = modal.attr( 'data-app' );
+		if ( app === 'campaignmonitor' ) {
+			if ( modal.find( '#ngl_lists' ).parents( '.ui:visible' ).length ) {
+				var selectedLists = modal.find( '#ngl_lists' ).parents( '.ui' ).dropdown( 'get value' );
+				var selectedSegments = modal.find( '#ngl_segments' ).parents( '.ui' ).dropdown( 'get value' );
+				if ( ! selectedLists && ! selectedSegments ) {
+					modal.find( '#ngl_lists' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
+					modal.find( '#ngl_segments' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
+					$( '.ngl-boarding-next' ).addClass( 'disabled' );
+				}
+			}
+		}
+
 		var keep_next_off = false;
 
 		setTimeout( function() {
@@ -67,6 +81,8 @@
 		$( '.ngl-boarding[data-screen=' + prev + ']' ).removeClass( 'is-hidden' );
 
 		$( '.ngl-boarding:visible' ).find( '.ui.dropdown, .ui.dropdown' ).dropdown();
+
+		$( '.ngl-boarding-next' ).removeClass( 'disabled' ).addClass( 'ready' );
 
 		// No navigation here.
 		if ( $( '.ngl-boarding-completed:visible' ).length ) {

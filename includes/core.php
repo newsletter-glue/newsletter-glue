@@ -240,7 +240,18 @@ function newsletterglue_default_connection() {
 function newsletterglue_generate_content( $post = '', $subject = '', $app = '' ) {
 
 	global $ng_post;
-	
+
+	// If post ID is provided.
+	if ( is_numeric( $post ) ) {
+		$post_id = $post;
+		$post    = get_post( $post_id );
+	}
+
+	// No subject.
+	if ( empty( $subject ) ) {
+		$subject = $post->post_title;
+	}
+
 	$ng_post = $post;
 
 	if ( ! defined( 'NGL_IN_EMAIL' ) ) {
@@ -269,7 +280,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	// Add preview text to email.
 	if ( ! empty( $preview_text ) ) {
 		if ( ! in_array( $app, array( 'mailchimp' ) ) ) {
-			$the_content .= '<div style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;font-family: sans-serif;">' . $preview_text . '</div>';
+			$the_content .= '<div class="ngl-preview-text -emogrifier-keep">' . $preview_text . '</div>';
 		}
 	}
 
@@ -308,7 +319,22 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$html = str_replace( '{post_permalink}', get_permalink( $post->ID ), $html );
 	$html = preg_replace( '/<!--(.*)-->/Uis', '', $html );
 
-	return apply_filters( 'newsletterglue_generate_content', $html, $post );
+	$html = apply_filters( 'newsletterglue_generate_content', $html, $post );
+
+	// Inline CSS.
+	$emogrifier_class = '\\Pelago\\Emogrifier';
+	if ( ! class_exists( $emogrifier_class ) ) {
+		include_once NGL_PLUGIN_DIR . 'includes/libraries/class-emogrifier.php';
+	}
+	try {
+		$emogrifier = new $emogrifier_class( $html );
+		$html    	= $emogrifier->emogrify();
+	} catch ( Exception $e ) {
+		// Do not display errors.
+	}
+
+	return $html;
+
 }
 
 /**
@@ -549,7 +575,7 @@ function newsletterglue_content_estimated_reading_time( $content = '', $words_pe
 function newsletterglue_add_theme_designer_css() {
 
 	// If theme designer css is disabled.
-	if ( get_option( 'newsletterglue_disable_theme_designer' ) === 'yes' ) {
+	if ( get_option( 'newsletterglue_disable_theme_designer' ) == 1 ) {
 		return;
 	}
 	?>
@@ -557,6 +583,7 @@ function newsletterglue_add_theme_designer_css() {
 body {
 	-webkit-text-size-adjust: 100%;
 	line-height: 1.5;
+	margin: 0;
 }
 
 #wrapper {
@@ -740,33 +767,24 @@ p.ngl-credits a {
 
 @media only screen and (max-width:596px) {
 
-	body {
-		line-height: 1.6;
-	}
-
 	#wrapper {
-		padding-top: <?php echo newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;
-		padding-bottom: <?php echo newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;
+		padding-top: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
+		padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
 	}
 
 	#template_inner {
-		padding: <?php echo newsletterglue_get_theme_option( 'mobile_container_padding1' ); ?>px <?php echo newsletterglue_get_theme_option( 'mobile_container_padding2' ); ?>px;
+		padding: <?php echo newsletterglue_get_theme_option( 'mobile_container_padding1' ); ?>px <?php echo newsletterglue_get_theme_option( 'mobile_container_padding2' ); ?>px !important;
 	}
 
-	h1, h2, h3, h4, h5, h6 {
-		line-height: 1.6;
-	}
-
-	h1 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px; }
-	h2 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h2_size' ); ?>px; }
-	h3 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h3_size' ); ?>px; }
-	h4 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h4_size' ); ?>px; }
-	h5 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h5_size' ); ?>px; }
-	h6 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h6_size' ); ?>px; }
+	h1 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px !important; }
+	h2 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h2_size' ); ?>px !important; }
+	h3 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h3_size' ); ?>px !important; }
+	h4 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h4_size' ); ?>px !important; }
+	h5 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h5_size' ); ?>px !important; }
+	h6 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h6_size' ); ?>px !important; }
 
 	p, ul, ol {
-		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px;
-		line-height: 1.6;
+		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
 	}
 
 	img {
@@ -779,7 +797,7 @@ p.ngl-credits a {
 	}
 
 	.ngl-logo img {
-		max-height: 60px;
+		max-height: 60px !important;
 	}
 
 }
@@ -797,3 +815,23 @@ function newsletterglue_add_custom_css() {
 
 }
 add_action( 'newsletterglue_email_styles', 'newsletterglue_add_custom_css', 20 );
+
+/**
+ * Add preview text CSS.
+ */
+function newsletterglue_add_preview_text_css() {
+	?>
+	.ngl-preview-text {
+		display: none;
+		font-size: 1px;
+		line-height: 1px;
+		max-height: 0px;
+		max-width: 0px;
+		opacity: 0;
+		overflow: hidden;
+		mso-hide: all;
+		font-family: sans-serif;
+	}
+	<?php
+}
+add_action( 'newsletterglue_email_styles', 'newsletterglue_add_preview_text_css', 30 );
