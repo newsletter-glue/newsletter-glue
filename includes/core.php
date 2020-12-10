@@ -575,7 +575,7 @@ function newsletterglue_content_estimated_reading_time( $content = '', $words_pe
 function newsletterglue_add_theme_designer_css() {
 
 	// If theme designer css is disabled.
-	if ( get_option( 'newsletterglue_disable_theme_designer' ) == 1 ) {
+	if ( get_option( 'newsletterglue_disable_plugin_css' ) == 1 ) {
 		return;
 	}
 	?>
@@ -807,16 +807,6 @@ p.ngl-credits a {
 add_action( 'newsletterglue_email_styles', 'newsletterglue_add_theme_designer_css', 10 );
 
 /**
- * Add custom CSS.
- */
-function newsletterglue_add_custom_css() {
-
-	echo wp_strip_all_tags( get_option( 'newsletterglue_css' ) );
-
-}
-add_action( 'newsletterglue_email_styles', 'newsletterglue_add_custom_css', 20 );
-
-/**
  * Add preview text CSS.
  */
 function newsletterglue_add_preview_text_css() {
@@ -834,4 +824,14 @@ function newsletterglue_add_preview_text_css() {
 	}
 	<?php
 }
-add_action( 'newsletterglue_email_styles', 'newsletterglue_add_preview_text_css', 30 );
+add_action( 'newsletterglue_email_styles', 'newsletterglue_add_preview_text_css', 20 );
+
+/**
+ * Add custom CSS.
+ */
+function newsletterglue_add_custom_css() {
+
+	echo wp_strip_all_tags( get_option( 'newsletterglue_css' ) );
+
+}
+add_action( 'newsletterglue_add_custom_styles', 'newsletterglue_add_custom_css', 100 );

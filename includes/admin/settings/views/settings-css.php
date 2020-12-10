@@ -42,10 +42,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="ngl-field">
 			<?php
 			newsletterglue_setting_checkbox(
-				'ngl_disable_theme_designer',
+				'ngl_disable_plugin_css',
 				'',
-				__( '<strong>Strip Newsletter Glue&rsquo;s default CSS from your newsletters.</strong><br />This also removes all styling from Newsletter Theme Designer. Only custom CSS in the above box will be inserted into your newsletter.', 'newsletter-glue' ),
-				get_option( 'newsletterglue_disable_theme_designer' )
+				__( '<strong>Strip Newsletter Glue&rsquo;s default CSS from your newsletters.</strong><br />This also removes all styling chosen in Newsletter Theme Designer and newsletter blocks. Only custom CSS in the above box will be inserted into your newsletter.', 'newsletter-glue' ),
+				get_option( 'newsletterglue_disable_plugin_css' )
 			);
 			?>
 		</div>

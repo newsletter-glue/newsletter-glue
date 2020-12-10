@@ -15,13 +15,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<style type="text/css">
 
 		<?php
-
 			// CSS added by theme designer, custom css tab.
 			do_action( 'newsletterglue_email_styles' );
 
 			// CSS added by plugin blocks.
-			do_action( 'newsletterglue_add_custom_styles' );
+			if ( ! get_option( 'newsletterglue_disable_plugin_css' ) ) {
+				do_action( 'newsletterglue_add_block_styles' );
+			}
 
+			// CSS added by 3rd party.
+			do_action( 'newsletterglue_add_custom_styles' );
 		?>
 
 	</style>

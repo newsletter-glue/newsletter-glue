@@ -20,7 +20,7 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 
 		if ( $this->use_block() === 'yes' ) {
 			add_action( 'init', array( $this, 'register_block' ) );
-			add_action( 'newsletterglue_add_custom_styles', array( $this, 'email_css' ) );
+			add_action( 'newsletterglue_add_block_styles', array( $this, 'email_css' ) );
 		}
 
 	}
