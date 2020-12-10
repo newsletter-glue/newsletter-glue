@@ -67,6 +67,7 @@
 			success: function( response ) {
 				if ( response ) {
 					$( '.ngl-modal:visible' ).prepend( response );
+					$( '.ngl-modal:visible' ).attr( 'data-app', api );
 					$( '.ngl-boarding-next' ).removeClass( 'disabled' ).addClass( 'ready' );
 				}
 			}
@@ -86,6 +87,8 @@
 	// Validates the form and output correct notice.
 	function ngl_validate_form() {
 		var f = $( '.ngl-metabox' );
+
+		var app = f.find( '#ngl_app' ).val();
 
 		if ( f.length == 0 ) {
 			return false;
@@ -123,11 +126,23 @@
 			$( '#ngl_double_confirm' ).val( 'no' );
 		}
 
+		// Campaign Monitor.
+		if ( app === 'campaignmonitor' ) {
+			var lists = $( '#ngl_lists' ).parent().dropdown( 'get value' );
+			var segments = $( '#ngl_segments' ).parent().dropdown( 'get value' );
+			if ( lists.length == 0 && segments.length == 0 ) {
+				ready = false;
+				$( '#ngl_lists, #ngl_segments' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
+			} else {
+				$( '#ngl_lists, #ngl_segments' ).parents( '.ngl-metabox-flex' ).removeClass( 'is-error' );
+			}
+		}
+
 		// Is form ready?
 		if ( ready ) {
 			$( '.ngl-ready' ).removeClass( 'is-hidden' );
 			$( '.ngl-not-ready' ).addClass( 'is-hidden' );
-			$( '.editor-post-publish-button__button.is-primary' ).removeAttr( 'disabled' );
+			$( '.editor-post-publish-button__button.is-primary' ).prop( 'disabled', false );
 			$( '.ngl-newsletter-errors' ).remove();
 			$( '.ngl-top-checkbox' ).removeClass( 'disable-send' );
 		} else {
@@ -142,7 +157,7 @@
 		
 		if ( ! $( '#ngl_send_newsletter' ).is( ':checked' ) ) {
 			$( '.ngl-newsletter-errors' ).remove();
-			$( '.editor-post-publish-button__button.is-primary' ).removeAttr( 'disabled' );
+			$( '.editor-post-publish-button__button.is-primary' ).prop( 'disabled', false );
 			$( '.ngl-top-checkbox' ).removeClass( 'disable-send' );
 		}
 	}
@@ -171,7 +186,7 @@
 						$( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
 					}
 					$( '#ngl_from_email' ).parent().parent().parent().removeClass( 'is-error' );
-					$( '#ngl_from_email' ).removeAttr( 'data-force-unready' );
+					$( '#ngl_from_email' ).attr( 'data-force-unready', false );
 				} else {
 					$( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
 					$( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
@@ -186,6 +201,52 @@
 	// Init fields.
 	$( '.ngl .ui.dropdown, .ngl-metabox .ui.dropdown' ).dropdown( { onChange: function() { ngl_validate_form(); } } );
 	$( '.ngl .ui.checkbox' ).checkbox();
+
+	// When a list is changed for Campaign Monitor.
+	$( document ).on( 'change', '.ngl-modal[data-app=campaignmonitor] #ngl_lists', function() {
+		var val = $( this ).val();
+		var continuethis = false;
+		if ( val ) {
+			continuethis = true;
+		} else {
+			var next_val = $( '.ngl-modal[data-app=campaignmonitor] #ngl_segments' ).parents( '.ui' ).dropdown( 'get value' );
+			if ( ! next_val ) {
+				continuethis = false
+			}
+		}
+		if ( continuethis ) {
+			$( this ).parents( '.ngl-metabox-flex' ).removeClass( 'is-error' );
+			$( '.ngl-modal[data-app=campaignmonitor] #ngl_segments' ).parents( '.ngl-metabox-flex' ).removeClass( 'is-error' );
+			$( '.ngl-boarding-next' ).removeClass( 'disabled' ).addClass( 'ready' );
+		} else {
+			$( this ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
+			$( '.ngl-modal[data-app=campaignmonitor] #ngl_segments' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
+			$( '.ngl-boarding-next' ).addClass( 'disabled' ).removeClass( 'ready' );
+		}
+	} );
+
+	// When a segment is changed for Campaign Monitor.
+	$( document ).on( 'change', '.ngl-modal[data-app=campaignmonitor] #ngl_segments', function() {
+		var val = $( this ).val();
+		var continuethis = false;
+		if ( val ) {
+			continuethis = true;
+		} else {
+			var next_val = $( '.ngl-modal[data-app=campaignmonitor] #ngl_lists' ).parents( '.ui' ).dropdown( 'get value' );
+			if ( ! next_val ) {
+				continuethis = false
+			}
+		}
+		if ( continuethis ) {
+			$( this ).parents( '.ngl-metabox-flex' ).removeClass( 'is-error' );
+			$( '.ngl-modal[data-app=campaignmonitor] #ngl_lists' ).parents( '.ngl-metabox-flex' ).removeClass( 'is-error' );
+			$( '.ngl-boarding-next' ).removeClass( 'disabled' ).addClass( 'ready' );
+		} else {
+			$( this ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
+			$( '.ngl-modal[data-app=campaignmonitor] #ngl_lists' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
+			$( '.ngl-boarding-next' ).addClass( 'disabled' ).removeClass( 'ready' );
+		}
+	} );
 
 	// Date and time picker.
 	$( '.ngl-date' ).flatpickr( {
@@ -662,6 +723,11 @@
 			$( '.ngl-top-checkbox' ).addClass( 'is-hidden' );
 		}
 
+		// Remove the checkbox check anyway.
+		if ( ! $( '#ngl_send_newsletter2' ).is( ':checked' ) ) {
+			$( '#ngl_double_optin' ).prop( 'checked', false );
+		}
+
 	} );
 
 	// Textarea tab indent.
@@ -770,6 +836,20 @@
 						}
 					}
 				}
+
+				var modal = $( '.ngl-modal[data-app=campaignmonitor]:visible' );
+				if ( modal.length ) {
+					var selectedLists = modal.find( '#ngl_lists' ).parents( '.ui' ).dropdown( 'get value' );
+					var selectedSegments = modal.find( '#ngl_segments' ).parents( '.ui' ).dropdown( 'get value' );
+					if ( ! selectedLists && ! selectedSegments ) {
+						modal.find( '#ngl_lists' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
+						modal.find( '#ngl_segments' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
+					} else {
+						modal.find( '#ngl_lists' ).parents( '.ngl-metabox-flex' ).removeClass( 'is-error' );
+						modal.find( '#ngl_segments' ).parents( '.ngl-metabox-flex' ).removeClass( 'is-error' );
+					}
+				}
+
 			}
 		} );
 

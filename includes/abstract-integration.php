@@ -30,7 +30,48 @@ abstract class NGL_Abstract_Integration {
 	 * Show test email options.
 	 */
 	public function show_test_email( $settings, $defaults, $post ) {
+		$this->test_column( $settings, $defaults, $post );
 		include NGL_PLUGIN_DIR . 'includes/admin/metabox/views/send-test.php';
+	}
+
+	/**
+	 * Show test column.
+	 */
+	public function test_column( $settings, $defaults, $post ) {
+		?>
+		<div class="ngl-metabox-flex">
+
+			<div class="ngl-metabox-flex">
+
+				<div class="ngl-metabox-header">
+					<?php esc_html_e( 'Send test email to', 'newsletter-glue' ); ?>
+				</div>
+
+				<div class="ngl-field">
+					<?php
+						newsletterglue_text_field( array(
+							'id' 			=> 'ngl_test_email',
+							'value'			=> isset( $settings->test_email ) ? $settings->test_email : $defaults->test_email,
+						) );
+					?>
+				</div>
+
+			</div>
+
+			<div class="ngl-metabox-flex">
+
+				<div class="ngl-metabox-header">
+					<?php esc_html_e( 'Preview email in new tab', 'newsletter-glue' ); ?>
+				</div>
+
+				<div class="ngl-field">
+					<a href="<?php echo add_query_arg( 'preview_newsletterglue_email', $post->ID ); ?>" target="_blank" class="ui button secondary"><?php _e( 'Preview email', 'newsletter-glue' ); ?></a>
+				</div>
+
+			</div>
+
+		</div>
+		<?php
 	}
 
 	/**

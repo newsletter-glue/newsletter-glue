@@ -47,8 +47,10 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 						}
 					}
 				}
-				
-				$the_lists = $defaults->audiences;
+
+				newsletterglue()::$the_lists = $defaults->audiences;
+				$the_lists = newsletterglue()::$the_lists;
+
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_audience',
 					'legacy'		=> true,

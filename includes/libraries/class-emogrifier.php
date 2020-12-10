@@ -1103,7 +1103,9 @@ class Emogrifier
     private function removeInvisibleNodes(\DOMXPath $xPath)
     {
         $nodesWithStyleDisplayNone = $xPath->query(
-            '//*[contains(translate(translate(@style," ",""),"NOE","noe"),"display:none")]'
+            //'//*[contains(translate(translate(@style," ",""),"NOE","noe"),"display:none")]'
+			'//*[@style and contains(translate(translate(@style," ",""),"NOE","noe"),"display:none")'
+        . ' and not(@class and contains(concat(" ", normalize-space(@class), " "), " -emogrifier-keep "))]'
         );
         if ($nodesWithStyleDisplayNone->length === 0) {
             return;

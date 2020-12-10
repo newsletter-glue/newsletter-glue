@@ -18,7 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				<input type="checkbox" name="ngl_double_optin" id="ngl_double_optin" value="1" checked />
 				<?php _e( 'Send email when post is published.', 'newsletter-glue' ); ?>
 			</label>
+			<?php if ( newsletterglue_get_count() < 3 ) : ?>
 			<span class="ngl-new-tag"><?php _e( 'New', 'newsletter-glue' ); ?></span>
+			<?php endif; ?>
 		</div>
 	</div>
 	<?php endif; ?>
@@ -31,7 +33,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				<input type="checkbox" name="ngl_double_optin" id="ngl_double_optin" value="1" />
 				<?php _e( 'Send email when post is updated.', 'newsletter-glue' ); ?>
 			</label>
+			<?php if ( newsletterglue_get_count() < 3 ) : ?>
 			<span class="ngl-new-tag"><?php _e( 'New', 'newsletter-glue' ); ?></span>
+			<?php endif; ?>
 		</div>
 	</div>
 	<?php endif; ?>

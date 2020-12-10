@@ -669,7 +669,8 @@
 
 .ngl-metabox-flex.is-error .ui.dropdown,
 .ngl-metabox-flex.is-error .ui.selection.active.dropdown,
-.ngl-metabox-flex.is-error .ui.selection.active.dropdown .menu
+.ngl-metabox-flex.is-error .ui.selection.active.dropdown .menu,
+.ngl-settings.ngl-metabox-flex.is-error div.ui.selection.dropdown
 {
 	border-color: #EF0000 !important;
 }
@@ -781,6 +782,30 @@
     align-items: center;
     display: inline-flex;
 	position: relative;
+}
+
+.ngl-field .ui.secondary.button {
+	padding: 0.65em 1.8em;
+    margin: 0;
+    line-height: 1;
+    background-color: #fff;
+	color: #DD3714;
+	border: 2px solid #DD3714;
+    border-radius: 8px;
+    width: auto;
+	font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.ngl-field .ui.secondary.button:hover {
+	border-color: #c72402;
+	color: #c72402;
+}
+
+.ngl-field .ui.secondary.button:focus {
+	border-color: #c72402;
+	color: #c72402;
 }
 
 .ngl-action .ui.primary.button {
@@ -1002,6 +1027,10 @@
 
 .ngl-settings .ngl-metabox-msg {
 	margin: 0;
+}
+
+.ngl-settings h3 {
+	margin: 1em 0 0;
 }
 
 .ngl-settings-save {
@@ -1545,13 +1574,17 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	margin: auto;
 }
 
+.ngl-theme.ngl-mobile .ngl-email-container {
+	margin: 0 10px;
+}
+
 .ngl-theme.ngl-mobile .ngl-email {
-	border-left: 1px solid #aaa;
-	border-right: 1px solid #aaa;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
 }
 
 .ngl-theme.ngl-mobile .ngl-theme-preview {
-	background: #eee;
+
 }
 
 h1.ngl-mobile,
