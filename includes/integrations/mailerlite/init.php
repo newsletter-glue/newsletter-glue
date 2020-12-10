@@ -383,21 +383,8 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	 * Show test email section.
 	 */
 	public function show_test_email( $settings, $defaults, $post ) {
+		$this->test_column( $settings, $defaults, $post );
 		?>
-		<div class="ngl-metabox-flex">
-			<div class="ngl-metabox-header">
-				<?php esc_html_e( 'Send test email to', 'newsletter-glue' ); ?>
-			</div>
-			<div class="ngl-field">
-				<?php
-					newsletterglue_text_field( array(
-						'id' 			=> 'ngl_test_email',
-						'value'			=> isset( $settings->test_email ) ? $settings->test_email : $defaults->test_email,
-					) );
-				?>
-			</div>
-		</div>
-
 		<div class="ngl-metabox-flex no-padding">
 			<div class="ngl-metabox-header">
 			&nbsp;
