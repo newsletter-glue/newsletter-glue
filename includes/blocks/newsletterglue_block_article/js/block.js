@@ -163,13 +163,6 @@
 										label: 'Full',
 									}, 'Full' ),
 									el( Button, {
-										value: '70_30',
-										isPrimary: ( props.attributes.table_ratio === '70_30' ),
-										isSecondary: ( props.attributes.table_ratio !== '70_30' ),
-										onClick: changeTableRatio,
-										label: '70:30'
-									}, '70:30' ),
-									el( Button, {
 										value: '50_50',
 										isPrimary: ( props.attributes.table_ratio === '50_50' ),
 										isSecondary: ( props.attributes.table_ratio !== '50_50' ),
@@ -183,6 +176,13 @@
 										onClick: changeTableRatio,
 										label: '30:70'
 									}, '30:70' ),
+									el( Button, {
+										value: '70_30',
+										isPrimary: ( props.attributes.table_ratio === '70_30' ),
+										isSecondary: ( props.attributes.table_ratio !== '70_30' ),
+										onClick: changeTableRatio,
+										label: '70:30'
+									}, '70:30' ),
 								)
 							),
 

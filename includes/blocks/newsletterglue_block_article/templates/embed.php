@@ -30,42 +30,81 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<?php endif; ?>
 
 	<?php if ( $articles ) : ?>
-		<table class="ngl-articles-table" cellpadding="0" cellspacing="0" border="0">
 		<?php 
 			foreach( $articles as $article ) :
 				$thearticle = get_post( $article );
 				$tags 		= wp_get_post_tags( $thearticle->ID );
+
+				$display_tags	= '';
+				$display_image  = ( has_post_thumbnail( $article ) && $show_image ) ? '<div class="ngl-article-featured"><img src="' . wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></div>' : '';
+
+				if ( $tags && $show_tags ) {
+					$display_tags = '<div class="ngl-article-tags">';
+					foreach( $tags as $tag ) {
+						$display_tags .= '<div class="ngl-article-tag">' . $tag->name . '</div>';
+					}
+					$display_tags .= '</div>';
+				}
+
+				$display_title = '<div class="ngl-article-title"><a href="' . get_permalink( $thearticle->ID ) . '" target="' . $new_window . '" rel="' . $nofollow . '">' . get_the_title( $thearticle ) . '</a></div>';
+				$display_excerpt = '<div class="ngl-article-excerpt">' . wp_trim_words( $thearticle->post_content, 55 ) . '</div>';
+				$display_date    = ( $show_date ) ? '<div class="ngl-article-date">' . date_i18n( $date_format, strtotime( $thearticle->post_date ) ) . '</div>' : '';
+
+				if ( ! $show_image ) {
+					$table_ratio = 'full';
+				}
+
+				if ( $border_size ) {
+					$padding = '20px';
+				} else {
+					$padding = '0px';
+				}
+
+				if ( ! $border_size ) {
+					if ( $background_color != 'transparent' ) {
+						$padding = '20px';
+					} else {
+						$border_radius = 0;
+					}
+				}
 		?>
 
-			<tr>
-				<td>
-					<div class="ngl-article">
-						<?php if ( has_post_thumbnail( $article ) && $show_image ) : ?>
-						<div class="ngl-article-featured">
-							<img src="<?php echo wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ); ?>" />
-						</div>
-						<?php endif; ?>
-						<?php if ( $tags && $show_tags ) : ?>
-						<div class="ngl-article-tags">
-							<?php foreach( $tags as $tag ) : ?>
-							<div class="ngl-article-tag"><?php echo $tag->name; ?></div>
-							<?php endforeach; ?>
-						</div>
-						<?php endif; ?>
-						<div class="ngl-article-title"><a href="<?php echo get_permalink( $thearticle->ID ); ?>"><?php echo get_the_title( $thearticle ); ?></a></div>
-						<div class="ngl-article-excerpt">
-							<?php echo wp_trim_words( $thearticle->post_content, 55 ); ?>
-						</div>
-						<?php if ( $show_date ) : ?>
-						<div class="ngl-article-date">
-							<?php echo date_i18n( $date_format, strtotime( $thearticle->post_date ) ); ?>
-						</div>
-						<?php endif; ?>
-					</div>
-				</td>
-			</tr>
+			<div class="ngl-article" style="background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
+
+				<?php if ( $table_ratio == 'full' ) : ?>
+				<?php
+					echo $display_image;
+					echo $display_tags;
+					echo $display_title;
+					echo $display_excerpt;
+					echo $display_date;
+				?>
+				<?php endif; ?>
+
+				<?php if ( $table_ratio != 'full' ) : ?>
+				<?php
+				if ( $image_position == 'left' ) :
+					echo '<div class="ngl-article-left">' . $display_image . '</div>';
+					echo '<div class="ngl-article-right">';
+						echo $display_tags;
+						echo $display_title;
+						echo $display_excerpt;
+						echo $display_date;
+					echo '</div>';
+				endif;
+				if ( $image_position == 'right' ) :
+					echo '<div class="ngl-article-left">';
+						echo $display_tags;
+						echo $display_title;
+						echo $display_excerpt;
+						echo $display_date;
+					echo '</div>';
+					echo '<div class="ngl-article-right">' . $display_image . '</div>';
+				endif;
+				?>
+				<?php endif; ?>
+			</div>
 
 		<?php endforeach; ?>
-		</table>
 	<?php endif; ?>
 </div>

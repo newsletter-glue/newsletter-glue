@@ -195,12 +195,21 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			}
 		}
 
-		$block_id 		= isset( $attributes[ 'block_id' ] ) ? str_replace( '-', '', $attributes[ 'block_id' ] ) : '';
-		$table_ratio 	= isset( $attributes[ 'table_ratio' ] ) ? $attributes[ 'table_ratio' ] : 'full';
-		$date_format    = isset( $attributes[ 'date_format' ] ) ? $attributes[ 'date_format' ] : $this->get_default_date_format();
-		$show_tags   	= isset( $attributes[ 'show_tags' ] ) ? $attributes[ 'show_tags' ] : '';
-		$show_date   	= isset( $attributes[ 'show_date' ] ) ? $attributes[ 'show_date' ] : '';
-		$show_image   	= isset( $attributes[ 'show_image' ] ) ? $attributes[ 'show_image' ] : '';
+		$block_id 			= isset( $attributes[ 'block_id' ] ) ? str_replace( '-', '', $attributes[ 'block_id' ] ) : '';
+		$table_ratio 		= isset( $attributes[ 'table_ratio' ] ) ? $attributes[ 'table_ratio' ] : 'full';
+		$date_format    	= isset( $attributes[ 'date_format' ] ) ? $attributes[ 'date_format' ] : $this->get_default_date_format();
+		$image_position    	= isset( $attributes[ 'image_position' ] ) ? $attributes[ 'image_position' ] : 'left';
+		$show_tags   		= isset( $attributes[ 'show_tags' ] ) ? $attributes[ 'show_tags' ] : '';
+		$show_date   		= isset( $attributes[ 'show_date' ] ) ? $attributes[ 'show_date' ] : '';
+		$show_image   		= isset( $attributes[ 'show_image' ] ) ? $attributes[ 'show_image' ] : '';
+		$image_radius   	= isset( $attributes[ 'image_radius' ] ) ? $attributes[ 'image_radius' ] : 0;
+		$border_radius   	= isset( $attributes[ 'border_radius' ] ) ? $attributes[ 'border_radius' ] : 0;
+		$border_size   		= isset( $attributes[ 'border_size' ] ) ? $attributes[ 'border_size' ] : '';
+		$border_style   	= isset( $attributes[ 'border_style' ] ) ? $attributes[ 'border_style' ] : 'solid';
+		$border_color   	= isset( $attributes[ 'border_color' ] ) ? $attributes[ 'border_color' ] : 'transparent';
+		$background_color   = isset( $attributes[ 'background_color' ] ) ? $attributes[ 'background_color' ] : 'transparent';
+		$new_window   		= ! empty( $attributes[ 'new_window' ] ) ? '_blank' : '_self';
+		$nofollow   		= ! empty( $attributes[ 'nofollow' ] ) ? 'nofollow' : '';
 
 		update_option( 'ngl_articles_' . $block_id, array( 1598, 1601, 1604 ) );
 		$articles = get_option( 'ngl_articles_' . $block_id );
@@ -276,6 +285,10 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	margin: 0 0 14px;
 }
 
+.ngl-article-featured img {
+	margin-bottom: 0;
+}
+
 .ngl-article-date {
 	margin: 8px 0 0;
 	font-size: 13px;
@@ -333,6 +346,16 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	width: 100%;
 	height: auto;
 }
+
+.ngl-article-left { display: inline-block; width: 49%; vertical-align: top; }
+.ngl-article-right { display: inline-block; width: 48%; vertical-align: top; margin-left: 2%; }
+
+.ngl-articles-30_70 .ngl-article-left { display: inline-block; width: 30%; vertical-align: top; }
+.ngl-articles-30_70 .ngl-article-right { display: inline-block; width: 66%; vertical-align: top; }
+
+.ngl-articles-70_30 .ngl-article-left { display: inline-block; width: 66%; vertical-align: top; }
+.ngl-articles-70_30 .ngl-article-right { display: inline-block; width: 30%; vertical-align: top; }
+
 	<?php
 	}
 

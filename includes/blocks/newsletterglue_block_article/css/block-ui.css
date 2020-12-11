@@ -75,8 +75,16 @@
 	border: none;
 }
 
-/* Full */
 .ngl-articles-full img {
 	width: 100%;
 	height: auto;
 }
+
+.ngl-article-left { display: inline-block; width: 49%; vertical-align: top; }
+.ngl-article-right { display: inline-block; width: 48%; vertical-align: top; margin-left: 2%; }
+
+.ngl-articles-30_70 .ngl-article-left { display: inline-block; width: 30%; vertical-align: top; }
+.ngl-articles-30_70 .ngl-article-right { display: inline-block; width: 66%; vertical-align: top; }
+
+.ngl-articles-70_30 .ngl-article-left { display: inline-block; width: 66%; vertical-align: top; }
+.ngl-articles-70_30 .ngl-article-right { display: inline-block; width: 30%; vertical-align: top; }
