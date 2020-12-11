@@ -71,40 +71,38 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			<div class="ngl-article" style="background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
 
-				<?php if ( $table_ratio == 'full' ) : ?>
 				<?php
-					echo $display_image;
-					echo $display_tags;
-					echo $display_title;
-					echo $display_excerpt;
-					echo $display_date;
+					if ( $table_ratio == 'full' ) :
+						echo $display_image;
+						echo $display_tags;
+						echo $display_title;
+						echo $display_excerpt;
+						echo $display_date;
+					else :
+						if ( $image_position == 'left' ) :
+							echo '<div class="ngl-article-left">' . $display_image . '</div>';
+							echo '<div class="ngl-article-right">';
+								echo $display_tags;
+								echo $display_title;
+								echo $display_excerpt;
+								echo $display_date;
+							echo '</div>';
+						endif;
+						if ( $image_position == 'right' ) :
+							echo '<div class="ngl-article-left">';
+								echo $display_tags;
+								echo $display_title;
+								echo $display_excerpt;
+								echo $display_date;
+							echo '</div>';
+							echo '<div class="ngl-article-right">' . $display_image . '</div>';
+						endif;
+					endif;
 				?>
-				<?php endif; ?>
 
-				<?php if ( $table_ratio != 'full' ) : ?>
-				<?php
-				if ( $image_position == 'left' ) :
-					echo '<div class="ngl-article-left">' . $display_image . '</div>';
-					echo '<div class="ngl-article-right">';
-						echo $display_tags;
-						echo $display_title;
-						echo $display_excerpt;
-						echo $display_date;
-					echo '</div>';
-				endif;
-				if ( $image_position == 'right' ) :
-					echo '<div class="ngl-article-left">';
-						echo $display_tags;
-						echo $display_title;
-						echo $display_excerpt;
-						echo $display_date;
-					echo '</div>';
-					echo '<div class="ngl-article-right">' . $display_image . '</div>';
-				endif;
-				?>
-				<?php endif; ?>
 			</div>
 
 		<?php endforeach; ?>
 	<?php endif; ?>
+
 </div>
