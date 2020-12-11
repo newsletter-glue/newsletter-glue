@@ -249,7 +249,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		?>
 .ngl-articles {
 	min-height: 100px;
-	padding: 0;
+	margin: 20px 0;
 }
 
 .ngl-article img {
@@ -300,17 +300,15 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 .ngl-article-tags {
 	display: block;
-	margin: 0 0 14px;
+	margin: 0 0 6px;
 }
 
 .ngl-article-tag {
 	display: inline-block;
-    padding: 2px 10px;
-    color: #fff;
-    background: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?>;
-    margin: 0 5px 0 0;
+    margin: 0 10px 0 0;
     border-radius: 999px;
 	font-size: 13px;
+	opacity: 0.8;
 }
 
 .ngl-articles-add {
