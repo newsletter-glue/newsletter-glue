@@ -765,6 +765,10 @@ p.ngl-credits a {
 	width: auto;
 }
 
+.has-text-align-center { text-align: center !important; }
+.has-text-align-left { text-align: left !important; }
+.has-text-align-right { text-align: right !important; }
+
 @media only screen and (max-width:596px) {
 
 	#wrapper {

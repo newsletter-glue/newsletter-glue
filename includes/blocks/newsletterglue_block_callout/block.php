@@ -175,6 +175,10 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 			margin: 0 0 25px !important;
 			color: inherit !important;
 		}
+
+		.wp-block-newsletterglue-callout * {
+			text-align: inherit;
+		}
 		<?php
 	}
 

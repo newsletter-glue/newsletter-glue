@@ -99,19 +99,14 @@
 				'type' : 'string',
 				'default' : 'full',
 			},
-			thepostdata: {
-				'type' : 'array',
-				'default' : [],
+			block_id: {
+				'type' : 'string',
 			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
 
-			var dateFormats = block.date_formats;
-			var postdata = [];
-
-			function htmlDecode(input) {
-				var doc = new DOMParser().parseFromString(input, "text/html");
-				return doc.documentElement.textContent.replace( '[…]', '...' );
+			if ( ! props.attributes.block_id ) {
+				props.setAttributes( { block_id: props.clientId } );
 			}
 
 			function changeImagePosition( ev ) {
@@ -124,93 +119,22 @@
 				props.setAttributes( { table_ratio } );
 			}
 
+			var dateFormats = block.date_formats;
 			var placementclass = props.attributes.table_ratio === 'full' || ! props.attributes.show_image ? 'ngl-gutenberg-greyed' : '';
 
-			var articlesRatio = props.attributes.table_ratio ? props.attributes.table_ratio : 'full';
-			var articlesClass = 'ngl-articles ngl-articles-' + articlesRatio;
+			return [
 
-			var articlesStyles = {
-				backgroundColor: props.attributes.background_color ? props.attributes.background_color : 'transparent'
-			};
-
-			var articles = [];
-
-			if ( props.attributes.thepostdata.length == 0 ) {
-				var items = wp.data.select( 'core' ).getEntityRecords( 'postType', 'post', { _embed: true, per_page: -1, include: [ 1598, 1601, 1604 ] } );
-				if ( items ) {
-					items.forEach( post => {
-						var excerpt = post.excerpt.rendered;
-						if ( post._embedded["wp:featuredmedia"] ) {
-							var thumbnail = post._embedded["wp:featuredmedia"][0]["source_url"];
-						} else {
-							var thumbnail = '';
-						}
-						postdata.push( { thumbnail: thumbnail, permalink: post.link, title: post.title.rendered, excerpt: excerpt, date: post.date } );
-					} );
-					props.setAttributes( { thepostdata: postdata } );
-				}
-			} else {
-				postdata = props.attributes.thepostdata;
-			}
-
-			if ( postdata.length ) {
-				postdata.forEach( post => {
-
-					var showImage = '';
-					if ( props.attributes.show_image ) {
-						showImage = el( 'div', { className: 'ngl-article-featured' },
-							el( 'img', { src: post.thumbnail, style: { borderRadius: props.attributes.image_radius } } )
-						);
-					}
-
-					var showDate = '';
-					if ( props.attributes.show_date ) {
-						showDate = el( 'div', { className: 'ngl-article-date' }, 
-							post.date
-						);
-					}
-
-					var articleStyles = {
-						borderWidth: props.attributes.border_size,
-						borderStyle: props.attributes.border_style,
-						borderColor: props.attributes.border_color ? props.attributes.border_color : 'transparent',
-						borderRadius: props.attributes.border_radius,
-						padding: props.attributes.border_size > 0 ? '20px' : '0'
-					};
-
-					var linkRel = props.attributes.nofollow ? 'nofollow' : 'follow';
-					var linkTarget = props.attributes.new_window ? '_blank' : '_self';
-
-					var thisel = el( 'div', { className: 'ngl-article', style: articleStyles },
-						showImage,
-						el( 'div', { className: 'ngl-article-title' },
-							el( 'a', {
-								href: post.permalink,
-								rel: linkRel,
-								target: linkTarget
-							},
-								post.title
-							)
-						),
-						el( 'div', { className: 'ngl-article-excerpt' },
-							htmlDecode( post.excerpt )
-						),
-						showDate
-					);
-					articles.push( thisel );
-				} );
-			}
-
-			return (
-
-				el( Fragment, { },
+					el( ServerSideRender, {
+						block: 'newsletterglue/article',
+						attributes: props.attributes,
+					} ),
 
 					// This is block settings in sidebar.
 					el( InspectorControls, {},
-
+					
 						el( PanelBody, { title: 'Container options', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Open links in new window',
 									onChange: ( value ) => { props.setAttributes( { new_window: value } ); },
@@ -218,7 +142,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Nofollow links',
 									onChange: ( value ) => { props.setAttributes( { nofollow: value } ); },
@@ -226,65 +150,61 @@
 								} )
 							),
 
-							el( PanelRow, {},
-								el( BaseControl, {
-										label: 'Table width ratio',
-										className: 'ngl-gutenberg-base--fullwidth',
-									},
-									el( ButtonGroup, { className: 'ngl-gutenberg--fullwidth' },
-										el( Button, {
-											value: 'full',
-											isPrimary: ( props.attributes.table_ratio === 'full' ),
-											isSecondary: ( props.attributes.table_ratio !== 'full' ),
-											onClick: changeTableRatio,
-											label: 'Full',
-										}, 'Full' ),
-										el( Button, {
-											value: '70_30',
-											isPrimary: ( props.attributes.table_ratio === '70_30' ),
-											isSecondary: ( props.attributes.table_ratio !== '70_30' ),
-											onClick: changeTableRatio,
-											label: '70:30'
-										}, '70:30' ),
-										el( Button, {
-											value: '50_50',
-											isPrimary: ( props.attributes.table_ratio === '50_50' ),
-											isSecondary: ( props.attributes.table_ratio !== '50_50' ),
-											onClick: changeTableRatio,
-											label: '50:50'
-										}, '50:50' ),
-										el( Button, {
-											value: '30_70',
-											isPrimary: ( props.attributes.table_ratio === '30_70' ),
-											isSecondary: ( props.attributes.table_ratio !== '30_70' ),
-											onClick: changeTableRatio,
-											label: '30:70'
-										}, '30:70' ),
-									)
+							el( BaseControl, {
+									label: 'Table width ratio',
+									className: 'ngl-gutenberg-base--fullwidth',
+								},
+								el( ButtonGroup, { className: 'ngl-gutenberg--fullwidth' },
+									el( Button, {
+										value: 'full',
+										isPrimary: ( props.attributes.table_ratio === 'full' ),
+										isSecondary: ( props.attributes.table_ratio !== 'full' ),
+										onClick: changeTableRatio,
+										label: 'Full',
+									}, 'Full' ),
+									el( Button, {
+										value: '70_30',
+										isPrimary: ( props.attributes.table_ratio === '70_30' ),
+										isSecondary: ( props.attributes.table_ratio !== '70_30' ),
+										onClick: changeTableRatio,
+										label: '70:30'
+									}, '70:30' ),
+									el( Button, {
+										value: '50_50',
+										isPrimary: ( props.attributes.table_ratio === '50_50' ),
+										isSecondary: ( props.attributes.table_ratio !== '50_50' ),
+										onClick: changeTableRatio,
+										label: '50:50'
+									}, '50:50' ),
+									el( Button, {
+										value: '30_70',
+										isPrimary: ( props.attributes.table_ratio === '30_70' ),
+										isSecondary: ( props.attributes.table_ratio !== '30_70' ),
+										onClick: changeTableRatio,
+										label: '30:70'
+									}, '30:70' ),
 								)
 							),
 
-							el( PanelRow, {},
-								el( BaseControl, {
-										label: 'Image placement',
-										className: 'ngl-gutenberg-base--fullwidth' + ' ' + placementclass,
-									},
-									el( ButtonGroup, { className: 'ngl-gutenberg--fullwidth' },
-										el( Button, {
-											value: 'left',
-											isPrimary: ( props.attributes.image_position === 'left' ),
-											isSecondary: ( props.attributes.image_position !== 'left' ),
-											onClick: changeImagePosition,
-											label: 'Left',
-										}, 'Left' ),
-										el( Button, {
-											value: 'right',
-											isPrimary: ( props.attributes.image_position === 'right' ),
-											isSecondary: ( props.attributes.image_position !== 'right' ),
-											onClick: changeImagePosition,
-											label: 'Right'
-										}, 'Right' ),
-									)
+							el( BaseControl, {
+									label: 'Image placement',
+									className: 'ngl-gutenberg-base--fullwidth' + ' ' + placementclass,
+								},
+								el( ButtonGroup, { className: 'ngl-gutenberg--fullwidth' },
+									el( Button, {
+										value: 'left',
+										isPrimary: ( props.attributes.image_position === 'left' ),
+										isSecondary: ( props.attributes.image_position !== 'left' ),
+										onClick: changeImagePosition,
+										label: 'Left',
+									}, 'Left' ),
+									el( Button, {
+										value: 'right',
+										isPrimary: ( props.attributes.image_position === 'right' ),
+										isSecondary: ( props.attributes.image_position !== 'right' ),
+										onClick: changeImagePosition,
+										label: 'Right'
+									}, 'Right' ),
 								)
 							),
 
@@ -292,7 +212,7 @@
 
 						el( PanelBody, { title: 'Article embed options', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show image',
 									onChange: ( value ) => { props.setAttributes( { show_image: value } ); },
@@ -300,7 +220,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show date',
 									onChange: ( value ) => { props.setAttributes( { show_date: value } ); },
@@ -308,7 +228,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show tag(s)',
 									onChange: ( value ) => { props.setAttributes( { show_tags: value } ); },
@@ -316,7 +236,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( SelectControl, {
 									label: 'Date format',
 									value: props.attributes.date_format,
@@ -325,7 +245,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( RangeControl, {
 									label: 'Image border radius',
 									value: props.attributes.image_radius,
@@ -342,7 +262,7 @@
 
 						el( PanelBody, { title: 'Border options', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( RangeControl, {
 									label: 'Border radius (pixels)',
 									value: props.attributes.border_radius,
@@ -355,7 +275,7 @@
 								} ),
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( RangeControl, {
 									label: 'Border thickness (pixels)',
 									value: props.attributes.border_size,
@@ -368,7 +288,7 @@
 								} ),
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( SelectControl, {
 									label: 'Border style',
 									value: props.attributes.border_style,
@@ -398,14 +318,14 @@
 
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in blog post',
 									onChange: ( value ) => { props.setAttributes( { show_in_blog: value } ); },
 									checked: props.attributes.show_in_blog,
 								} )
 							),
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in email newsletter',
 									onChange: ( value ) => { props.setAttributes( { show_in_email: value } ); },
@@ -413,24 +333,17 @@
 								} )
 							)
 
-						),
+						)
 
-					),
-
-					// Rendering.
-					el( 'div', { className: articlesClass, style: articlesStyles },
-						articles
 					)
 
-				)
-
-			);
+			]
 
 		} ),
 
 		// This is how the block is rendered in frontend.
 		save: function( props, className ) {
-			return null;
+			return null
 		},
 
 	} );

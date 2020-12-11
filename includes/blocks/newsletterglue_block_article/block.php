@@ -74,7 +74,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$defaults[ 'description' ] 	= __( 'Bulk embed articles and customise their layout.', 'newsletter-glue' );
 
 		// Post dates.
-		$formats = array( 'l, j M Y', 'F j, Y', 'Y-m-d', 'm/d/Y', 'd/m/Y' );
+		$formats = $this->get_date_formats();
 		$date_formats = array();
 		foreach( $formats as $format ) {
 			$date_formats[] = array( 'value' => $format, 'label' => date( $format, current_time( 'timestamp' ) ) );
@@ -90,6 +90,72 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'editor_script'   => $this->asset_id,
 			'style'           => $this->asset_id . '-style',
 			'render_callback' => array( $this, 'render_block' ),
+			'attributes'	  => array(
+				'show_in_blog' => array(
+					'type' 		=> 'boolean',
+					'default' 	=> $defaults[ 'show_in_blog' ],
+				),
+				'show_in_email' => array(
+					'type' 		=> 'boolean',
+					'default' 	=> $defaults[ 'show_in_email' ],
+				),
+				'block_id'		=> array(
+					'type'		=> 'string',
+				),
+				'border_color'	=> array(
+					'type'		=> 'string',
+				),
+				'background_color'	=> array(
+					'type'		=> 'string',
+				),
+				'border_radius'	=> array(
+					'type'		=> 'number',
+					'default'	=> 0,
+				),
+				'border_size'	=> array(
+					'type'		=> 'number',
+					'default'	=> 0,
+				),
+				'border_style'	=> array(
+					'type'		=> 'string',
+					'default'	=> 'solid',
+				),
+				'show_image'	=> array(
+					'type'		=> 'boolean',
+					'default'	=> true,
+				),
+				'show_date'		=> array(
+					'type'		=> 'boolean',
+					'default'	=> true,
+				),
+				'show_tags'		=> array(
+					'type'		=> 'boolean',
+					'default'	=> true,
+				),
+				'image_radius'	=> array(
+					'type'		=> 'number',
+					'default'	=> 0,
+				),
+				'date_format'	=> array(
+					'type'		=> 'string',
+				),
+				'new_window'	=> array(
+					'type'		=> 'boolean',
+					'default'	=> false,
+				),
+				'nofollow'		=> array(
+					'type'		=> 'boolean',
+					'default'	=> false,
+				),
+				'image_position'	=> array(
+					'type'		=> 'string',
+					'default'	=> 'left',
+				),
+				'table_ratio'	=> array(
+					'type'		=> 'string',
+					'default'	=> 'full',
+				),
+			),
 		) );
 
 	}
@@ -98,6 +164,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	 * Render the block.
 	 */
 	public function render_block( $attributes, $content ) {
+
+		ob_start();
 
 		$defaults = get_option( $this->id );
 
@@ -113,15 +181,33 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		// Hidden from blog.
 		if ( ! defined( 'NGL_IN_EMAIL' ) && ! $show_in_blog ) {
-			$content = '';
+			if ( ! defined( 'REST_REQUEST' ) ) {
+				echo '';
+				return ob_get_clean();
+			}
 		}
 
 		// Hidden from email.
 		if ( defined( 'NGL_IN_EMAIL' ) && ! $show_in_email ) {
-			$content = '';
+			if ( ! defined( 'REST_REQUEST' ) ) {
+				echo '';
+				return ob_get_clean();
+			}
 		}
 
-		return $content;
+		$block_id 		= isset( $attributes[ 'block_id' ] ) ? str_replace( '-', '', $attributes[ 'block_id' ] ) : '';
+		$table_ratio 	= isset( $attributes[ 'table_ratio' ] ) ? $attributes[ 'table_ratio' ] : 'full';
+		$date_format    = isset( $attributes[ 'date_format' ] ) ? $attributes[ 'date_format' ] : $this->get_default_date_format();
+		$show_tags   	= isset( $attributes[ 'show_tags' ] ) ? $attributes[ 'show_tags' ] : '';
+		$show_date   	= isset( $attributes[ 'show_date' ] ) ? $attributes[ 'show_date' ] : '';
+		$show_image   	= isset( $attributes[ 'show_image' ] ) ? $attributes[ 'show_image' ] : '';
+
+		update_option( 'ngl_articles_' . $block_id, array( 1598, 1601, 1604 ) );
+		$articles = get_option( 'ngl_articles_' . $block_id );
+
+		include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $this->id . '/templates/embed.php';
+
+		return ob_get_clean();
 
 	}
 
@@ -160,7 +246,112 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	 * CSS.
 	 */
 	public function email_css() {
+		?>
+.ngl-articles {
+	min-height: 100px;
+	padding: 0;
+}
 
+.ngl-article img {
+	display: block;
+	overflow: hidden;
+}
+
+.ngl-article {
+	font-size: 14px;
+	margin: 0 0 30px;
+	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
+}
+
+.ngl-article-title {
+	margin: 0 0 4px;
+}
+
+.ngl-article-title a {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.ngl-article-featured {
+	margin: 0 0 14px;
+}
+
+.ngl-article-date {
+	margin: 8px 0 0;
+	font-size: 13px;
+	opacity: 0.7;
+}
+
+.ngl-articles .components-placeholder.components-placeholder {
+	min-height: 100px;
+}
+
+.ngl-articles input[type=text] {
+	padding: 6px 8px;
+    box-shadow: 0 0 0 transparent;
+    transition: box-shadow 0.1s linear;
+    border-radius: 2px;
+    border: 1px solid #757575;
+    margin: 0 8px 0 0;
+    flex: 1 1 auto;
+	font-size: 13px;
+    line-height: normal;
+}
+
+.ngl-article-tags {
+	display: block;
+	margin: 0 0 14px;
+}
+
+.ngl-article-tag {
+	display: inline-block;
+    padding: 2px 10px;
+    color: #fff;
+    background: <?php echo newsletterglue_get_theme_option( 'a_colour' ); ?>;
+    margin: 0 5px 0 0;
+    border-radius: 999px;
+	font-size: 13px;
+}
+
+.ngl-articles-add {
+	width: 100%;
+}
+
+#template_body td table.ngl-articles-table {
+	border: none;
+}
+
+#template_body td table.ngl-articles-table th,
+#template_body td table.ngl-articles-table td {
+	border: none;
+	padding: 0;
+}
+
+.ngl-articles table {
+	border: none;
+}
+
+.ngl-articles-full img {
+	width: 100%;
+	height: auto;
+}
+	<?php
+	}
+
+	/**
+	 * Get date formats.
+	 */
+	public function get_date_formats() {
+		return array( 'd M Y', 'l, j M Y', 'F j, Y', 'Y-m-d', 'm/d/Y', 'd/m/Y' );
+	}
+
+	/**
+	 * Get default date format.
+	 */
+	public function get_default_date_format() {
+		$formats = $this->get_date_formats();
+
+		return $formats[ 0 ];
 	}
 
 }
