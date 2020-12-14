@@ -5,7 +5,7 @@ Contributors: newsletterglue, lesleysim, ahmedfouade
 Donate link: https://paypal.me/newsletterglue
 Tags: newsletter, email, mailchimp, mailerlite, sendinblue
 Requires at least: 5.3
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 7.0
 Stable Tag: 1.1.7
 License: GPLv2 or later
