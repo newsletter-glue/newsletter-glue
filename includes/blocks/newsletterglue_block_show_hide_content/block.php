@@ -75,7 +75,6 @@ class NGL_Block_Show_Hide_Content extends NGL_Abstract_Block {
 		wp_register_script( $this->asset_id, $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-editor' ), time() );
 		wp_localize_script( $this->asset_id, $this->id, $defaults );
 
-		wp_register_style( $this->asset_id, $css_dir . 'block' . $suffix . '.css', array(), time() );
 		wp_register_style( $this->asset_id . '-style', $css_dir . 'block-ui' . $suffix . '.css', array(), time() );
 
 		register_block_type( 'newsletterglue/group', array(
@@ -88,8 +87,7 @@ class NGL_Block_Show_Hide_Content extends NGL_Abstract_Block {
 				),
 			),
 			'editor_script' 	=> $this->asset_id,
-			'editor_style'  	=> $this->asset_id,
-			'style'         	=> $this->asset_id . '-style',
+			'editor_style'      => $this->asset_id . '-style',
 			'render_callback'	=> array( $this, 'render_block' ),
 		) );
 

@@ -77,7 +77,7 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 
 		register_block_type( 'newsletterglue/callout', array(
 			'editor_script'   => $this->asset_id,
-			'style'           => $this->asset_id . '-style',
+			'editor_style'    => $this->asset_id . '-style',
 			'render_callback' => array( $this, 'render_block' ),
 		) );
 

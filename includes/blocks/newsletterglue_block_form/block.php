@@ -87,7 +87,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 
 		register_block_type( 'newsletterglue/form', array(
 			'editor_script'   => $this->asset_id,
-			'style'           => $this->asset_id . '-style',
+			'editor_style'    => $this->asset_id . '-style',
 			'render_callback' => array( $this, 'render_block' ),
 		) );
 
