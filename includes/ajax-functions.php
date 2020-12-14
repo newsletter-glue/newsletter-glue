@@ -437,13 +437,19 @@ function newsletterglue_ajax_save_field() {
 
 	} else {
 
+		if ( ! in_array( $id, array( 'from_name' ) ) && empty( $value ) ) {
+			$options[ $app ][ $id ] = '';
+		}
+
 		if ( trim( $value ) ) {
 
 			$options[ $app ][ $id ] = $value;
 
 		} else {
 
-			$result[ 'failed' ] = __( 'This cannot be empty', 'newsletter-glue' );
+			if ( in_array( $id, array( 'from_name' ) ) ) {
+				$result[ 'failed' ] = __( 'This cannot be empty', 'newsletter-glue' );
+			}
 
 		}
 

@@ -167,7 +167,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	public function get_audiences() {
 		$audiences = array();
 
-		$data = $this->api->get( 'lists' );
+		$data = $this->api->get( 'lists', array( 'count' => 1000 ) );
 
 		if ( ! empty( $data[ 'lists' ] ) ) {
 			foreach( $data[ 'lists' ] as $key => $array ) {

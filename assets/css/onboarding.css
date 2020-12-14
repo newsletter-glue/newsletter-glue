@@ -332,20 +332,7 @@
 
 	.ngl-boarding .ngl-metabox-flex {
 		padding: 20px 50px 20px 60px;
-	}
-
-	.ngl-boarding .ngl-metabox-header {
-		color: #666;
-		font-size: 13px;
-		font-weight: bold;
-		width: 50px;
-		min-width: 50px;
-		margin: 0 15px 0 0;
-	}
-
-	.ngl-boarding div.ui.selection.dropdown {
-		min-width: auto !important;
-		width: 100% !important;
+		justify-content: center;
 	}
 
 }
@@ -396,20 +383,7 @@
 
 	.ngl-boarding .ngl-metabox-flex {
 		padding: 20px 50px 20px 60px;
-	}
-
-	.ngl-boarding .ngl-metabox-header {
-		color: #666;
-		font-size: 13px;
-		font-weight: bold;
-		width: 50px;
-		min-width: 50px;
-		margin: 0 15px 0 0;
-	}
-
-	.ngl-boarding div.ui.selection.dropdown {
-		min-width: auto !important;
-		width: 100% !important;
+		justify-content: center;
 	}
 
 }

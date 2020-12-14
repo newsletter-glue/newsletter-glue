@@ -130,7 +130,7 @@
 		if ( app === 'campaignmonitor' ) {
 			var lists = $( '#ngl_lists' ).parent().dropdown( 'get value' );
 			var segments = $( '#ngl_segments' ).parent().dropdown( 'get value' );
-			if ( lists.length == 0 && segments.length == 0 ) {
+			if ( ( ! lists || lists.length == 0 ) && ( ! segments || segments.length == 0 ) ) {
 				ready = false;
 				$( '#ngl_lists, #ngl_segments' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
 			} else {
@@ -206,11 +206,11 @@
 	$( document ).on( 'change', '.ngl-modal[data-app=campaignmonitor] #ngl_lists', function() {
 		var val = $( this ).val();
 		var continuethis = false;
-		if ( val ) {
+		if ( val && val.length ) {
 			continuethis = true;
 		} else {
 			var next_val = $( '.ngl-modal[data-app=campaignmonitor] #ngl_segments' ).parents( '.ui' ).dropdown( 'get value' );
-			if ( ! next_val ) {
+			if ( ! next_val || next_val.length == 0 ) {
 				continuethis = false
 			}
 		}
@@ -229,11 +229,11 @@
 	$( document ).on( 'change', '.ngl-modal[data-app=campaignmonitor] #ngl_segments', function() {
 		var val = $( this ).val();
 		var continuethis = false;
-		if ( val ) {
+		if ( val && val.length ) {
 			continuethis = true;
 		} else {
 			var next_val = $( '.ngl-modal[data-app=campaignmonitor] #ngl_lists' ).parents( '.ui' ).dropdown( 'get value' );
-			if ( ! next_val ) {
+			if ( ! next_val || next_val.length == 0 ) {
 				continuethis = false
 			}
 		}
@@ -780,7 +780,7 @@
 				value = 0;
 			}
 		}
-		
+
 		value = encodeURIComponent( value );
 
 		var data = 'action=newsletterglue_ajax_save_field&security=' + newsletterglue_params.ajaxnonce + '&id=' + id + '&value=' + value;
@@ -841,7 +841,7 @@
 				if ( modal.length ) {
 					var selectedLists = modal.find( '#ngl_lists' ).parents( '.ui' ).dropdown( 'get value' );
 					var selectedSegments = modal.find( '#ngl_segments' ).parents( '.ui' ).dropdown( 'get value' );
-					if ( ! selectedLists && ! selectedSegments ) {
+					if ( ( ! selectedLists || selectedLists.length == 0 ) && ( ! selectedSegments || selectedSegments.length == 0 ) ) {
 						modal.find( '#ngl_lists' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
 						modal.find( '#ngl_segments' ).parents( '.ngl-metabox-flex' ).addClass( 'is-error' );
 					} else {
