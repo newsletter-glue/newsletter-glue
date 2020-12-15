@@ -6,12 +6,15 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+$editable = false;
+
 ?>
 
 <div class="ngl-articles ngl-articles-<?php echo $table_ratio; ?> <?php echo ( is_admin() || defined( 'REST_REQUEST' ) && REST_REQUEST ) ? 'ngl-articles-admin' : 'ngl-articles-frontend'; ?>" data-date_format="<?php echo esc_attr( $date_format ); ?>" data-block-id="<?php echo esc_attr( $block_id ); ?>">
 
 	<?php if ( is_admin() || defined( 'REST_REQUEST' ) && REST_REQUEST ) : ?>
 	<?php if ( ! defined( 'NGL_IN_EMAIL' ) ) : ?>
+	<?php $editable = 'contenteditable="true"'; ?>
 	<div class="components-placeholder wp-block-embed is-large">
 		<div class="ngl-articles-add">
 			<div class="components-placeholder__label">
@@ -44,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><img src="{featured_image}" style="border-radius: ' . absint( $image_radius ) . 'px;" /></div>' : '';
 		$display_tags   	= ( $show_tags ) ? '{tags}' : '';
 		$display_title  	= '<div class="ngl-article-title"><a href="{permalink}" style="' . $link_color . '">{title}</a></div>';
-		$display_excerpt 	= '<div class="ngl-article-excerpt">{excerpt}</div>';
+		$display_excerpt 	= '<div class="ngl-article-excerpt" ' . $editable . '>{excerpt}</div>';
 		$display_date       = ( $show_date ) ? '<div class="ngl-article-date">{date}</div>' : '';
 	?>
 
@@ -104,7 +107,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
 
 				$display_title = '<div class="ngl-article-title"><a href="' . get_permalink( $thearticle->ID ) . '" target="' . $new_window . '" rel="' . $nofollow . '" style="' . $link_color . '">' . get_the_title( $thearticle ) . '</a></div>';
-				$display_excerpt = '<div class="ngl-article-excerpt">' . wp_trim_words( $thecontent, 30 ) . '</div>';
+				
+				$the_excerpt = ! empty( get_option( 'newsletterglue_excerpt_' . $thearticle->ID ) ) ? get_option( 'newsletterglue_excerpt_' . $thearticle->ID ) : wp_trim_words( $thecontent, $this->excerpt_words() );
+				$display_excerpt = '<div class="ngl-article-excerpt" ' . $editable . '>' . $the_excerpt . '</div>';
 				$display_date    = ( $show_date ) ? '<div class="ngl-article-date">' . date_i18n( $date_format, strtotime( $thearticle->post_date ) ) . '</div>' : '';
 
 				if ( ! $show_image ) {

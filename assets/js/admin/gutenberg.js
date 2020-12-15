@@ -60,7 +60,7 @@
 					cloned.html( cloned.html().replace( '{permalink}', response.permalink ) );
 					cloned.html( cloned.html().replace( '{date}', response.date ) );
 					cloned.html( cloned.html().replace( '{featured_image}', response.featured_image ) );
-					cloned.html( cloned.html().replace( '{post_id}', response.post_id ) );
+					cloned.attr( 'data-post-id', response.post_id );
 					cloned.appendTo( el ).removeClass( 'ngl-article-placeholder' );
 				}
 			}
@@ -103,6 +103,33 @@
 		ngl_add_article( $( this ).parents( '.ngl-articles' ) );
 
 		return false;
+
+	} );
+
+	// Change excerpt dynamically.
+	$( document ).on( 'focus', '.ngl-article-excerpt[contenteditable]', function() {
+		const $this = $(this);
+		$this.data('before', $this.html());
+	}).on('blur keyup paste input', '.ngl-article-excerpt[contenteditable]', function() {
+		const $this = $(this);
+		if ($this.data('before') !== $this.html()) {
+			$this.data('before', $this.html());
+			$this.trigger('change');
+		}
+	});
+
+	// When excerpt is changed.
+	$( document ).on( 'change', '.ngl-article-excerpt[contenteditable]', function() {
+
+		var post_id = $( this ).parents( '.ngl-article' ).attr( 'data-post-id' );
+		var excerpt = $( this ).html();
+		var data = 'action=newsletterglue_ajax_update_excerpt&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id + '&excerpt=' + encodeURIComponent( excerpt );
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data
+		} );
 
 	} );
 
