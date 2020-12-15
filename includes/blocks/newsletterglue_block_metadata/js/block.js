@@ -249,42 +249,42 @@
 					el( InspectorControls, {},
 
 						el( PanelBody, { title: 'Show/hide elements', initialOpen: true },
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Author details',
 									onChange: ( value ) => { props.setAttributes( { show_author: value } ); },
 									checked: props.attributes.show_author,
 								} )
 							),
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Issue number',
 									onChange: ( value ) => { props.setAttributes( { show_issue: value } ); },
 									checked: props.attributes.show_issue,
 								} )
 							),
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Date',
 									onChange: ( value ) => { props.setAttributes( { show_date: value } ); },
 									checked: props.attributes.show_date,
 								} )
 							),
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Location',
 									onChange: ( value ) => { props.setAttributes( { show_location: value } ); },
 									checked: props.attributes.show_location,
 								} )
 							),
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Reading time',
 									onChange: ( value ) => { props.setAttributes( { show_readtime: value } ); },
 									checked: props.attributes.show_readtime,
 								} )
 							),
-							el( PanelRow, { className: 'ngl-gutenberg-help' },
+							el( BaseControl, { className: 'ngl-gutenberg-help' },
 								el( ToggleControl, {
 									label: 'Read online',
 									onChange: ( value ) => { props.setAttributes( { show_readonline: value } ); },
@@ -296,7 +296,7 @@
 
 						el( PanelBody, { title: 'General options', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( MediaUpload, {
 									onSelect: onSelectImage,
 									type: 'image',
@@ -325,7 +325,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( SelectControl, {
 									label: 'Date format',
 									value: props.attributes.date_format,
@@ -334,7 +334,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( SelectControl, {
 									label: 'Divider type',
 									value: props.attributes.divider_style,
@@ -359,14 +359,14 @@
 	
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in blog post',
 									onChange: ( value ) => { props.setAttributes( { show_in_blog: value } ); },
 									checked: props.attributes.show_in_blog
 								} )
 							),
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in email newsletter',
 									onChange: ( value ) => { props.setAttributes( { show_in_email: value } ); },

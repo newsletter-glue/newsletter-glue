@@ -295,7 +295,7 @@
 					onChange: ( value ) => { props.setAttributes( { list_id: value } ); },
 					options: newsletterglue_meta.the_lists,
 				} );
-				DoubleOptin = el( PanelRow, { className: 'ngl-gutenberg-help' },
+				DoubleOptin = el( BaseControl, { className: 'ngl-gutenberg-help' },
 					el( ToggleControl, {
 						label: 'Double opt-in',
 						onChange: ( value ) => { props.setAttributes( { double_optin: value } ); },
@@ -318,7 +318,7 @@
 			}
 
 			if ( app && newsletterglue_meta.extra_lists && props.attributes.add_checkbox ) {
-				ExtraList = el( PanelRow, {},
+				ExtraList = el( BaseControl, {},
 						el( SelectControl, {
 						label: 'Select list for checkbox (optional)',
 						value: props.attributes.extra_list_id,
@@ -374,14 +374,14 @@
 			var showESP = '';
 			if ( app ) {
 				showESP = [
-					el( PanelRow, {},
+					el( BaseControl, {},
 						SelectList
 					),
 					ExtraList,
 					DoubleOptin
 				];
 			} else {
-				showESP = el( PanelRow, {}, el( 'a', { href: block.connect_url }, block.connect_esp ) );
+				showESP = el( BaseControl, {}, el( 'a', { href: block.connect_url }, block.connect_esp ) );
 			}
 
 			return (
@@ -393,31 +393,29 @@
 
 						el( PanelBody, { title: 'Form options', initialOpen: true },
 
-							el( PanelRow, {},
-								el( BaseControl, {
-										label: 'Form style',
-										className: 'ngl-gutenberg-base--fullwidth',
-									},
-									el( ButtonGroup, { className: 'ngl-gutenberg--fullwidth' },
-										el( Button, {
-											value: 'portrait',
-											isPrimary: ( props.attributes.form_style === 'portrait' ),
-											isSecondary: ( props.attributes.form_style !== 'portrait' ),
-											onClick: changeFormStyle,
-											label: 'Portrait',
-										}, 'Portrait' ),
-										el( Button, {
-											value: 'landscape',
-											isPrimary: ( props.attributes.form_style === 'landscape' ),
-											isSecondary: ( props.attributes.form_style !== 'landscape' ),
-											onClick: changeFormStyle,
-											label: 'Landscape'
-										}, 'Landscape' ),
-									)
+							el( BaseControl, {
+								label: 'Form style',
+								className: 'ngl-gutenberg-base--fullwidth',
+							},
+								el( ButtonGroup, { className: 'ngl-gutenberg--fullwidth' },
+									el( Button, {
+										value: 'portrait',
+										isPrimary: ( props.attributes.form_style === 'portrait' ),
+										isSecondary: ( props.attributes.form_style !== 'portrait' ),
+										onClick: changeFormStyle,
+										label: 'Portrait',
+									}, 'Portrait' ),
+									el( Button, {
+										value: 'landscape',
+										isPrimary: ( props.attributes.form_style === 'landscape' ),
+										isSecondary: ( props.attributes.form_style !== 'landscape' ),
+										onClick: changeFormStyle,
+										label: 'Landscape'
+									}, 'Landscape' ),
 								)
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( RangeControl, {
 									label: 'Button and field radius (pixels)',
 									value: props.attributes.form_radius,
@@ -430,7 +428,7 @@
 								} ),
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( RangeControl, {
 									label: 'Padding (pixels)',
 									value: props.attributes.spacing_size,
@@ -443,7 +441,7 @@
 								} ),
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Add form heading',
 									onChange: ( value ) => { props.setAttributes( { add_heading: value } ); },
@@ -451,7 +449,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Add form description',
 									onChange: ( value ) => { props.setAttributes( { add_description: value } ); },
@@ -459,7 +457,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Add name field',
 									onChange: ( value ) => { props.setAttributes( { add_name: value } ); },
@@ -467,7 +465,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Add text beneath button',
 									onChange: ( value ) => { props.setAttributes( { add_text: value } ); },
@@ -475,7 +473,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Add checkbox',
 									onChange: ( value ) => { props.setAttributes( { add_checkbox: value } ); },
@@ -483,7 +481,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Edit success message',
 									onChange: ( value ) => { props.setAttributes( { toggle_success: value } ); },
@@ -521,14 +519,14 @@
 
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in blog post',
 									onChange: ( value ) => { props.setAttributes( { show_in_blog: value } ); },
 									checked: props.attributes.show_in_blog,
 								} )
 							),
-							el( PanelRow, { className: 'ngl-gutenberg-help' },
+							el( BaseControl, { className: 'ngl-gutenberg-help' },
 								el( ToggleControl, {
 									label: 'Show in email newsletter',
 									onChange: ( value ) => { props.setAttributes( { show_in_email: value } ); },

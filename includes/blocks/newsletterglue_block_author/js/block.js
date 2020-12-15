@@ -140,7 +140,7 @@
 
 						el( PanelBody, { title: 'Profile settings', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( MediaUpload, {
 									onSelect: onSelectImage,
 									type: 'image',
@@ -169,7 +169,7 @@
 								} )
 							),
 
-							el( PanelRow, { className: 'ngl-gutenberg-help' },
+							el( BaseControl, { className: 'ngl-gutenberg-help' },
 								'Ideal image size 100x100 pixels.'
 							)
 
@@ -177,7 +177,7 @@
 
 						el( PanelBody, { title: 'Follow button', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( SelectControl, {
 									label: 'Social media platform',
 									value: props.attributes.social,
@@ -192,7 +192,7 @@
 									],
 								} )
 							),
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( TextControl, {
 									label: 'Username',
 									value: props.attributes.social_user,
@@ -200,7 +200,7 @@
 								} )
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( BaseControl, {
 										label: 'Button style',
 										className: 'ngl-gutenberg-base--fullwidth',
@@ -224,7 +224,7 @@
 								)
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( RangeControl, {
 									label: 'Border radius (pixels)',
 									value: props.attributes.border_radius,
@@ -241,14 +241,14 @@
 
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in blog post',
 									onChange: ( value ) => { props.setAttributes( { show_in_blog: value } ); },
 									checked: props.attributes.show_in_blog,
 								} )
 							),
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in email newsletter',
 									onChange: ( value ) => { props.setAttributes( { show_in_email: value } ); },

@@ -112,7 +112,7 @@
 
 						el( PanelBody, { title: 'Container options', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( RangeControl, {
 									label: 'Padding width (pixels)',
 									value: props.attributes.cta_padding,
@@ -125,7 +125,7 @@
 								} ),
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( RangeControl, {
 									label: 'Margin (pixels)',
 									value: props.attributes.cta_margin,
@@ -142,7 +142,7 @@
 
 						el( PanelBody, { title: 'Border options', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( RangeControl, {
 									label: 'Border radius (pixels)',
 									value: props.attributes.border_radius,
@@ -155,7 +155,7 @@
 								} ),
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( RangeControl, {
 									label: 'Border thickness (pixels)',
 									value: props.attributes.border_size,
@@ -168,7 +168,7 @@
 								} ),
 							),
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( SelectControl, {
 									label: 'Border style',
 									value: props.attributes.border_style,
@@ -203,14 +203,14 @@
 
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in blog post',
 									onChange: ( value ) => { props.setAttributes( { show_in_blog: value } ); },
 									checked: props.attributes.show_in_blog,
 								} )
 							),
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in email newsletter',
 									onChange: ( value ) => { props.setAttributes( { show_in_email: value } ); },

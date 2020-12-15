@@ -71,14 +71,14 @@
 
 						el( PanelBody, { title: 'Show/hide block', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in blog post',
 									onChange: ( value ) => { props.setAttributes( { show_in_blog: value } ); },
 									checked: props.attributes.show_in_blog,
 								} )
 							),
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl, {
 									label: 'Show in email newsletter',
 									onChange: ( value ) => { props.setAttributes( { show_in_email: value } ); },
