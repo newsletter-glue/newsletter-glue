@@ -839,3 +839,20 @@ function newsletterglue_add_custom_css() {
 
 }
 add_action( 'newsletterglue_add_custom_styles', 'newsletterglue_add_custom_css', 100 );
+
+/**
+ * Remove a div by class from html.
+ */
+function newsletterglue_remove_div( $html, $class ) {
+    $dom = new \DOMDocument();
+    $dom->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8') );
+    $finder = new \DOMXPath($dom);
+
+    $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' {$class} ')]");
+
+    foreach ($nodes as $node) {
+        $node->parentNode->removeChild( $node );
+    }
+
+    return $dom->saveHTML();
+}

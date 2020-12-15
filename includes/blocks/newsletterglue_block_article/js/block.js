@@ -52,6 +52,12 @@
 			background_color: {
 				'type' : 'string',
 			},
+			text_color: {
+				'type' : 'string',
+			},
+			link_color: {
+				'type' : 'string',
+			},
 			border_radius: {
 				'type' : 'number',
 				'default' : 0,
@@ -312,6 +318,16 @@
 									value: props.attributes.background_color,
 									label: 'Background color',
 									onChange: ( value ) => props.setAttributes( { background_color: value } ),
+								},
+								{
+									value: props.attributes.text_color,
+									label: 'Text color',
+									onChange: ( value ) => props.setAttributes( { text_color: value } ),
+								},
+								{
+									value: props.attributes.link_color,
+									label: 'Link color',
+									onChange: ( value ) => props.setAttributes( { link_color: value } ),
 								},
 							]
 						} ),

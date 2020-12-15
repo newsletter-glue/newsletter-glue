@@ -92,3 +92,10 @@
 
 .ngl-articles-70_30 .ngl-article-left { display: inline-block; width: 66%; vertical-align: top; }
 .ngl-articles-70_30 .ngl-article-right { display: inline-block; width: 30%; vertical-align: top; }
+
+.ngl-article-error {
+	font-size: 12px;
+	margin: 8px 0 0;
+	display: block;
+	color: #b30b0b;
+}

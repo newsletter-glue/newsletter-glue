@@ -39,18 +39,20 @@
 
 		var data = 'action=newsletterglue_ajax_add_article&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&thepost=' + encodeURIComponent( thepost ) + '&date_format=' + encodeURIComponent( date_format );
 
-		console.log( data );
-
 		$.ajax( {
 			type : 'post',
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			beforeSend: function() {
-
+				el.find( '.ngl-articles-add' ).find( 'span.ngl-article-error' ).remove();
 			},
 			success: function( response ) {
 				console.log( response );
+				if ( response.error ) {
+					el.find( '.ngl-articles-add' ).append( '<span class="ngl-article-error">' + response.error + '</span>' );
+				}
 				if ( response.date ) {
+					el.find( '.ngl_article_s' ).val( '' ).attr( 'data-post', '' );
 					var cloned = preview.clone();
 					cloned.html( cloned.html().replace( '{excerpt}', response.excerpt ) );
 					cloned.html( cloned.html().replace( '{tags}', response.tags ) );
@@ -58,6 +60,7 @@
 					cloned.html( cloned.html().replace( '{permalink}', response.permalink ) );
 					cloned.html( cloned.html().replace( '{date}', response.date ) );
 					cloned.html( cloned.html().replace( '{featured_image}', response.featured_image ) );
+					cloned.html( cloned.html().replace( '{post_id}', response.post_id ) );
 					cloned.appendTo( el ).removeClass( 'ngl-article-placeholder' );
 				}
 			}

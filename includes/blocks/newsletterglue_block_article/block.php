@@ -25,6 +25,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			// Ajax hooks.
 			add_action( 'wp_ajax_newsletterglue_ajax_add_article', array( $this, 'embed_article' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_add_article', array( $this, 'embed_article' ) );
+
+			add_filter( 'newsletterglue_article_embed_content', array( $this, 'remove_div' ), 50, 2 );
 		}
 
 	}
@@ -110,6 +112,12 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 					'type'		=> 'string',
 				),
 				'background_color'	=> array(
+					'type'		=> 'string',
+				),
+				'text_color'	=> array(
+					'type'		=> 'string',
+				),
+				'link_color'	=> array(
 					'type'		=> 'string',
 				),
 				'border_radius'	=> array(
@@ -212,8 +220,18 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$border_style   	= isset( $attributes[ 'border_style' ] ) ? $attributes[ 'border_style' ] : 'solid';
 		$border_color   	= isset( $attributes[ 'border_color' ] ) ? $attributes[ 'border_color' ] : 'transparent';
 		$background_color   = isset( $attributes[ 'background_color' ] ) ? $attributes[ 'background_color' ] : 'transparent';
+		$text_color   		= isset( $attributes[ 'text_color' ] ) ? $attributes[ 'text_color' ] : '';
+		$link_color   		= isset( $attributes[ 'link_color' ] ) ? $attributes[ 'link_color' ] : '';
 		$new_window   		= ! empty( $attributes[ 'new_window' ] ) ? '_blank' : '_self';
 		$nofollow   		= ! empty( $attributes[ 'nofollow' ] ) ? 'nofollow' : '';
+
+		if ( $text_color ) {
+			$text_color = "color: $text_color; ";
+		}
+
+		if ( $link_color ) {
+			$link_color = "color: $link_color !important; ";
+		}
 
 		$articles = get_option( 'ngl_articles_' . $block_id );
 
@@ -366,7 +384,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	 * Get date formats.
 	 */
 	public function get_date_formats() {
-		return array( 'd M Y', 'l, j M Y', 'F j, Y', 'Y-m-d', 'm/d/Y', 'd/m/Y' );
+		return array( 'j M Y', 'l, j M Y', 'F j, Y', 'Y-m-d', 'm/d/Y', 'd/m/Y' );
 	}
 
 	/**
@@ -396,8 +414,12 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			$thearticle	= get_post( $post_id );
 		}
 
+		if ( empty( $thepost ) ) {
+			wp_send_json( array( 'error' => __( 'Please enter post URL first.', 'newsletter-glue' ) ) );
+		}
+
 		if ( ! isset( $thearticle->ID ) || empty( $thearticle->ID ) ) {
-			wp_die( 'invalid' );
+			wp_send_json( array( 'error' => __( 'Invalid post URL.', 'newsletter-glue' ) ) );
 		}
 
 		$articles = get_option( 'ngl_articles_' . $block_id );
@@ -405,9 +427,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		if ( ! empty( $articles ) ) {
 			foreach( $articles as $key => $article_id ) {
 				if ( $article_id == $thearticle->ID ) {
-					unset( $articles[ $key ] );
-					update_option( 'ngl_articles_' . $block_id, $articles );
-					wp_die( 'duplicate' );
+					wp_send_json( array( 'error' => __( 'This post is already embedded.', 'newsletter-glue' ) ) );
 				}
 			}
 		} else {
@@ -431,11 +451,14 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		$featured_image  = ( has_post_thumbnail( $thearticle->ID ) ) ? wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) : '';
 
+		$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
+
 		$result = array(
 			'block_id'			=> $block_id,
 			'thepost'			=> $thepost,
 			'post'				=> $thearticle,
-			'excerpt'			=> wp_trim_words( $thearticle->post_content, 55 ),
+			'post_id'			=> $thearticle->ID,
+			'excerpt'			=> wp_trim_words( $thecontent, 30 ),
 			'title'				=> get_the_title( $thearticle->ID ),
 			'permalink'			=> get_permalink( $thearticle->ID ),
 			'date'				=> date_i18n( $date_format, strtotime( $thearticle->post_date ) ),
@@ -445,6 +468,15 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		wp_send_json( $result );
 
+	}
+
+	/**
+	 * Remove this block div from article embeds.
+	 */
+	public function remove_div( $content, $post_id ) {
+		$content = newsletterglue_remove_div( $content, 'ngl-articles' );
+
+		return $content;
 	}
 
 }

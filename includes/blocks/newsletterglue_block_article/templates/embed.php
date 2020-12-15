@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</div>
 			<div class="components-placeholder__fieldset">
 				<form class="ngl-article-add">
-					<input type="text" class="components-placeholder__input ngl_article_s" data-post="" aria-label="<?php _e( 'Search a post or enter a post URL…', 'newsletter-glue' ); ?>" placeholder="<?php _e( 'Search a post or enter a post URL…', 'newsletter-glue' ); ?>" value="">
+					<input type="text" class="components-placeholder__input ngl_article_s" data-post="" placeholder="<?php _e( 'Enter post URL here…', 'newsletter-glue' ); ?>" value="">
 					<button type="submit" class="components-button is-primary"><?php _e( 'Add', 'newsletter-glue' ); ?></button>
 				</form>
 			</div>
@@ -43,12 +43,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><img src="{featured_image}" style="border-radius: ' . absint( $image_radius ) . 'px;" /></div>' : '';
 		$display_tags   	= ( $show_tags ) ? '{tags}' : '';
-		$display_title  	= '<div class="ngl-article-title"><a href="{permalink}">{title}</a></div>';
+		$display_title  	= '<div class="ngl-article-title"><a href="{permalink}" style="' . $link_color . '">{title}</a></div>';
 		$display_excerpt 	= '<div class="ngl-article-excerpt">{excerpt}</div>';
 		$display_date       = ( $show_date ) ? '<div class="ngl-article-date">{date}</div>' : '';
 	?>
 
-	<div class="ngl-article ngl-article-placeholder" style="background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
+	<div class="ngl-article ngl-article-placeholder" data-post-id="{post_id}" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
 
 				<?php
 					if ( $table_ratio == 'full' ) :
@@ -101,8 +101,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					$display_tags .= '</div>';
 				}
 
-				$display_title = '<div class="ngl-article-title"><a href="' . get_permalink( $thearticle->ID ) . '" target="' . $new_window . '" rel="' . $nofollow . '">' . get_the_title( $thearticle ) . '</a></div>';
-				$display_excerpt = '<div class="ngl-article-excerpt">' . wp_trim_words( $thearticle->post_content, 55 ) . '</div>';
+				$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
+
+				$display_title = '<div class="ngl-article-title"><a href="' . get_permalink( $thearticle->ID ) . '" target="' . $new_window . '" rel="' . $nofollow . '" style="' . $link_color . '">' . get_the_title( $thearticle ) . '</a></div>';
+				$display_excerpt = '<div class="ngl-article-excerpt">' . wp_trim_words( $thecontent, 30 ) . '</div>';
 				$display_date    = ( $show_date ) ? '<div class="ngl-article-date">' . date_i18n( $date_format, strtotime( $thearticle->post_date ) ) . '</div>' : '';
 
 				if ( ! $show_image ) {
@@ -124,7 +126,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				}
 		?>
 
-			<div class="ngl-article" style="background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
+			<div class="ngl-article" data-post-id="<?php echo $thearticle->ID; ?>" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
 
 				<?php
 					if ( $table_ratio == 'full' ) :
