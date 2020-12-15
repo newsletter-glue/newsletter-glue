@@ -368,8 +368,8 @@ p.ngl-form-checkbox input[type=checkbox] {
 
 /* Article embed */
 .ngl-articles {
-	min-height: 100px;
-	margin: 20px 0;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .ngl-article img {

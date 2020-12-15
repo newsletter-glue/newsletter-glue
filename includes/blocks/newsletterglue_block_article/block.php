@@ -21,6 +21,10 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		if ( $this->use_block() === 'yes' ) {
 			add_action( 'init', array( $this, 'register_block' ) );
 			add_action( 'newsletterglue_add_block_styles', array( $this, 'email_css' ) );
+
+			// Ajax hooks.
+			add_action( 'wp_ajax_newsletterglue_ajax_add_article', array( $this, 'embed_article' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_add_article', array( $this, 'embed_article' ) );
 		}
 
 	}
@@ -211,7 +215,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$new_window   		= ! empty( $attributes[ 'new_window' ] ) ? '_blank' : '_self';
 		$nofollow   		= ! empty( $attributes[ 'nofollow' ] ) ? 'nofollow' : '';
 
-		update_option( 'ngl_articles_' . $block_id, array( 1598, 1601, 1604 ) );
 		$articles = get_option( 'ngl_articles_' . $block_id );
 
 		include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $this->id . '/templates/embed.php';
@@ -257,8 +260,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	public function email_css() {
 		?>
 .ngl-articles {
-	min-height: 100px;
-	margin: 20px 0;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .ngl-article img {
@@ -373,6 +376,75 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$formats = $this->get_date_formats();
 
 		return $formats[ 0 ];
+	}
+
+	/**
+	 * AJAX embedding article.
+	 */
+	public function embed_article() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$block_id 		= isset( $_REQUEST[ 'block_id' ] ) ? sanitize_text_field( $_REQUEST[ 'block_id' ] ) : '';
+		$thepost 		= isset( $_REQUEST[ 'thepost' ] ) ? sanitize_text_field( $_REQUEST[ 'thepost' ] ) : '';
+		$date_format 	= isset( $_REQUEST[ 'date_format' ] ) ? sanitize_text_field( $_REQUEST[ 'date_format' ] ) : '';
+
+		if ( is_numeric( $thepost ) ) {
+			$thearticle = get_post( $thepost );
+		} else {
+			$post_id 	= url_to_postid( $thepost );
+			$thearticle	= get_post( $post_id );
+		}
+
+		if ( ! isset( $thearticle->ID ) || empty( $thearticle->ID ) ) {
+			wp_die( 'invalid' );
+		}
+
+		$articles = get_option( 'ngl_articles_' . $block_id );
+
+		if ( ! empty( $articles ) ) {
+			foreach( $articles as $key => $article_id ) {
+				if ( $article_id == $thearticle->ID ) {
+					unset( $articles[ $key ] );
+					update_option( 'ngl_articles_' . $block_id, $articles );
+					wp_die( 'duplicate' );
+				}
+			}
+		} else {
+			$articles = array();
+		}
+
+		$articles[] = $thearticle->ID;
+
+		update_option( 'ngl_articles_' . $block_id, $articles );
+
+		$post_tags 		= wp_get_post_tags( $thearticle->ID );
+		$display_tags 	= '';
+
+		if ( $post_tags ) {
+			$display_tags = '<div class="ngl-article-tags">';
+			foreach( $post_tags as $tag ) {
+				$display_tags .= '<div class="ngl-article-tag">' . $tag->name . '</div>';
+			}
+			$display_tags .= '</div>';
+		}
+
+		$featured_image  = ( has_post_thumbnail( $thearticle->ID ) ) ? wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) : '';
+
+		$result = array(
+			'block_id'			=> $block_id,
+			'thepost'			=> $thepost,
+			'post'				=> $thearticle,
+			'excerpt'			=> wp_trim_words( $thearticle->post_content, 55 ),
+			'title'				=> get_the_title( $thearticle->ID ),
+			'permalink'			=> get_permalink( $thearticle->ID ),
+			'date'				=> date_i18n( $date_format, strtotime( $thearticle->post_date ) ),
+			'tags'				=> $display_tags,
+			'featured_image'	=> $featured_image,
+		);
+
+		wp_send_json( $result );
+
 	}
 
 }
