@@ -845,10 +845,16 @@ add_action( 'newsletterglue_add_custom_styles', 'newsletterglue_add_custom_css',
  */
 function newsletterglue_remove_div( $html, $class ) {
     $dom = new \DOMDocument();
-    $dom->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8') );
-    $finder = new \DOMXPath($dom);
 
-    $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' {$class} ')]");
+	libxml_use_internal_errors( true );
+
+    $dom->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8') );
+
+	libxml_clear_errors();
+
+    $finder = new \DOMXPath( $dom );
+
+    $nodes = $finder->query( "//*[contains(concat(' ', normalize-space(@class), ' '), ' {$class} ')]" );
 
     foreach ($nodes as $node) {
         $node->parentNode->removeChild( $node );
