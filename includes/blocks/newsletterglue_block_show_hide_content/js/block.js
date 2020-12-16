@@ -48,6 +48,7 @@
 									}
 								)
 							),
+							el( BaseControl, {},
 								el( ToggleControl,
 									{
 										label: 'Show in email newsletter',
