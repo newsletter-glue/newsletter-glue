@@ -127,6 +127,23 @@ We're working on it! Stay tuned!
 
 == Changelog ==
 
+= 1.1.8, December 16, 2020 =
+
+** New features **
+
+* **Strip Newsletter Glue's default CSS:** This is a feature for advanced users who want to completely remove all our CSS from their emails and replace it with their own.
+
+** Improvements **
+
+* **In-line CSS:** We've rebuilt our plugin so that all CSS is inserted inline. There are many advantages, including: we use less code (loads faster, cleaner, less chance of clipping) and forwarded emails retain their styling.
+* **Preview email in new tab:** Next to "Send test email" you'll now find a "Preview email" button. This lets you quickly preview emails in your browser, instead of sending a test email every time.
+* **Image captions** now align bottom center for each image.
+* **Campaign Monitor users must select a list ID before sending an email:** Blank ID lists now cause an error message and sending is disabled. Previously, we allowed users to send emails without selecting a list. Emails would then get stuck on the backend as Campaign Monitor requires a list in order to send.
+
+** Bug fixes **
+
+* **Bug fix for Mailchimp audiences:** Previously only showed up to 10 audiences. We now show the maximum 1000 audiences.
+
 = 1.1.7, December 3, 2020 =
 
 * **New feature:** We've added a double confirmation when sending *updated* newsletters. Next to **Your email is ready to publish** notification, you'll now see an additional checkbox.
