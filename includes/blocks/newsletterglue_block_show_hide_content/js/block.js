@@ -37,7 +37,7 @@
 					el( InspectorControls, {},
 						el( PanelBody, { title: 'Show/hide - newsletter block', initialOpen: true },
 
-							el( PanelRow, {},
+							el( BaseControl, {},
 								el( ToggleControl,
 									{
 										label: 'Show in blog post',
@@ -48,7 +48,6 @@
 									}
 								)
 							),
-							el( PanelRow, {},
 								el( ToggleControl,
 									{
 										label: 'Show in email newsletter',

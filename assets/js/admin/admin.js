@@ -101,7 +101,7 @@
 		var ready = true;
 
 		f.find( 'input[type=text].is-required' ).each( function() {
-			if ( $( this ).val() == '' || $( this ).attr( 'data-force-unready' ) ) {
+			if ( $( this ).val() == '' || ( $( this ).attr( 'data-force-unready' ) == '1' ) ) {
 				ready = false;
 				$( this ).closest( '.ngl-metabox-flex' ).addClass( 'is-error' );
 			} else {
@@ -186,12 +186,12 @@
 						$( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
 					}
 					$( '#ngl_from_email' ).parent().parent().parent().removeClass( 'is-error' );
-					$( '#ngl_from_email' ).attr( 'data-force-unready', false );
+					$( '#ngl_from_email' ).attr( 'data-force-unready', '0' );
 				} else {
 					$( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
 					$( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
 					$( '#ngl_from_email' ).parent().parent().parent().addClass( 'is-error' );
-					$( '#ngl_from_email' ).attr( 'data-force-unready', true );
+					$( '#ngl_from_email' ).attr( 'data-force-unready', '1' );
 				}
 				ngl_validate_form();
 			}
