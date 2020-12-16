@@ -4,7 +4,7 @@
     const { registerBlockType } = blocks;
 	const { RichText, InspectorControls, InnerBlocks } = editor;
 	const { Fragment } = element;
-	const { TextControl, ToggleControl, Panel, PanelBody, PanelRow } = components;
+	const { TextControl, ToggleControl, Panel, PanelBody, PanelRow, BaseControl } = components;
 
 	const icon = el( 'svg', { width: 24, height: 24, viewBox: '0 0 45 36' },
 		el( 'path',

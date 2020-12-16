@@ -5,7 +5,7 @@
     const { registerBlockType } = blocks;
 	const { RichText, InspectorControls, InnerBlocks, PanelColorSettings, withColors, BlockControls, AlignmentToolbar } = editor;
 	const { Fragment } = element;
-	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, ServerSideRender, RangeControl } = components;
+	const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, ServerSideRender, RangeControl, BaseControl } = components;
 
 	var borderStyles = [
 		{ value: 'dotted', label: 'dotted' },
