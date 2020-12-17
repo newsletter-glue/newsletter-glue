@@ -241,6 +241,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			height: 30px !important;
 			line-height: 30px !important;
 			text-align: center !important;
+			box-sizing: border-box !important;
 		}
 
 		.ngl-form.ngl-portrait {
@@ -259,6 +260,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		.ngl-form.ngl-landscape .ngl-form-container {
 			display: flex;
 			align-items: flex-end;
+			flex-wrap: wrap;
 		}
 
 		.ngl-form.ngl-landscape .ngl-form-field {
@@ -270,6 +272,10 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			text-align: center;
 			height: 40px;
 			min-width: 180px;
+		}
+
+		.ngl-form.ngl-landscape .ngl-form-text {
+			flex-basis: 100%;
 		}
 
 		.ngl-message-overlay {

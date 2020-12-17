@@ -202,6 +202,7 @@
 	text-decoration: none !important;
 	text-transform: none;
 	display: inline-block;
+	box-sizing: border-box !important;
 }
 
 .ngl-form.ngl-portrait {
@@ -224,6 +225,7 @@
 .ngl-form.ngl-landscape .ngl-form-container {
 	display: flex;
 	align-items: flex-end;
+	flex-wrap: wrap;
 }
 
 .ngl-form.ngl-landscape .ngl-form-field {
@@ -235,6 +237,10 @@
 	text-align: center;
 	height: 40px;
 	min-width: 180px;
+}
+
+.ngl-form.ngl-landscape .ngl-form-text {
+	flex-basis: 100%;
 }
 
 .ngl-message-overlay {

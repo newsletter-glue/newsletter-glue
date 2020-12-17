@@ -50,6 +50,7 @@
 				console.log( response );
 				if ( response.error ) {
 					el.find( '.ngl-articles-add' ).append( '<span class="ngl-article-error">' + response.error + '</span>' );
+					el.find( '.ngl_article_s' ).focus();
 				}
 				if ( response.date ) {
 					el.find( '.ngl_article_s' ).val( '' ).attr( 'data-post', '' );
@@ -124,6 +125,39 @@
 		var post_id = $( this ).parents( '.ngl-article' ).attr( 'data-post-id' );
 		var excerpt = $( this ).html();
 		var data = 'action=newsletterglue_ajax_update_excerpt&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id + '&excerpt=' + encodeURIComponent( excerpt );
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data
+		} );
+
+	} );
+
+	// Disable links to edit titles.
+	$( document ).on( 'click', '.ngl-article-title a', function( event ) {
+		event.preventDefault();
+		return false;
+	} );
+
+	// Change title dynamically.
+	$( document ).on( 'focus', '.ngl-article-title span[contenteditable]', function() {
+		const $this = $(this);
+		$this.data('before', $this.html());
+	}).on('blur keyup paste input', '.ngl-article-title span[contenteditable]', function() {
+		const $this = $(this);
+		if ($this.data('before') !== $this.html()) {
+			$this.data('before', $this.html());
+			$this.trigger('change');
+		}
+	});
+
+	// When title is changed.
+	$( document ).on( 'change', '.ngl-article-title span[contenteditable]', function() {
+
+		var post_id = $( this ).parents( '.ngl-article' ).attr( 'data-post-id' );
+		var title   = $( this ).html();
+		var data = 'action=newsletterglue_ajax_update_title&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id + '&title=' + encodeURIComponent( title );
 
 		$.ajax( {
 			type : 'post',

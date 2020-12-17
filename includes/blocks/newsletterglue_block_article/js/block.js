@@ -31,6 +31,17 @@
 		{ value: 'hidden', label: 'hidden' },
 	];
 
+	let blockLoaded = false;
+	let blockLoadedInterval = setInterval(function() {
+		if ( jQuery( '.ngl_article_s' ).length && jQuery( '.ngl-articles' ).attr( 'data-block-id' ) != '' ) {
+			jQuery( '.ngl_article_s' ).focus();
+			blockLoaded = true;
+		}
+		if ( blockLoaded ) {
+			clearInterval( blockLoadedInterval );
+		}
+	}, 500);
+
 	registerBlockType( 'newsletterglue/article', {
 		title: block.name,
 		description: block.description,

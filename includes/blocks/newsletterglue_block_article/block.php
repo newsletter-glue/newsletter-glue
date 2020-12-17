@@ -28,6 +28,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 			add_action( 'wp_ajax_newsletterglue_ajax_update_excerpt', array( $this, 'update_excerpt' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_excerpt', array( $this, 'update_excerpt' ) );
+			add_action( 'wp_ajax_newsletterglue_ajax_update_title', array( $this, 'update_title' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_title', array( $this, 'update_title' ) );
 
 			add_filter( 'newsletterglue_article_embed_content', array( $this, 'remove_div' ), 50, 2 );
 		}
@@ -428,16 +430,20 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$articles = get_option( 'ngl_articles_' . $block_id );
 
 		if ( ! empty( $articles ) ) {
-			foreach( $articles as $key => $article_id ) {
-				if ( $article_id == $thearticle->ID ) {
-					wp_send_json( array( 'error' => __( 'This post is already embedded.', 'newsletter-glue' ) ) );
+			foreach( $articles as $article => $article_data ) {
+				foreach( $article_data as $key => $value ) {
+					if ( $key == 'post_id' && $value == $thearticle->ID ) {
+						wp_send_json( array( 'error' => __( 'This post is already embedded.', 'newsletter-glue' ) ) );
+					}
 				}
 			}
 		} else {
 			$articles = array();
 		}
 
-		$articles[] = $thearticle->ID;
+		$articles[] = array(
+			'post_id' 	=> $thearticle->ID
+		);
 
 		update_option( 'ngl_articles_' . $block_id, $articles );
 
@@ -461,7 +467,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'thepost'			=> $thepost,
 			'post'				=> $thearticle,
 			'post_id'			=> $thearticle->ID,
-			'excerpt'			=> wp_trim_words( $thecontent, $this->excerpt_words() ),
+			'excerpt'			=> $this->display_excerpt( $thearticle->ID, $thecontent ),
 			'title'				=> get_the_title( $thearticle->ID ),
 			'permalink'			=> get_permalink( $thearticle->ID ),
 			'date'				=> date_i18n( $date_format, strtotime( $thearticle->post_date ) ),
@@ -490,6 +496,30 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	}
 
 	/**
+	 * Update title.
+	 */
+	public function update_title() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$post_id = isset( $_REQUEST[ 'post_id' ] ) ? sanitize_text_field( $_REQUEST[ 'post_id' ] ) : '';
+		$title   = isset( $_REQUEST[ 'title' ] ) ? sanitize_text_field( $_REQUEST[ 'title' ] ) : '';
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( empty( $custom_data ) ) {
+			$custom_data = array();
+		}
+
+		$custom_data[ $post_id ][ 'title' ] = $title;
+
+		update_option( 'newsletterglue_article_custom_data', $custom_data );
+
+		wp_die();
+
+	}
+
+	/**
 	 * Update excerpt.
 	 */
 	public function update_excerpt() {
@@ -499,9 +529,48 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$post_id = isset( $_REQUEST[ 'post_id' ] ) ? sanitize_text_field( $_REQUEST[ 'post_id' ] ) : '';
 		$excerpt = isset( $_REQUEST[ 'excerpt' ] ) ? sanitize_text_field( $_REQUEST[ 'excerpt' ] ) : '';
 
-		update_option( 'newsletterglue_excerpt_' . $post_id, $excerpt );
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( empty( $custom_data ) ) {
+			$custom_data = array();
+		}
+
+		$custom_data[ $post_id ][ 'excerpt' ] = $excerpt;
+
+		update_option( 'newsletterglue_article_custom_data', $custom_data );
 
 		wp_die();
+
+	}
+
+	/**
+	 * Display title.
+	 */
+	public function display_title( $post_id, $post ) {
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( ! empty( $custom_data ) && isset( $custom_data[ $post_id ][ 'title' ] ) ) {
+			return stripslashes_deep( $custom_data[ $post_id ][ 'title' ] );
+		} else {
+			return get_the_title( $post );
+		}
+
+	}
+
+	/**
+	 * Display excerpt.
+	 */
+	public function display_excerpt( $post_id, $content ) {
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( ! empty( $custom_data ) && isset( $custom_data[ $post_id ][ 'excerpt' ] ) ) {
+			return stripslashes_deep( $custom_data[ $post_id ][ 'excerpt' ] );
+		} else {
+			return wp_trim_words( $content, $this->excerpt_words() );
+		}
+
 	}
 
 }

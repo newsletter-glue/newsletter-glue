@@ -44,9 +44,9 @@ $editable = false;
 			}
 		}
 
-		$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><img src="{featured_image}" style="border-radius: ' . absint( $image_radius ) . 'px;" /></div>' : '';
+		$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="{permalink}"><img src="{featured_image}" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
 		$display_tags   	= ( $show_tags ) ? '{tags}' : '';
-		$display_title  	= '<div class="ngl-article-title"><a href="{permalink}" style="' . $link_color . '">{title}</a></div>';
+		$display_title  	= '<div class="ngl-article-title"><a href="{permalink}" style="' . $link_color . '"><span ' . $editable . '>{title}</span></a></div>';
 		$display_excerpt 	= '<div class="ngl-article-excerpt" ' . $editable . '>{excerpt}</div>';
 		$display_date       = ( $show_date ) ? '<div class="ngl-article-date">{date}</div>' : '';
 	?>
@@ -87,30 +87,34 @@ $editable = false;
 	<?php endif; ?>
 
 	<!-- Begin articles display -->
-	<?php if ( $articles ) : ?>
-		<?php 
-			foreach( $articles as $article ) :
-				$thearticle = get_post( $article );
-				$tags 		= wp_get_post_tags( $thearticle->ID );
+	<?php
+	if ( $articles ) :
 
-				$display_tags	= '';
-				$display_image  = ( has_post_thumbnail( $article ) && $show_image ) ? '<div class="ngl-article-featured"><img src="' . wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></div>' : '';
+			foreach( $articles as $key => $article ) :
 
-				if ( $tags && $show_tags ) {
-					$display_tags = '<div class="ngl-article-tags">';
-					foreach( $tags as $tag ) {
-						$display_tags .= '<div class="ngl-article-tag">' . $tag->name . '</div>';
+				// Internal post.
+				if ( ! empty( $article[ 'post_id' ] ) ) :
+
+					$thearticle 		= get_post( $article[ 'post_id' ] );
+					$tags 				= wp_get_post_tags( $thearticle->ID );
+					$display_tags		= '';
+					if ( $tags && $show_tags ) {
+						$display_tags 	= '<div class="ngl-article-tags">';
+						foreach( $tags as $tag ) {
+							$display_tags .= '<div class="ngl-article-tag">' . $tag->name . '</div>';
+						}
+						$display_tags .= '</div>';
 					}
-					$display_tags .= '</div>';
-				}
+					$display_image  	= ( has_post_thumbnail( $thearticle->ID ) && $show_image ) ? '<div class="ngl-article-featured"><a href="' . get_permalink( $thearticle->ID ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
+					$thecontent 		= apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
+					$display_title 		= '<div class="ngl-article-title"><a href="' . get_permalink( $thearticle->ID ) . '" target="' . $new_window . '" rel="' . $nofollow . '" style="' . $link_color . '">';
+					$display_title     .= '<span ' . $editable . '>' . $this->display_title( $thearticle->ID, $thearticle ) . '</span></a></div>';
+					$display_excerpt 	= '<div class="ngl-article-excerpt" ' . $editable . '>' . $this->display_excerpt( $thearticle->ID, $thecontent ) . '</div>';
+					$display_date    	= ( $show_date ) ? '<div class="ngl-article-date">' . date_i18n( $date_format, strtotime( $thearticle->post_date ) ) . '</div>' : '';
 
-				$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
+				else :
 
-				$display_title = '<div class="ngl-article-title"><a href="' . get_permalink( $thearticle->ID ) . '" target="' . $new_window . '" rel="' . $nofollow . '" style="' . $link_color . '">' . get_the_title( $thearticle ) . '</a></div>';
-				
-				$the_excerpt = ! empty( get_option( 'newsletterglue_excerpt_' . $thearticle->ID ) ) ? get_option( 'newsletterglue_excerpt_' . $thearticle->ID ) : wp_trim_words( $thecontent, $this->excerpt_words() );
-				$display_excerpt = '<div class="ngl-article-excerpt" ' . $editable . '>' . $the_excerpt . '</div>';
-				$display_date    = ( $show_date ) ? '<div class="ngl-article-date">' . date_i18n( $date_format, strtotime( $thearticle->post_date ) ) . '</div>' : '';
+				endif;
 
 				if ( ! $show_image ) {
 					$table_ratio = 'full';
@@ -131,7 +135,7 @@ $editable = false;
 				}
 		?>
 
-			<div class="ngl-article" data-post-id="<?php echo $thearticle->ID; ?>" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
+			<div class="ngl-article" data-key="<?php echo $key; ?>" data-post-id="<?php echo $thearticle->ID; ?>" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
 
 				<?php
 					if ( $table_ratio == 'full' ) :
