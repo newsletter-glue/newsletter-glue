@@ -295,7 +295,7 @@
 	color: #444;
 }
 
-.ngl-form-text {
+.ngl-form-container p.ngl-form-text {
 	padding: 20px 0 0;
 	font-size: 14px;
 }
