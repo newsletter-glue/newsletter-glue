@@ -307,7 +307,7 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 				'email'	=> $from_email,
 			),
 			'name'			=> $subject,
-			'htmlContent'	=> newsletterglue_generate_content( $post, $subject ),
+			'htmlContent'	=> newsletterglue_generate_content( $post, $subject, 'sendinblue' ),
 			'subject'		=> $subject,
 			'replyTo'		=> $from_email,
 			'recipients'	=> array(

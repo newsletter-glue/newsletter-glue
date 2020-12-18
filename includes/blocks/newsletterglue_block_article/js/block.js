@@ -227,7 +227,7 @@
 
 						),
 
-						el( PanelBody, { title: 'Article embed options', initialOpen: true },
+						el( PanelBody, { title: 'Post embed options', initialOpen: true },
 
 							el( BaseControl, {},
 								el( ToggleControl, {

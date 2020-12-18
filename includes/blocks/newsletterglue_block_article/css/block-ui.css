@@ -24,6 +24,8 @@
 .ngl-article-title a {
 	font-size: 18px;
 	font-weight: bold;
+	cursor: text !important;
+	text-decoration: none !important;
 }
 
 .ngl-article-featured {
@@ -41,15 +43,16 @@
 }
 
 .ngl-articles input[type=text] {
-	padding: 6px 8px;
+	padding: 8px;
     box-shadow: 0 0 0 transparent;
     transition: box-shadow 0.1s linear;
     border-radius: 2px;
     border: 1px solid #757575;
-    margin: 0 8px 0 0;
-    flex: 1 1 auto;
+    margin: 0;
 	font-size: 13px;
     line-height: normal;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .ngl-article-tags {
@@ -98,4 +101,46 @@
 	margin: 8px 0 0;
 	display: block;
 	color: #b30b0b;
+}
+
+.ngl-article-box {
+	flex: 1 1 auto;
+	margin: 0 10px 0 0;
+	position: relative;
+}
+
+ul.ngl-article-suggest {
+	position: absolute;
+    max-height: 200px;
+	overflow: auto;
+    top: 35px;
+    left: 0;
+    border: 1px solid #757575;
+	border-top: 0;
+    background: #fff;
+    z-index: 9999;
+    width: 100%;
+	margin: 0 !important;
+	padding: 0 !important;
+	display: none;
+}
+
+ul.ngl-article-suggest li {
+	list-style-type: none !important;
+}
+
+ul.ngl-article-suggest a {
+	display: block;
+	color: #666 !important;
+	box-shadow: none !important;
+	border: none;
+	text-decoration: none !important;
+	padding: 6px 10px;
+	font-family: "Segoe UI";
+	font-size: 13px;
+	cursor: pointer;
+}
+
+ul.ngl-article-suggest a:hover {
+	background: #f6f6f6;
 }

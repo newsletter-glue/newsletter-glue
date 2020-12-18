@@ -167,4 +167,58 @@
 
 	} );
 
+	var suggestion = '';
+
+	// Article search.
+	$( document ).on( 'blur paste input keyup change', '.ngl_article_s', function() {
+		var term = $( this ).val();
+		var list = $( this ).parents( '.ngl-article-add' ).find( '.ngl-article-suggest' );
+		var data = 'action=newsletterglue_ajax_search_articles&security=' + newsletterglue_params.ajaxnonce + '&term=' + encodeURIComponent( term );
+
+		if ( term.length < 3 ) {
+			list.hide().empty();
+			suggestion = null;
+			return false;
+		}
+
+		if ( suggestion == term ) {
+			console.log( 'not needed' );
+			return false;
+		}
+
+		console.log( 'searching' );
+
+		suggestion = term;
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data,
+			success: function( response ) {
+				if ( response.html ) {
+					list.show().html( response.html );
+				} else {
+					list.hide().empty();
+				}
+			}
+		} );
+
+	} );
+
+	// When a suggestion is clicked.
+	$( document ).on( 'click', '.ngl-article-suggest li a', function( event ) {
+		event.preventDefault();
+
+		var el = $( this ).parents( '.ngl-article-add' );
+		var post_id = $( this ).attr( 'data-post-id' );
+
+		el.find( '.ngl_article_s' ).val( $( this ).html() ).attr( 'data-post', post_id );
+
+		el.find( '.ngl-article-suggest' ).empty().hide();
+
+		el.trigger( 'submit' );
+
+		return false;
+	} );
+
 } )( jQuery );

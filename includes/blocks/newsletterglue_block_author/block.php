@@ -21,6 +21,8 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		if ( $this->use_block() === 'yes' ) {
 			add_action( 'init', array( $this, 'register_block' ) );
 			add_action( 'newsletterglue_add_block_styles', array( $this, 'email_css' ) );
+
+			add_filter( 'newsletterglue_article_embed_content', array( $this, 'remove_div' ), 50, 2 );
 		}
 
 	}
@@ -234,6 +236,15 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		.ngl-author-btn-outlined.ngl-author-tiktok { border-color: #fe2c55 !important; }
 		.ngl-author-btn-outlined.ngl-author-youtube { border-color: #FF0000 !important; }
 		<?php
+	}
+
+	/**
+	 * Remove this block div from article embeds.
+	 */
+	public function remove_div( $content, $post_id ) {
+		$content = newsletterglue_remove_div( $content, 'ngl-author' );
+
+		return $content;
 	}
 
 }

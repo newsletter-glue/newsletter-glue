@@ -31,6 +31,9 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			add_action( 'wp_ajax_newsletterglue_ajax_update_title', array( $this, 'update_title' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_title', array( $this, 'update_title' ) );
 
+			add_action( 'wp_ajax_newsletterglue_ajax_search_articles', array( $this, 'search_articles' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_search_articles', array( $this, 'search_articles' ) );
+
 			add_filter( 'newsletterglue_article_embed_content', array( $this, 'remove_div' ), 50, 2 );
 		}
 
@@ -40,7 +43,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	 * Block label.
 	 */
 	public function get_label() {
-		return __( 'Article embeds', 'newsletter-glue' );
+		return __( 'Post embeds', 'newsletter-glue' );
 	}
 
 	/**
@@ -81,7 +84,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		$suffix  = '';
 
-		$defaults[ 'name' ]			= __( 'NG: Article embeds', 'newsletter-glue' );
+		$defaults[ 'name' ]			= __( 'NG: Post embeds', 'newsletter-glue' );
 		$defaults[ 'description' ] 	= __( 'Bulk embed articles and customise their layout.', 'newsletter-glue' );
 
 		// Post dates.
@@ -420,11 +423,11 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		}
 
 		if ( empty( $thepost ) ) {
-			wp_send_json( array( 'error' => __( 'Please enter post URL first.', 'newsletter-glue' ) ) );
+			wp_send_json( array( 'error' => __( 'Please search for a post or type some URL.', 'newsletter-glue' ) ) );
 		}
 
 		if ( ! isset( $thearticle->ID ) || empty( $thearticle->ID ) ) {
-			wp_send_json( array( 'error' => __( 'Invalid post URL.', 'newsletter-glue' ) ) );
+			wp_send_json( array( 'error' => __( 'Invalid post.', 'newsletter-glue' ) ) );
 		}
 
 		$articles = get_option( 'ngl_articles_' . $block_id );
@@ -571,6 +574,57 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			return wp_trim_words( $content, $this->excerpt_words() );
 		}
 
+	}
+
+	/**
+	 * Search articles.
+	 */
+	public function search_articles() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$term = isset( $_REQUEST[ 'term' ] ) ? sanitize_text_field( $_REQUEST[ 'term' ] ) : '';
+
+		if ( ! $term || mb_strlen( $term ) < 3 ) {
+			wp_die( -1 );
+		}
+
+		add_filter( 'posts_where', array( $this, 'post_title_filter' ), 10, 2 );
+
+		$results = new WP_Query( array(
+			'post_type'      	=> array( 'post' ),
+			'post_status'    	=> 'publish',
+			'nopaging'       	=> true,
+			'posts_per_page' 	=> 100,
+			'ngl_post_title_s'  => $term, // search post title only
+		) );
+
+		remove_filter( 'posts_where', array( $this, 'post_title_filter' ), 10, 2 );
+
+		$html = '';
+
+		if ( ! empty( $results->posts ) ) {
+			foreach ( $results->posts as $result ) {
+				$html .= '<li><a href="#" data-post-id="' . $result->ID . '" data-permalink="' . get_permalink( $result->ID ) . '">' . $result->post_title . '</a></li>';
+			}
+			wp_send_json( array( 'html' => $html ) );
+		} else {
+			wp_send_json( array( 'no_results' => true ) );
+		}
+
+		wp_die();
+
+	}
+
+	/**
+	 * Add search to post titles only.
+	 */
+	public function post_title_filter( $where, $wp_query ) {
+		global $wpdb;
+		if ( $term = $wp_query->get( 'ngl_post_title_s' ) ) {
+			$where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . $wpdb->esc_like( $term ) . '%\'';
+		}
+		return $where;
 	}
 
 }
