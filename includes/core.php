@@ -693,7 +693,8 @@ p.ngl-credits {
 	font-size: 13px;
 	text-align: center;
 	color: #999 !important;
-	padding-top: 70px;
+	padding-top: 50px;
+	margin: 0 !important;
 }
 
 p.ngl-credits a {

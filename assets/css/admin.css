@@ -2040,8 +2040,8 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	font-size: 13px;
 	text-align: center;
 	color: #999 !important;
-	padding-top: 70px;
-	margin-bottom: 25px;
+	padding-top: 50px;
+	margin: 0 0 25px !important;
 }
 
 .ngl-email .ngl-credits a {
