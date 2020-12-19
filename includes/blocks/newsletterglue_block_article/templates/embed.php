@@ -56,7 +56,7 @@ $editable = false;
 		$display_date       = ( $show_date ) ? '<div class="ngl-article-date">{date}</div>' : '';
 	?>
 
-	<div class="ngl-article ngl-article-placeholder" data-post-id="{post_id}" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
+	<div class="ngl-article ngl-article-img-<?php echo $image_position; ?> ngl-article-placeholder" data-post-id="{post_id}" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
 
 				<?php
 					if ( $table_ratio == 'full' ) :
@@ -145,7 +145,7 @@ $editable = false;
 				}
 		?>
 
-			<div class="ngl-article" data-key="<?php echo $key; ?>" data-post-id="<?php echo $thearticle->ID; ?>" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
+			<div class="ngl-article ngl-article-img-<?php echo $image_position; ?>" data-key="<?php echo $key; ?>" data-post-id="<?php echo $thearticle->ID; ?>" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
 
 				<?php
 					if ( $table_ratio == 'full' ) :
@@ -165,6 +165,7 @@ $editable = false;
 							echo '</div>';
 						endif;
 						if ( $image_position == 'right' ) :
+							echo '<div class="ngl-article-left-mobile -emogrifier-keep">' . $display_image . '</div>';
 							echo '<div class="ngl-article-left">';
 								echo $display_tags;
 								echo $display_title;

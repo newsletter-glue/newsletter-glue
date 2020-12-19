@@ -465,6 +465,28 @@ p.ngl-form-checkbox input[type=checkbox] {
 .ngl-articles-70_30 .ngl-article-left { display: inline-block; width: 66%; vertical-align: top; }
 .ngl-articles-70_30 .ngl-article-right { display: inline-block; width: 30%; vertical-align: top; }
 
+.ngl-article-left-mobile {
+	display: none !important;
+}
+
+@media only screen and (max-width:596px) {
+
+	.ngl-article-left-mobile {
+		display: block !important;
+	}
+
+	.ngl-article-left,
+	.ngl-article-right {
+		width: 100% !important;
+		margin: 0 !important;
+	}
+
+	.ngl-article-img-right .ngl-article-right {
+		display: none !important;
+	}
+
+}
+
 /* Misc */
 .ngl-working {
 	opacity: 0.7;
