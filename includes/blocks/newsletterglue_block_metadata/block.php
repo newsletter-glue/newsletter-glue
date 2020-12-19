@@ -197,7 +197,8 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			display: inline-block;
 			margin: 0 4px 0 0 !important;
 			position: relative;
-			top: 3px;
+			top: 9px;
+			vertical-align: top;
 		}
 
 		.ngl-metadata-permalink-arrow {

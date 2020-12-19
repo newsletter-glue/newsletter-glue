@@ -16,11 +16,12 @@
 }
 
 .ngl-metadata-map-pin {
-	width: 12px;
-	display: inline-block;
-	margin: 0 4px 0 0 !important;
-	position: relative;
-	top: 3px;
+    width: 12px;
+    display: inline-block;
+    margin: 0 4px 0 0 !important;
+    position: relative;
+    top: 9px;
+    vertical-align: top;
 }
 
 .ngl-metadata-permalink-arrow {
