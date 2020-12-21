@@ -333,6 +333,9 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 		// Do not display errors.
 	}
 
+	// Fixes emogrifier encoding bugs.
+	$html = str_replace( array( '%7B', '%7D', '%24' ), array( '{', '}', '$' ), $html );
+
 	return $html;
 
 }

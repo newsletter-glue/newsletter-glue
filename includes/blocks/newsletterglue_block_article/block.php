@@ -498,6 +498,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'date'				=> date_i18n( $date_format, strtotime( $thearticle->post_date ) ),
 			'tags'				=> $display_tags,
 			'featured_image'	=> $featured_image,
+			'success'			=> __( 'Add another post', 'newsletter-glue' ),
 		);
 
 		wp_send_json( $result );

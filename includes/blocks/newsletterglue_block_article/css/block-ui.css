@@ -118,13 +118,6 @@
 
 }
 
-.ngl-article-error {
-	font-size: 12px;
-	margin: 8px 0 0;
-	display: block;
-	color: #b30b0b;
-}
-
 .ngl-article-box {
 	flex: 1 1 auto;
 	margin: 0 10px 0 0;
@@ -165,4 +158,45 @@ ul.ngl-article-suggest a {
 
 ul.ngl-article-suggest a:hover {
 	background: #f6f6f6;
+}
+
+.ngl-article-status {
+	display: block;
+	width: 100%;
+	min-height: 25px;
+	opacity: 0;
+	transition: opacity .2s linear;
+	font-weight: 500;
+}
+
+.ngl-article-error {
+	color: #b30b0b;
+	opacity: 1;
+}
+
+.ngl-article-success {
+	color: #007cba;
+	opacity: 1;
+}
+
+.ngl-article-list {
+	padding: 15px 0 0;
+}
+
+.ngl-article-list-head {
+	font-size: 13px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.ngl-article-list-head span {
+	font-size: 30px;
+	opacity: 0.6;
+}
+
+.ngl-article-list-empty {
+	font-size: 15px;
+	margin: 4px 0 0;
+	opacity: 0.6;
 }
