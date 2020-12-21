@@ -127,6 +127,10 @@ We're working on it! Stay tuned!
 
 == Changelog ==
 
+= 1.1.9, December 21, 2020 =
+
+* **Bug fix for MailerLite:** Fixed a bug that was causing MailerLite newsletters to save inside MailerLite, instead of being sent out. It's an encoding bug with emogrifier.
+
 = 1.1.8, December 16, 2020 =
 
 **New features**
