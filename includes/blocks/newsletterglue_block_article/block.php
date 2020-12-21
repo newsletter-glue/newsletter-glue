@@ -28,6 +28,11 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 			add_action( 'wp_ajax_newsletterglue_ajax_update_excerpt', array( $this, 'update_excerpt' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_excerpt', array( $this, 'update_excerpt' ) );
+			add_action( 'wp_ajax_newsletterglue_ajax_update_title', array( $this, 'update_title' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_title', array( $this, 'update_title' ) );
+
+			add_action( 'wp_ajax_newsletterglue_ajax_search_articles', array( $this, 'search_articles' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_search_articles', array( $this, 'search_articles' ) );
 
 			add_filter( 'newsletterglue_article_embed_content', array( $this, 'remove_div' ), 50, 2 );
 		}
@@ -38,7 +43,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	 * Block label.
 	 */
 	public function get_label() {
-		return __( 'Article embeds', 'newsletter-glue' );
+		return __( 'Post embeds', 'newsletter-glue' );
 	}
 
 	/**
@@ -79,7 +84,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		$suffix  = '';
 
-		$defaults[ 'name' ]			= __( 'NG: Article embeds', 'newsletter-glue' );
+		$defaults[ 'name' ]			= __( 'NG: Post embeds', 'newsletter-glue' );
 		$defaults[ 'description' ] 	= __( 'Bulk embed articles and customise their layout.', 'newsletter-glue' );
 
 		// Post dates.
@@ -380,6 +385,28 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 .ngl-articles-70_30 .ngl-article-left { display: inline-block; width: 66%; vertical-align: top; }
 .ngl-articles-70_30 .ngl-article-right { display: inline-block; width: 30%; vertical-align: top; }
 
+.ngl-article-left-mobile {
+	display: none !important;
+}
+
+@media only screen and (max-width:596px) {
+
+	.ngl-article-left-mobile {
+		display: block !important;
+	}
+
+	.ngl-article-left,
+	.ngl-article-right {
+		width: 100% !important;
+		margin: 0 !important;
+	}
+
+	.ngl-article-img-right .ngl-article-right {
+		display: none !important;
+	}
+
+}
+
 	<?php
 	}
 
@@ -418,26 +445,30 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		}
 
 		if ( empty( $thepost ) ) {
-			wp_send_json( array( 'error' => __( 'Please enter post URL first.', 'newsletter-glue' ) ) );
+			wp_send_json( array( 'error' => __( 'Please search for a post or type some URL.', 'newsletter-glue' ) ) );
 		}
 
 		if ( ! isset( $thearticle->ID ) || empty( $thearticle->ID ) ) {
-			wp_send_json( array( 'error' => __( 'Invalid post URL.', 'newsletter-glue' ) ) );
+			wp_send_json( array( 'error' => __( 'Invalid post.', 'newsletter-glue' ) ) );
 		}
 
 		$articles = get_option( 'ngl_articles_' . $block_id );
 
 		if ( ! empty( $articles ) ) {
-			foreach( $articles as $key => $article_id ) {
-				if ( $article_id == $thearticle->ID ) {
-					wp_send_json( array( 'error' => __( 'This post is already embedded.', 'newsletter-glue' ) ) );
+			foreach( $articles as $article => $article_data ) {
+				foreach( $article_data as $key => $value ) {
+					if ( $key == 'post_id' && $value == $thearticle->ID ) {
+						wp_send_json( array( 'error' => __( 'This post is already embedded.', 'newsletter-glue' ) ) );
+					}
 				}
 			}
 		} else {
 			$articles = array();
 		}
 
-		$articles[] = $thearticle->ID;
+		$articles[] = array(
+			'post_id' 	=> $thearticle->ID
+		);
 
 		update_option( 'ngl_articles_' . $block_id, $articles );
 
@@ -461,12 +492,13 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'thepost'			=> $thepost,
 			'post'				=> $thearticle,
 			'post_id'			=> $thearticle->ID,
-			'excerpt'			=> wp_trim_words( $thecontent, $this->excerpt_words() ),
+			'excerpt'			=> $this->display_excerpt( $thearticle->ID, $thecontent ),
 			'title'				=> get_the_title( $thearticle->ID ),
 			'permalink'			=> get_permalink( $thearticle->ID ),
 			'date'				=> date_i18n( $date_format, strtotime( $thearticle->post_date ) ),
 			'tags'				=> $display_tags,
 			'featured_image'	=> $featured_image,
+			'success'			=> __( 'Add another post', 'newsletter-glue' ),
 		);
 
 		wp_send_json( $result );
@@ -490,6 +522,30 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	}
 
 	/**
+	 * Update title.
+	 */
+	public function update_title() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$post_id = isset( $_REQUEST[ 'post_id' ] ) ? sanitize_text_field( $_REQUEST[ 'post_id' ] ) : '';
+		$title   = isset( $_REQUEST[ 'title' ] ) ? sanitize_text_field( $_REQUEST[ 'title' ] ) : '';
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( empty( $custom_data ) ) {
+			$custom_data = array();
+		}
+
+		$custom_data[ $post_id ][ 'title' ] = $title;
+
+		update_option( 'newsletterglue_article_custom_data', $custom_data );
+
+		wp_die();
+
+	}
+
+	/**
 	 * Update excerpt.
 	 */
 	public function update_excerpt() {
@@ -499,9 +555,99 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$post_id = isset( $_REQUEST[ 'post_id' ] ) ? sanitize_text_field( $_REQUEST[ 'post_id' ] ) : '';
 		$excerpt = isset( $_REQUEST[ 'excerpt' ] ) ? sanitize_text_field( $_REQUEST[ 'excerpt' ] ) : '';
 
-		update_option( 'newsletterglue_excerpt_' . $post_id, $excerpt );
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( empty( $custom_data ) ) {
+			$custom_data = array();
+		}
+
+		$custom_data[ $post_id ][ 'excerpt' ] = $excerpt;
+
+		update_option( 'newsletterglue_article_custom_data', $custom_data );
 
 		wp_die();
+
+	}
+
+	/**
+	 * Display title.
+	 */
+	public function display_title( $post_id, $post ) {
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( ! empty( $custom_data ) && isset( $custom_data[ $post_id ][ 'title' ] ) ) {
+			return stripslashes_deep( $custom_data[ $post_id ][ 'title' ] );
+		} else {
+			return get_the_title( $post );
+		}
+
+	}
+
+	/**
+	 * Display excerpt.
+	 */
+	public function display_excerpt( $post_id, $content ) {
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( ! empty( $custom_data ) && isset( $custom_data[ $post_id ][ 'excerpt' ] ) ) {
+			return stripslashes_deep( $custom_data[ $post_id ][ 'excerpt' ] );
+		} else {
+			return wp_trim_words( $content, $this->excerpt_words() );
+		}
+
+	}
+
+	/**
+	 * Search articles.
+	 */
+	public function search_articles() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$term = isset( $_REQUEST[ 'term' ] ) ? sanitize_text_field( $_REQUEST[ 'term' ] ) : '';
+
+		if ( ! $term || mb_strlen( $term ) < 3 ) {
+			wp_die( -1 );
+		}
+
+		add_filter( 'posts_where', array( $this, 'post_title_filter' ), 10, 2 );
+
+		$results = new WP_Query( array(
+			'post_type'      	=> array( 'post' ),
+			'post_status'    	=> 'publish',
+			'nopaging'       	=> true,
+			'posts_per_page' 	=> 100,
+			'ngl_post_title_s'  => $term, // search post title only
+		) );
+
+		remove_filter( 'posts_where', array( $this, 'post_title_filter' ), 10, 2 );
+
+		$html = '';
+
+		if ( ! empty( $results->posts ) ) {
+			foreach ( $results->posts as $result ) {
+				$html .= '<li><a href="#" data-post-id="' . $result->ID . '" data-permalink="' . get_permalink( $result->ID ) . '">' . $result->post_title . '</a></li>';
+			}
+			wp_send_json( array( 'html' => $html ) );
+		} else {
+			wp_send_json( array( 'no_results' => true ) );
+		}
+
+		wp_die();
+
+	}
+
+	/**
+	 * Add search to post titles only.
+	 */
+	public function post_title_filter( $where, $wp_query ) {
+		global $wpdb;
+		if ( $term = $wp_query->get( 'ngl_post_title_s' ) ) {
+			$where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . $wpdb->esc_like( $term ) . '%\'';
+		}
+		return $where;
 	}
 
 }

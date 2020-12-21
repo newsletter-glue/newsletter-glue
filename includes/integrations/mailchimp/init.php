@@ -325,7 +325,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 			// Manage campaign content
 			$result = $this->api->put( 'campaigns/' . $campaign_id . '/content', [
-				'html'	=> newsletterglue_generate_content( $post, $subject ),
+				'html'	=> newsletterglue_generate_content( $post, $subject, 'mailchimp' ),
 			] );
 
 			if ( $test ) {

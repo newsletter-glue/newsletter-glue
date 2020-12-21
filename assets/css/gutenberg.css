@@ -17,11 +17,12 @@
 }
 
 .ngl-metadata-map-pin {
-	width: 12px;
-	display: inline-block;
-	margin: 0 4px 0 0 !important;
-	position: relative;
-	top: 3px;
+    width: 12px;
+    display: inline-block;
+    margin: 0 4px 0 0 !important;
+    position: relative;
+    top: 9px;
+    vertical-align: top;
 }
 
 .ngl-metadata-permalink-arrow {
@@ -202,6 +203,7 @@
 	text-decoration: none !important;
 	text-transform: none;
 	display: inline-block;
+	box-sizing: border-box !important;
 }
 
 .ngl-form.ngl-portrait {
@@ -224,6 +226,7 @@
 .ngl-form.ngl-landscape .ngl-form-container {
 	display: flex;
 	align-items: flex-end;
+	flex-wrap: wrap;
 }
 
 .ngl-form.ngl-landscape .ngl-form-field {
@@ -235,6 +238,10 @@
 	text-align: center;
 	height: 40px;
 	min-width: 180px;
+}
+
+.ngl-form.ngl-landscape .ngl-form-text {
+	flex-basis: 100%;
 }
 
 .ngl-message-overlay {
@@ -289,7 +296,7 @@
 	color: #444;
 }
 
-.ngl-form-text {
+.ngl-form-container p.ngl-form-text {
 	padding: 20px 0 0;
 	font-size: 14px;
 }
@@ -457,6 +464,28 @@ p.ngl-form-checkbox input[type=checkbox] {
 
 .ngl-articles-70_30 .ngl-article-left { display: inline-block; width: 66%; vertical-align: top; }
 .ngl-articles-70_30 .ngl-article-right { display: inline-block; width: 30%; vertical-align: top; }
+
+.ngl-article-left-mobile {
+	display: none !important;
+}
+
+@media only screen and (max-width:596px) {
+
+	.ngl-article-left-mobile {
+		display: block !important;
+	}
+
+	.ngl-article-left,
+	.ngl-article-right {
+		width: 100% !important;
+		margin: 0 !important;
+	}
+
+	.ngl-article-img-right .ngl-article-right {
+		display: none !important;
+	}
+
+}
 
 /* Misc */
 .ngl-working {

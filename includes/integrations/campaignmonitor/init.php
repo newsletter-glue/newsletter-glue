@@ -287,7 +287,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		$uploadfile = $uploaddir['path'] . '/' . $filename;
 		$htmlurl 	= $uploaddir['url'] . '/' . $filename;
 		$handle 	= fopen( $uploadfile, 'w+' );
-		fwrite( $handle, newsletterglue_generate_content( $post, $subject ) );
+		fwrite( $handle, newsletterglue_generate_content( $post, $subject, 'campaignmonitor' ) );
 		fclose( $handle );
 
 		$campaign_info = array(

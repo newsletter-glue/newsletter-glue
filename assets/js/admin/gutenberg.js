@@ -1,6 +1,19 @@
 ( function( $ ) {
 	"use strict";
 
+	// Is valid URL.
+	function is_ngl_valid_url( string ) {
+		  let url;
+		  
+		  try {
+			url = new URL(string);
+		  } catch (_) {
+			return false;  
+		  }
+
+		  return url.protocol === "http:" || url.protocol === "https:";
+	}
+
 	// Calls ajax function to get embed html.
 	function ngl_get_embed( el ) {
 		var container   = el.parents( '.ngl-embed' ).find( '.ngl-embed-content' );
@@ -44,15 +57,19 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			beforeSend: function() {
-				el.find( '.ngl-articles-add' ).find( 'span.ngl-article-error' ).remove();
+				el.find( '.ngl-articles-add .ngl-article-status' ).removeClass( 'ngl-article-error ngl-article-success' ).empty();
 			},
 			success: function( response ) {
 				console.log( response );
 				if ( response.error ) {
-					el.find( '.ngl-articles-add' ).append( '<span class="ngl-article-error">' + response.error + '</span>' );
+					el.find( '.ngl-articles-add .ngl-article-status' ).addClass( 'ngl-article-error' ).html( response.error );
+					el.find( '.ngl_article_s' ).focus();
 				}
 				if ( response.date ) {
+
+					el.find( '.ngl-articles-add .ngl-article-status' ).addClass( 'ngl-article-success' ).html( response.success );
 					el.find( '.ngl_article_s' ).val( '' ).attr( 'data-post', '' );
+
 					var cloned = preview.clone();
 					cloned.html( cloned.html().replace( '{excerpt}', response.excerpt ) );
 					cloned.html( cloned.html().replace( '{tags}', response.tags ) );
@@ -61,7 +78,12 @@
 					cloned.html( cloned.html().replace( '{date}', response.date ) );
 					cloned.html( cloned.html().replace( '{featured_image}', response.featured_image ) );
 					cloned.attr( 'data-post-id', response.post_id );
-					cloned.appendTo( el ).removeClass( 'ngl-article-placeholder' );
+					cloned.prependTo( el.find( '.ngl-articles-wrap' ) ).removeClass( 'ngl-article-placeholder' );
+
+					if ( el.find( '.ngl-article-list-empty' ).length ) {
+						el.find( '.ngl-article-list-empty' ).hide();
+					}
+
 				}
 			}
 		} );
@@ -131,6 +153,111 @@
 			data : data
 		} );
 
+	} );
+
+	// Disable links to edit titles.
+	$( document ).on( 'click', '.ngl-article-title a', function( event ) {
+		event.preventDefault();
+		return false;
+	} );
+
+	// Change title dynamically.
+	$( document ).on( 'focus', '.ngl-article-title span[contenteditable]', function() {
+		const $this = $(this);
+		$this.data('before', $this.html());
+	}).on('blur keyup paste input', '.ngl-article-title span[contenteditable]', function() {
+		const $this = $(this);
+		if ($this.data('before') !== $this.html()) {
+			$this.data('before', $this.html());
+			$this.trigger('change');
+		}
+	});
+
+	// When title is changed.
+	$( document ).on( 'change', '.ngl-article-title span[contenteditable]', function() {
+
+		var post_id = $( this ).parents( '.ngl-article' ).attr( 'data-post-id' );
+		var title   = $( this ).html();
+		var data = 'action=newsletterglue_ajax_update_title&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id + '&title=' + encodeURIComponent( title );
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data
+		} );
+
+	} );
+
+	var suggestion = '';
+
+	// Article search.
+	$( document ).on( 'blur input keyup change', '.ngl_article_s', function() {
+		var term = $( this ).val();
+		var list = $( this ).parents( '.ngl-article-add' ).find( '.ngl-article-suggest' );
+		var data = 'action=newsletterglue_ajax_search_articles&security=' + newsletterglue_params.ajaxnonce + '&term=' + encodeURIComponent( term );
+
+		if ( is_ngl_valid_url( term ) ) {
+			list.hide().empty();
+			suggestion = null;
+			return false;
+		}
+
+		if ( term.length < 3 ) {
+			list.hide().empty();
+			suggestion = null;
+			return false;
+		}
+
+		if ( suggestion == term ) {
+			console.log( 'not needed' );
+			return false;
+		}
+
+		console.log( 'searching' );
+
+		suggestion = term;
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data,
+			success: function( response ) {
+				if ( response.html ) {
+					list.show().html( response.html );
+				} else {
+					list.hide().empty();
+				}
+			}
+		} );
+
+	} );
+
+	// When a suggestion is clicked.
+	$( document ).on( 'click', '.ngl-article-suggest li a', function( event ) {
+		event.preventDefault();
+
+		var el = $( this ).parents( '.ngl-article-add' );
+		var post_id = $( this ).attr( 'data-post-id' );
+
+		el.find( '.ngl_article_s' ).val( $( this ).html() ).attr( 'data-post', post_id );
+
+		el.find( '.ngl-article-suggest' ).empty().hide();
+
+		el.trigger( 'submit' );
+
+		return false;
+	} );
+
+	// When a list head is clicked.
+	$( document ).on( 'click', '.ngl-is-expanded', function() {
+		var wrap = $( this ).parent().find( '.ngl-article-list-wrap' );
+		if ( wrap.is( ':visible' ) ) {
+			$( this ).find( 'span' ).html( 'expand_less' );
+			wrap.hide();
+		} else {
+			$( this ).find( 'span' ).html( 'expand_more' );
+			wrap.show();
+		}
 	} );
 
 } )( jQuery );
