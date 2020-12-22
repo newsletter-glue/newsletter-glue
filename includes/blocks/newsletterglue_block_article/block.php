@@ -28,11 +28,18 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 			add_action( 'wp_ajax_newsletterglue_ajax_update_excerpt', array( $this, 'update_excerpt' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_excerpt', array( $this, 'update_excerpt' ) );
+
 			add_action( 'wp_ajax_newsletterglue_ajax_update_title', array( $this, 'update_title' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_title', array( $this, 'update_title' ) );
 
 			add_action( 'wp_ajax_newsletterglue_ajax_search_articles', array( $this, 'search_articles' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_search_articles', array( $this, 'search_articles' ) );
+
+			add_action( 'wp_ajax_newsletterglue_ajax_remove_article', array( $this, 'remove_article' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_remove_article', array( $this, 'remove_article' ) );
+
+			add_action( 'wp_ajax_newsletterglue_ajax_order_articles', array( $this, 'order_articles' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_order_articles', array( $this, 'order_articles' ) );
 
 			add_filter( 'newsletterglue_article_embed_content', array( $this, 'remove_div' ), 50, 2 );
 		}
@@ -427,85 +434,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	}
 
 	/**
-	 * AJAX embedding article.
-	 */
-	public function embed_article() {
-
-		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
-
-		$block_id 		= isset( $_REQUEST[ 'block_id' ] ) ? sanitize_text_field( $_REQUEST[ 'block_id' ] ) : '';
-		$thepost 		= isset( $_REQUEST[ 'thepost' ] ) ? sanitize_text_field( $_REQUEST[ 'thepost' ] ) : '';
-		$date_format 	= isset( $_REQUEST[ 'date_format' ] ) ? sanitize_text_field( $_REQUEST[ 'date_format' ] ) : '';
-
-		if ( is_numeric( $thepost ) ) {
-			$thearticle = get_post( $thepost );
-		} else {
-			$post_id 	= url_to_postid( $thepost );
-			$thearticle	= get_post( $post_id );
-		}
-
-		if ( empty( $thepost ) ) {
-			wp_send_json( array( 'error' => __( 'Please search for a post or type some URL.', 'newsletter-glue' ) ) );
-		}
-
-		if ( ! isset( $thearticle->ID ) || empty( $thearticle->ID ) ) {
-			wp_send_json( array( 'error' => __( 'Invalid post.', 'newsletter-glue' ) ) );
-		}
-
-		$articles = get_option( 'ngl_articles_' . $block_id );
-
-		if ( ! empty( $articles ) ) {
-			foreach( $articles as $article => $article_data ) {
-				foreach( $article_data as $key => $value ) {
-					if ( $key == 'post_id' && $value == $thearticle->ID ) {
-						wp_send_json( array( 'error' => __( 'This post is already embedded.', 'newsletter-glue' ) ) );
-					}
-				}
-			}
-		} else {
-			$articles = array();
-		}
-
-		$articles[] = array(
-			'post_id' 	=> $thearticle->ID
-		);
-
-		update_option( 'ngl_articles_' . $block_id, $articles );
-
-		$post_tags 		= wp_get_post_tags( $thearticle->ID );
-		$display_tags 	= '';
-
-		if ( $post_tags ) {
-			$display_tags = '<div class="ngl-article-tags">';
-			foreach( $post_tags as $tag ) {
-				$display_tags .= '<div class="ngl-article-tag">' . $tag->name . '</div>';
-			}
-			$display_tags .= '</div>';
-		}
-
-		$featured_image  = ( has_post_thumbnail( $thearticle->ID ) ) ? wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) : '';
-
-		$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
-
-		$result = array(
-			'block_id'			=> $block_id,
-			'thepost'			=> $thepost,
-			'post'				=> $thearticle,
-			'post_id'			=> $thearticle->ID,
-			'excerpt'			=> $this->display_excerpt( $thearticle->ID, $thecontent ),
-			'title'				=> get_the_title( $thearticle->ID ),
-			'permalink'			=> get_permalink( $thearticle->ID ),
-			'date'				=> date_i18n( $date_format, strtotime( $thearticle->post_date ) ),
-			'tags'				=> $display_tags,
-			'featured_image'	=> $featured_image,
-			'success'			=> __( 'Add another post', 'newsletter-glue' ),
-		);
-
-		wp_send_json( $result );
-
-	}
-
-	/**
 	 * Remove this block div from article embeds.
 	 */
 	public function remove_div( $content, $post_id ) {
@@ -579,7 +507,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		if ( ! empty( $custom_data ) && isset( $custom_data[ $post_id ][ 'title' ] ) ) {
 			return stripslashes_deep( $custom_data[ $post_id ][ 'title' ] );
 		} else {
-			return get_the_title( $post );
+			return ! empty( $post->title ) ? $post->title : get_the_title( $post );
 		}
 
 	}
@@ -648,6 +576,241 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			$where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . $wpdb->esc_like( $term ) . '%\'';
 		}
 		return $where;
+	}
+
+	/**
+	 * Remove article.
+	 */
+	public function remove_article() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$key 		= isset( $_REQUEST[ 'key' ] ) ? absint( $_REQUEST[ 'key' ] ) : '';
+		$block_id 	= isset( $_REQUEST[ 'block_id' ] ) ? sanitize_text_field( $_REQUEST[ 'block_id' ] ) : '';
+
+		$articles = get_option( 'ngl_articles_' . $block_id );
+
+		if ( ! empty( $articles ) && isset( $articles[ $key ] ) ) {
+			unset( $articles[ $key ] );
+			if ( ! empty( $articles ) ) {
+				update_option( 'ngl_articles_' . $block_id, $articles );
+			} else {
+				delete_option( 'ngl_articles_' . $block_id );
+			}
+		}
+
+		wp_die();
+
+	}
+
+	/**
+	 * Order article.
+	 */
+	public function order_articles() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$block_id 	= isset( $_REQUEST[ 'block_id' ] ) ? sanitize_text_field( $_REQUEST[ 'block_id' ] ) : '';
+		$keys 		= isset( $_REQUEST[ 'keys' ] ) ? sanitize_text_field( $_REQUEST[ 'keys' ] ) : '';
+		$values 	= isset( $_REQUEST[ 'values' ] ) ? sanitize_text_field( $_REQUEST[ 'values' ] ) : '';
+
+		if ( $keys && $values ) {
+			$updated = array();
+			$articles = get_option( 'ngl_articles_' . $block_id );
+			$order = array_combine( explode( ',', $keys ), explode( ',', $values ) );
+			foreach( $order as $key => $value ) {
+				foreach( $articles as $index => $data ) {
+					if ( $data[ 'post_id' ] == $value ) {
+						$updated[ $key ] = $data;
+					}
+				}
+			}
+			update_option( 'ngl_articles_' . $block_id, $updated );
+		}
+
+	}
+
+	/**
+	 * Get a remote URL.
+	 */
+	public function get_remote_url( $url ) {
+
+		$html = get_transient( 'ngl_' . md5( $url ) );
+
+		if ( false === $html ) {
+			$html = file_get_contents( $url );
+			if ( $html ) {
+				set_transient( 'ngl_' . md5( $url ), $html, 2628000 );
+			}
+		}
+
+		$data = new stdclass;
+
+		$data->is_remote 	= true;
+		$data->favicon 		= 'https://www.google.com/s2/favicons?sz=32&domain_url=' . $url; 
+		$data->ID			= $url;
+
+		$doc = new DOMDocument();
+		libxml_use_internal_errors( true );
+		$doc->loadHTML( $html );
+		libxml_clear_errors();
+		$nodes = $doc->getElementsByTagName( 'title' );
+		$data->title = $nodes->item(0)->nodeValue;
+
+		$metas = $doc->getElementsByTagName( 'meta' );
+
+		for ( $i = 0; $i < $metas->length; $i++ ) {
+			$meta = $metas->item( $i );
+			if ( $meta->getAttribute( 'name' ) == 'description' ) {
+				$data->post_content = $meta->getAttribute( 'content' );
+			}
+		}
+
+		if ( empty( $data->post_content ) ) {
+			$data->post_content = __( 'No description found.', 'newsletter-glue' );
+		}
+
+		return $data;
+
+	}
+
+	/**
+	 * Get permalink.
+	 */
+	public function get_permalink( $thearticle ) {
+		return ! empty( $thearticle->is_remote ) ? $thearticle->ID : get_permalink( $thearticle->ID );
+	}
+
+	/**
+	 * Get favicon.
+	 */
+	public function get_favicon( $thearticle ) {
+		
+		if ( ! empty( $thearticle->favicon ) ) {
+			return $thearticle->favicon;
+		}
+
+		if ( $_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['REMOTE_ADDR'] == '::1' ) {
+			$url = 'https://newsletterglue.com';
+		} else {
+			$url = home_url();
+		}
+
+		$favicon = 'https://www.google.com/s2/favicons?sz=32&domain_url=' . $url;
+
+		return $favicon;
+	}
+
+	/**
+	 * AJAX embedding article.
+	 */
+	public function embed_article() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$block_id 		= isset( $_REQUEST[ 'block_id' ] ) ? sanitize_text_field( $_REQUEST[ 'block_id' ] ) : '';
+		$thepost 		= isset( $_REQUEST[ 'thepost' ] ) ? sanitize_text_field( $_REQUEST[ 'thepost' ] ) : '';
+		$date_format 	= isset( $_REQUEST[ 'date_format' ] ) ? sanitize_text_field( $_REQUEST[ 'date_format' ] ) : '';
+		$key 	        = isset( $_REQUEST[ 'key' ] ) ? absint( $_REQUEST[ 'key' ] ) : 1;
+
+		if ( is_numeric( $thepost ) ) {
+			$thearticle = get_post( $thepost );
+		} else {
+			$post_id 	= url_to_postid( $thepost );
+			$thearticle	= get_post( $post_id );
+		}
+
+		if ( empty( $thepost ) ) {
+			wp_send_json( array( 'error' => __( 'Please search for a post or type some URL.', 'newsletter-glue' ) ) );
+		}
+
+		if ( ! isset( $thearticle->ID ) || empty( $thearticle->ID ) ) {
+			if ( filter_var( $thepost, FILTER_VALIDATE_URL ) ) {
+				$thearticle = $this->get_remote_url( $thepost );
+			} else {
+				wp_send_json( array( 'error' => __( 'Invalid post.', 'newsletter-glue' ) ) );
+			}
+		}
+
+		$articles = get_option( 'ngl_articles_' . $block_id );
+
+		if ( ! empty( $articles ) ) {
+			foreach( $articles as $article => $article_data ) {
+				foreach( $article_data as $index => $value ) {
+					if ( $index == 'post_id' && $value == $thearticle->ID ) {
+						wp_send_json( array( 'error' => __( 'This post is already embedded.', 'newsletter-glue' ) ) );
+					}
+				}
+			}
+		} else {
+			$articles = array();
+		}
+
+		$embed = array(
+			'post_id' 	=> $thearticle->ID,
+			'favicon'   => $this->get_favicon( $thearticle ),
+		);
+
+		if ( ! empty( $thearticle->is_remote ) ) {
+			foreach( $thearticle as $remote_key => $remote_value ) {
+				$embed[ $remote_key ] = $remote_value;
+			}
+		}
+
+		$articles[ $key ] = $embed;
+
+		update_option( 'ngl_articles_' . $block_id, $articles );
+
+		$post_tags 		= wp_get_post_tags( $thearticle->ID );
+		$display_tags 	= '';
+
+		if ( $post_tags ) {
+			$display_tags = '<div class="ngl-article-tags">';
+			foreach( $post_tags as $tag ) {
+				$display_tags .= '<div class="ngl-article-tag">' . $tag->name . '</div>';
+			}
+			$display_tags .= '</div>';
+		}
+
+		$featured_image  = ( has_post_thumbnail( $thearticle->ID ) ) ? wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) : '';
+
+		$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
+
+		// Generate html for item.
+		$item = '<div class="ngl-article-list-item" data-key="' . $key . '" data-post-id="' . $thearticle->ID . '">
+						<div class="ngl-article-list-icon"><img src="' . $this->get_favicon( $thearticle ) . '" /></div>
+						<div class="ngl-article-list-info">
+							<div class="ngl-article-list-title">' . $this->display_title( $thearticle->ID, $thearticle ) . '</div>
+							<div class="ngl-article-list-url">' . $this->get_permalink( $thearticle ) . '</div>
+							<div class="ngl-article-list-action">
+								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i>' . __( 'Remove post', 'newsletter-glue' ) . '</a>
+							</div>
+						</div>
+						<div class="ngl-article-list-move">
+							<div class="ngl-article-list-move-up"><a href="#"><span class="material-icons">expand_less</span></a></div>
+							<div class="ngl-article-list-move-down"><a href="#"><span class="material-icons">expand_more</span></a></div>
+						</div>
+					</div>';
+
+		$result = array(
+			'key'				=> $key,
+			'block_id'			=> $block_id,
+			'thepost'			=> $thepost,
+			'post'				=> $thearticle,
+			'post_id'			=> $thearticle->ID,
+			'excerpt'			=> $this->display_excerpt( $thearticle->ID, $thecontent ),
+			'title'				=> $this->display_title( $thearticle->ID, $thearticle ),
+			'permalink'			=> $this->get_permalink( $thearticle ),
+			'date'				=> ! empty( $thearticle->post_date ) ? date_i18n( $date_format, strtotime( $thearticle->post_date ) ) : '',
+			'tags'				=> $display_tags,
+			'featured_image'	=> $featured_image,
+			'item'				=> $item,
+			'embed'				=> $embed,
+			'success'			=> __( 'Add another post', 'newsletter-glue' ),
+		);
+
+		wp_send_json( $result );
+
 	}
 
 }

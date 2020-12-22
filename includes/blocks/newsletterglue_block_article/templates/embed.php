@@ -33,12 +33,46 @@ $editable = false;
 				</form>
 			</div>
 			<div class="ngl-article-list">
-				<div class="ngl-article-list-head ngl-is-expanded"><?php _e( 'Reorder, change or remove posts', 'newsletter-glue' ); ?> <span class="material-icons">expand_more</span></div>
+				<a href="#" class="ngl-article-list-head"><?php _e( 'Reorder, change or remove posts', 'newsletter-glue' ); ?> <span class="material-icons">expand_more</span></a>
 				<div class="ngl-article-list-wrap">
 
 					<?php if ( empty( $articles ) ) : ?>
 					<div class="ngl-article-list-empty"><?php _e( 'There&rsquo;s nothing here yet. Add your first post above.', 'newsletter-glue' ); ?></div>
 					<?php endif; ?>
+
+					<?php
+						if ( $articles ) :
+							krsort( $articles );
+							foreach( $articles as $key => $article ) :
+
+							if ( ! empty( $article[ 'is_remote' ] ) ) {
+								$thearticle = $this->get_remote_url( $article[ 'post_id' ] );
+							} else {
+								$thearticle = get_post( $article[ 'post_id' ] );
+								if ( empty( $thearticle->ID ) ) {
+									unset( $articles[ $key ] );
+									continue;
+								}
+							}
+					?>
+					<div class="ngl-article-list-item" data-key="<?php echo $key; ?>" data-post-id="<?php echo $article[ 'post_id' ]; ?>">
+						<div class="ngl-article-list-icon"><img src="<?php echo esc_url( $this->get_favicon( $thearticle ) ); ?>" /></div>
+						<div class="ngl-article-list-info">
+							<div class="ngl-article-list-title"><?php echo $this->display_title( $thearticle->ID, $thearticle ); ?></div>
+							<div class="ngl-article-list-url"><?php echo $this->get_permalink( $thearticle ); ?></div>
+							<div class="ngl-article-list-action">
+								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i><?php _e( 'Remove post', 'newsletter-glue' ); ?></a>
+							</div>
+						</div>
+						<div class="ngl-article-list-move">
+							<div class="ngl-article-list-move-up"><a href="#"><span class="material-icons">expand_less</span></a></div>
+							<div class="ngl-article-list-move-down"><a href="#"><span class="material-icons">expand_more</span></a></div>
+						</div>
+					</div>
+					<?php
+							endforeach;
+						endif;
+					?>
 
 				</div>
 			</div>
@@ -67,7 +101,7 @@ $editable = false;
 		$display_date       = ( $show_date ) ? '<div class="ngl-article-date">{date}</div>' : '';
 	?>
 
-	<div class="ngl-article ngl-article-img-<?php echo $image_position; ?> ngl-article-placeholder" data-post-id="{post_id}" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
+	<div class="ngl-article ngl-article-img-<?php echo $image_position; ?> ngl-article-placeholder" data-key="{key}" data-post-id="{post_id}" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>;">
 
 				<?php
 					if ( $table_ratio == 'full' ) :
@@ -114,10 +148,14 @@ $editable = false;
 				// Internal post.
 				if ( ! empty( $article[ 'post_id' ] ) ) :
 
-					$thearticle 		= get_post( $article[ 'post_id' ] );
-					if ( empty( $thearticle->ID ) ) {
-						unset( $articles[ $key ] );
-						continue;
+					if ( ! empty( $article[ 'is_remote' ] ) ) {
+						$thearticle = $this->get_remote_url( $article[ 'post_id' ] );
+					} else {
+						$thearticle = get_post( $article[ 'post_id' ] );
+						if ( empty( $thearticle->ID ) ) {
+							unset( $articles[ $key ] );
+							continue;
+						}
 					}
 
 					$tags 				= wp_get_post_tags( $thearticle->ID );
@@ -129,12 +167,12 @@ $editable = false;
 						}
 						$display_tags .= '</div>';
 					}
-					$display_image  	= ( has_post_thumbnail( $thearticle->ID ) && $show_image ) ? '<div class="ngl-article-featured"><a href="' . get_permalink( $thearticle->ID ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
+					$display_image  	= ( has_post_thumbnail( $thearticle->ID ) && $show_image ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
 					$thecontent 		= apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
-					$display_title 		= '<div class="ngl-article-title"><a href="' . get_permalink( $thearticle->ID ) . '" target="' . $new_window . '" rel="' . $nofollow . '" style="' . $link_color . '">';
+					$display_title 		= '<div class="ngl-article-title"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '" style="' . $link_color . '">';
 					$display_title     .= '<span ' . $editable . '>' . $this->display_title( $thearticle->ID, $thearticle ) . '</span></a></div>';
 					$display_excerpt 	= '<div class="ngl-article-excerpt" ' . $editable . '>' . $this->display_excerpt( $thearticle->ID, $thecontent ) . '</div>';
-					$display_date    	= ( $show_date ) ? '<div class="ngl-article-date">' . date_i18n( $date_format, strtotime( $thearticle->post_date ) ) . '</div>' : '';
+					$display_date    	= ( $show_date && ! empty( $thearticle->post_date ) ) ? '<div class="ngl-article-date">' . date_i18n( $date_format, strtotime( $thearticle->post_date ) ) . '</div>' : '';
 
 				else :
 

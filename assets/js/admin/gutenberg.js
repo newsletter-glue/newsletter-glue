@@ -1,6 +1,42 @@
 ( function( $ ) {
 	"use strict";
 
+	// Reorder keys.
+	function ngl_reorder_keys( wrap ) {
+
+		wrap.find( '.ngl-article-list-item' ).each( function() {
+			var elements = wrap.find( '.ngl-article-list-item' );
+			var theindex = elements.length - elements.index( $( this ) );
+			$( this ).attr( 'data-key', theindex );
+		} );
+
+		wrap.find( '.ngl-articles-wrap .ngl-article:visible' ).each( function() {
+			var elements = wrap.find( '.ngl-article:visible' );
+			var theindex = elements.length - elements.index( $( this ) );
+			$( this ).attr( 'data-key', theindex );
+		} );
+
+		var block_id 	= wrap.attr( 'data-block-id' );
+		var keys        = [];
+		var values      = [];
+
+		wrap.find( '.ngl-article-list-item' ).each( function() {
+			var key = $( this ).attr( 'data-key' );
+			var id  = $( this ).attr( 'data-post-id' );
+			keys.push( key );
+			values.push( id );
+		} );
+
+		var data = 'action=newsletterglue_ajax_order_articles&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&keys=' + keys + '&values=' + values;
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data
+		} );
+
+	}
+
 	// Is valid URL.
 	function is_ngl_valid_url( string ) {
 		  let url;
@@ -50,7 +86,16 @@
 			thepost = el.find( '.ngl_article_s' ).val();
 		}
 
-		var data = 'action=newsletterglue_ajax_add_article&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&thepost=' + encodeURIComponent( thepost ) + '&date_format=' + encodeURIComponent( date_format );
+		var wrap = el.find( '.ngl-article-list-wrap' );
+		if ( wrap.find( '.ngl-article-list-item' ).length ) {
+			var key = parseInt( wrap.find( '.ngl-article-list-item' ).first().attr( 'data-key' ) ) + 1;
+		} else {
+			var key = 1;
+		}
+
+		var data = 'action=newsletterglue_ajax_add_article&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&key=' + key + '&thepost=' + encodeURIComponent( thepost ) + '&date_format=' + encodeURIComponent( date_format );
+
+		console.log( data );
 
 		$.ajax( {
 			type : 'post',
@@ -60,12 +105,11 @@
 				el.find( '.ngl-articles-add .ngl-article-status' ).removeClass( 'ngl-article-error ngl-article-success' ).empty();
 			},
 			success: function( response ) {
-				console.log( response );
 				if ( response.error ) {
 					el.find( '.ngl-articles-add .ngl-article-status' ).addClass( 'ngl-article-error' ).html( response.error );
 					el.find( '.ngl_article_s' ).focus();
 				}
-				if ( response.date ) {
+				if ( response.key ) {
 
 					el.find( '.ngl-articles-add .ngl-article-status' ).addClass( 'ngl-article-success' ).html( response.success );
 					el.find( '.ngl_article_s' ).val( '' ).attr( 'data-post', '' );
@@ -78,11 +122,15 @@
 					cloned.html( cloned.html().replace( '{date}', response.date ) );
 					cloned.html( cloned.html().replace( '{featured_image}', response.featured_image ) );
 					cloned.attr( 'data-post-id', response.post_id );
+					cloned.attr( 'data-key', response.key );
 					cloned.prependTo( el.find( '.ngl-articles-wrap' ) ).removeClass( 'ngl-article-placeholder' );
 
 					if ( el.find( '.ngl-article-list-empty' ).length ) {
 						el.find( '.ngl-article-list-empty' ).hide();
 					}
+
+					el.find( '.ngl-article-list-wrap' ).prepend( response.item );
+					el.find( '.ngl-article-list-empty' ).remove();
 
 				}
 			}
@@ -176,9 +224,13 @@
 	// When title is changed.
 	$( document ).on( 'change', '.ngl-article-title span[contenteditable]', function() {
 
+		var wrap	= $( this ).parents( '.ngl-articles' );
 		var post_id = $( this ).parents( '.ngl-article' ).attr( 'data-post-id' );
+		var key 	= $( this ).parents( '.ngl-article' ).attr( 'data-key' );
 		var title   = $( this ).html();
-		var data = 'action=newsletterglue_ajax_update_title&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id + '&title=' + encodeURIComponent( title );
+		var data 	= 'action=newsletterglue_ajax_update_title&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id + '&title=' + encodeURIComponent( title );
+
+		wrap.find( '.ngl-article-list-item[data-key=' + key + '] .ngl-article-list-title' ).html( title );
 
 		$.ajax( {
 			type : 'post',
@@ -249,8 +301,12 @@
 	} );
 
 	// When a list head is clicked.
-	$( document ).on( 'click', '.ngl-is-expanded', function() {
+	$( document ).on( 'click', '.ngl-article-list-head', function( event ) {
+
+		event.preventDefault();
+
 		var wrap = $( this ).parent().find( '.ngl-article-list-wrap' );
+
 		if ( wrap.is( ':visible' ) ) {
 			$( this ).find( 'span' ).html( 'expand_less' );
 			wrap.hide();
@@ -258,6 +314,79 @@
 			$( this ).find( 'span' ).html( 'expand_more' );
 			wrap.show();
 		}
+
+		return false;
+
+	} );
+
+	// Remove an article.
+	$( document ).on( 'click', '.ngl-article-list-red', function( event ) {
+		event.preventDefault();
+
+		var wrap		= $( this ).parents( '.ngl-article-list-wrap' );
+		var item 		= $( this ).parents( '.ngl-article-list-item' );
+		var block_id 	= $( this ).parents( '.ngl-articles' ).attr( 'data-block-id' );
+		var key			= item.attr( 'data-key' );
+
+		var data = 'action=newsletterglue_ajax_remove_article&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&key=' + encodeURIComponent( key );
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data,
+			beforeSend: function() {
+				item.remove();
+				$( '.ngl-article[data-key=' + key + ']' ).remove();
+				if ( wrap.find( '.ngl-article-list-item' ).length == 0 ) {
+					wrap.append( '<div class="ngl-article-list-empty">' + newsletterglue_params.no_posts_found + '</div>' );
+				} else {
+					wrap.find( '.ngl-article-list-empty' ).remove();
+				}
+			},
+			success: function( response ) {
+
+			}
+		} );
+
+		return false;
+	} );
+
+	// Move article down.
+	$( document ).on( 'click', '.ngl-article-list-move-down a', function( event ) {
+		event.preventDefault();
+		var ajax = false;
+		var wrap = $( this ).parents( '.ngl-articles' );
+		var item = $( this ).parents( '.ngl-article-list-item' );
+		var key  = item.attr( 'data-key' );
+		var post = wrap.find( '.ngl-article[data-key=' + key + ']' );
+		var next = item.next();
+		var next_post = post.next( '.ngl-article' );
+		if ( next.length !== 0 ) {
+			item.insertAfter( next );
+			post.insertAfter( next_post );
+			ngl_reorder_keys( wrap );
+		}
+
+		return false;
+	} );
+
+	// Move article up.
+	$( document ).on( 'click', '.ngl-article-list-move-up a', function( event ) {
+		event.preventDefault();
+		var ajax = false;
+		var wrap = $( this ).parents( '.ngl-articles' );
+		var item = $( this ).parents( '.ngl-article-list-item' );
+		var key  = item.attr( 'data-key' );
+		var post = wrap.find( '.ngl-article[data-key=' + key + ']' );
+		var prev = item.prev();
+		var prev_post = post.prev( '.ngl-article' );
+		if ( prev.length !== 0 ) {
+			item.insertBefore( prev );
+			post.insertBefore( prev_post );
+			ngl_reorder_keys( wrap );
+		}
+
+		return false;
 	} );
 
 } )( jQuery );
