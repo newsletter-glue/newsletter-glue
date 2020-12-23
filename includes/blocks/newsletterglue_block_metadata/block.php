@@ -193,20 +193,20 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		}
 
 		.ngl-metadata-map-pin {
-			width: 12px;
-			display: inline-block;
+			width: 12px !important;
+			display: inline-block !important;
 			margin: 0 4px 0 0 !important;
-			position: relative;
-			top: 9px;
-			vertical-align: top;
+			position: relative !important;
+			top: 9px !important;
+			vertical-align: top !important;
 		}
 
 		.ngl-metadata-permalink-arrow {
-			width: 10px;
-			display: inline-block;
+			width: 10px !important;
+			display: inline-block !important;
 			margin: 0 0 0 4px !important;
-			position: relative;
-			top: 2px;
+			position: relative !important;
+			top: 2px !important;
 		}
 
 		.ngl-metadata-permalink {
