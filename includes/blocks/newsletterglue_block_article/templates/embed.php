@@ -62,6 +62,7 @@ $editable = false;
 							<div class="ngl-article-list-url"><?php echo $this->get_permalink( $thearticle ); ?></div>
 							<div class="ngl-article-list-action">
 								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i><?php _e( 'Remove post', 'newsletter-glue' ); ?></a>
+								<?php if ( ! empty( $thearticle->is_remote ) ) : ?><a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i><?php _e( 'Refresh', 'newsletter-glue' ); ?></a><?php endif; ?>
 							</div>
 						</div>
 						<div class="ngl-article-list-move">

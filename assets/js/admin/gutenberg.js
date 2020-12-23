@@ -315,6 +315,48 @@
 
 	} );
 
+	// Refresh an external URL.
+	$( document ).on( 'click', '.ngl-article-list-refresh', function( event ) {
+		event.preventDefault();
+
+		var el			= $( this );
+		var wrap		= $( this ).parents( '.ngl-article-list-wrap' );
+		var item 		= $( this ).parents( '.ngl-article-list-item' );
+		var block_id 	= $( this ).parents( '.ngl-articles' ).attr( 'data-block-id' );
+		var key			= item.attr( 'data-key' );
+		var thepost		= item.attr( 'data-post-id' );
+		var post		= $( this ).parents( '.ngl-articles' ).find( '.ngl-article[data-key=' + key + ']' );
+		var data 		= 'action=newsletterglue_ajax_clear_cache&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&key=' + encodeURIComponent( key ) + '&thepost=' + encodeURIComponent( thepost );
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data,
+			beforeSend: function() {
+				el.addClass( 'ngl-in-progress' );
+				post.addClass( 'ngl-in-progress' );
+			},
+			success: function( response ) {
+				el.removeClass( 'ngl-in-progress' );
+				post.removeClass( 'ngl-in-progress' );
+				if ( response ) {
+					item.replaceWith( response.item );
+					if ( response.title ) {
+						post.find( '.ngl-article-title span' ).html( response.title );
+					}
+					if ( response.featured_image ) {
+						post.find( '.ngl-article-featured img' ).attr( 'src', response.featured_image );
+					}
+					if ( response.excerpt ) {
+						post.find( '.ngl-article-excerpt' ).html( response.excerpt );
+					}
+				}
+			}
+		} );
+
+		return false;
+	} );
+
 	// Remove an article.
 	$( document ).on( 'click', '.ngl-article-list-red', function( event ) {
 		event.preventDefault();

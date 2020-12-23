@@ -41,6 +41,9 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			add_action( 'wp_ajax_newsletterglue_ajax_order_articles', array( $this, 'order_articles' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_order_articles', array( $this, 'order_articles' ) );
 
+			add_action( 'wp_ajax_newsletterglue_ajax_clear_cache', array( $this, 'clear_cache' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_clear_cache', array( $this, 'clear_cache' ) );
+
 			add_filter( 'newsletterglue_article_embed_content', array( $this, 'remove_div' ), 50, 2 );
 		}
 
@@ -325,7 +328,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 }
 
 .ngl-article img {
-	display: inline-block;
+	display: block;
 	overflow: hidden;
 }
 
@@ -335,7 +338,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 }
 
 .ngl-article-title {
-	margin: 0 0 4px;
+	margin: 0 0 8px;
 	line-height: 1.4;
 }
 
@@ -348,7 +351,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 }
 
 .ngl-article-featured a {
-	display: inline-block;
+	display: block;
 }
 
 .ngl-article-featured img {
@@ -422,8 +425,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 .ngl-articles-70_30 .ngl-article-left { display: inline-block; width: 69%; vertical-align: top; }
 .ngl-articles-70_30 .ngl-article-right { display: inline-block; width: 30%; vertical-align: top; }
 
-.ngl-article-right .ngl-article-featured { text-align: right; }
-.ngl-article-left .ngl-article-featured { text-align: right; }
+.ngl-article-right .ngl-article-featured { margin: 0; }
+.ngl-article-left .ngl-article-featured { margin: 0; }
 
 .ngl-article-left-mobile {
 	display: none !important;
@@ -668,12 +671,12 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	 */
 	public function get_remote_url( $url ) {
 
-		$html = get_transient( 'ngl_' . md5( $url ) );
+		$html = get_transient( 'ngl_' . md5( untrailingslashit( $url ) ) );
 
 		if ( false === $html ) {
 			$html = file_get_contents( $url );
 			if ( $html ) {
-				set_transient( 'ngl_' . md5( $url ), $html, 2628000 );
+				set_transient( 'ngl_' . md5( untrailingslashit( $url ) ), $html, 2628000 );
 			}
 		}
 
@@ -826,8 +829,10 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		if ( ! empty( $thearticle->is_remote ) ) {
 			$featured_image  = $thearticle->image_url;
+			$refresh_icon    = '<a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i>' . __( 'Refresh', 'newsletter-glue' ) . '</a>';
 		} else {
 			$featured_image  = ( has_post_thumbnail( $thearticle->ID ) ) ? wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) : $this->default_image_url();
+			$refresh_icon	 = '';
 		}
 
 		$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
@@ -839,7 +844,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 							<div class="ngl-article-list-title">' . $this->display_title( $thearticle->ID, $thearticle ) . '</div>
 							<div class="ngl-article-list-url">' . $this->get_permalink( $thearticle ) . '</div>
 							<div class="ngl-article-list-action">
-								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i>' . __( 'Remove post', 'newsletter-glue' ) . '</a>
+								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i>' . __( 'Remove post', 'newsletter-glue' ) . '</a>' . $refresh_icon . '
 							</div>
 						</div>
 						<div class="ngl-article-list-move">
@@ -863,6 +868,71 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'item'				=> $item,
 			'embed'				=> $embed,
 			'success'			=> __( 'Add another post', 'newsletter-glue' ),
+		);
+
+		wp_send_json( $result );
+
+	}
+
+	/**
+	 * Clear cache for external links.
+	 */
+	public function clear_cache() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$thepost 		= isset( $_REQUEST[ 'thepost' ] ) ? sanitize_text_field( $_REQUEST[ 'thepost' ] ) : '';
+		$block_id 		= isset( $_REQUEST[ 'block_id' ] ) ? sanitize_text_field( $_REQUEST[ 'block_id' ] ) : '';
+		$key 	        = isset( $_REQUEST[ 'key' ] ) ? absint( $_REQUEST[ 'key' ] ) : 1;
+
+		// Remove cache.
+		delete_transient( 'ngl_' . md5( untrailingslashit( $thepost ) ) );
+
+		$thearticle = $this->get_remote_url( $thepost );
+
+		$embed = array(
+			'post_id' 	=> $thearticle->ID,
+			'favicon'   => $this->get_favicon( $thearticle ),
+		);
+
+		if ( ! empty( $thearticle->is_remote ) ) {
+			foreach( $thearticle as $remote_key => $remote_value ) {
+				$embed[ $remote_key ] = $remote_value;
+			}
+		}
+
+		$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
+
+		// Generate html for item.
+		$refresh_icon    = '<a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i>' . __( 'Refresh', 'newsletter-glue' ) . '</a>';
+
+		$item = '<div class="ngl-article-list-item" data-key="' . $key . '" data-post-id="' . $thearticle->ID . '">
+						<div class="ngl-article-list-icon"><img src="' . $this->get_favicon( $thearticle ) . '" /></div>
+						<div class="ngl-article-list-info">
+							<div class="ngl-article-list-title">' . $this->display_title( $thearticle->ID, $thearticle ) . '</div>
+							<div class="ngl-article-list-url">' . $this->get_permalink( $thearticle ) . '</div>
+							<div class="ngl-article-list-action">
+								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i>' . __( 'Remove post', 'newsletter-glue' ) . '</a>' . $refresh_icon . '
+							</div>
+						</div>
+						<div class="ngl-article-list-move">
+							<div class="ngl-article-list-move-up"><a href="#"><span class="material-icons">expand_less</span></a></div>
+							<div class="ngl-article-list-move-down"><a href="#"><span class="material-icons">expand_more</span></a></div>
+						</div>
+					</div>';
+
+		$result = array(
+			'key'				=> $key,
+			'block_id'			=> $block_id,
+			'thepost'			=> $thepost,
+			'post'				=> $thearticle,
+			'post_id'			=> $thearticle->ID,
+			'excerpt'			=> $this->display_excerpt( $thearticle->ID, $thecontent ),
+			'title'				=> $this->display_title( $thearticle->ID, $thearticle ),
+			'permalink'			=> $this->get_permalink( $thearticle ),
+			'featured_image'	=> $thearticle->image_url,
+			'item'				=> $item,
+			'embed'				=> $embed,
 		);
 
 		wp_send_json( $result );

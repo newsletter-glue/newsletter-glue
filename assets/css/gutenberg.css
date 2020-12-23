@@ -380,7 +380,7 @@ p.ngl-form-checkbox input[type=checkbox] {
 }
 
 .ngl-article img {
-	display: inline-block;
+	display: block;
 	overflow: hidden;
 }
 
@@ -389,7 +389,7 @@ p.ngl-form-checkbox input[type=checkbox] {
 }
 
 .ngl-article-title {
-	margin: 0 0 4px;
+	margin: 0 0 8px;
 	line-height: 1.4;
 }
 
@@ -402,7 +402,7 @@ p.ngl-form-checkbox input[type=checkbox] {
 }
 
 .ngl-article-featured a {
-	display: inline-block;
+	display: block;
 }
 
 .ngl-article-date {
@@ -468,8 +468,8 @@ p.ngl-form-checkbox input[type=checkbox] {
 .ngl-articles-70_30 .ngl-article-left { display: inline-block; width: 69%; vertical-align: top; }
 .ngl-articles-70_30 .ngl-article-right { display: inline-block; width: 30%; vertical-align: top; }
 
-.ngl-article-right .ngl-article-featured { text-align: right; }
-.ngl-article-left .ngl-article-featured { text-align: right; }
+.ngl-article-right .ngl-article-featured { margin: 0; }
+.ngl-article-left .ngl-article-featured { margin: 0; }
 
 .ngl-article-left-mobile {
 	display: none !important;
