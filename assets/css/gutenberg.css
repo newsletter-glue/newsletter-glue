@@ -395,6 +395,7 @@ p.ngl-form-checkbox input[type=checkbox] {
 
 .ngl-article-title a {
 	font-weight: bold;
+	text-decoration: none;
 }
 
 .ngl-article-featured {
