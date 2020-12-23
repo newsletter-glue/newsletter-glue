@@ -69,6 +69,14 @@
 			link_color: {
 				'type' : 'string',
 			},
+			font_size_title: {
+				'type' : 'number',
+				'default' : 18,
+			},
+			font_size_text: {
+				'type' : 'number',
+				'default' : 14,
+			},
 			border_radius: {
 				'type' : 'number',
 				'default' : 0,
@@ -272,6 +280,36 @@
 									allowReset: true,
 									resetFallbackValue: 0,
 									onChange: ( value ) => { props.setAttributes( { image_radius: value } ); },
+								} ),
+							),
+
+						),
+
+						el( PanelBody, { title: 'Font size', initialOpen: true },
+
+							el( BaseControl, {},
+								el( RangeControl, {
+									label: 'Post title font size',
+									value: props.attributes.font_size_title,
+									initialPosition: 0,
+									min: 0,
+									max: 50,
+									allowReset: true,
+									resetFallbackValue: 18,
+									onChange: ( value ) => { props.setAttributes( { font_size_title: value } ); },
+								} ),
+							),
+
+							el( BaseControl, {},
+								el( RangeControl, {
+									label: 'Post text font size',
+									value: props.attributes.font_size_text,
+									initialPosition: 0,
+									min: 0,
+									max: 50,
+									allowReset: true,
+									resetFallbackValue: 14,
+									onChange: ( value ) => { props.setAttributes( { font_size_text: value } ); },
 								} ),
 							),
 

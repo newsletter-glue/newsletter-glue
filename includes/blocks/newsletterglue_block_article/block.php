@@ -143,6 +143,14 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 					'type'		=> 'number',
 					'default'	=> 0,
 				),
+				'font_size_title' => array(
+					'type'		=> 'number',
+					'default'	=> 18,
+				),
+				'font_size_text' => array(
+					'type'		=> 'number',
+					'default'	=> 14,
+				),
 				'border_style'	=> array(
 					'type'		=> 'string',
 					'default'	=> 'solid',
@@ -237,6 +245,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$background_color   = isset( $attributes[ 'background_color' ] ) ? $attributes[ 'background_color' ] : 'transparent';
 		$text_color   		= isset( $attributes[ 'text_color' ] ) ? $attributes[ 'text_color' ] : '';
 		$link_color   		= isset( $attributes[ 'link_color' ] ) ? $attributes[ 'link_color' ] : '';
+		$font_size_title   	= ! empty( $attributes[ 'font_size_title' ] ) ? $attributes[ 'font_size_title' ] : 18;
+		$font_size_text   	= ! empty( $attributes[ 'font_size_text' ] ) ? $attributes[ 'font_size_text' ] : 14;
 		$new_window   		= ! empty( $attributes[ 'new_window' ] ) ? '_blank' : '_self';
 		$nofollow   		= ! empty( $attributes[ 'nofollow' ] ) ? 'nofollow' : '';
 
@@ -320,18 +330,16 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 }
 
 .ngl-article {
-	font-size: 14px;
 	margin: 0 0 30px;
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 }
 
 .ngl-article-title {
 	margin: 0 0 4px;
+	line-height: 1.4;
 }
 
 .ngl-article-title a {
-	font-size: 18px;
-	line-height: 22px;
 	font-weight: bold;
 }
 
