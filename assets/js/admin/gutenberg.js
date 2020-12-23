@@ -95,8 +95,6 @@
 
 		var data = 'action=newsletterglue_ajax_add_article&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&key=' + key + '&thepost=' + encodeURIComponent( thepost ) + '&date_format=' + encodeURIComponent( date_format );
 
-		console.log( data );
-
 		$.ajax( {
 			type : 'post',
 			url : newsletterglue_params.ajaxurl,
@@ -123,6 +121,7 @@
 					cloned.html( cloned.html().replace( '{featured_image}', response.featured_image ) );
 					cloned.attr( 'data-post-id', response.post_id );
 					cloned.attr( 'data-key', response.key );
+					cloned.find( '.ngl-article-featured a' ).attr( 'href', response.permalink );
 					cloned.prependTo( el.find( '.ngl-articles-wrap' ) ).removeClass( 'ngl-article-placeholder' );
 
 					if ( el.find( '.ngl-article-list-empty' ).length ) {
@@ -261,11 +260,8 @@
 		}
 
 		if ( suggestion == term ) {
-			console.log( 'not needed' );
 			return false;
 		}
-
-		console.log( 'searching' );
 
 		suggestion = term;
 

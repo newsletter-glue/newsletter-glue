@@ -248,6 +248,23 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			$link_color = "color: $link_color !important; ";
 		}
 
+		if ( $border_color == 'transparent' && $border_size ) {
+			$border_color = '#ddd';
+		}
+
+		if ( ! $border_size && $border_radius && ( $border_color == 'transparent' ) ) {
+			if ( $background_color == 'transparent' ) {
+				$border_size = 1;
+				$border_color = '#ddd';
+			}
+		}
+
+		if ( $border_size || $border_radius ) {
+			$padding = '20px';
+		} else {
+			$padding = '0px';
+		}
+
 		$articles = get_option( 'ngl_articles_' . $block_id );
 
 		include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $this->id . '/templates/embed.php';
@@ -298,7 +315,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 }
 
 .ngl-article img {
-	display: block;
+	display: inline-block;
 	overflow: hidden;
 }
 
@@ -314,11 +331,16 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 .ngl-article-title a {
 	font-size: 18px;
+	line-height: 22px;
 	font-weight: bold;
 }
 
 .ngl-article-featured {
 	margin: 0 0 14px;
+}
+
+.ngl-article-featured a {
+	display: inline-block;
 }
 
 .ngl-article-featured img {
@@ -383,14 +405,17 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	height: auto;
 }
 
-.ngl-article-left { display: inline-block; width: 49%; vertical-align: top; }
-.ngl-article-right { display: inline-block; width: 48%; vertical-align: top; margin-left: 2%; }
+.ngl-article-left { display: inline-block; width: 49.5%; vertical-align: top; box-sizing: border-box; }
+.ngl-article-right { display: inline-block; width: 49.5%; vertical-align: top; padding-left: 20px; box-sizing: border-box; }
 
 .ngl-articles-30_70 .ngl-article-left { display: inline-block; width: 30%; vertical-align: top; }
-.ngl-articles-30_70 .ngl-article-right { display: inline-block; width: 66%; vertical-align: top; }
+.ngl-articles-30_70 .ngl-article-right { display: inline-block; width: 69%; vertical-align: top; }
 
-.ngl-articles-70_30 .ngl-article-left { display: inline-block; width: 66%; vertical-align: top; }
+.ngl-articles-70_30 .ngl-article-left { display: inline-block; width: 69%; vertical-align: top; }
 .ngl-articles-70_30 .ngl-article-right { display: inline-block; width: 30%; vertical-align: top; }
+
+.ngl-article-right .ngl-article-featured { text-align: right; }
+.ngl-article-left .ngl-article-featured { text-align: right; }
 
 .ngl-article-left-mobile {
 	display: none !important;
@@ -658,20 +683,38 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$data->title = $nodes->item(0)->nodeValue;
 
 		$metas = $doc->getElementsByTagName( 'meta' );
-
 		for ( $i = 0; $i < $metas->length; $i++ ) {
 			$meta = $metas->item( $i );
 			if ( $meta->getAttribute( 'name' ) == 'description' ) {
 				$data->post_content = $meta->getAttribute( 'content' );
 			}
+			if ( $meta->getAttribute( 'property' ) =='og:image' ) { 
+				$data->image_url = $meta->getAttribute('content');
+			}
 		}
-
 		if ( empty( $data->post_content ) ) {
 			$data->post_content = __( 'No description found.', 'newsletter-glue' );
+		}
+		if ( empty( $data->image_url ) ) {
+			$data->image_url = $this->default_image_url();
 		}
 
 		return $data;
 
+	}
+
+	/**
+	 * Get featured image URL.
+	 */
+	public function get_featured( $thearticle ) {
+		return has_post_thumbnail( $thearticle ) ? wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) : $this->default_image_url();
+	}
+
+	/**
+	 * Get default image URL.
+	 */
+	public function default_image_url() {
+		return NGL_PLUGIN_URL . 'includes/blocks/' . $this->id . '/img/placeholder.png';
 	}
 
 	/**
@@ -725,6 +768,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		}
 
 		if ( ! isset( $thearticle->ID ) || empty( $thearticle->ID ) ) {
+			$thepost = strpos( $thepost, 'http' ) !== 0 ? "https://$thepost" : $thepost;
 			if ( filter_var( $thepost, FILTER_VALIDATE_URL ) ) {
 				$thearticle = $this->get_remote_url( $thepost );
 			} else {
@@ -772,7 +816,11 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			$display_tags .= '</div>';
 		}
 
-		$featured_image  = ( has_post_thumbnail( $thearticle->ID ) ) ? wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) : '';
+		if ( ! empty( $thearticle->is_remote ) ) {
+			$featured_image  = $thearticle->image_url;
+		} else {
+			$featured_image  = ( has_post_thumbnail( $thearticle->ID ) ) ? wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) : $this->default_image_url();
+		}
 
 		$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
 

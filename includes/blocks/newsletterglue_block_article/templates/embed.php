@@ -80,20 +80,6 @@ $editable = false;
 	</div>
 
 	<?php
-		if ( $border_size ) {
-			$padding = '20px';
-		} else {
-			$padding = '0px';
-		}
-
-		if ( ! $border_size ) {
-			if ( $background_color != 'transparent' ) {
-				$padding = '20px';
-			} else {
-				$border_radius = 0;
-			}
-		}
-
 		$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="{permalink}"><img src="{featured_image}" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
 		$display_tags   	= ( $show_tags ) ? '{tags}' : '';
 		$display_title  	= '<div class="ngl-article-title"><a href="{permalink}" style="' . $link_color . '"><span ' . $editable . '>{title}</span></a></div>';
@@ -167,7 +153,13 @@ $editable = false;
 						}
 						$display_tags .= '</div>';
 					}
-					$display_image  	= ( has_post_thumbnail( $thearticle->ID ) && $show_image ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
+
+					if ( ! empty( $thearticle->is_remote ) ) {
+						$display_image  	= ( $show_image && ! empty( $thearticle->image_url ) ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $thearticle->image_url . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
+					} else {
+						$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $this->get_featured( $thearticle ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
+					}
+
 					$thecontent 		= apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
 					$display_title 		= '<div class="ngl-article-title"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '" style="' . $link_color . '">';
 					$display_title     .= '<span ' . $editable . '>' . $this->display_title( $thearticle->ID, $thearticle ) . '</span></a></div>';
@@ -180,20 +172,6 @@ $editable = false;
 
 				if ( ! $show_image ) {
 					$table_ratio = 'full';
-				}
-
-				if ( $border_size ) {
-					$padding = '20px';
-				} else {
-					$padding = '0px';
-				}
-
-				if ( ! $border_size ) {
-					if ( $background_color != 'transparent' ) {
-						$padding = '20px';
-					} else {
-						$border_radius = 0;
-					}
 				}
 		?>
 

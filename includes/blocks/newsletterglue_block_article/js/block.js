@@ -337,7 +337,7 @@
 								},
 								{
 									value: props.attributes.link_color,
-									label: 'Link color',
+									label: 'Title color',
 									onChange: ( value ) => props.setAttributes( { link_color: value } ),
 								},
 							]
