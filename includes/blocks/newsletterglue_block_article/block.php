@@ -358,7 +358,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 }
 
 .ngl-article-featured img {
-	margin-bottom: 0;
+	margin: 0 !important;
 }
 
 .ngl-article-date {

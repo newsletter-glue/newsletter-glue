@@ -645,7 +645,7 @@ figcaption {
 	text-align: center;
 }
 
-img {
+#template_inner img {
 	max-width: 100%;
 	margin: 0 auto 25px auto;
 	display: block;
@@ -795,7 +795,7 @@ p.ngl-credits a {
 		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
 	}
 
-	img {
+	#template_inner img {
 		width: auto;
 		height: auto;
 	}

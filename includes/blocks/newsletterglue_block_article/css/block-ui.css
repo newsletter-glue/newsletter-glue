@@ -35,6 +35,10 @@
 	display: block;
 }
 
+.ngl-article-featured img {
+	margin: 0 !important;
+}
+
 .ngl-article-date {
 	margin: 8px 0 0;
 	font-size: 0.95em;
