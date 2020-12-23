@@ -82,7 +82,7 @@ $editable = false;
 
 	<?php
 		$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="{permalink}"><img src="{featured_image}" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
-		$display_tags   	= ( $show_tags ) ? '{tags}' : '';
+		$display_labels     = ( $show_labels ) ? '<div class="ngl-article-labels" ' . $editable . '>{labels}</div>' : '';
 		$display_title  	= '<div class="ngl-article-title"><a href="{permalink}" style="font-size: ' . $font_size_title . 'px;' . $link_color . '"><span ' . $editable . '>{title}</span></a></div>';
 		$display_excerpt 	= '<div class="ngl-article-excerpt" ' . $editable . '>{excerpt}</div>';
 		$display_date       = ( $show_date ) ? '<div class="ngl-article-date">{date}</div>' : '';
@@ -93,7 +93,7 @@ $editable = false;
 				<?php
 					if ( $table_ratio == 'full' ) :
 						echo $display_image;
-						echo $display_tags;
+						echo $display_labels;
 						echo $display_title;
 						echo $display_excerpt;
 						echo $display_date;
@@ -101,7 +101,7 @@ $editable = false;
 						if ( $image_position == 'left' ) :
 							echo '<div class="ngl-article-left">' . $display_image . '</div>';
 							echo '<div class="ngl-article-right">';
-								echo $display_tags;
+								echo $display_labels;
 								echo $display_title;
 								echo $display_excerpt;
 								echo $display_date;
@@ -109,7 +109,7 @@ $editable = false;
 						endif;
 						if ( $image_position == 'right' ) :
 							echo '<div class="ngl-article-left">';
-								echo $display_tags;
+								echo $display_labels;
 								echo $display_title;
 								echo $display_excerpt;
 								echo $display_date;
@@ -145,15 +145,7 @@ $editable = false;
 						}
 					}
 
-					$tags 				= wp_get_post_tags( $thearticle->ID );
-					$display_tags		= '';
-					if ( $tags && $show_tags ) {
-						$display_tags 	= '<div class="ngl-article-tags">';
-						foreach( $tags as $tag ) {
-							$display_tags .= '<div class="ngl-article-tag">' . $tag->name . '</div>';
-						}
-						$display_tags .= '</div>';
-					}
+					$display_labels = ( $show_labels ) ? '<div class="ngl-article-labels" ' . $editable . '>' . $this->get_labels( $thearticle->ID ) . '</div>' : '';
 
 					if ( ! empty( $thearticle->is_remote ) ) {
 						$display_image  	= ( $show_image && ! empty( $thearticle->image_url ) ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $thearticle->image_url . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
@@ -181,7 +173,7 @@ $editable = false;
 				<?php
 					if ( $table_ratio == 'full' ) :
 						echo $display_image;
-						echo $display_tags;
+						echo $display_labels;
 						echo $display_title;
 						echo $display_excerpt;
 						echo $display_date;
@@ -189,7 +181,7 @@ $editable = false;
 						if ( $image_position == 'left' ) :
 							echo '<div class="ngl-article-left">' . $display_image . '</div>';
 							echo '<div class="ngl-article-right">';
-								echo $display_tags;
+								echo $display_labels;
 								echo $display_title;
 								echo $display_excerpt;
 								echo $display_date;
@@ -198,7 +190,7 @@ $editable = false;
 						if ( $image_position == 'right' ) :
 							echo '<div class="ngl-article-left-mobile -emogrifier-keep">' . $display_image . '</div>';
 							echo '<div class="ngl-article-left">';
-								echo $display_tags;
+								echo $display_labels;
 								echo $display_title;
 								echo $display_excerpt;
 								echo $display_date;

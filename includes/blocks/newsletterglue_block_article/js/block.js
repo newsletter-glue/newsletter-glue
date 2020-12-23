@@ -97,7 +97,7 @@
 				'type' : 'boolean',
 				'default' : true,
 			},
-			show_tags: {
+			show_labels: {
 				'type' : 'boolean',
 				'default' : true,
 			},
@@ -255,9 +255,9 @@
 
 							el( BaseControl, {},
 								el( ToggleControl, {
-									label: 'Show tag(s)',
-									onChange: ( value ) => { props.setAttributes( { show_tags: value } ); },
-									checked: props.attributes.show_tags,
+									label: 'Show labels',
+									onChange: ( value ) => { props.setAttributes( { show_labels: value } ); },
+									checked: props.attributes.show_labels,
 								} )
 							),
 

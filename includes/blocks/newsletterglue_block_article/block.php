@@ -26,6 +26,9 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			add_action( 'wp_ajax_newsletterglue_ajax_add_article', array( $this, 'embed_article' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_add_article', array( $this, 'embed_article' ) );
 
+			add_action( 'wp_ajax_newsletterglue_ajax_update_labels', array( $this, 'update_labels' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_labels', array( $this, 'update_labels' ) );
+
 			add_action( 'wp_ajax_newsletterglue_ajax_update_excerpt', array( $this, 'update_excerpt' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_excerpt', array( $this, 'update_excerpt' ) );
 
@@ -166,7 +169,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 					'type'		=> 'boolean',
 					'default'	=> true,
 				),
-				'show_tags'		=> array(
+				'show_labels'	=> array(
 					'type'		=> 'boolean',
 					'default'	=> true,
 				),
@@ -237,7 +240,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$table_ratio 		= isset( $attributes[ 'table_ratio' ] ) ? $attributes[ 'table_ratio' ] : 'full';
 		$date_format    	= isset( $attributes[ 'date_format' ] ) ? $attributes[ 'date_format' ] : $this->get_default_date_format();
 		$image_position    	= isset( $attributes[ 'image_position' ] ) ? $attributes[ 'image_position' ] : 'left';
-		$show_tags   		= isset( $attributes[ 'show_tags' ] ) ? $attributes[ 'show_tags' ] : '';
+		$show_labels   		= isset( $attributes[ 'show_labels' ] ) ? $attributes[ 'show_labels' ] : '';
 		$show_date   		= isset( $attributes[ 'show_date' ] ) ? $attributes[ 'show_date' ] : '';
 		$show_image   		= isset( $attributes[ 'show_image' ] ) ? $attributes[ 'show_image' ] : '';
 		$image_radius   	= isset( $attributes[ 'image_radius' ] ) ? $attributes[ 'image_radius' ] : 0;
@@ -360,7 +363,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 .ngl-article-date {
 	margin: 8px 0 0;
-	font-size: 13px;
+	font-size: 0.95em;
 	opacity: 0.7;
 }
 
@@ -380,16 +383,10 @@ class NGL_Block_Article extends NGL_Abstract_Block {
     line-height: normal;
 }
 
-.ngl-article-tags {
+.ngl-article-labels {
 	display: block;
 	margin: 0 0 6px;
-}
-
-.ngl-article-tag {
-	display: inline-block;
-    margin: 0 10px 0 0;
-    border-radius: 999px;
-	font-size: 13px;
+	font-size: 0.95em;
 	opacity: 0.8;
 }
 
@@ -510,6 +507,30 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	}
 
 	/**
+	 * Update labels.
+	 */
+	public function update_labels() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$post_id = isset( $_REQUEST[ 'post_id' ] ) ? sanitize_text_field( $_REQUEST[ 'post_id' ] ) : '';
+		$labels  = isset( $_REQUEST[ 'labels' ] ) ? sanitize_text_field( $_REQUEST[ 'labels' ] ) : '';
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( empty( $custom_data ) ) {
+			$custom_data = array();
+		}
+
+		$custom_data[ $post_id ][ 'labels' ] = $labels;
+
+		update_option( 'newsletterglue_article_custom_data', $custom_data );
+
+		wp_die();
+
+	}
+
+	/**
 	 * Update excerpt.
 	 */
 	public function update_excerpt() {
@@ -530,6 +551,32 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		update_option( 'newsletterglue_article_custom_data', $custom_data );
 
 		wp_die();
+
+	}
+
+	/**
+	 * Display labels.
+	 */
+	public function get_labels( $post_id ) {
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( ! empty( $custom_data ) && isset( $custom_data[ $post_id ][ 'labels' ] ) ) {
+			$labels = stripslashes_deep( $custom_data[ $post_id ][ 'labels' ] );
+			if ( ! empty( $labels ) ) {
+				return $labels;
+			} else {
+				if ( ! defined( 'NGL_IN_EMAIL' ) && ( is_admin() || defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+					return __( 'Write custom labels here...', 'newsletter-glue' );
+				}
+			}
+		}
+
+		if ( ! defined( 'NGL_IN_EMAIL' ) && ( is_admin() || defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+			return __( 'Write custom labels here...', 'newsletter-glue' );
+		}
+
+		return '';
 
 	}
 
@@ -699,6 +746,12 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			if ( $meta->getAttribute( 'name' ) == 'description' ) {
 				$data->post_content = $meta->getAttribute( 'content' );
 			}
+			if ( $meta->getAttribute( 'property' ) =='og:description' ) { 
+				$data->post_content = $meta->getAttribute('content');
+			}
+			if ( $meta->getAttribute( 'property' ) =='og:title' ) { 
+				$data->title = $meta->getAttribute('content');
+			}
 			if ( $meta->getAttribute( 'property' ) =='og:image' ) { 
 				$data->image_url = $meta->getAttribute('content');
 			}
@@ -816,17 +869,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		update_option( 'ngl_articles_' . $block_id, $articles );
 
-		$post_tags 		= wp_get_post_tags( $thearticle->ID );
-		$display_tags 	= '';
-
-		if ( $post_tags ) {
-			$display_tags = '<div class="ngl-article-tags">';
-			foreach( $post_tags as $tag ) {
-				$display_tags .= '<div class="ngl-article-tag">' . $tag->name . '</div>';
-			}
-			$display_tags .= '</div>';
-		}
-
 		if ( ! empty( $thearticle->is_remote ) ) {
 			$featured_image  = $thearticle->image_url;
 			$refresh_icon    = '<a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i>' . __( 'Refresh', 'newsletter-glue' ) . '</a>';
@@ -863,7 +905,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'title'				=> $this->display_title( $thearticle->ID, $thearticle ),
 			'permalink'			=> $this->get_permalink( $thearticle ),
 			'date'				=> ! empty( $thearticle->post_date ) ? date_i18n( $date_format, strtotime( $thearticle->post_date ) ) : '',
-			'tags'				=> $display_tags,
+			'labels'			=> $this->get_labels( $thearticle->ID ),
 			'featured_image'	=> $featured_image,
 			'item'				=> $item,
 			'embed'				=> $embed,
@@ -931,6 +973,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'title'				=> $this->display_title( $thearticle->ID, $thearticle ),
 			'permalink'			=> $this->get_permalink( $thearticle ),
 			'featured_image'	=> $thearticle->image_url,
+			'labels'			=> $this->get_labels( $thearticle->ID ),
 			'item'				=> $item,
 			'embed'				=> $embed,
 		);

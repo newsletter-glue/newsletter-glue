@@ -407,7 +407,7 @@ p.ngl-form-checkbox input[type=checkbox] {
 
 .ngl-article-date {
 	margin: 8px 0 0;
-	font-size: 13px;
+	font-size: 0.95em;
 	opacity: 0.7;
 }
 
@@ -427,16 +427,10 @@ p.ngl-form-checkbox input[type=checkbox] {
     line-height: normal;
 }
 
-.ngl-article-tags {
+.ngl-article-labels {
 	display: block;
 	margin: 0 0 6px;
-}
-
-.ngl-article-tag {
-	display: inline-block;
-    margin: 0 10px 0 0;
-    border-radius: 999px;
-	font-size: 13px;
+	font-size: 0.95em;
 	opacity: 0.8;
 }
 

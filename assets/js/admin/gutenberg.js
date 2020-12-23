@@ -114,7 +114,7 @@
 
 					var cloned = preview.clone();
 					cloned.html( cloned.html().replace( '{excerpt}', response.excerpt ) );
-					cloned.html( cloned.html().replace( '{tags}', response.tags ) );
+					cloned.html( cloned.html().replace( '{labels}', response.labels ) );
 					cloned.html( cloned.html().replace( '{title}', response.title ) );
 					cloned.html( cloned.html().replace( '{permalink}', response.permalink ) );
 					cloned.html( cloned.html().replace( '{date}', response.date ) );
@@ -172,6 +172,41 @@
 		ngl_add_article( $( this ).parents( '.ngl-articles' ) );
 
 		return false;
+
+	} );
+
+	// Change labels dynamically.
+	$( document ).on( 'focus', '.ngl-article-labels[contenteditable]', function() {
+		const $this = $(this);
+		$this.data('before', $this.html());
+		if ( $this.html() == newsletterglue_params.write_labels ) {
+			$this.html( '' );
+		}
+	}).on('blur keyup paste input', '.ngl-article-labels[contenteditable]', function() {
+		const $this = $(this);
+		if ($this.data('before') !== $this.html()) {
+			$this.data('before', $this.html());
+			$this.trigger('change');
+		}
+	}).on( 'blur', '.ngl-article-labels[contenteditable]', function() {
+		const $this = $(this);
+		if ( $this.html() == '' ) {
+			$this.html( newsletterglue_params.write_labels );
+		}
+	} );
+
+	// When labels is changed.
+	$( document ).on( 'change', '.ngl-article-labels[contenteditable]', function() {
+
+		var post_id  = $( this ).parents( '.ngl-article' ).attr( 'data-post-id' );
+		var labels   = $( this ).html();
+		var data    = 'action=newsletterglue_ajax_update_labels&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id + '&labels=' + encodeURIComponent( labels );
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data
+		} );
 
 	} );
 

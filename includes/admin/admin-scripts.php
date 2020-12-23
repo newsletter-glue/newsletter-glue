@@ -64,6 +64,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 			'no_image_set'		=> __( 'No image selected', 'newsletter-glue' ),
 			'send_newsletter'	=> sprintf( __( '<strong>Send as newsletter</strong> (%s)', 'newsletter-glue' ), '<a href="#newsletter_glue_metabox">' . __( 'check settings', 'newsletter-glue' ) . '</a>' ),
 			'no_posts_found'	=> __( 'There&rsquo;s nothing here yet. Add your first post above.', 'newsletter-glue' ),
+			'write_labels'		=> __( 'Write custom labels here...', 'newsletter-glue' ),
 		) ) );
 
 		wp_enqueue_style( 'newsletterglue_material_icons' );
