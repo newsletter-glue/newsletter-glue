@@ -762,7 +762,7 @@ p.ngl-credits a {
 	text-align: center;
 }
 
-.ngl-logo img {
+#template_inner .ngl-logo img {
 	margin: 0 !important;
 	display: inline-block !important;
 	max-height: 100px;
@@ -804,7 +804,7 @@ p.ngl-credits a {
 		min-width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px !important;
 	}
 
-	.ngl-logo img {
+	#template_inner .ngl-logo img {
 		max-height: 60px !important;
 	}
 
