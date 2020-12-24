@@ -14,12 +14,10 @@ function newsletterglue_get_blocks() {
 	$blocks = array(
 		'newsletterglue_block_show_hide_content' 	=> array(),
 		'newsletterglue_block_form' 				=> array(),
-		//'newsletterglue_block_social' 			=> array(),
 		'newsletterglue_block_article' 				=> array(),
 		'newsletterglue_block_author' 				=> array(),
 		'newsletterglue_block_callout' 				=> array(),
 		'newsletterglue_block_metadata' 			=> array(),
-		//'newsletterglue_block_table'				=> array(),
 	);
 
 	return apply_filters( 'newsletterglue_get_blocks', $blocks );
