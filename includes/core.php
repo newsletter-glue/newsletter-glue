@@ -645,7 +645,7 @@ figcaption {
 	text-align: center;
 }
 
-img {
+#template_inner img {
 	max-width: 100%;
 	margin: 0 auto 25px auto;
 	display: block;
@@ -762,7 +762,7 @@ p.ngl-credits a {
 	text-align: center;
 }
 
-.ngl-logo img {
+#template_inner .ngl-logo img {
 	margin: 0 !important;
 	display: inline-block !important;
 	max-height: 100px;
@@ -795,7 +795,7 @@ p.ngl-credits a {
 		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
 	}
 
-	img {
+	#template_inner img {
 		width: auto;
 		height: auto;
 	}
@@ -804,7 +804,7 @@ p.ngl-credits a {
 		min-width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px !important;
 	}
 
-	.ngl-logo img {
+	#template_inner .ngl-logo img {
 		max-height: 60px !important;
 	}
 
