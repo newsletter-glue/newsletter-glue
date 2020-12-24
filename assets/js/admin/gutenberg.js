@@ -355,6 +355,7 @@
 		event.preventDefault();
 
 		var el			= $( this );
+		var state		= $( this ).html();
 		var wrap		= $( this ).parents( '.ngl-article-list-wrap' );
 		var item 		= $( this ).parents( '.ngl-article-list-item' );
 		var block_id 	= $( this ).parents( '.ngl-articles' ).attr( 'data-block-id' );
@@ -368,11 +369,10 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			beforeSend: function() {
-				el.addClass( 'ngl-in-progress' );
+				el.addClass( 'ngl-in-progress' ).html( newsletterglue_params.refreshing_html );
 				post.addClass( 'ngl-in-progress' );
 			},
 			success: function( response ) {
-				el.removeClass( 'ngl-in-progress' );
 				post.removeClass( 'ngl-in-progress' );
 				if ( response ) {
 					item.replaceWith( response.item );
@@ -385,6 +385,11 @@
 					if ( response.excerpt ) {
 						post.find( '.ngl-article-excerpt' ).html( response.excerpt );
 					}
+					var new_item = wrap.find( '.ngl-article-list-item[data-key=' + key + '] .ngl-article-list-refresh' );
+					new_item.addClass( 'ngl-refreshed' ).html( newsletterglue_params.refreshed_html );
+					setTimeout( function() {
+						new_item.removeClass( 'ngl-refreshed' ).html( state );
+					}, 2000 );
 				}
 			}
 		} );

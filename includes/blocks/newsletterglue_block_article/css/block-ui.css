@@ -272,8 +272,13 @@ ul.ngl-article-suggest a:hover {
 }
 
 .ngl-in-progress {
-	opacity: 0.5;
+	opacity: 0.75;
 	pointer-events: none;
+}
+
+.ngl-refreshed {
+	color: #00A332 !important;
+		pointer-events: none;
 }
 
 .ngl-in-progress i.icon {
