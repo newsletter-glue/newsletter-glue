@@ -665,6 +665,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 			wp_send_json_success( $data );
 
+		} else {	
+			$this->remove_custom_image( $key );
 		}
 
 		wp_die();
@@ -1083,6 +1085,21 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		}
 
 		return $this->get_custom_image( $thearticle->ID ) ? esc_url( $this->get_custom_image( $thearticle->ID ) ) : $fallback;
+
+	}
+
+	/**
+	 * Get image default URL.
+	 */
+	public function get_image_default( $thearticle ) {
+
+		if ( ! empty( $thearticle->is_remote ) ) {
+			$fallback = $thearticle->image_url;
+		} else {
+			$fallback = $this->get_featured( $thearticle );
+		}
+
+		return $fallback;
 
 	}
 

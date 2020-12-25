@@ -30,6 +30,7 @@
 
 .ngl-article-featured {
 	margin: 0 0 14px;
+	position: relative;
 }
 
 .ngl-article-featured a {
@@ -38,6 +39,39 @@
 
 .ngl-article-featured img {
 	margin: 0 !important;
+}
+
+.ngl-articles-admin .ngl-article-featured a {
+	cursor: default;
+}
+
+.ngl-articles-admin .ngl-article-featured:hover .ngl-article-featured-edit {
+	opacity: 1;
+}
+
+.ngl-article-featured-edit {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	margin-top: -16px;
+	height: 32px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	opacity: 0;
+}
+
+.ngl-article-featured-edit i.icon {
+	margin: 0 5px !important;
+	width: 32px;
+    height: 32px;
+    background: #111;
+	color: #fff;
+    border-radius: 999px;
+    font-size: 18px;
+	cursor: pointer;
+	box-shadow: 0 1px 4px #353535;
 }
 
 .ngl-article-date {

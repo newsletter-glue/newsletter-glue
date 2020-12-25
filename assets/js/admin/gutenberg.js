@@ -52,6 +52,8 @@
 	// Ajax request to refresh the image preview
 	function ngl_change_image_ajax( el, key, ids ) {
 
+		var current = el.find( '.ngl-article-featured img' ).prop( 'src' );
+
 		var data = {
 			action: 'newsletterglue_save_article_image',
 			key: key,
@@ -64,7 +66,15 @@
 			url		: newsletterglue_params.ajaxurl,
 			data	: data,
 			success : function( response ) {
-				el.find( '.ngl-article-featured img' ).prop( 'src', response.data.url );
+				if ( response ) {
+					el.find( '.ngl-article-featured img' ).prop( 'src', response.data.url );
+					el.attr( 'data-attachment', response.data.id );
+					el.find( '.ngl-article-featured-edit i.trash' ).show();
+				} else {
+					el.find( '.ngl-article-featured img' ).prop( 'src', el.find( '.ngl-article-featured img' ).attr( 'data-original-src' ) );
+					el.attr( 'data-attachment', '' );
+					el.find( '.ngl-article-featured-edit i.trash' ).hide();
+				}
 			}
 		} );
 
@@ -191,6 +201,7 @@
 					cloned.attr( 'data-post-id', response.post_id );
 					cloned.attr( 'data-key', response.key );
 					cloned.find( '.ngl-article-featured a' ).attr( 'href', response.permalink );
+					cloned.find( '.ngl-article-featured img' ).attr( 'data-original-src', response.featured_image );
 					cloned.prependTo( el.find( '.ngl-articles-wrap' ) ).removeClass( 'ngl-article-placeholder' );
 
 					if ( el.find( '.ngl-article-list-empty' ).length ) {
@@ -205,12 +216,34 @@
 		} );
 	}
 
+	// When article featured image is hovered.
+	$( document ).on( 'mouseenter', '.ngl-article-featured', function() {
+		var edit = $( this ).find( '.ngl-article-featured-edit' );
+		var img  = $( this ).find( 'img' );
+		if ( img.attr( 'src' ) == img.attr( 'data-original-src' ) ) {
+			edit.find( 'i.trash' ).hide();
+		} else {
+			edit.find( 'i.trash' ).show();
+		}
+	} );
+
 	// Trigger media upload.
-	$( document ).on( 'click', '.ngl-article-featured a', function( event ) {
+	$( document ).on( 'click', '.ngl-article-featured-edit i.image.outline.icon', function( event ) {
 
 		event.preventDefault();
 
 		ngl_change_image( $( this ).parents( '.ngl-article' ) );
+
+		return false;
+
+	} );
+
+	// Trigger media remove.
+	$( document ).on( 'click', '.ngl-article-featured-edit i.trash.outline.icon', function( event ) {
+
+		event.preventDefault();
+
+		ngl_change_image_ajax( $( this ).parents( '.ngl-article' ), $( this ).parents( '.ngl-article' ).attr( 'data-post-id' ), '' );
 
 		return false;
 

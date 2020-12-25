@@ -7,6 +7,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 $editable = false;
+$show_edit_controls = false;
 
 ?>
 
@@ -14,7 +15,10 @@ $editable = false;
 
 	<?php if ( is_admin() || defined( 'REST_REQUEST' ) && REST_REQUEST ) : ?>
 	<?php if ( ! defined( 'NGL_IN_EMAIL' ) ) : ?>
-	<?php $editable = 'contenteditable="true"'; ?>
+	<?php
+		$editable = 'contenteditable="true"';
+		$show_edit_controls = '<span class="ngl-article-featured-edit"><i class="image outline icon"></i><i class="trash alternate outline icon"></i></span>';
+	?>
 	<div class="components-placeholder wp-block-embed is-large">
 		<div class="ngl-articles-add">
 			<div class="components-placeholder__label">
@@ -81,7 +85,7 @@ $editable = false;
 	</div>
 
 	<?php
-		$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="{permalink}"><img src="{featured_image}" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
+		$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="{permalink}"><img src="{featured_image}" data-original-src="{featured_image}" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a>' . $show_edit_controls . '</div>' : '';
 		$display_labels     = ( $show_labels ) ? '<div class="ngl-article-labels" ' . $editable . '>{labels}</div>' : '';
 		$display_title  	= '<div class="ngl-article-title"><a href="{permalink}" style="font-size: ' . $font_size_title . 'px;' . $link_color . '"><span ' . $editable . '>{title}</span></a></div>';
 		$display_excerpt 	= '<div class="ngl-article-excerpt" ' . $editable . '>{excerpt}</div>';
@@ -146,11 +150,14 @@ $editable = false;
 					}
 
 					$display_labels = ( $show_labels ) ? '<div class="ngl-article-labels" ' . $editable . '>' . $this->get_labels( $thearticle->ID ) . '</div>' : '';
+					if ( ! $editable && $show_labels && ! $this->get_labels( $thearticle->ID ) ) {
+						$display_labels = '';
+					}
 
 					if ( ! empty( $thearticle->is_remote ) ) {
-						$display_image  	= ( $show_image && ! empty( $thearticle->image_url ) ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $this->get_image_url( $thearticle ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
+						$display_image  	= ( $show_image && ! empty( $thearticle->image_url ) ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $this->get_image_url( $thearticle ) . '" data-original-src="' . $this->get_image_default( $thearticle ). '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a>' . $show_edit_controls . '</div>' : '';
 					} else {
-						$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $this->get_image_url( $thearticle ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
+						$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $this->get_image_url( $thearticle ) . '" data-original-src="' . $this->get_image_default( $thearticle ). '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a>' . $show_edit_controls . '</div>' : '';
 					}
 
 					$thecontent 		= apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
