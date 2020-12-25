@@ -35,6 +35,9 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			add_action( 'wp_ajax_newsletterglue_ajax_update_title', array( $this, 'update_title' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_title', array( $this, 'update_title' ) );
 
+			add_action( 'wp_ajax_newsletterglue_save_article_image', array( $this, 'save_article_image' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_save_article_image', array( $this, 'save_article_image' ) );
+
 			add_action( 'wp_ajax_newsletterglue_ajax_search_articles', array( $this, 'search_articles' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_search_articles', array( $this, 'search_articles' ) );
 
@@ -568,16 +571,103 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 				return $labels;
 			} else {
 				if ( ! defined( 'NGL_IN_EMAIL' ) && ( is_admin() || defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
-					return __( 'Write custom labels here...', 'newsletter-glue' );
+					return __( 'Add label', 'newsletter-glue' );
 				}
 			}
 		}
 
 		if ( ! defined( 'NGL_IN_EMAIL' ) && ( is_admin() || defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
-			return __( 'Write custom labels here...', 'newsletter-glue' );
+			return __( 'Add label', 'newsletter-glue' );
 		}
 
 		return '';
+
+	}
+
+	/**
+	 * Set custom image.
+	 */
+	public function set_custom_image( $post_id, $custom_image  ) {
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( empty( $custom_data ) ) {
+			$custom_data = array();
+		}
+
+		$custom_data[ $post_id ][ 'custom_image' ] = $custom_image;
+
+		update_option( 'newsletterglue_article_custom_data', $custom_data );
+
+	}
+
+	/**
+	 * Get custom image.
+	 */
+	public function get_custom_image( $post_id ) {
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( ! empty( $custom_data ) && isset( $custom_data[ $post_id ][ 'custom_image' ] ) ) {
+			return esc_attr( $custom_data[ $post_id ][ 'custom_image' ] );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Remove custom image.
+	 */
+	public function remove_custom_image( $post_id ) {
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		if ( empty( $custom_data ) ) {
+			return;
+		}
+
+		unset( $custom_data[ $post_id ][ 'custom_image' ] );
+
+		update_option( 'newsletterglue_article_custom_data', $custom_data );
+
+	}
+
+	/**
+	 * AJAX save article image.
+	 */
+	public function save_article_image() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+			wp_die( -1 );
+		}
+
+		$key = isset( $_REQUEST[ 'key' ] ) ? sanitize_text_field( $_REQUEST[ 'key' ] ) : '';
+		$ids = isset( $_REQUEST[ 'ids' ] ) ? absint( $_REQUEST[ 'ids' ] ) : '';
+
+		if ( $ids ) {
+
+			$url = wp_get_attachment_url( $ids );
+
+			// No URL.
+			if ( ! $url ) {
+				wp_send_json_error();
+			}
+
+			$data = array(
+				'id'		=> $ids,
+				'url'		=> $url,
+				'filename'	=> basename( $url ),
+			);
+
+			$this->set_custom_image( $key, $url );
+
+			wp_send_json_success( $data );
+
+		}
+
+		wp_die();
 
 	}
 
@@ -871,10 +961,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		update_option( 'ngl_articles_' . $block_id, $articles );
 
 		if ( ! empty( $thearticle->is_remote ) ) {
-			$featured_image  = $thearticle->image_url;
 			$refresh_icon    = '<a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i>' . __( 'Refresh', 'newsletter-glue' ) . '</a>';
 		} else {
-			$featured_image  = ( has_post_thumbnail( $thearticle->ID ) ) ? wp_get_attachment_url( get_post_thumbnail_id( $thearticle->ID ), 'full' ) : $this->default_image_url();
 			$refresh_icon	 = '';
 		}
 
@@ -907,7 +995,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'permalink'			=> $this->get_permalink( $thearticle ),
 			'date'				=> ! empty( $thearticle->post_date ) ? date_i18n( $date_format, strtotime( $thearticle->post_date ) ) : '',
 			'labels'			=> $this->get_labels( $thearticle->ID ),
-			'featured_image'	=> $featured_image,
+			'featured_image'	=> $this->get_image_url( $thearticle ),
 			'item'				=> $item,
 			'embed'				=> $embed,
 			'success'			=> __( 'Add another post', 'newsletter-glue' ),
@@ -973,13 +1061,28 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'excerpt'			=> $this->display_excerpt( $thearticle->ID, $thecontent ),
 			'title'				=> $this->display_title( $thearticle->ID, $thearticle ),
 			'permalink'			=> $this->get_permalink( $thearticle ),
-			'featured_image'	=> $thearticle->image_url,
+			'featured_image'	=> $this->get_image_url( $thearticle ),
 			'labels'			=> $this->get_labels( $thearticle->ID ),
 			'item'				=> $item,
 			'embed'				=> $embed,
 		);
 
 		wp_send_json( $result );
+
+	}
+
+	/**
+	 * Get image URL.
+	 */
+	public function get_image_url( $thearticle ) {
+
+		if ( ! empty( $thearticle->is_remote ) ) {
+			$fallback = $thearticle->image_url;
+		} else {
+			$fallback = $this->get_featured( $thearticle );
+		}
+
+		return $this->get_custom_image( $thearticle->ID ) ? esc_url( $this->get_custom_image( $thearticle->ID ) ) : $fallback;
 
 	}
 

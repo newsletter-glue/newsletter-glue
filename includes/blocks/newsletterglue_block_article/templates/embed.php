@@ -148,9 +148,9 @@ $editable = false;
 					$display_labels = ( $show_labels ) ? '<div class="ngl-article-labels" ' . $editable . '>' . $this->get_labels( $thearticle->ID ) . '</div>' : '';
 
 					if ( ! empty( $thearticle->is_remote ) ) {
-						$display_image  	= ( $show_image && ! empty( $thearticle->image_url ) ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $thearticle->image_url . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
+						$display_image  	= ( $show_image && ! empty( $thearticle->image_url ) ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $this->get_image_url( $thearticle ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
 					} else {
-						$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $this->get_featured( $thearticle ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
+						$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $this->get_image_url( $thearticle ) . '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a></div>' : '';
 					}
 
 					$thecontent 		= apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );

@@ -1,6 +1,75 @@
 ( function( $ ) {
 	"use strict";
 
+	// Function to trigger media library.
+	function ngl_change_image( el ) {
+
+		var image_frame;
+
+		if ( image_frame ) {
+			image_frame.open();
+		}
+
+		image_frame = wp.media( {
+			title: newsletterglue_params.select_image,
+			multiple : false,
+			library : {
+				type : 'image',
+			}
+		} );
+
+		image_frame.on( 'close', function() {
+			var selection =  image_frame.state().get( 'selection' );
+			var gallery_ids = new Array();
+			var my_index = 0;
+			selection.each( function( attachment ) {
+				gallery_ids[my_index] = attachment[ 'id' ];
+				my_index++;
+			} );
+			var ids = gallery_ids.join( ',' );
+			el.attr( 'data-attachment', ids );
+			ngl_change_image_ajax( el, el.attr( 'data-post-id' ), ids );
+		} );
+
+		image_frame.on( 'open', function() {
+			var selection = image_frame.state().get( 'selection' );
+			var ids = el.attr( 'data-attachment' ) ? el.attr( 'data-attachment' ).split( ',' ) : '';
+			if ( ids ) {
+				ids.forEach( function( id ) {
+					if ( id ) {
+						var attachment = wp.media.attachment( id );
+						attachment.fetch();
+						selection.add( attachment ? [ attachment ] : [] );
+					}
+				} );
+			}
+		} );
+
+		image_frame.open();
+
+	}
+
+	// Ajax request to refresh the image preview
+	function ngl_change_image_ajax( el, key, ids ) {
+
+		var data = {
+			action: 'newsletterglue_save_article_image',
+			key: key,
+			ids: ids,
+			security:  newsletterglue_params.ajaxnonce
+		};
+
+		$.ajax( {
+			type	: 'post',
+			url		: newsletterglue_params.ajaxurl,
+			data	: data,
+			success : function( response ) {
+				el.find( '.ngl-article-featured img' ).prop( 'src', response.data.url );
+			}
+		} );
+
+	}
+
 	// Reorder keys.
 	function ngl_reorder_keys( wrap ) {
 
@@ -135,6 +204,17 @@
 			}
 		} );
 	}
+
+	// Trigger media upload.
+	$( document ).on( 'click', '.ngl-article-featured a', function( event ) {
+
+		event.preventDefault();
+
+		ngl_change_image( $( this ).parents( '.ngl-article' ) );
+
+		return false;
+
+	} );
 
 	// Trigger on URL change.
 	$( document ).on( 'change', '#ngl_embed_url', function( event ) {

@@ -1177,7 +1177,7 @@ msgstr ""
 
 #: includes/blocks/newsletterglue_block_article/block.php:571
 #: includes/blocks/newsletterglue_block_article/block.php:577
-msgid "Write custom labels here..."
+msgid "Add label"
 msgstr ""
 
 #: includes/blocks/newsletterglue_block_article/block.php:761
