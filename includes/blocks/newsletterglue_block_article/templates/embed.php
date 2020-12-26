@@ -63,7 +63,15 @@ $show_edit_controls = false;
 						<div class="ngl-article-list-icon"><img src="<?php echo esc_url( $this->get_favicon( $thearticle ) ); ?>" /></div>
 						<div class="ngl-article-list-info">
 							<div class="ngl-article-list-title"><?php echo $this->display_title( $thearticle->ID, $thearticle ); ?></div>
-							<div class="ngl-article-list-url"><?php echo $this->get_permalink( $thearticle ); ?></div>
+							<div class="ngl-article-list-url">
+								<div class="ngl-article-list-url-edit" onclick="document.execCommand('selectAll',false,null)" contenteditable="true"><?php echo $this->get_permalink( $thearticle ); ?></div>
+								<span class="ngl-article-save-state">
+									<span class="ngl-article-save"><i class="sync icon"></i><?php _e( 'Save', 'newsletter-glue' ); ?></span>
+									<span class="ngl-article-saving"><i class="sync icon"></i><?php _e( 'Saving...', 'newsletter-glue' ); ?></span>
+									<span class="ngl-article-saved"><i class="check icon"></i><?php _e( 'Saved!', 'newsletter-glue' ); ?></span>
+									<span class="ngl-article-unsaved"><i class="close icon"></i><?php _e( 'Failed!', 'newsletter-glue' ); ?></span>
+								</span>
+							</div>
 							<div class="ngl-article-list-action">
 								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i><?php _e( 'Remove post', 'newsletter-glue' ); ?></a>
 								<?php if ( ! empty( $thearticle->is_remote ) ) : ?><a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i><?php _e( 'Refresh', 'newsletter-glue' ); ?></a><?php endif; ?>

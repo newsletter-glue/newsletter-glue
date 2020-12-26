@@ -50,6 +50,9 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			add_action( 'wp_ajax_newsletterglue_ajax_clear_cache', array( $this, 'clear_cache' ) );
 			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_clear_cache', array( $this, 'clear_cache' ) );
 
+			add_action( 'wp_ajax_newsletterglue_ajax_update_url', array( $this, 'update_url' ) );
+			add_action( 'wp_ajax_nopriv_newsletterglue_ajax_update_url', array( $this, 'update_url' ) );
+
 			add_filter( 'newsletterglue_article_embed_content', array( $this, 'remove_div' ), 50, 2 );
 		}
 
@@ -902,6 +905,119 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	}
 
 	/**
+	 * AJAX update article.
+	 */
+	public function update_url() {
+
+		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+		$block_id 		= isset( $_REQUEST[ 'block_id' ] ) ? sanitize_text_field( $_REQUEST[ 'block_id' ] ) : '';
+		$key 	        = isset( $_REQUEST[ 'key' ] ) ? absint( $_REQUEST[ 'key' ] ) : '';
+		$url 	        = isset( $_REQUEST[ 'url' ] ) ? sanitize_text_field( $_REQUEST[ 'url' ] ) : '';
+		$date_format 	= isset( $_REQUEST[ 'date_format' ] ) ? sanitize_text_field( $_REQUEST[ 'date_format' ] ) : '';
+
+		if ( ! $key || ! $block_id ) {
+			wp_die();
+		}
+
+		if ( empty( $url ) || ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
+			$error = __( 'Invalid URL.', 'newsletter-glue' );
+		}
+
+		if ( ! empty( $error ) ) {
+			wp_send_json_error( array( 'error' => $error ) );
+		}
+
+		// Try to find out if this is an internal post.
+		$post_id  = url_to_postid( $url );
+		$post     = get_post( $post_id );
+
+		$articles = get_option( 'ngl_articles_' . $block_id );
+
+		if ( empty( $post ) || empty( $post->ID ) ) {
+
+			// External.
+			$thearticle = $this->get_remote_url( $url );
+
+			if ( empty( $thearticle->title ) ) {
+				wp_send_json_error( array( 'error' => __( 'Invalid URL.', 'newsletter-glue' ) ) );
+			}
+
+		} else {
+
+			// Local.
+			$thearticle = $post;
+		}
+
+		// Update current key with new data.
+		$embed = array(
+			'post_id' 	=> $thearticle->ID,
+			'favicon'   => $this->get_favicon( $thearticle ),
+		);
+
+		if ( ! empty( $thearticle->is_remote ) ) {
+			foreach( $thearticle as $remote_key => $remote_value ) {
+				$embed[ $remote_key ] = $remote_value;
+			}
+		}
+
+		$articles[ $key ] = $embed;
+
+		update_option( 'ngl_articles_' . $block_id, $articles );
+
+		// Show refresh icon.
+		if ( ! empty( $thearticle->is_remote ) ) {
+			$refresh_icon    = '<a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i>' . __( 'Refresh', 'newsletter-glue' ) . '</a>';
+		} else {
+			$refresh_icon	 = '';
+		}
+
+		$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
+
+		// Generate html for item.
+		$item = '<div class="ngl-article-list-item" data-key="' . $key . '" data-post-id="' . $thearticle->ID . '">
+						<div class="ngl-article-list-icon"><img src="' . $this->get_favicon( $thearticle ) . '" /></div>
+						<div class="ngl-article-list-info">
+							<div class="ngl-article-list-title">' . $this->display_title( $thearticle->ID, $thearticle ) . '</div>
+							<div class="ngl-article-list-url">
+								<div class="ngl-article-list-url-edit" onclick="document.execCommand(\'selectAll\',false,null)" contenteditable="true">' . $this->get_permalink( $thearticle ) . '</div>
+								<span class="ngl-article-save-state">
+									<span class="ngl-article-save"><i class="sync icon"></i>' . __( 'Save', 'newsletter-glue' ) . '</span>
+									<span class="ngl-article-saving"><i class="sync icon"></i>' . __( 'Saving...', 'newsletter-glue' ) . '</span>
+									<span class="ngl-article-saved"><i class="check icon"></i>' . __( 'Saved!', 'newsletter-glue' ) . '</span>
+									<span class="ngl-article-unsaved"><i class="close icon"></i>' . __( 'Failed!', 'newsletter-glue' ) . '</span>
+								</span>
+							</div>
+							<div class="ngl-article-list-action">
+								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i>' . __( 'Remove post', 'newsletter-glue' ) . '</a>' . $refresh_icon . '
+							</div>
+						</div>
+						<div class="ngl-article-list-move">
+							<div class="ngl-article-list-move-up"><a href="#"><span class="material-icons">expand_less</span></a></div>
+							<div class="ngl-article-list-move-down"><a href="#"><span class="material-icons">expand_more</span></a></div>
+						</div>
+					</div>';
+
+		$result = array(
+			'key'				=> $key,
+			'block_id'			=> $block_id,
+			'post'				=> $thearticle,
+			'post_id'			=> $thearticle->ID,
+			'excerpt'			=> $this->display_excerpt( $thearticle->ID, $thecontent ),
+			'title'				=> $this->display_title( $thearticle->ID, $thearticle ),
+			'permalink'			=> $this->get_permalink( $thearticle ),
+			'featured_image'	=> $this->get_image_url( $thearticle ),
+			'labels'			=> $this->get_labels( $thearticle->ID ),
+			'item'				=> $item,
+			'embed'				=> $embed,
+			'date'				=> ! empty( $thearticle->post_date ) ? date_i18n( $date_format, strtotime( $thearticle->post_date ) ) : '',
+		);
+
+		wp_send_json_success( $result );
+
+	}
+
+	/**
 	 * AJAX embedding article.
 	 */
 	public function embed_article() {
@@ -928,6 +1044,9 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			$thepost = strpos( $thepost, 'http' ) !== 0 ? "https://$thepost" : $thepost;
 			if ( filter_var( $thepost, FILTER_VALIDATE_URL ) ) {
 				$thearticle = $this->get_remote_url( $thepost );
+				if ( empty( $thearticle->title ) ) {
+					wp_send_json( array( 'error' => __( 'Invalid URL.', 'newsletter-glue' ) ) );
+				}
 			} else {
 				wp_send_json( array( 'error' => __( 'Invalid post.', 'newsletter-glue' ) ) );
 			}
@@ -975,7 +1094,15 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 						<div class="ngl-article-list-icon"><img src="' . $this->get_favicon( $thearticle ) . '" /></div>
 						<div class="ngl-article-list-info">
 							<div class="ngl-article-list-title">' . $this->display_title( $thearticle->ID, $thearticle ) . '</div>
-							<div class="ngl-article-list-url">' . $this->get_permalink( $thearticle ) . '</div>
+							<div class="ngl-article-list-url">
+								<div class="ngl-article-list-url-edit" onclick="document.execCommand(\'selectAll\',false,null)" contenteditable="true">' . $this->get_permalink( $thearticle ) . '</div>
+								<span class="ngl-article-save-state">
+									<span class="ngl-article-save"><i class="sync icon"></i>' . __( 'Save', 'newsletter-glue' ) . '</span>
+									<span class="ngl-article-saving"><i class="sync icon"></i>' . __( 'Saving...', 'newsletter-glue' ) . '</span>
+									<span class="ngl-article-saved"><i class="check icon"></i>' . __( 'Saved!', 'newsletter-glue' ) . '</span>
+									<span class="ngl-article-unsaved"><i class="close icon"></i>' . __( 'Failed!', 'newsletter-glue' ) . '</span>
+								</span>
+							</div>
 							<div class="ngl-article-list-action">
 								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i>' . __( 'Remove post', 'newsletter-glue' ) . '</a>' . $refresh_icon . '
 							</div>
@@ -1043,7 +1170,15 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 						<div class="ngl-article-list-icon"><img src="' . $this->get_favicon( $thearticle ) . '" /></div>
 						<div class="ngl-article-list-info">
 							<div class="ngl-article-list-title">' . $this->display_title( $thearticle->ID, $thearticle ) . '</div>
-							<div class="ngl-article-list-url">' . $this->get_permalink( $thearticle ) . '</div>
+							<div class="ngl-article-list-url">
+								<div class="ngl-article-list-url-edit" onclick="document.execCommand(\'selectAll\',false,null)" contenteditable="true">' . $this->get_permalink( $thearticle ) . '</div>
+								<span class="ngl-article-save-state">
+									<span class="ngl-article-save"><i class="sync icon"></i>' . __( 'Save', 'newsletter-glue' ) . '</span>
+									<span class="ngl-article-saving"><i class="sync icon"></i>' . __( 'Saving...', 'newsletter-glue' ) . '</span>
+									<span class="ngl-article-saved"><i class="check icon"></i>' . __( 'Saved!', 'newsletter-glue' ) . '</span>
+									<span class="ngl-article-unsaved"><i class="close icon"></i>' . __( 'Failed!', 'newsletter-glue' ) . '</span>
+								</span>
+							</div>
 							<div class="ngl-article-list-action">
 								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i>' . __( 'Remove post', 'newsletter-glue' ) . '</a>' . $refresh_icon . '
 							</div>

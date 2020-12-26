@@ -265,18 +265,57 @@ ul.ngl-article-suggest a:hover {
 
 .ngl-article-list-info {
 	margin-right: 32px;
+	flex: 1;
 }
 
 .ngl-article-list-title {
 	line-height: 1.4;
 	font-weight: 500;
 	color: #333;
+	margin: 0 0 3px;
 }
 
 .ngl-article-list-url {
 	color: #999;
+	display: flex;
+	justify-content: space-between;
 	line-height: 1.4;
-	margin: 3px 0 0;
+	align-items: flex-start;
+}
+
+.ngl-article-list-url-edit {
+	width: 100%;
+}
+
+.ngl-article-list-url span.ngl-article-save-state {
+	min-width: 70px;
+	margin-left: 10px;
+	text-align: right;
+	font-size: 12px;
+	cursor: pointer;
+	color: #333;
+}
+
+.ngl-article-list-url span span {
+	display: none;
+}
+
+.ngl-article-list-url span.ngl-article-save-state i.icon {
+	width: 16px;
+	height: 16px;
+	display: block;
+}
+
+.ngl-article-list-url span.ngl-article-saved {
+	color: #00A332;
+}
+
+.ngl-article-list-url span.ngl-article-saving {
+	color: #666;
+}
+
+.ngl-article-list-url span.ngl-article-unsaved {
+	color: #ff0000;
 }
 
 .ngl-article-list-action {
@@ -312,10 +351,11 @@ ul.ngl-article-suggest a:hover {
 
 .ngl-refreshed {
 	color: #00A332 !important;
-		pointer-events: none;
+		=pointer-events: none;
 }
 
-.ngl-in-progress i.icon {
+.ngl-in-progress i.icon,
+.ngl-article-saving i.icon {
 	-webkit-animation: spin1 1.5s infinite linear;
 	-moz-animation: spin1 1.5s infinite linear;
 	-o-animation: spin1 1.5s infinite linear;
