@@ -1,6 +1,85 @@
 ( function( $ ) {
 	"use strict";
 
+	// Function to trigger media library.
+	function ngl_change_image( el ) {
+
+		var image_frame;
+
+		if ( image_frame ) {
+			image_frame.open();
+		}
+
+		image_frame = wp.media( {
+			title: newsletterglue_params.select_image,
+			multiple : false,
+			library : {
+				type : 'image',
+			}
+		} );
+
+		image_frame.on( 'close', function() {
+			var selection =  image_frame.state().get( 'selection' );
+			var gallery_ids = new Array();
+			var my_index = 0;
+			selection.each( function( attachment ) {
+				gallery_ids[my_index] = attachment[ 'id' ];
+				my_index++;
+			} );
+			var ids = gallery_ids.join( ',' );
+			el.attr( 'data-attachment', ids );
+			ngl_change_image_ajax( el, el.attr( 'data-post-id' ), ids );
+		} );
+
+		image_frame.on( 'open', function() {
+			var selection = image_frame.state().get( 'selection' );
+			var ids = el.attr( 'data-attachment' ) ? el.attr( 'data-attachment' ).split( ',' ) : '';
+			if ( ids ) {
+				ids.forEach( function( id ) {
+					if ( id ) {
+						var attachment = wp.media.attachment( id );
+						attachment.fetch();
+						selection.add( attachment ? [ attachment ] : [] );
+					}
+				} );
+			}
+		} );
+
+		image_frame.open();
+
+	}
+
+	// Ajax request to refresh the image preview
+	function ngl_change_image_ajax( el, key, ids ) {
+
+		var current = el.find( '.ngl-article-featured img' ).prop( 'src' );
+
+		var data = {
+			action: 'newsletterglue_save_article_image',
+			key: key,
+			ids: ids,
+			security:  newsletterglue_params.ajaxnonce
+		};
+
+		$.ajax( {
+			type	: 'post',
+			url		: newsletterglue_params.ajaxurl,
+			data	: data,
+			success : function( response ) {
+				if ( response ) {
+					el.find( '.ngl-article-featured img' ).prop( 'src', response.data.url );
+					el.attr( 'data-attachment', response.data.id );
+					el.find( '.ngl-article-featured-edit i.trash' ).show();
+				} else {
+					el.find( '.ngl-article-featured img' ).prop( 'src', el.find( '.ngl-article-featured img' ).attr( 'data-original-src' ) );
+					el.attr( 'data-attachment', '' );
+					el.find( '.ngl-article-featured-edit i.trash' ).hide();
+				}
+			}
+		} );
+
+	}
+
 	// Reorder keys.
 	function ngl_reorder_keys( wrap ) {
 
@@ -122,6 +201,7 @@
 					cloned.attr( 'data-post-id', response.post_id );
 					cloned.attr( 'data-key', response.key );
 					cloned.find( '.ngl-article-featured a' ).attr( 'href', response.permalink );
+					cloned.find( '.ngl-article-featured img' ).attr( 'data-original-src', response.featured_image );
 					cloned.prependTo( el.find( '.ngl-articles-wrap' ) ).removeClass( 'ngl-article-placeholder' );
 
 					if ( el.find( '.ngl-article-list-empty' ).length ) {
@@ -135,6 +215,39 @@
 			}
 		} );
 	}
+
+	// When article featured image is hovered.
+	$( document ).on( 'mouseenter', '.ngl-article-featured', function() {
+		var edit = $( this ).find( '.ngl-article-featured-edit' );
+		var img  = $( this ).find( 'img' );
+		if ( img.attr( 'src' ) == img.attr( 'data-original-src' ) ) {
+			edit.find( 'i.trash' ).hide();
+		} else {
+			edit.find( 'i.trash' ).show();
+		}
+	} );
+
+	// Trigger media upload.
+	$( document ).on( 'click', '.ngl-article-featured-edit i.image.outline.icon', function( event ) {
+
+		event.preventDefault();
+
+		ngl_change_image( $( this ).parents( '.ngl-article' ) );
+
+		return false;
+
+	} );
+
+	// Trigger media remove.
+	$( document ).on( 'click', '.ngl-article-featured-edit i.trash.outline.icon', function( event ) {
+
+		event.preventDefault();
+
+		ngl_change_image_ajax( $( this ).parents( '.ngl-article' ), $( this ).parents( '.ngl-article' ).attr( 'data-post-id' ), '' );
+
+		return false;
+
+	} );
 
 	// Trigger on URL change.
 	$( document ).on( 'change', '#ngl_embed_url', function( event ) {
@@ -465,6 +578,85 @@
 		}
 
 		return false;
+	} );
+
+	// When URL is clicked.
+	$( document ).on( 'click', '.ngl-article-list-url-edit', function() {
+		$( this ).select();
+	} );
+
+	// Change URL dynamically.
+	$( document ).on( 'focus', '.ngl-article-list-url-edit[contenteditable]', function() {
+		const $this = $(this);
+		$this.data('before', $this.html());
+	}).on('blur keyup paste input', '.ngl-article-list-url-edit[contenteditable]', function() {
+		const $this = $(this);
+		if ($this.data('before') !== $this.html()) {
+			$this.data('before', $this.html());
+			$this.trigger('change');
+		}
+	});
+
+	// When URL is changed.
+	$( document ).on( 'change', '.ngl-article-list-url-edit[contenteditable]', function() {
+		
+		$( this ).parents( '.ngl-article-list-item' ).find( '.ngl-article-save-state span' ).css( { 'display' : 'none' } );
+		$( this ).parents( '.ngl-article-list-item' ).find( '.ngl-article-save' ).css( { 'display' : 'inline-flex' } );
+
+	} );
+
+	// When save is clicked.
+	$( document ).on( 'click', '.ngl-article-save', function() {
+
+		var $this       = $( this );
+		var urldiv      = $( this ).parents( '.ngl-article-list-url' );
+		var url 		= $( this ).parents( '.ngl-article-list-url' ).find( 'div' ).html();
+		var wrap		= $( this ).parents( '.ngl-article-list-wrap' );
+		var item 		= $( this ).parents( '.ngl-article-list-item' );
+		var block_id 	= $( this ).parents( '.ngl-articles' ).attr( 'data-block-id' );
+		var key			= item.attr( 'data-key' );
+		var cloned		= $( this ).parents( '.ngl-articles' ).find( '.ngl-article[data-key=' + key + ']' );
+		var date_format = $( this ).parents( '.ngl-articles' ).attr( 'data-date_format' );
+		var data 		= 'action=newsletterglue_ajax_update_url&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&key=' + encodeURIComponent( key ) + '&url=' + encodeURIComponent( url ) + '&date_format=' + encodeURIComponent( date_format );
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data,
+			beforeSend: function() {
+				$this.css( { 'display' : 'none' } );
+				urldiv.find( '.ngl-article-saving' ).css( { 'display' : 'inline-flex' } );
+				cloned.addClass( 'ngl-in-progress' );
+			},
+			success: function( response ) {
+				cloned.removeClass( 'ngl-in-progress' );
+				if ( ! response.success ) {
+					urldiv.find( '.ngl-article-save-state span' ).css( { 'display' : 'none' } );
+					urldiv.find( '.ngl-article-unsaved' ).css( { 'display' : 'inline-flex' } );
+				} else {
+					urldiv.find( '.ngl-article-save-state span' ).css( { 'display' : 'none' } );
+					urldiv.find( '.ngl-article-saved' ).css( { 'display' : 'inline-flex' } );
+
+					cloned.find( '.ngl-article-title span' ).html( response.data.title );
+					cloned.find( '.ngl-article-featured img' ).attr( 'src', response.data.featured_image );
+					cloned.find( '.ngl-article-excerpt' ).html( response.data.excerpt );
+					cloned.find( '.ngl-article-labels' ).html( response.data.labels );
+					cloned.find( '.ngl-article-date' ).html( response.data.date );
+					cloned.attr( 'data-post-id', response.data.post_id );
+					cloned.attr( 'data-key', response.data.key );
+					cloned.find( '.ngl-article-title a' ).attr( 'href', response.data.permalink );
+					cloned.find( '.ngl-article-featured a' ).attr( 'href', response.data.permalink );
+					cloned.find( '.ngl-article-featured img' ).attr( 'data-original-src', response.data.featured_image );
+					item.replaceWith( response.data.item );
+
+				}
+			},
+			error: function() {
+				urldiv.find( '.ngl-article-save-state span' ).css( { 'display' : 'none' } );
+				urldiv.find( '.ngl-article-unsaved' ).css( { 'display' : 'inline-flex' } );
+			}
+		} );
+
 	} );
 
 } )( jQuery );
