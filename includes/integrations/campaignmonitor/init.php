@@ -335,6 +335,12 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 					);
 				}
 
+				if ( $resp['Code'] == 4202 ) {
+					$response = array(
+						'fail'		=> __( 'Email content contains JavaScript. Please remove it and try again.', 'newsletter-glue' ),
+					);
+				}
+
 				wp_delete_file( $uploadfile );
 
 				return $response;
