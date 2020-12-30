@@ -315,32 +315,23 @@ class NGL_Pro {
 
 		$finder = new \DOMXPath( $dom );
 
-		// Embed Twitter.
-		$nodes = $finder->query( "//*[contains(concat(' ', normalize-space(@class), ' '), ' is-provider-twitter ')]" );
-		if ( ! empty( $nodes ) ) {
-			foreach ( $nodes as $node ) {
-				$html = $this->get_tweet( $node->nodeValue );
-				if ( $html ) {
-					$twitter = $dom->createElement( 'div', $html );
-					$twitter->setAttribute( 'class', 'ngl-embed-social ngl-embed-twitter' );
-					$node->parentNode->replaceChild( $twitter, $node );
-				} else {
-					$node->parentNode->removeChild( $node );
-				}
-			}
-		}
+		$supports = array(
+			'twitter',
+			'youtube',
+		);
 
-		// Embed YouTube.
-		$nodes = $finder->query( "//*[contains(concat(' ', normalize-space(@class), ' '), ' is-provider-youtube ')]" );
-		if ( ! empty( $nodes ) ) {
-			foreach ( $nodes as $node ) {
-				$html = $this->get_youtube( $node->nodeValue );
-				if ( $html ) {
-					$youtube = $dom->createElement( 'div', $html );
-					$youtube->setAttribute( 'class', 'ngl-embed-social ngl-embed-youtube' );
-					$node->parentNode->replaceChild( $youtube, $node );
-				} else {
-					$node->parentNode->removeChild( $node );
+		foreach( $supports as $support ) {
+			$nodes = $finder->query( "//*[contains(concat(' ', normalize-space(@class), ' '), ' is-provider-" . $support . " ')]" );
+			if ( ! empty( $nodes ) ) {
+				foreach ( $nodes as $node ) {
+					$html = call_user_func_array( array($this, 'get_' . $support ), array( $node->nodeValue ) );
+					if ( $html ) {
+						$newdiv = $dom->createElement( 'div', $html );
+						$newdiv->setAttribute( 'class', 'ngl-embed-social ngl-embed-' . $support );
+						$node->parentNode->replaceChild( $newdiv, $node );
+					} else {
+						$node->parentNode->removeChild( $node );
+					}
 				}
 			}
 		}
@@ -368,15 +359,13 @@ class NGL_Pro {
 		$image_url = str_replace( 'hqdefault', 'maxresdefault', $data->thumbnail_url );
 
 		$html = '<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . $image_url . '" class="ngl-embed-youtube-thumb" /></a>';
-		$html .= '<a href="' . urldecode( trim( $url ) ) . '" target="_blank">' . $data->title . '</a>';
 
 		$html .= '<div class="ngl-embed-meta">
 					<div class="ngl-embed-metadata">
-						<strong>' . $data->author_name . '</strong><br />
-						<a href="' . $data->author_url . '" target="_blank">' . __( 'Go to channel &#8599;', 'newsletter-glue' ) . '</a>
+						<a href="' . urldecode( trim( $url ) ) . '" target="_blank">' . $data->title . '</a>
 					</div>
 					<div class="ngl-embed-icon">
-						<a href="https://youtube.com/" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/youtube.png" /></a>
+						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/youtube.png" /></a>
 					</div>
 				</div>';
 
@@ -387,7 +376,7 @@ class NGL_Pro {
 	/**
 	 * Get tweet.
 	 */
-	public function get_tweet( $url ) {
+	public function get_twitter( $url ) {
 
 		$url = urlencode( untrailingslashit( trim( $url ) ) );
 
@@ -406,7 +395,7 @@ class NGL_Pro {
 		$stripped = preg_replace( '/<p\b[^>]*>(.*?)<\/p>/i', '', $html );
 		preg_match( '#<a(.*?)</a>#i', $stripped, $match );
 		$date = wp_strip_all_tags( $match[0] );
-		$formatted_date = date_i18n( 'M j, Y', strtotime( $date ) );
+		$formatted_date = '<a href="' . urldecode( trim( $url ) ) . '" target="_blank">' . date_i18n( 'M j, Y', strtotime( $date ) ) . '</a>';
 
 		preg_match( '%(<p[^>]*>.*?</p>)%i', $html, $regs );
 		$html = $regs[0];
@@ -424,7 +413,7 @@ class NGL_Pro {
 						' . $username . '
 					</div>
 					<div class="ngl-embed-icon">
-						<a href="https://twitter.com/" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/twitter.png" /></a>
+						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/twitter.png" /></a>
 					</div>
 				</div>';
 
@@ -479,6 +468,7 @@ class NGL_Pro {
 			display: inline-block;
 			text-align: right;
 			margin-left: auto;
+			min-width: 30px;
 		}
 
 		.ngl-embed-icon img {
@@ -509,18 +499,32 @@ class NGL_Pro {
 			text-decoration: none !important;
 		}
 
+		.ngl-embed-youtube {
+			padding: 0;
+		}
+
 		.ngl-embed-youtube a {
 			color: #ff0000 !important;
 			text-decoration: none !important;
 		}
 
 		.ngl-embed-youtube-thumb {
-			margin: 0 0 12px !important;
-			border-radius: 5px !important;
+			margin: 0 !important;
+			border-radius: 5px 5px 0 0 !important;
+		}
+
+		.ngl-embed-youtube .ngl-embed-meta {
+			margin: 0 !important;
+			border: none;
+			padding: 20px;
+		}
+
+		.ngl-embed-youtube .ngl-embed-metadata {
+			margin-right: 50px;
 		}
 
 		.ngl-embed-youtube .ngl-embed-metadata a {
-			color: #999 !important;
+			color: #333 !important;
 		}
 		<?php
 	}
