@@ -1,3 +1,20 @@
+jQuery.fn.selectText = function(){
+   var doc = document;
+   var element = this[0];
+   console.log(this, element);
+   if (doc.body.createTextRange) {
+       var range = document.body.createTextRange();
+       range.moveToElementText(element);
+       range.select();
+   } else if (window.getSelection) {
+       var selection = window.getSelection();        
+       var range = document.createRange();
+       range.selectNodeContents(element);
+       selection.removeAllRanges();
+       selection.addRange(range);
+   }
+};
+
 ( function( $ ) {
 	"use strict";
 
@@ -83,12 +100,6 @@
 	// Reorder keys.
 	function ngl_reorder_keys( wrap ) {
 
-		wrap.find( '.ngl-article-list-item' ).each( function() {
-			var elements = wrap.find( '.ngl-article-list-item' );
-			var theindex = elements.length - elements.index( $( this ) );
-			$( this ).attr( 'data-key', theindex );
-		} );
-
 		wrap.find( '.ngl-articles-wrap .ngl-article:visible' ).each( function() {
 			var elements = wrap.find( '.ngl-article:visible' );
 			var theindex = elements.length - elements.index( $( this ) );
@@ -99,7 +110,7 @@
 		var keys        = [];
 		var values      = [];
 
-		wrap.find( '.ngl-article-list-item' ).each( function() {
+		wrap.find( '.ngl-article' ).each( function() {
 			var key = $( this ).attr( 'data-key' );
 			var id  = $( this ).attr( 'data-post-id' );
 			keys.push( key );
@@ -165,9 +176,9 @@
 			thepost = el.find( '.ngl_article_s' ).val();
 		}
 
-		var wrap = el.find( '.ngl-article-list-wrap' );
-		if ( wrap.find( '.ngl-article-list-item' ).length ) {
-			var key = parseInt( wrap.find( '.ngl-article-list-item' ).first().attr( 'data-key' ) ) + 1;
+		var wrap = el.find( '.ngl-articles-wrap' );
+		if ( wrap.find( '.ngl-article' ).length ) {
+			var key = parseInt( wrap.find( '.ngl-article' ).first().attr( 'data-key' ) ) + 1;
 		} else {
 			var key = 1;
 		}
@@ -469,12 +480,11 @@
 
 		var el			= $( this );
 		var state		= $( this ).html();
-		var wrap		= $( this ).parents( '.ngl-article-list-wrap' );
-		var item 		= $( this ).parents( '.ngl-article-list-item' );
+		var wrap		= $( this ).parents( '.ngl-articles' );
+		var item 		= $( this ).parents( '.ngl-article' );
 		var block_id 	= $( this ).parents( '.ngl-articles' ).attr( 'data-block-id' );
 		var key			= item.attr( 'data-key' );
 		var thepost		= item.attr( 'data-post-id' );
-		var post		= $( this ).parents( '.ngl-articles' ).find( '.ngl-article[data-key=' + key + ']' );
 		var data 		= 'action=newsletterglue_ajax_clear_cache&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&key=' + encodeURIComponent( key ) + '&thepost=' + encodeURIComponent( thepost );
 
 		$.ajax( {
@@ -482,27 +492,29 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			beforeSend: function() {
-				el.addClass( 'ngl-in-progress' ).html( newsletterglue_params.refreshing_html );
-				post.addClass( 'ngl-in-progress' );
+				el.addClass( 'ngl-in-progress ngl-is-toggled' );
+				item.find( '.ngl-article-state-refreshing' ).addClass( 'ngl-show-state' );
+				item.find( '.ngl-article-overlay' ).show();
 			},
 			success: function( response ) {
-				post.removeClass( 'ngl-in-progress' );
+				el.removeClass( 'ngl-in-progress ngl-is-toggled' ).addClass( 'ngl-in-done' );
+				el.find( 'i' ).removeClass().addClass( 'check icon' );
+				item.find( '.ngl-article-state-refreshing' ).removeClass( 'ngl-show-state' );
+				item.find( '.ngl-article-overlay' ).hide();
+				setTimeout( function() {
+					el.removeClass( 'ngl-in-done' );
+					el.find( 'i' ).removeClass().addClass( 'sync icon' );
+				}, 1000 );
 				if ( response ) {
-					item.replaceWith( response.item );
 					if ( response.title ) {
-						post.find( '.ngl-article-title span' ).html( response.title );
+						item.find( '.ngl-article-title span' ).html( response.title );
 					}
 					if ( response.featured_image ) {
-						post.find( '.ngl-article-featured img' ).attr( 'src', response.featured_image );
+						item.find( '.ngl-article-featured img' ).attr( 'src', response.featured_image );
 					}
 					if ( response.excerpt ) {
-						post.find( '.ngl-article-excerpt' ).html( response.excerpt );
+						item.find( '.ngl-article-excerpt' ).html( response.excerpt );
 					}
-					var new_item = wrap.find( '.ngl-article-list-item[data-key=' + key + '] .ngl-article-list-refresh' );
-					new_item.addClass( 'ngl-refreshed' ).html( newsletterglue_params.refreshed_html );
-					setTimeout( function() {
-						new_item.removeClass( 'ngl-refreshed' ).html( state );
-					}, 2000 );
 				}
 			}
 		} );
@@ -510,12 +522,27 @@
 		return false;
 	} );
 
+	// Overlay clicked.
+	$( document ).on( 'click', '.ngl-article-overlay', function( event ) {
+		var item  = $( this ).parents( '.ngl-article' );
+		var remove_state = $( this ).parents( '.ngl-article' ).find( '.ngl-article-state-remove' );
+		var update_state = $( this ).parents( '.ngl-article' ).find( '.ngl-article-list-url-edit' );
+		if ( remove_state.hasClass( 'ngl-show-state' ) ) {
+			item.find( '.ngl-article-list-delete' ).trigger( 'click' );
+		} else if ( update_state.hasClass( 'ngl-show-state' ) ) {
+			item.find( '.ngl-article-list-link' ).trigger( 'click' );
+		}
+	} );
+
 	// Remove an article.
-	$( document ).on( 'click', '.ngl-article-list-red', function( event ) {
+	$( document ).on( 'click', '.ngl-article-state-remove', function( event ) {
 		event.preventDefault();
 
-		var wrap		= $( this ).parents( '.ngl-article-list-wrap' );
-		var item 		= $( this ).parents( '.ngl-article-list-item' );
+		if ( ! $( this ).hasClass( 'ngl-show-state' ) ) {
+			return false;
+		}
+
+		var item 		= $( this ).parents( '.ngl-article' );
 		var block_id 	= $( this ).parents( '.ngl-articles' ).attr( 'data-block-id' );
 		var key			= item.attr( 'data-key' );
 
@@ -527,12 +554,6 @@
 			data : data,
 			beforeSend: function() {
 				item.remove();
-				$( '.ngl-article[data-key=' + key + ']' ).remove();
-				if ( wrap.find( '.ngl-article-list-item' ).length == 0 ) {
-					wrap.append( '<div class="ngl-article-list-empty">' + newsletterglue_params.no_posts_found + '</div>' );
-				} else {
-					wrap.find( '.ngl-article-list-empty' ).remove();
-				}
 			},
 			success: function( response ) {
 
@@ -547,17 +568,13 @@
 		event.preventDefault();
 		var ajax = false;
 		var wrap = $( this ).parents( '.ngl-articles' );
-		var item = $( this ).parents( '.ngl-article-list-item' );
+		var item = $( this ).parents( '.ngl-article' );
 		var key  = item.attr( 'data-key' );
-		var post = wrap.find( '.ngl-article[data-key=' + key + ']' );
 		var next = item.next();
-		var next_post = post.next( '.ngl-article' );
 		if ( next.length !== 0 ) {
 			item.insertAfter( next );
-			post.insertAfter( next_post );
 			ngl_reorder_keys( wrap );
 		}
-
 		return false;
 	} );
 
@@ -566,23 +583,14 @@
 		event.preventDefault();
 		var ajax = false;
 		var wrap = $( this ).parents( '.ngl-articles' );
-		var item = $( this ).parents( '.ngl-article-list-item' );
+		var item = $( this ).parents( '.ngl-article' );
 		var key  = item.attr( 'data-key' );
-		var post = wrap.find( '.ngl-article[data-key=' + key + ']' );
 		var prev = item.prev();
-		var prev_post = post.prev( '.ngl-article' );
 		if ( prev.length !== 0 ) {
 			item.insertBefore( prev );
-			post.insertBefore( prev_post );
 			ngl_reorder_keys( wrap );
 		}
-
 		return false;
-	} );
-
-	// When URL is clicked.
-	$( document ).on( 'click', '.ngl-article-list-url-edit', function() {
-		$( this ).select();
 	} );
 
 	// Change URL dynamically.
@@ -599,10 +607,59 @@
 
 	// When URL is changed.
 	$( document ).on( 'change', '.ngl-article-list-url-edit[contenteditable]', function() {
-		
+
 		$( this ).parents( '.ngl-article-list-item' ).find( '.ngl-article-save-state span' ).css( { 'display' : 'none' } );
 		$( this ).parents( '.ngl-article-list-item' ).find( '.ngl-article-save' ).css( { 'display' : 'inline-flex' } );
 
+	} );
+
+	// When mouse leaves article item.
+	$( document ).on( 'mouseleave', '.ngl-article', function( event ) {
+		if ( $( this ).find( '.ngl-article-state-remove' ).hasClass( 'ngl-show-state' ) ) {
+
+		}
+	} );
+
+	// When the update url icon is clicked first time.
+	$( document ).on( 'click', '.ngl-article-list-link', function( event ) {
+		event.preventDefault();
+
+		var item 		= $( this ).parents( '.ngl-article' );
+		var state		= item.find( '.ngl-article-list-url-edit' );
+
+		if ( state.hasClass( 'ngl-show-state' ) ) {
+			item.find( '.ngl-article-overlay' ).hide();
+			state.removeClass( 'ngl-show-state' );
+			$( this ).removeClass( 'ngl-is-toggled' );
+		} else {
+			item.find( '.ngl-article-overlay' ).show();
+			state.addClass( 'ngl-show-state' ).selectText();
+			$( this ).addClass( 'ngl-is-toggled' );
+		}
+
+		return false;
+	} );
+
+	// When the delete icon is clicked first time.
+	$( document ).on( 'click', '.ngl-article-list-delete', function( event ) {
+		event.preventDefault();
+
+		var item 		= $( this ).parents( '.ngl-article' );
+		var state		= item.find( '.ngl-article-state-remove' );
+
+		if ( state.hasClass( 'ngl-show-state' ) ) {
+			item.find( '.ngl-article-overlay' ).hide();
+			state.removeClass( 'ngl-show-state' );
+			item.find( '.ngl-article-list-move, .ngl-article-list-refresh, .ngl-article-list-link' ).show();
+			$( this ).removeClass( 'ngl-is-toggled' );
+		} else {
+			item.find( '.ngl-article-overlay' ).show();
+			state.addClass( 'ngl-show-state' );
+			item.find( '.ngl-article-list-move, .ngl-article-list-refresh, .ngl-article-list-link' ).hide();
+			$( this ).addClass( 'ngl-is-toggled' );
+		}
+
+		return false;
 	} );
 
 	// When save is clicked.

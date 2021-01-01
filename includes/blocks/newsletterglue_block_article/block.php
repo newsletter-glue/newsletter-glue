@@ -974,30 +974,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
 
-		// Generate html for item.
-		$item = '<div class="ngl-article-list-item" data-key="' . $key . '" data-post-id="' . $thearticle->ID . '">
-						<div class="ngl-article-list-icon"><img src="' . $this->get_favicon( $thearticle ) . '" /></div>
-						<div class="ngl-article-list-info">
-							<div class="ngl-article-list-title">' . $this->display_title( $thearticle->ID, $thearticle ) . '</div>
-							<div class="ngl-article-list-url">
-								<div class="ngl-article-list-url-edit" onclick="document.execCommand(\'selectAll\',false,null)" contenteditable="true">' . $this->get_permalink( $thearticle ) . '</div>
-								<span class="ngl-article-save-state">
-									<span class="ngl-article-save"><i class="sync icon"></i>' . __( 'Save', 'newsletter-glue' ) . '</span>
-									<span class="ngl-article-saving"><i class="sync icon"></i>' . __( 'Saving...', 'newsletter-glue' ) . '</span>
-									<span class="ngl-article-saved"><i class="check icon"></i>' . __( 'Saved!', 'newsletter-glue' ) . '</span>
-									<span class="ngl-article-unsaved"><i class="close icon"></i>' . __( 'Failed!', 'newsletter-glue' ) . '</span>
-								</span>
-							</div>
-							<div class="ngl-article-list-action">
-								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i>' . __( 'Remove post', 'newsletter-glue' ) . '</a>' . $refresh_icon . '
-							</div>
-						</div>
-						<div class="ngl-article-list-move">
-							<div class="ngl-article-list-move-up"><a href="#"><span class="material-icons">expand_less</span></a></div>
-							<div class="ngl-article-list-move-down"><a href="#"><span class="material-icons">expand_more</span></a></div>
-						</div>
-					</div>';
-
 		$result = array(
 			'key'				=> $key,
 			'block_id'			=> $block_id,
@@ -1008,7 +984,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'permalink'			=> $this->get_permalink( $thearticle ),
 			'featured_image'	=> $this->get_image_url( $thearticle ),
 			'labels'			=> $this->get_labels( $thearticle->ID ),
-			'item'				=> $item,
 			'embed'				=> $embed,
 			'date'				=> ! empty( $thearticle->post_date ) ? date_i18n( $date_format, strtotime( $thearticle->post_date ) ) : '',
 		);
@@ -1089,30 +1064,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		$thecontent = apply_filters( 'newsletterglue_article_embed_content', apply_filters( 'the_content', $thearticle->post_content ), $thearticle->ID );
 
-		// Generate html for item.
-		$item = '<div class="ngl-article-list-item" data-key="' . $key . '" data-post-id="' . $thearticle->ID . '">
-						<div class="ngl-article-list-icon"><img src="' . $this->get_favicon( $thearticle ) . '" /></div>
-						<div class="ngl-article-list-info">
-							<div class="ngl-article-list-title">' . $this->display_title( $thearticle->ID, $thearticle ) . '</div>
-							<div class="ngl-article-list-url">
-								<div class="ngl-article-list-url-edit" onclick="document.execCommand(\'selectAll\',false,null)" contenteditable="true">' . $this->get_permalink( $thearticle ) . '</div>
-								<span class="ngl-article-save-state">
-									<span class="ngl-article-save"><i class="sync icon"></i>' . __( 'Save', 'newsletter-glue' ) . '</span>
-									<span class="ngl-article-saving"><i class="sync icon"></i>' . __( 'Saving...', 'newsletter-glue' ) . '</span>
-									<span class="ngl-article-saved"><i class="check icon"></i>' . __( 'Saved!', 'newsletter-glue' ) . '</span>
-									<span class="ngl-article-unsaved"><i class="close icon"></i>' . __( 'Failed!', 'newsletter-glue' ) . '</span>
-								</span>
-							</div>
-							<div class="ngl-article-list-action">
-								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i>' . __( 'Remove post', 'newsletter-glue' ) . '</a>' . $refresh_icon . '
-							</div>
-						</div>
-						<div class="ngl-article-list-move">
-							<div class="ngl-article-list-move-up"><a href="#"><span class="material-icons">expand_less</span></a></div>
-							<div class="ngl-article-list-move-down"><a href="#"><span class="material-icons">expand_more</span></a></div>
-						</div>
-					</div>';
-
 		$result = array(
 			'key'				=> $key,
 			'block_id'			=> $block_id,
@@ -1125,7 +1076,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'date'				=> ! empty( $thearticle->post_date ) ? date_i18n( $date_format, strtotime( $thearticle->post_date ) ) : '',
 			'labels'			=> $this->get_labels( $thearticle->ID ),
 			'featured_image'	=> $this->get_image_url( $thearticle ),
-			'item'				=> $item,
 			'embed'				=> $embed,
 			'success'			=> __( 'Add another post', 'newsletter-glue' ),
 		);
@@ -1145,10 +1095,16 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$block_id 		= isset( $_REQUEST[ 'block_id' ] ) ? sanitize_text_field( $_REQUEST[ 'block_id' ] ) : '';
 		$key 	        = isset( $_REQUEST[ 'key' ] ) ? absint( $_REQUEST[ 'key' ] ) : 1;
 
-		// Remove cache.
-		delete_transient( 'ngl_' . md5( untrailingslashit( $thepost ) ) );
+		if ( absint( $thepost ) > 0 ) {
+			$thearticle = get_post( $thepost );
+		} else {
 
-		$thearticle = $this->get_remote_url( $thepost );
+			// Remove cache.
+			delete_transient( 'ngl_' . md5( untrailingslashit( $thepost ) ) );
+
+			$thearticle = $this->get_remote_url( $thepost );
+
+		}
 
 		$embed = array(
 			'post_id' 	=> $thearticle->ID,
@@ -1166,29 +1122,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		// Generate html for item.
 		$refresh_icon    = '<a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i>' . __( 'Refresh', 'newsletter-glue' ) . '</a>';
 
-		$item = '<div class="ngl-article-list-item" data-key="' . $key . '" data-post-id="' . $thearticle->ID . '">
-						<div class="ngl-article-list-icon"><img src="' . $this->get_favicon( $thearticle ) . '" /></div>
-						<div class="ngl-article-list-info">
-							<div class="ngl-article-list-title">' . $this->display_title( $thearticle->ID, $thearticle ) . '</div>
-							<div class="ngl-article-list-url">
-								<div class="ngl-article-list-url-edit" onclick="document.execCommand(\'selectAll\',false,null)" contenteditable="true">' . $this->get_permalink( $thearticle ) . '</div>
-								<span class="ngl-article-save-state">
-									<span class="ngl-article-save"><i class="sync icon"></i>' . __( 'Save', 'newsletter-glue' ) . '</span>
-									<span class="ngl-article-saving"><i class="sync icon"></i>' . __( 'Saving...', 'newsletter-glue' ) . '</span>
-									<span class="ngl-article-saved"><i class="check icon"></i>' . __( 'Saved!', 'newsletter-glue' ) . '</span>
-									<span class="ngl-article-unsaved"><i class="close icon"></i>' . __( 'Failed!', 'newsletter-glue' ) . '</span>
-								</span>
-							</div>
-							<div class="ngl-article-list-action">
-								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i>' . __( 'Remove post', 'newsletter-glue' ) . '</a>' . $refresh_icon . '
-							</div>
-						</div>
-						<div class="ngl-article-list-move">
-							<div class="ngl-article-list-move-up"><a href="#"><span class="material-icons">expand_less</span></a></div>
-							<div class="ngl-article-list-move-down"><a href="#"><span class="material-icons">expand_more</span></a></div>
-						</div>
-					</div>';
-
 		$result = array(
 			'key'				=> $key,
 			'block_id'			=> $block_id,
@@ -1200,7 +1133,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			'permalink'			=> $this->get_permalink( $thearticle ),
 			'featured_image'	=> $this->get_image_url( $thearticle ),
 			'labels'			=> $this->get_labels( $thearticle->ID ),
-			'item'				=> $item,
 			'embed'				=> $embed,
 		);
 

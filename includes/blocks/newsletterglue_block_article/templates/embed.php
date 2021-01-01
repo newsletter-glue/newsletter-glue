@@ -36,59 +36,6 @@ $show_edit_controls = false;
 					<button type="submit" class="components-button is-primary"><?php _e( 'Add', 'newsletter-glue' ); ?></button>
 				</form>
 			</div>
-			<div class="ngl-article-list">
-				<a href="#" class="ngl-article-list-head"><?php _e( 'Reorder, change or remove posts', 'newsletter-glue' ); ?> <span class="material-icons">expand_more</span></a>
-				<div class="ngl-article-list-wrap">
-
-					<?php if ( empty( $articles ) ) : ?>
-					<div class="ngl-article-list-empty"><?php _e( 'There&rsquo;s nothing here yet. Add your first post above.', 'newsletter-glue' ); ?></div>
-					<?php endif; ?>
-
-					<?php
-						if ( $articles ) :
-							krsort( $articles );
-							foreach( $articles as $key => $article ) :
-
-							if ( ! empty( $article[ 'is_remote' ] ) ) {
-								$thearticle = $this->get_remote_url( $article[ 'post_id' ] );
-							} else {
-								$thearticle = get_post( $article[ 'post_id' ] );
-								if ( empty( $thearticle->ID ) ) {
-									unset( $articles[ $key ] );
-									continue;
-								}
-							}
-					?>
-					<div class="ngl-article-list-item" data-key="<?php echo $key; ?>" data-post-id="<?php echo $article[ 'post_id' ]; ?>">
-						<div class="ngl-article-list-icon"><img src="<?php echo esc_url( $this->get_favicon( $thearticle ) ); ?>" /></div>
-						<div class="ngl-article-list-info">
-							<div class="ngl-article-list-title"><?php echo $this->display_title( $thearticle->ID, $thearticle ); ?></div>
-							<div class="ngl-article-list-url">
-								<div class="ngl-article-list-url-edit" onclick="document.execCommand('selectAll',false,null)" contenteditable="true"><?php echo $this->get_permalink( $thearticle ); ?></div>
-								<span class="ngl-article-save-state">
-									<span class="ngl-article-save"><i class="sync icon"></i><?php _e( 'Save', 'newsletter-glue' ); ?></span>
-									<span class="ngl-article-saving"><i class="sync icon"></i><?php _e( 'Saving...', 'newsletter-glue' ); ?></span>
-									<span class="ngl-article-saved"><i class="check icon"></i><?php _e( 'Saved!', 'newsletter-glue' ); ?></span>
-									<span class="ngl-article-unsaved"><i class="close icon"></i><?php _e( 'Failed!', 'newsletter-glue' ); ?></span>
-								</span>
-							</div>
-							<div class="ngl-article-list-action">
-								<a href="#" class="ngl-article-list-red"><i class="trash alternate outline icon"></i><?php _e( 'Remove post', 'newsletter-glue' ); ?></a>
-								<?php if ( ! empty( $thearticle->is_remote ) ) : ?><a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i><?php _e( 'Refresh', 'newsletter-glue' ); ?></a><?php endif; ?>
-							</div>
-						</div>
-						<div class="ngl-article-list-move">
-							<div class="ngl-article-list-move-up"><a href="#"><span class="material-icons">expand_less</span></a></div>
-							<div class="ngl-article-list-move-down"><a href="#"><span class="material-icons">expand_more</span></a></div>
-						</div>
-					</div>
-					<?php
-							endforeach;
-						endif;
-					?>
-
-				</div>
-			</div>
 		</div>
 	</div>
 
@@ -101,6 +48,25 @@ $show_edit_controls = false;
 	?>
 
 	<div class="ngl-article ngl-article-img-<?php echo $image_position; ?> ngl-article-placeholder" data-key="{key}" data-post-id="{post_id}" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>; font-size: <?php echo $font_size_text; ?>px;">
+
+				<div class="ngl-article-list-move">
+					<div class="ngl-article-list-move-up"><a href="#"><span class="material-icons">expand_less</span></a></div>
+					<div class="ngl-article-list-move-down"><a href="#"><span class="material-icons">expand_more</span></a></div>
+				</div>
+
+				<div class="ngl-article-list-layer"></div>
+				<div class="ngl-article-list-layer2"></div>
+
+				<a href="#" class="ngl-article-list-link"><i class="linkify icon"></i></a>
+				<a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i></a>
+				<a href="#" class="ngl-article-list-delete"><i class="trash alternate outline icon"></i></a>
+
+				<div class="ngl-article-state-refreshing"><?php _e( 'Refreshing...', 'newsletter-glue' ); ?></div>
+				<a href="#" class="ngl-article-state-remove"><?php _e( 'Confirm remove', 'newsletter-glue' ); ?></a>
+
+				<div class="ngl-article-list-url-edit" contenteditable="true">{permalink}</div>
+
+				<div class="ngl-article-overlay"></div>
 
 				<?php
 					if ( $table_ratio == 'full' ) :
@@ -184,6 +150,31 @@ $show_edit_controls = false;
 		?>
 
 			<div class="ngl-article ngl-article-img-<?php echo $image_position; ?>" data-key="<?php echo $key; ?>" data-post-id="<?php echo $thearticle->ID; ?>" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>; font-size: <?php echo $font_size_text; ?>px;">
+
+				<?php if ( is_admin() || defined( 'REST_REQUEST' ) && REST_REQUEST ) : ?>
+				<?php if ( ! defined( 'NGL_IN_EMAIL' ) ) : ?>
+
+					<div class="ngl-article-list-move">
+						<div class="ngl-article-list-move-up"><a href="#"><span class="material-icons">expand_less</span></a></div>
+						<div class="ngl-article-list-move-down"><a href="#"><span class="material-icons">expand_more</span></a></div>
+					</div>
+
+					<div class="ngl-article-list-layer"></div>
+					<div class="ngl-article-list-layer2"></div>
+
+					<a href="#" class="ngl-article-list-link"><i class="linkify icon"></i></a>
+					<a href="#" class="ngl-article-list-refresh"><i class="sync icon"></i></a>
+					<a href="#" class="ngl-article-list-delete"><i class="trash alternate outline icon"></i></a>
+
+					<div class="ngl-article-state-refreshing"><?php _e( 'Refreshing...', 'newsletter-glue' ); ?></div>
+					<a href="#" class="ngl-article-state-remove"><?php _e( 'Confirm remove', 'newsletter-glue' ); ?></a>
+
+					<div class="ngl-article-list-url-edit" contenteditable="true"><?php echo $this->get_permalink( $thearticle ); ?></div>
+
+					<div class="ngl-article-overlay"></div>
+
+				<?php endif; ?>
+				<?php endif; ?>
 
 				<?php
 					if ( $table_ratio == 'full' ) :
