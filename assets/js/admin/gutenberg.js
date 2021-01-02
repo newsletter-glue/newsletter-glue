@@ -1,7 +1,6 @@
 jQuery.fn.selectText = function(){
    var doc = document;
    var element = this[0];
-   console.log(this, element);
    if (doc.body.createTextRange) {
        var range = document.body.createTextRange();
        range.moveToElementText(element);
@@ -608,8 +607,44 @@ jQuery.fn.selectText = function(){
 	// When URL is changed.
 	$( document ).on( 'change', '.ngl-article-list-url-edit[contenteditable]', function() {
 
-		$( this ).parents( '.ngl-article-list-item' ).find( '.ngl-article-save-state span' ).css( { 'display' : 'none' } );
-		$( this ).parents( '.ngl-article-list-item' ).find( '.ngl-article-save' ).css( { 'display' : 'inline-flex' } );
+		var $this       = $( this );
+		var url 		= $( this ).html();
+		var item 		= $( this ).parents( '.ngl-article' );
+		var block_id 	= $( this ).parents( '.ngl-articles' ).attr( 'data-block-id' );
+		var key			= item.attr( 'data-key' );
+		var date_format = $( this ).parents( '.ngl-articles' ).attr( 'data-date_format' );
+		var data 		= 'action=newsletterglue_ajax_update_url&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&key=' + encodeURIComponent( key ) + '&url=' + encodeURIComponent( url ) + '&date_format=' + encodeURIComponent( date_format );
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data,
+			beforeSend: function() {
+
+			},
+			success: function( response ) {
+				console.log( response );
+				if ( ! response.success ) {
+
+				} else {
+
+					item.find( '.ngl-article-title span' ).html( response.data.title );
+					item.find( '.ngl-article-featured img' ).attr( 'src', response.data.featured_image );
+					item.find( '.ngl-article-excerpt' ).html( response.data.excerpt );
+					item.find( '.ngl-article-labels' ).html( response.data.labels );
+					item.find( '.ngl-article-date' ).html( response.data.date );
+					item.attr( 'data-post-id', response.data.post_id );
+					item.attr( 'data-key', response.data.key );
+					item.find( '.ngl-article-title a' ).attr( 'href', response.data.permalink );
+					item.find( '.ngl-article-featured a' ).attr( 'href', response.data.permalink );
+					item.find( '.ngl-article-featured img' ).attr( 'data-original-src', response.data.featured_image );
+
+				}
+			},
+			error: function() {
+
+			}
+		} );
 
 	} );
 
@@ -660,60 +695,6 @@ jQuery.fn.selectText = function(){
 		}
 
 		return false;
-	} );
-
-	// When save is clicked.
-	$( document ).on( 'click', '.ngl-article-save', function() {
-
-		var $this       = $( this );
-		var urldiv      = $( this ).parents( '.ngl-article-list-url' );
-		var url 		= $( this ).parents( '.ngl-article-list-url' ).find( 'div' ).html();
-		var wrap		= $( this ).parents( '.ngl-article-list-wrap' );
-		var item 		= $( this ).parents( '.ngl-article-list-item' );
-		var block_id 	= $( this ).parents( '.ngl-articles' ).attr( 'data-block-id' );
-		var key			= item.attr( 'data-key' );
-		var cloned		= $( this ).parents( '.ngl-articles' ).find( '.ngl-article[data-key=' + key + ']' );
-		var date_format = $( this ).parents( '.ngl-articles' ).attr( 'data-date_format' );
-		var data 		= 'action=newsletterglue_ajax_update_url&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&key=' + encodeURIComponent( key ) + '&url=' + encodeURIComponent( url ) + '&date_format=' + encodeURIComponent( date_format );
-
-		$.ajax( {
-			type : 'post',
-			url : newsletterglue_params.ajaxurl,
-			data : data,
-			beforeSend: function() {
-				$this.css( { 'display' : 'none' } );
-				urldiv.find( '.ngl-article-saving' ).css( { 'display' : 'inline-flex' } );
-				cloned.addClass( 'ngl-in-progress' );
-			},
-			success: function( response ) {
-				cloned.removeClass( 'ngl-in-progress' );
-				if ( ! response.success ) {
-					urldiv.find( '.ngl-article-save-state span' ).css( { 'display' : 'none' } );
-					urldiv.find( '.ngl-article-unsaved' ).css( { 'display' : 'inline-flex' } );
-				} else {
-					urldiv.find( '.ngl-article-save-state span' ).css( { 'display' : 'none' } );
-					urldiv.find( '.ngl-article-saved' ).css( { 'display' : 'inline-flex' } );
-
-					cloned.find( '.ngl-article-title span' ).html( response.data.title );
-					cloned.find( '.ngl-article-featured img' ).attr( 'src', response.data.featured_image );
-					cloned.find( '.ngl-article-excerpt' ).html( response.data.excerpt );
-					cloned.find( '.ngl-article-labels' ).html( response.data.labels );
-					cloned.find( '.ngl-article-date' ).html( response.data.date );
-					cloned.attr( 'data-post-id', response.data.post_id );
-					cloned.attr( 'data-key', response.data.key );
-					cloned.find( '.ngl-article-title a' ).attr( 'href', response.data.permalink );
-					cloned.find( '.ngl-article-featured a' ).attr( 'href', response.data.permalink );
-					cloned.find( '.ngl-article-featured img' ).attr( 'data-original-src', response.data.featured_image );
-					item.replaceWith( response.data.item );
-
-				}
-			},
-			error: function() {
-				urldiv.find( '.ngl-article-save-state span' ).css( { 'display' : 'none' } );
-				urldiv.find( '.ngl-article-unsaved' ).css( { 'display' : 'inline-flex' } );
-			}
-		} );
-
 	} );
 
 } )( jQuery );
