@@ -15,6 +15,7 @@
 .ngl-article {
 	margin: 0 0 30px;
 	position: relative;
+	min-height: 170px;
 }
 
 .ngl-article-title {
@@ -27,6 +28,10 @@
 	text-decoration: none;
 	cursor: text !important;
 	text-decoration: none !important;
+}
+
+.ngl-article-excerpt {
+	line-height: 1.4;
 }
 
 .ngl-article-featured {
@@ -44,6 +49,7 @@
 
 .ngl-articles-admin .ngl-article-featured a {
 	cursor: default;
+	box-shadow: none !important;
 }
 
 .ngl-articles-admin .ngl-article-featured:hover .ngl-article-featured-edit {
@@ -156,8 +162,13 @@
 		margin: 0 !important;
 	}
 
-	.ngl-article-img-right .ngl-article-right {
+	.ngl-article-img-right .ngl-article-right,
+	.ngl-article-img-left .ngl-article-left	{
 		display: none !important;
+	}
+
+	.ngl-article-img-left .ngl-article-right {
+		padding-left: 0 !important;
 	}
 
 }
@@ -542,14 +553,50 @@ ul.ngl-article-suggest a:hover {
 
 .ngl-article-list-url-edit {
 	left: 10px;
-	padding: 0 16px;
 	display: flex;
 	align-items: center;
 	width: auto;
 	z-index: 100;
     max-width: 80%;
     line-height: 1.4;
-    padding: 7px 16px 6px 16px;
+    padding: 0;
     height: auto;
 	font-size: 13px;
+}
+
+.ngl-article-list-url-edit span {
+	display: block;
+	width: 100%;
+	flex-basis: auto;
+	padding: 4px 60px 4px 10px;
+	min-height: 32px;
+	display: flex;
+	align-items: center;
+	line-height: 1.4;
+}
+
+.ngl-article-list-url-edit a {
+	position: absolute;
+	width: 46px;
+	height: 100%;
+	background: #007cba !important;
+	right: 0;
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff !important;
+	text-decoration: none !important;
+	display: none;
+}
+
+.ngl-article-list-url-edit a i {
+    margin: 0 !important;
+    position: relative;
+    font-size: 15px;
+	width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

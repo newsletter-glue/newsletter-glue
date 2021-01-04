@@ -356,6 +356,10 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	text-decoration: none;
 }
 
+.ngl-article-excerpt {
+	line-height: 1.4;
+}
+
 .ngl-article-featured {
 	margin: 0 0 14px;
 }
@@ -448,8 +452,13 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		margin: 0 !important;
 	}
 
-	.ngl-article-img-right .ngl-article-right {
+	.ngl-article-img-right .ngl-article-right,
+	.ngl-article-img-left .ngl-article-left	{
 		display: none !important;
+	}
+
+	.ngl-article-img-left .ngl-article-right {
+		padding-left: 0 !important;
 	}
 
 }
@@ -814,12 +823,14 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	 */
 	public function get_remote_url( $url ) {
 
-		$html = get_transient( 'ngl_' . md5( untrailingslashit( $url ) ) );
+		$url  = untrailingslashit( $url );
+
+		$html = get_transient( 'ngl_' . md5( $url ) );
 
 		if ( false === $html ) {
 			$html = file_get_contents( $url );
 			if ( $html ) {
-				set_transient( 'ngl_' . md5( untrailingslashit( $url ) ), $html, 2628000 );
+				set_transient( 'ngl_' . md5( $url ), $html, 2628000 );
 			}
 		}
 
@@ -915,6 +926,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		$key 	        = isset( $_REQUEST[ 'key' ] ) ? absint( $_REQUEST[ 'key' ] ) : '';
 		$url 	        = isset( $_REQUEST[ 'url' ] ) ? sanitize_text_field( $_REQUEST[ 'url' ] ) : '';
 		$date_format 	= isset( $_REQUEST[ 'date_format' ] ) ? sanitize_text_field( $_REQUEST[ 'date_format' ] ) : '';
+
+		$url = untrailingslashit( $url );
 
 		if ( ! $key || ! $block_id ) {
 			wp_die();
@@ -1104,6 +1117,15 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 			$thearticle = $this->get_remote_url( $thepost );
 
+		}
+
+		$custom_data = get_option( 'newsletterglue_article_custom_data' );
+
+		$post_id = untrailingslashit( $thepost );
+
+		if ( ! empty( $custom_data ) && ! empty( $custom_data[ $post_id ] ) ) {
+			unset( $custom_data[ $post_id ] );
+			update_option( 'newsletterglue_article_custom_data', $custom_data );
 		}
 
 		$embed = array(

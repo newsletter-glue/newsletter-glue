@@ -318,13 +318,16 @@ class NGL_Pro {
 		$supports = array(
 			'twitter',
 			'youtube',
+			'soundcloud',
+			'spotify',
+			'reddit',
 		);
 
 		foreach( $supports as $support ) {
 			$nodes = $finder->query( "//*[contains(concat(' ', normalize-space(@class), ' '), ' is-provider-" . $support . " ')]" );
 			if ( ! empty( $nodes ) ) {
 				foreach ( $nodes as $node ) {
-					$html = call_user_func_array( array($this, 'get_' . $support ), array( $node->nodeValue ) );
+					$html = call_user_func_array( array( $this, 'get_' . $support ), array( $node->nodeValue ) );
 					if ( $html ) {
 						$newdiv = $dom->createElement( 'div', $html );
 						$newdiv->setAttribute( 'class', 'ngl-embed-social ngl-embed-' . $support );
@@ -337,6 +340,80 @@ class NGL_Pro {
 		}
 
 		return htmlspecialchars_decode( $dom->saveHTML() );
+
+	}
+
+	/**
+	 * Get spotify.
+	 */
+	public function get_spotify( $url ) {
+
+		$url = urlencode( untrailingslashit( trim( $url ) ) );
+
+		$request  = wp_remote_get( 'https://open.spotify.com/oembed?url=' . $url );
+		$response = wp_remote_retrieve_body( $request );
+
+		$data = json_decode( $response );
+
+		if ( empty( $data ) ) {
+			return false;
+		}
+
+		return $url;
+
+	}
+
+	/**
+	 * Get reddit.
+	 */
+	public function get_reddit( $url ) {
+
+		$url = urlencode( untrailingslashit( trim( $url ) ) );
+
+		$request  = wp_remote_get( 'https://www.reddit.com/oembed?url=' . $url );
+		$response = wp_remote_retrieve_body( $request );
+
+		$data = json_decode( $response );
+
+		if ( empty( $data ) ) {
+			return false;
+		}
+
+		$html = preg_replace( '#<script(.*?)>(.*?)</script>#is', '', ( string ) trim( $data->html ) );
+
+		return $html;
+
+	}
+
+	/**
+	 * Get soundcloud.
+	 */
+	public function get_soundcloud( $url ) {
+
+		$url = urlencode( untrailingslashit( trim( $url ) ) );
+
+		$request  = wp_remote_get( 'https://soundcloud.com/oembed?format=json&url=' . $url );
+		$response = wp_remote_retrieve_body( $request );
+
+		$data = json_decode( $response );
+
+		if ( empty( $data ) ) {
+			return false;
+		}
+
+		$html = '<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . $data->thumbnail_url . '" class="ngl-embed-soundcloud-thumb" /></a>';
+
+		$html .= '<div class="ngl-embed-meta">
+					<div class="ngl-embed-metadata">
+						<a href="' . urldecode( trim( $url ) ) . '" target="_blank">' . esc_html( $data->title ) . '</a><br />
+						' . $data->description . '<br />' . $data->author_name . '<br />' . $data->author_url . '
+					</div>
+					<div class="ngl-embed-icon">
+						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/soundcloud.png" /></a>
+					</div>
+				</div>';
+
+		return $html;
 
 	}
 
@@ -428,7 +505,7 @@ class NGL_Pro {
 		?>
 		.ngl-embed-social {
 			background: #fff !important;
-			border: 1px solid #b9b9b9;
+			box-shadow: 0 1px 2px #aaa;
 			border-radius: 5px;
 			padding: 20px;
 			font-size: 13px;
@@ -486,7 +563,8 @@ class NGL_Pro {
 
 		.ngl-embed-twitter {
 			background: #fff !important;
-			border-color: rgb(204, 214, 221);
+			border: 1px solid rgb(204, 214, 221);
+			box-shadow: none !important;
 			color: #111 !important;
 		}
 

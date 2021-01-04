@@ -64,7 +64,10 @@ $show_edit_controls = false;
 				<div class="ngl-article-state-refreshing"><?php _e( 'Refreshing...', 'newsletter-glue' ); ?></div>
 				<a href="#" class="ngl-article-state-remove"><?php _e( 'Confirm remove', 'newsletter-glue' ); ?></a>
 
-				<div class="ngl-article-list-url-edit" contenteditable="true">{permalink}</div>
+				<div class="ngl-article-list-url-edit">
+					<span contenteditable="true">{permalink}</span>
+					<a href="#"><i class="check icon"></i></a>
+				</div>
 
 				<div class="ngl-article-overlay"></div>
 
@@ -169,7 +172,10 @@ $show_edit_controls = false;
 					<div class="ngl-article-state-refreshing"><?php _e( 'Refreshing...', 'newsletter-glue' ); ?></div>
 					<a href="#" class="ngl-article-state-remove"><?php _e( 'Confirm remove', 'newsletter-glue' ); ?></a>
 
-					<div class="ngl-article-list-url-edit" contenteditable="true"><?php echo $this->get_permalink( $thearticle ); ?></div>
+					<div class="ngl-article-list-url-edit">
+						<span contenteditable="true"><?php echo $this->get_permalink( $thearticle ); ?></span>
+						<a href="#"><i class="check icon"></i></a>
+					</div>
 
 					<div class="ngl-article-overlay"></div>
 
@@ -185,6 +191,7 @@ $show_edit_controls = false;
 						echo $display_date;
 					else :
 						if ( $image_position == 'left' ) :
+							echo '<div class="ngl-article-left-mobile -emogrifier-keep">' . $display_image . '</div>';
 							echo '<div class="ngl-article-left">' . $display_image . '</div>';
 							echo '<div class="ngl-article-right">';
 								echo $display_labels;

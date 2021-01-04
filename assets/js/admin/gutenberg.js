@@ -226,6 +226,12 @@ jQuery.fn.selectText = function(){
 		} );
 	}
 
+	// When article featured image is clicked.
+	$( document ).on( 'click', '.ngl-article-featured a', function( event ) {
+		event.preventDefault();
+		return false;
+	} );
+
 	// When article featured image is hovered.
 	$( document ).on( 'mouseenter', '.ngl-article-featured', function() {
 		var edit = $( this ).find( '.ngl-article-featured-edit' );
@@ -496,12 +502,13 @@ jQuery.fn.selectText = function(){
 				item.find( '.ngl-article-overlay' ).show();
 			},
 			success: function( response ) {
-				el.removeClass( 'ngl-in-progress ngl-is-toggled' ).addClass( 'ngl-in-done' );
+				el.removeClass( 'ngl-in-progress' ).addClass( 'ngl-in-done' );
 				el.find( 'i' ).removeClass().addClass( 'check icon' );
-				item.find( '.ngl-article-state-refreshing' ).removeClass( 'ngl-show-state' );
-				item.find( '.ngl-article-overlay' ).hide();
+				item.find( '.ngl-article-state-refreshing' ).html( newsletterglue_params.refreshed_html ).addClass( 'ngl-refreshed' );
 				setTimeout( function() {
-					el.removeClass( 'ngl-in-done' );
+					item.find( '.ngl-article-overlay' ).hide();
+					item.find( '.ngl-article-state-refreshing' ).html( newsletterglue_params.refreshing_html ).removeClass( 'ngl-show-state ngl-refreshed' );
+					el.removeClass( 'ngl-in-done ngl-is-toggled' );
 					el.find( 'i' ).removeClass().addClass( 'sync icon' );
 				}, 1000 );
 				if ( response ) {
@@ -593,10 +600,10 @@ jQuery.fn.selectText = function(){
 	} );
 
 	// Change URL dynamically.
-	$( document ).on( 'focus', '.ngl-article-list-url-edit[contenteditable]', function() {
+	$( document ).on( 'focus', '.ngl-article-list-url-edit span[contenteditable]', function() {
 		const $this = $(this);
 		$this.data('before', $this.html());
-	}).on('blur keyup paste input', '.ngl-article-list-url-edit[contenteditable]', function() {
+	}).on('blur keyup paste input', '.ngl-article-list-url-edit span[contenteditable]', function() {
 		const $this = $(this);
 		if ($this.data('before') !== $this.html()) {
 			$this.data('before', $this.html());
@@ -605,10 +612,12 @@ jQuery.fn.selectText = function(){
 	});
 
 	// When URL is changed.
-	$( document ).on( 'change', '.ngl-article-list-url-edit[contenteditable]', function() {
+	$( document ).on( 'click', '.ngl-article-list-url-edit a', function( event ) {
+
+		event.preventDefault();
 
 		var $this       = $( this );
-		var url 		= $( this ).html();
+		var url 		= $( this ).parent().find( 'span' ).html();
 		var item 		= $( this ).parents( '.ngl-article' );
 		var block_id 	= $( this ).parents( '.ngl-articles' ).attr( 'data-block-id' );
 		var key			= item.attr( 'data-key' );
@@ -623,7 +632,10 @@ jQuery.fn.selectText = function(){
 
 			},
 			success: function( response ) {
-				console.log( response );
+				item.find( '.ngl-article-overlay' ).hide();
+				item.find( '.ngl-article-list-url-edit' ).removeClass( 'ngl-show-state' );
+				item.find( '.ngl-article-list-link' ).removeClass( 'ngl-is-toggled' );
+				item.find( '.ngl-article-list-url-edit a' ).hide();
 				if ( ! response.success ) {
 
 				} else {
@@ -645,6 +657,15 @@ jQuery.fn.selectText = function(){
 
 			}
 		} );
+
+		return false;
+
+	} );
+
+	// When URL is changed.
+	$( document ).on( 'change', '.ngl-article-list-url-edit span[contenteditable]', function() {
+
+		$( this ).parent().find( 'a' ).show();
 
 	} );
 
@@ -668,7 +689,8 @@ jQuery.fn.selectText = function(){
 			$( this ).removeClass( 'ngl-is-toggled' );
 		} else {
 			item.find( '.ngl-article-overlay' ).show();
-			state.addClass( 'ngl-show-state' ).selectText();
+			state.addClass( 'ngl-show-state' );
+			state.find( 'span' ).selectText();
 			$( this ).addClass( 'ngl-is-toggled' );
 		}
 
