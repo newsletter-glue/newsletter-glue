@@ -127,6 +127,11 @@ We're working on it! Stay tuned!
 
 == Changelog ==
 
+= 1.1.10, January 6, 2021 =
+
+* **Bug fix for Campaign Monitor:** Fixed a bug that caused newsletter to be sent to only one list when selecting multiple lists.
+* **Bug fix for Sendinblue:** Fixed a bug that caused sending newsletter to fail, because of an encoding issue.
+
 = 1.1.9, December 21, 2020 =
 
 * **Bug fix for MailerLite:** Fixed a bug that was causing MailerLite newsletters to save inside MailerLite, instead of being sent out. It's an encoding bug with emogrifier.
