@@ -179,6 +179,15 @@ function newsletterglue_save_data( $post_id, $data ) {
 	}
 
 	if ( isset( $meta ) && ! empty( $meta ) ) {
+		if ( empty( $meta[ 'lists' ] ) ) {
+			$meta[ 'lists' ] = '';
+		}
+		if ( empty( $meta[ 'groups' ] ) ) {
+			$meta[ 'groups' ] = '';
+		}
+		if ( empty( $meta[ 'segments' ] ) ) {
+			$meta[ 'segments' ] = '';
+		}
 		update_post_meta( $post_id, '_newsletterglue', $meta );
 	}
 
@@ -335,6 +344,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	// Fixes emogrifier encoding bugs.
 	$html = str_replace( array( '%7B', '%7D', '%24' ), array( '{', '}', '$' ), $html );
+	$html = str_replace( '@media only screen and (max-width:596px) {', '@media only screen and (max-width:596px) {' . "\r\n", $html );
 
 	return $html;
 

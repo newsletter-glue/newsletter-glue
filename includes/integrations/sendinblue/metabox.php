@@ -48,7 +48,7 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 					'legacy'		=> true,
 					'helper'		=> __( 'Who receives your email.', 'newsletter-glue' ),
 					'options'		=> $the_lists,
-					'default'		=> explode( ',', $lists ),
+					'default'		=> is_array( $lists ) ? $lists : explode( ',', $lists ),
 					'multiple'		=> true,
 					'placeholder'	=> __( 'All contact lists', 'newsletter-glue' ),
 				) );

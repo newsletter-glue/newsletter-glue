@@ -381,6 +381,15 @@ class NGL_Pro {
 
 		$html = preg_replace( '#<script(.*?)>(.*?)</script>#is', '', ( string ) trim( $data->html ) );
 
+		$html .= '<div class="ngl-embed-meta">
+					<div class="ngl-embed-metadata">
+						<a href="' . urldecode( trim( $url ) ) . '" target="_blank">' . esc_html( $data->title ) . '</a>
+					</div>
+					<div class="ngl-embed-icon">
+						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/soundcloud.png" /></a>
+					</div>
+				</div>';
+
 		return $html;
 
 	}

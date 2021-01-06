@@ -498,6 +498,8 @@ jQuery.fn.selectText = function(){
 			data : data,
 			beforeSend: function() {
 				el.addClass( 'ngl-in-progress ngl-is-toggled' );
+				item.find( '.ngl-article-list-link' ).removeClass( 'ngl-is-toggled' );
+				item.find( '.ngl-article-list-url-edit' ).removeClass( 'ngl-show-state' );
 				item.find( '.ngl-article-state-refreshing' ).addClass( 'ngl-show-state' );
 				item.find( '.ngl-article-overlay' ).show();
 			},
