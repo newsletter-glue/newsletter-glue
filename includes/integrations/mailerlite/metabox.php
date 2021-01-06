@@ -49,7 +49,7 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 					'legacy'		=> true,
 					'helper'		=> __( 'Who receives your email.', 'newsletter-glue' ),
 					'options'		=> $the_lists,
-					'default'		=> explode( ',', $groups ),
+					'default'		=> is_array( $groups ) ? $groups : explode( ',', $groups ),
 					'multiple'		=> true,
 					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),
 				) );
@@ -74,7 +74,7 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 					'legacy'		=> true,
 					'helper'		=> sprintf( __( 'A specific group of subscribers. %s', 'newsletter-glue' ), '<a href="https://app.mailerlite.com/subscribers/segments" target="_blank">' . __( 'Create segment', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>' ),
 					'options'		=> $api->get_segments(),
-					'default'		=> explode( ',', $segments ),
+					'default'		=> is_array( $segments ) ? $segments : explode( ',', $segments ),
 					'multiple'		=> true,
 					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),
 				) );

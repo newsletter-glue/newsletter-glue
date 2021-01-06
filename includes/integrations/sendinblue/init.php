@@ -253,7 +253,7 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 		$from_name	= isset( $data['from_name'] ) ? $data['from_name'] : '';
 		$from_email	= isset( $data['from_email'] ) ? $data['from_email'] : '';
 		$schedule   = isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
-		$lists		= isset( $data['lists'] ) && ! empty( trim( $data['lists'] ) ) && $data['lists'] != 'null' ? array_map( 'intval', explode( ',', $data['lists'] ) ) : '';
+		$lists      = isset( $data['lists'] ) && ! empty( $data['lists'] ) && is_array( $data['lists'] ) ? array_map( 'intval', $data['lists'] ) : '';
 
 		$this->api  = new NGL_SendinblueApiClient( $this->api_key );
 
@@ -287,14 +287,14 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 
 		if ( ! $verified ) {
 
-			if ( ! $test ) {
-				newsletterglue_add_campaign_data( $post_id, $subject, $this->prepare_message( $result ) );
-			}
-
 			$result = array(
 				'fail'	=> sprintf( __( 'Your <strong><em>From Email</em></strong> address isn&rsquo;t verified.<br />
 						%s Or %s', 'newsletter-glue' ), '<a href="https://account.sendinblue.com/senders" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>', '<a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' ),
 			);
+
+			if ( ! $test ) {
+				newsletterglue_add_campaign_data( $post_id, $subject, $this->prepare_message( $result ) );
+			}
 
 			return $result;
 

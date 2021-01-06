@@ -49,7 +49,7 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 					'legacy'		=> true,
 					'helper'		=> __( 'Who receives your email.', 'newsletter-glue' ),
 					'options'		=> $the_lists,
-					'default'		=> explode( ',', $lists ),
+					'default'		=> is_array( $lists ) ? $lists : explode( ',', $lists ),
 					'multiple'		=> true,
 					'placeholder'	=> __( 'Select list(s)', 'newsletter-glue' ),
 				) );
@@ -74,7 +74,7 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 					'legacy'		=> true,
 					'helper'		=> __( 'A specific group of subscribers.', 'newsletter-glue' ),
 					'options'		=> $api->get_segments(),
-					'default'		=> explode( ',', $segments ),
+					'default'		=> is_array( $segments ) ? $segments : explode( ',', $segments ),
 					'multiple'		=> true,
 					'placeholder'	=> __( 'Select segment(s)', 'newsletter-glue' ),
 				) );

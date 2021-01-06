@@ -258,8 +258,8 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		$from_name	= isset( $data['from_name'] ) ? $data['from_name'] : '';
 		$from_email	= isset( $data['from_email'] ) ? $data['from_email'] : '';
 		$schedule   = isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
-		$lists		= isset( $data['lists'] ) && ! empty( trim( $data['lists'] ) ) && $data['lists'] != 'null' ? explode( ',', $data['lists'] ) : '';
-		$segments	= isset( $data['segments'] ) && ! empty( trim( $data['segments'] ) ) && $data['segments'] != 'null' ? explode( ',', $data['segments'] ) : '';
+		$lists		= isset( $data['lists'] ) && ! empty( $data['lists'] ) && is_array( $data['lists'] ) ? $data['lists'] : '';
+		$segments	= isset( $data['segments'] ) && ! empty( $data['segments'] ) && is_array( $data['segments'] ) ? $data['segments'] : '';
 
 		$post = get_post( $post_id );
 
@@ -332,6 +332,12 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 				if ( $resp['Code'] == 310 ) {
 					$response = array(
 						'fail'		=> __( 'HTML content has to be valid and served via a remote URL.', 'newsletter-glue' ),
+					);
+				}
+
+				if ( $resp['Code'] == 4202 ) {
+					$response = array(
+						'fail'		=> __( 'Email content contains JavaScript. Please remove it and try again.', 'newsletter-glue' ),
 					);
 				}
 

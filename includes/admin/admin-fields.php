@@ -102,7 +102,7 @@ function newsletterglue_select_field( $args ) {
 
 		<?php if ( $legacy ) { ?>
 
-		<select name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" class="ui dropdown <?php echo esc_attr( $class ); ?>" <?php if ( $multiple ) echo 'multiple=""'; ?> >
+		<select name="<?php echo esc_attr( $name ); ?><?php if ( $multiple ) echo '[]'; ?>" id="<?php echo esc_attr( $id ); ?>" class="ui dropdown <?php echo esc_attr( $class ); ?>" <?php if ( $multiple ) echo 'multiple=""'; ?> >
 			<option value=""><?php echo esc_html( $placeholder ); ?></option>
 			<?php if ( $options ) { ?>
 				<?php foreach( $options as $key => $value ) { ?>
@@ -113,7 +113,7 @@ function newsletterglue_select_field( $args ) {
 
 		<?php } else { ?>
 
-		<div class="ui selection dropdown <?php echo esc_attr( $class ); ?>">
+		<div class="ui selection dropdown <?php if ( $multiple ) echo 'multiple'; ?> <?php echo esc_attr( $class ); ?>">
 			<input type="hidden" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $default ); ?>">
 			<div class="default text"><?php echo esc_html( $placeholder ); ?></div>
 			<i class="dropdown icon"></i>
