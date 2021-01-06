@@ -359,7 +359,19 @@ class NGL_Pro {
 			return false;
 		}
 
-		return $url;
+		$html = '<a href="' . urldecode( trim( $url ) ) . '" target="_blank" class="ngl-sound">';
+		$html .= '<img src="' . $data->thumbnail_url . '" class="ngl-embed-sound-thumb" />';
+
+		$html .= '<span class="ngl-sound-meta">';
+		$html .= '<span class="ngl-sound-p1">';
+		$html .= '<span class="ngl-sound-title">' . esc_html( $data->title ) . '</span>';
+		$html .= '</span>';
+		$html .= '<span class="ngl-sound-icon"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/spotify.png" /></span>';
+		$html .= '</span>';
+
+		$html .= '</a>';
+
+		return $html;
 
 	}
 
@@ -378,17 +390,31 @@ class NGL_Pro {
 		if ( empty( $data ) ) {
 			return false;
 		}
+		
+		$content = ( string ) trim( $data->html );
+		$content = preg_replace( '#<script(.*?)>(.*?)</script>#is', '', $content );
 
-		$html = preg_replace( '#<script(.*?)>(.*?)</script>#is', '', ( string ) trim( $data->html ) );
+		$x = strrpos( $content, 'from' );
+		$split = array( substr( $content, 0, $x ), substr( $content, $x + 4 ) );
+
+		if ( isset( $split[1] ) ) {
+			$from = trim( str_replace( 'from', '', $split[1] ) );
+			$from = '<a href="https://reddit.com/r/' . wp_strip_all_tags( $from ) . '" target="_blank">/r/' . wp_strip_all_tags( $from ) . '</a>';
+		}
+
+		$html = trim( $split[0] );
 
 		$html .= '<div class="ngl-embed-meta">
 					<div class="ngl-embed-metadata">
-						<a href="' . urldecode( trim( $url ) ) . '" target="_blank">' . esc_html( $data->title ) . '</a>
+						<strong>' . $from . '</strong><br />
+						<a href="https://reddit.com/user/' . $data->author_name . '" target="_blank">' . esc_html( $data->author_name ) . '</a>
 					</div>
 					<div class="ngl-embed-icon">
-						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/soundcloud.png" /></a>
+						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/reddit.png" /></a>
 					</div>
 				</div>';
+
+		$html = str_replace( 'blockquote', 'div', $html );
 
 		return $html;
 
@@ -410,17 +436,18 @@ class NGL_Pro {
 			return false;
 		}
 
-		$html = '<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . $data->thumbnail_url . '" class="ngl-embed-soundcloud-thumb" /></a>';
+		$html = '<a href="' . urldecode( trim( $url ) ) . '" target="_blank" class="ngl-sound">';
+		$html .= '<img src="' . $data->thumbnail_url . '" class="ngl-embed-sound-thumb" />';
 
-		$html .= '<div class="ngl-embed-meta">
-					<div class="ngl-embed-metadata">
-						<a href="' . urldecode( trim( $url ) ) . '" target="_blank">' . esc_html( $data->title ) . '</a><br />
-						' . $data->description . '<br />' . $data->author_name . '<br />' . $data->author_url . '
-					</div>
-					<div class="ngl-embed-icon">
-						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/soundcloud.png" /></a>
-					</div>
-				</div>';
+		$html .= '<span class="ngl-sound-meta">';
+		$html .= '<span class="ngl-sound-p1">';
+		$html .= '<span class="ngl-sound-title">' . esc_html( $data->title ) . '</span>';
+		$html .= '<span class="ngl-sound-author">' . esc_html( $data->author_name ) . '</span>';
+		$html .= '</span>';
+		$html .= '<span class="ngl-sound-icon"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/soundcloud.png" /></span>';
+		$html .= '</span>';
+
+		$html .= '</a>';
 
 		return $html;
 
@@ -612,6 +639,96 @@ class NGL_Pro {
 
 		.ngl-embed-youtube .ngl-embed-metadata a {
 			color: #333 !important;
+		}
+
+		.ngl-embed-reddit {
+			font-size: 16px;
+			border: 1px solid #ccc;
+			box-shadow: none !important;
+			border-radius: 10px;
+		}
+
+		.ngl-embed-reddit a {
+			text-decoration: none !important;
+			color: #444 !important;
+		}
+
+		.ngl-embed-reddit .ngl-embed-meta {
+			font-size: 13px;
+		}
+
+		.ngl-embed-reddit .ngl-embed-meta a {
+			color: #aaa !important;
+		}
+
+		.ngl-embed-reddit .ngl-embed-meta strong a {
+			color: #444 !important;
+		}
+
+		.ngl-embed-soundcloud,
+		.ngl-embed-spotify {
+			padding: 0;
+			box-shadow: none !important;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			width: 400px;
+			max-width: 400px;
+			height: 120px;
+		}
+
+		.ngl-embed-soundcloud a.ngl-sound,
+		.ngl-embed-spotify a.ngl-sound {
+			text-decoration: none !important;
+			font-size: 16px;
+			color: #333 !important;
+			font-weight: bold;
+			display: block !important;
+			height: 120px !important;
+		}
+
+		.ngl-sound img {
+			margin: 0 !important;
+			border-radius: 5px 0 0 5px;
+			width: 120px !important;
+			height: 120px !important;
+			display: inline-block !important;
+		}
+
+		.ngl-sound span.ngl-sound-meta {
+			width: 280px !important;
+			height: 120px;
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		.ngl-sound-p1 {
+			display: block;
+			height: 85px;
+		}
+
+		.ngl-sound-title {
+			display: block;
+			line-height: 1.2;
+			padding: 15px 15px 4px 15px;
+		}
+
+		.ngl-sound-author {
+			padding: 0 15px;
+			font-size: 13px;
+			font-weight: 300;
+			color: #999;
+		}
+
+		.ngl-sound-icon {
+			display: block;
+			text-align: right;
+			padding: 0 15px 0 0;
+			height: 35px;
+		}
+
+		.ngl-sound-icon img {
+			width: 30px !important;
+			height: 30px !important;
 		}
 		<?php
 	}
