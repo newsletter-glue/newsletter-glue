@@ -637,7 +637,6 @@ jQuery.fn.selectText = function(){
 				item.find( '.ngl-article-overlay' ).hide();
 				item.find( '.ngl-article-list-url-edit' ).removeClass( 'ngl-show-state' );
 				item.find( '.ngl-article-list-link' ).removeClass( 'ngl-is-toggled' );
-				item.find( '.ngl-article-list-url-edit a' ).hide();
 				if ( ! response.success ) {
 
 				} else {
