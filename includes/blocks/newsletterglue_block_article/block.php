@@ -289,7 +289,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		$articles = get_option( 'ngl_articles_' . $block_id );
 
-		include_once NGL_PLUGIN_DIR . 'includes/blocks/' . $this->id . '/templates/embed.php';
+		include( NGL_PLUGIN_DIR . 'includes/blocks/' . $this->id . '/templates/embed.php' );
 
 		return ob_get_clean();
 
@@ -424,8 +424,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	height: auto;
 }
 
-.ngl-article-left { display: inline-block; width: 49.5%; vertical-align: top; box-sizing: border-box; }
-.ngl-article-right { display: inline-block; width: 49.5%; vertical-align: top; padding-left: 20px; box-sizing: border-box; }
+.ngl-article-left { display: inline-block; width: 49.5%; vertical-align: top; box-sizing: border-box !important; }
+.ngl-article-right { display: inline-block; width: 49.5%; vertical-align: top; padding-left: 20px; box-sizing: border-box !important; }
 
 .ngl-articles-30_70 .ngl-article-left { display: inline-block; width: 30%; vertical-align: top; }
 .ngl-articles-30_70 .ngl-article-right { display: inline-block; width: 69%; vertical-align: top; }

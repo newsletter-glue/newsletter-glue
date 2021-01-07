@@ -134,8 +134,8 @@
 	height: auto;
 }
 
-.ngl-article-left { display: inline-block; width: 49.5%; vertical-align: top; box-sizing: border-box; }
-.ngl-article-right { display: inline-block; width: 49.5%; vertical-align: top; padding-left: 20px; box-sizing: border-box; }
+.ngl-article-left { display: inline-block; width: 49.5%; vertical-align: top; box-sizing: border-box !important; }
+.ngl-article-right { display: inline-block; width: 49.5%; vertical-align: top; padding-left: 20px; box-sizing: border-box !important; }
 
 .ngl-articles-30_70 .ngl-article-left { display: inline-block; width: 30%; vertical-align: top; }
 .ngl-articles-30_70 .ngl-article-right { display: inline-block; width: 69%; vertical-align: top; }
