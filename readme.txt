@@ -127,6 +127,10 @@ We're working on it! Stay tuned!
 
 == Changelog ==
 
+= 1.1.11, January 8, 2021 =
+
+* **Bug fix for Mailchimp:** Preview text was not displaying for newsletters sent via Mailchimp. This is now fixed.
+
 = 1.1.10, January 6, 2021 =
 
 * **Bug fix for Campaign Monitor:** Fixed a bug that caused newsletter to be sent to only one list when selecting multiple lists.
