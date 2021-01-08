@@ -249,7 +249,6 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 		$audience		= isset( $data['audience'] ) ? $data['audience'] : '';
 		$segment		= isset( $data['segment'] ) && $data['segment'] && ( $data['segment'] != '_everyone' ) ? $data['segment'] : '';
 		$schedule  	 	= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
-		$preview_text 	= isset( $data['preview_text'] ) ? esc_attr( $data[ 'preview_text' ] ) : '';
 
 		// API request.
 		$this->api = new NGL_Mailchimp_API( $this->api_key );
@@ -293,10 +292,6 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 			'reply_to' 		=> $from_email,
 			'from_name' 	=> $from_name,
 		);
-
-		if ( ! empty( $preview_text ) ) {
-			$settings[ 'preview_text' ] = $preview_text;
-		}
 
 		// Setup campaign array.
 		$campaign_array = array(

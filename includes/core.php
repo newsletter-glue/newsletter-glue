@@ -288,9 +288,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	// Add preview text to email.
 	if ( ! empty( $preview_text ) ) {
-		if ( ! in_array( $app, array( 'mailchimp' ) ) ) {
-			$the_content .= '<div class="ngl-preview-text -emogrifier-keep">' . $preview_text . '</div>';
-		}
+		$the_content .= '<div class="ngl-preview-text -emogrifier-keep">' . $preview_text . '</div>';
 	}
 
 	// Add logo.

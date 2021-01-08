@@ -414,8 +414,6 @@ class NGL_Pro {
 					</div>
 				</div>';
 
-		$html = str_replace( 'blockquote', 'div', $html );
-
 		return $html;
 
 	}
@@ -475,7 +473,8 @@ class NGL_Pro {
 
 		$html .= '<div class="ngl-embed-meta">
 					<div class="ngl-embed-metadata">
-						<a href="' . urldecode( trim( $url ) ) . '" target="_blank">' . $data->title . '</a>
+						<a href="' . urldecode( trim( $url ) ) . '" target="_blank">' . $data->title . '</a><br />
+						<span class="ngl-embed-light"><a href="' . $data->author_url . '" target="_blank" class="ngl-embed-light-link">' . $data->author_name . '</a></span>
 					</div>
 					<div class="ngl-embed-icon">
 						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/youtube.png" /></a>
@@ -597,6 +596,13 @@ class NGL_Pro {
 			text-decoration: none !important;
 		}
 
+		.ngl-embed-light,
+		.ngl-embed-youtube .ngl-embed-light a.ngl-embed-light-link {
+			color: #888 !important;
+			font-size: 13px;
+			font-weight: normal;
+		}
+
 		.ngl-embed-twitter {
 			background: #fff !important;
 			border: 1px solid rgb(204, 214, 221);
@@ -639,6 +645,7 @@ class NGL_Pro {
 
 		.ngl-embed-youtube .ngl-embed-metadata a {
 			color: #333 !important;
+			font-weight: 600;
 		}
 
 		.ngl-embed-reddit {
@@ -646,6 +653,10 @@ class NGL_Pro {
 			border: 1px solid #ccc;
 			box-shadow: none !important;
 			border-radius: 10px;
+		}
+
+		.ngl-embed-reddit blockquote.reddit-card {
+			margin: 0 !important;
 		}
 
 		.ngl-embed-reddit a {
