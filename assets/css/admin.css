@@ -1292,8 +1292,9 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-block-upgrade {
 	position: absolute;
-	right: 20px;
-	bottom: 15px;
+    right: 0;
+    bottom: 15px;
+    width: 100%;
 }
 
 .ngl-block-upgrade a {

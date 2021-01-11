@@ -32,21 +32,23 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				$block = new $classname;
 		?>
 		<div class="ngl-block <?php echo ( $block->use_block() === 'yes' ) ? 'ngl-block-used' : 'ngl-block-unused'; ?> <?php echo ( $block->is_pro && newsletterglue_is_free_version() ) ? 'ngl-block-locked' : ''; ?>" data-block="<?php echo esc_attr( $block_id ); ?>">
+
 			<div class="ngl-block-top" style="<?php if ( $block->get_icon_url() ) : ?>background-image: url( <?php echo $block->get_icon_url(); ?> )<?php endif; ?>">
 				<?php if ( $block->is_pro ) : ?>
 				<div class="ngl-block-upgrade-icon"><?php if ( newsletterglue_is_free_version() ) : ?><i class="lock icon"></i><?php endif; ?><?php _e( 'Pro', 'newsletter-glue' ); ?></div>
 				<?php endif; ?>
 				<a href="#" class="ngl-block-demo"><?php _e( 'See demo', 'newsletter-glue' ); ?></a>
 			</div>
+
 			<div class="ngl-block-title"><?php echo esc_html( $block->get_label() ); ?></div>
 			<div class="ngl-block-desc"><?php echo esc_html( $block->get_description() ); ?></div>
-			<div class="ngl-block-defaults"><a href="#"><?php _e( 'Set defaults', 'newsletter-glue' ); ?></a></div>
 
 			<?php if ( $block->is_pro && newsletterglue_is_free_version() ) : ?>
 			<div class="ngl-block-upgrade">
-				<a href="https://newsletterglue.com/pricing/"><?php _e( 'Upgrade to unlock', 'newsletter-glue' ); ?></a>
+				<a href="https://newsletterglue.com/upgrade/" target="_blank"><?php _e( 'Upgrade to unlock &rarr;', 'newsletter-glue' ); ?></a>
 			</div>
 			<?php else : ?>
+			<div class="ngl-block-defaults"><a href="#"><?php _e( 'Set defaults', 'newsletter-glue' ); ?></a></div>
 			<div class="ngl-block-use">
 				<label for="<?php echo esc_attr( $block_id ); ?>">
 					<span class="ngl-block-use-label"><?php _e( 'Use block', 'newsletter-glue' ); ?></span>
@@ -55,10 +57,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				</label>
 			</div>
 			<?php endif; ?>
+
 			<?php
 				$block->load_settings();
 				$block->load_demo();
 			?>
+
 		</div>
 		<?php endforeach; ?>
 
