@@ -231,15 +231,15 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			outline: 0;
 			box-shadow: none;
 			border: none;
-			padding: 4px 25px;
+			padding: 12px 25px;
 			font-size: 16px;
 			text-decoration: none !important;
 			text-transform: none;
 			width: auto !important;
 			min-width: 120px !important;
 			display: inline-block !important;
-			height: 30px !important;
-			line-height: 30px !important;
+			height: auto !important;
+			line-height: 1 !important;
 			text-align: center !important;
 			box-sizing: border-box !important;
 		}

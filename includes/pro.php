@@ -395,6 +395,7 @@ class NGL_Pro {
 		$content = preg_replace( '#<script(.*?)>(.*?)</script>#is', '', $content );
 
 		$x = strrpos( $content, 'from' );
+
 		$split = array( substr( $content, 0, $x ), substr( $content, $x + 4 ) );
 
 		if ( isset( $split[1] ) ) {
@@ -407,10 +408,10 @@ class NGL_Pro {
 		$html .= '<div class="ngl-embed-meta">
 					<div class="ngl-embed-metadata">
 						<strong>' . $from . '</strong><br />
-						<a href="https://reddit.com/user/' . $data->author_name . '" target="_blank">' . esc_html( $data->author_name ) . '</a>
+						<a href="https://reddit.com/user/' . esc_attr( $data->author_name ) . '" target="_blank">' . esc_html( $data->author_name ) . '</a>
 					</div>
 					<div class="ngl-embed-icon">
-						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/reddit.png" /></a>
+						<a href="' . esc_url( urldecode( trim( $url ) ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/reddit.png" /></a>
 					</div>
 				</div>';
 
@@ -621,6 +622,9 @@ class NGL_Pro {
 
 		.ngl-embed-youtube {
 			padding: 0;
+			border: 1px solid #ddd;
+			border-radius: 6px;
+			box-shadow: none !important;
 		}
 
 		.ngl-embed-youtube a {
