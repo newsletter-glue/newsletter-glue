@@ -211,8 +211,8 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 
 		.ngl-author-cta img {
 			display: inline-block;
-			width: 16px;
-			height: 16px;
+			width: 16px !important;
+			height: 16px !important;
 			margin: 0 4px 0 0 !important;
 		}
 
