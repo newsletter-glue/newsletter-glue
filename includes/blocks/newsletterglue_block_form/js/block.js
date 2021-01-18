@@ -209,7 +209,7 @@
 				var addText = '';
 			}
 
-			if ( props.attributes.add_checkbox ) {
+			if ( props.attributes.add_checkbox && props.attributes.form_style !== 'landscape' ) {
 				var addCheckbox = el( 'p', { className: 'ngl-form-checkbox' },
 					el( 'label', { },
 						el( 'input', { type: 'checkbox', name: 'ngl_extra_list', id: 'ngl_extra_list' } ),
@@ -226,6 +226,25 @@
 				);
 			} else {
 				var addCheckbox = '';
+			}
+
+			if ( props.attributes.add_checkbox && props.attributes.form_style === 'landscape' ) {
+				var addCheckbox2 = el( 'p', { className: 'ngl-form-checkbox' },
+					el( 'label', { },
+						el( 'input', { type: 'checkbox', name: 'ngl_extra_list', id: 'ngl_extra_list' } ),
+						el( RichText, {
+							tagName: 'span',
+							className: 'ngl-form-checkbox-text',
+							value: props.attributes.checkbox_text,
+							format: 'string',
+							onChange: ( value ) => { props.setAttributes( { checkbox_text: value } ); },
+							placeholder: 'Enter text for checkbox...',
+							multiline: '&nbsp;'
+						} )
+					)
+				);
+			} else {
+				var addCheckbox2 = '';
 			}
 
 			var addEmail = el( 'div', { className: 'ngl-form-field', style: fieldStyle },
@@ -350,6 +369,7 @@
 								multiline: '&nbsp;',
 								style: buttonStyles,
 							} ),
+							addCheckbox2,
 							addText
 						),
 						el( 'div', { className: 'ngl-message-overlay' + ' ' + isOverlayshown },
@@ -609,7 +629,7 @@
 			}
 
 			// Add checkbox.
-			if ( props.attributes.add_checkbox ) {
+			if ( props.attributes.add_checkbox && props.attributes.form_style !== 'landscape' ) {
 				var formCheckbox = el( 'p', { className: 'ngl-form-checkbox' },
 					el( 'label', { },
 						el( 'input', { type: 'checkbox', name: 'ngl_extra_list', id: 'ngl_extra_list' } ),
@@ -622,6 +642,21 @@
 				);
 			} else {
 				var formCheckbox = '';
+			}
+
+			if ( props.attributes.add_checkbox && props.attributes.form_style === 'landscape' ) {
+				var formCheckbox2 = el( 'p', { className: 'ngl-form-checkbox' },
+					el( 'label', { },
+						el( 'input', { type: 'checkbox', name: 'ngl_extra_list', id: 'ngl_extra_list' } ),
+						el( RichText.Content, {
+							tagName: 'span',
+							className: 'ngl-form-checkbox-text',
+							value: props.attributes.checkbox_text
+						} )
+					)
+				);
+			} else {
+				var formCheckbox2 = '';
 			}
 
 			// Email.
@@ -665,6 +700,7 @@
 								value: props.attributes.button_text,
 								style: buttonStyles,
 							} ),
+							formCheckbox2,
 							formText
 						),
 						el( 'div', { className: 'ngl-message-overlay' },

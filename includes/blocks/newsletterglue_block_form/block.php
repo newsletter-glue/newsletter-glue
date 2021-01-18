@@ -228,7 +228,6 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			color: #fff;
 			border-radius: 0;
 			cursor: pointer;
-			outline: 0;
 			box-shadow: none;
 			border: none;
 			padding: 12px 25px;
@@ -242,6 +241,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			line-height: 1 !important;
 			text-align: center !important;
 			box-sizing: border-box !important;
+			outline: none !important;
 		}
 
 		.ngl-form.ngl-portrait {
@@ -311,11 +311,16 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			justify-content: center;
 		}
 
+		.ngl-message-svg-wrap svg {
+			stroke-width: 2px !important;
+			fill: transparent !important;
+		}
+
 		.ngl-message-overlay-text {
 			font-size: 18px;
 			margin: 14px 0 0;
 		}
-		
+
 		.ngl-form-checkbox, .ngl-form-text {
 			display: none !important;
 			visibility: hidden !important;

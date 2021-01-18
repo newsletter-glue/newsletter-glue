@@ -194,7 +194,6 @@
     color: #fff;
     border-radius: 0;
     cursor: pointer;
-    outline: 0;
     box-shadow: none;
     border: none;
     padding: 5px 15px;
@@ -204,6 +203,7 @@
 	text-transform: none;
 	display: inline-block;
 	box-sizing: border-box !important;
+	outline: none !important;
 }
 
 .ngl-form.ngl-portrait {
@@ -283,6 +283,11 @@
 	margin: 0 10px 0 0;
 }
 
+.ngl-message-svg-wrap svg {
+	stroke-width: 2px !important;
+	fill: transparent !important;
+}
+
 .ngl-form-unready {
 	border: 0;
 	border-radius: 0;
@@ -305,6 +310,11 @@ p.ngl-form-checkbox {
 	text-align: left;
 	line-height: 1 !important;
     margin-top: 0 !important;
+}
+
+.ngl-form.ngl-landscape p.ngl-form-checkbox {
+	flex-basis: 100%;
+	margin: 15px 0 0 !important;
 }
 
 p.ngl-form-checkbox input[type=checkbox] {
