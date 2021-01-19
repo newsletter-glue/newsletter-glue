@@ -313,6 +313,15 @@ function newsletterglue_ajax_save_theme_setting() {
 		die();
 	}
 
+	if ( $id == 'ngl_link_title' ) {
+		if ( $value ) {
+			update_option( 'newsletterglue_link_title', 'yes' );
+		} else {
+			update_option( 'newsletterglue_link_title', 'no' );
+		}
+		die();
+	}
+
 	if ( strstr( $id, 'ngl_' ) ) {
 		$key = str_replace( 'ngl_', '', $id );
 		update_option( 'newsletterglue_' . $key, $value );
@@ -351,6 +360,7 @@ function newsletterglue_ajax_reset_theme() {
 	delete_option( 'newsletterglue_position_logo' );
 	delete_option( 'newsletterglue_position_featured' );
 	delete_option( 'newsletterglue_add_title' );
+	delete_option( 'newsletterglue_link_title' );
 	update_option( 'newsletterglue_add_featured', 1 );
 
 	?>
