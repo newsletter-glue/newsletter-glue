@@ -16,4 +16,5 @@
 .wp-block-newsletterglue-callout figure,
 .wp-block-newsletterglue-callout p {
 	margin: 0 0 25px !important;
+	padding: 0 !important;
 }

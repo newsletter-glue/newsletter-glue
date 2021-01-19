@@ -174,6 +174,7 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 		.wp-block-newsletterglue-callout p {
 			margin: 0 0 25px !important;
 			color: inherit !important;
+			padding: 0 !important;
 		}
 
 		.wp-block-newsletterglue-callout * {

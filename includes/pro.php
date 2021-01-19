@@ -470,15 +470,17 @@ class NGL_Pro {
 
 		$image_url = str_replace( 'hqdefault', 'maxresdefault', $data->thumbnail_url );
 
-		$html = '<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . $image_url . '" class="ngl-embed-youtube-thumb" /></a>';
+		$url = esc_url( urldecode( trim( $url ) ) );
+
+		$html = '<a href="' . $url . '" target="_blank"><img src="' . $image_url . '" class="ngl-embed-youtube-thumb" /></a>';
 
 		$html .= '<div class="ngl-embed-meta">
 					<div class="ngl-embed-metadata">
-						<a href="' . urldecode( trim( $url ) ) . '" target="_blank">' . $data->title . '</a><br />
+						<a href="' . $url . '" target="_blank">' . $data->title . '</a><br />
 						<span class="ngl-embed-light"><a href="' . $data->author_url . '" target="_blank" class="ngl-embed-light-link">' . $data->author_name . '</a></span>
 					</div>
 					<div class="ngl-embed-icon">
-						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/youtube.png" /></a>
+						<a href="' . $url . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/youtube.png" /></a>
 					</div>
 				</div>';
 
