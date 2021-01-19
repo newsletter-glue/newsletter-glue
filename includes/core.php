@@ -354,6 +354,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 function newsletterglue_add_logo() {
 
 	$logo			= get_option( 'newsletterglue_logo' );
+	$logo_url		= get_option( 'newsletterglue_logo_url' );
 	$logo_position 	= get_option( 'newsletterglue_position_logo' );
 
 	if ( ! $logo_position ) {
@@ -361,7 +362,11 @@ function newsletterglue_add_logo() {
 	}
 
 	if ( $logo ) {
-		return '<div class="ngl-logo ngl-logo-' . $logo_position . '"><img src="' . esc_url( $logo ) . '" /></div>';
+		if ( esc_url( $logo_url ) ) {
+			return '<div class="ngl-logo ngl-logo-' . $logo_position . '"><a href="' . esc_url( $logo_url ) . '" target="_blank"><img src="' . esc_url( $logo ) . '" /></a></div>';
+		} else {
+			return '<div class="ngl-logo ngl-logo-' . $logo_position . '"><img src="' . esc_url( $logo ) . '" /></div>';
+		}
 	}
 
 	return null;

@@ -15,6 +15,8 @@ if ( ! $position ) {
 
 $logo = get_option( 'newsletterglue_logo' );
 
+$logo_url = esc_url( get_option( 'newsletterglue_logo_url' ) );
+
 $logo_position = get_option( 'newsletterglue_position_logo' );
 if ( ! $logo_position ) {
 	$logo_position = 'center';
@@ -33,7 +35,9 @@ $border_color 	= newsletterglue_get_theme_option( 'btn_border' );
 	<div class="ngl-email-container" style="margin-top: <?php echo (int) newsletterglue_get_theme_option( 'container_margin' ); ?>px;margin-bottom: <?php echo (int) newsletterglue_get_theme_option( 'container_margin' ); ?>px;padding: <?php echo (int) newsletterglue_get_theme_option( 'container_padding1' ); ?>px <?php echo (int) newsletterglue_get_theme_option( 'container_padding2' ); ?>px;background-color: <?php echo $container_bg; ?>">
 	
 		<div class="ngl-email-logo ngl-desktop ngl-logo-<?php echo esc_attr( $logo_position ); ?> <?php if ( ! $logo ) echo 'is-hidden'; ?>">
+			<?php if ( $logo_url ) { ?><a href="<?php echo $logo_url; ?>" target="_blank"><?php } ?>
 			<img src="<?php echo esc_url( $logo ); ?>" alt="" />
+			<?php if ( $logo_url ) { ?></a><?php } ?>
 		</div>
 
 		<?php if ( $position == 'above' ) : ?>
@@ -75,7 +79,9 @@ $border_color 	= newsletterglue_get_theme_option( 'btn_border' );
 	<div class="ngl-email-container" style="margin-top: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;margin-bottom: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;padding: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_padding1' ); ?>px <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_padding2' ); ?>px;background-color: <?php echo $container_bg; ?>">
 
 		<div class="ngl-email-logo ngl-mobile ngl-logo-<?php echo esc_attr( $logo_position ); ?> <?php if ( ! $logo ) echo 'is-hidden'; ?>">
+			<?php if ( $logo_url ) { ?><a href="<?php echo $logo_url; ?>" target="_blank"><?php } ?>
 			<img src="<?php echo esc_url( $logo ); ?>" alt="" />
+			<?php if ( $logo_url ) { ?></a><?php } ?>
 		</div>
 
 		<?php if ( $position == 'above' ) : ?>

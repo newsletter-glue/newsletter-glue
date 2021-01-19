@@ -59,6 +59,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		newsletterglue_setting_upload( 'newsletterglue_logo', __( 'Add logo', 'newsletter-glue' ) );
 
+		newsletterglue_setting_text( 'newsletterglue_logo_url', __( 'Add URL for logo', 'newsletter-glue' ) );
+
 		newsletterglue_setting_dropdown(
 			'ngl_position_logo',
 			__( 'Align', 'newsletter-glue' ),

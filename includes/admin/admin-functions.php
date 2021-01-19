@@ -269,6 +269,28 @@ function newsletterglue_setting_colour( $id = '', $title = '' ) {
 }
 
 /**
+ * Setting: Text input.
+ */
+function newsletterglue_setting_text( $id = '', $title = '' ) {
+	$class = 'ngl-' . str_replace( '_', '-', $id );
+	?>
+	<div class="components-base-control <?php echo esc_attr( $class ); ?>">
+		<div class="components-base-control__field">
+			<div>
+				<label class="components-base-control__label" for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $title ); ?></label>
+			</div>
+			<div class="">
+				<input class="components-text-control__input ngl-theme-input ngl-desktop" id="<?php echo esc_attr( $id ); ?>" type="text" value="<?php echo get_option( $id ); ?>" data-option="<?php echo esc_attr( $id ); ?>" >
+			</div>
+			<div>
+				<?php newsletterglue_show_save_text(); ?>
+			</div>
+		</div>
+	</div>
+	<?php
+}
+
+/**
  * Setting: Size.
  */
 function newsletterglue_setting_size( $id = '', $title = '', $max = 999 ) {

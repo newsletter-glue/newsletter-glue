@@ -299,6 +299,11 @@ function newsletterglue_ajax_save_theme_setting() {
 	$id 	= isset( $_REQUEST[ 'id' ] ) ? sanitize_text_field( $_REQUEST[ 'id' ] ) : '';
 	$value 	= isset( $_REQUEST['value'] ) ? sanitize_text_field( trim( $_REQUEST['value'] ) ) : '';
 
+	if ( $id == 'newsletterglue_logo_url' ) {
+		update_option( 'newsletterglue_logo_url', esc_url( $value ) );
+		die();
+	}
+
 	if ( $id == 'ngl_add_title' ) {
 		if ( $value ) {
 			update_option( 'newsletterglue_add_title', 'yes' );
