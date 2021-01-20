@@ -299,7 +299,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	// Link to title.
 	if ( $link_to_post !== 'no' ) {
-		$title = '<a href="' . get_permalink( $post->ID ) . '" target="_blank">' . $title . '</a>';
+		$title = '<a href="' . get_permalink( $post->ID ) . '" class="ngl-title-to-post" target="_blank">' . $title . '</a>';
 	}
 
 	// Masthead and heading
