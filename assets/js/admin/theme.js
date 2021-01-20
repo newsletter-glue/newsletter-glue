@@ -442,4 +442,22 @@
 		$( '.ngl-theme .ngl-desktop' ).show();
 	} );
 
+	// Switch checkbox status.
+	if ( $( document ).find( '#ngl_add_title' ).length ) {
+		if ( ! $( document ).find( '#ngl_add_title' ).is( ':checked' ) ) {
+			$( document ).find( '#ngl_link_title' ).prop( 'disabled', true );
+			$( document ).find( '#ngl_link_title' ).parents( '.components-base-control__field' ).addClass( 'disabled' );
+		}
+	}
+
+	$( document ).on( 'change', '#ngl_add_title', function() {
+		if ( $( this ).is( ':checked' ) ) {
+			$( document ).find( '#ngl_link_title' ).prop( 'disabled', false );
+			$( document ).find( '#ngl_link_title' ).parents( '.components-base-control__field' ).removeClass( 'disabled' );
+		} else {
+			$( document ).find( '#ngl_link_title' ).prop( 'disabled', true );
+			$( document ).find( '#ngl_link_title' ).parents( '.components-base-control__field' ).addClass( 'disabled' );
+		}
+	} );
+
 } ) ( jQuery );
