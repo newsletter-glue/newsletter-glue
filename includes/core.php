@@ -7,6 +7,35 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Creates a preview for emails.
+ */
+function newsletterglue_preview_emails() {
+
+	if ( ! empty( $_GET['preview_email'] ) ) {
+
+		$post_id = absint( $_GET[ 'preview_email' ] );
+
+		$test = get_post( $post_id );
+		if ( ! isset( $test->ID ) ) {
+			return;
+		}
+
+		ob_start();
+
+		echo newsletterglue_generate_content( $post_id );
+
+		$message = ob_get_clean();
+
+		echo $message;
+
+		exit;
+
+	}
+
+}
+add_action( 'init', 'newsletterglue_preview_emails' );
+
+/**
  * Returns true if free version is being used.
  */
 function newsletterglue_is_free_version() {
@@ -625,6 +654,10 @@ body {
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
 	font-family: <?php echo newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ); ?>;
 	<?php endif; ?>
+}
+
+#template_inner * {
+	max-width: 600px !important;
 }
 
 h1, h2, h3, h4, h5, h6 {

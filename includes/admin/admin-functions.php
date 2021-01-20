@@ -7,29 +7,6 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Creates a preview for emails.
- */
-function newsletterglue_preview_emails() {
-
-	if ( isset( $_GET['preview_newsletterglue_email'] ) ) {
-		if ( ! ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'preview-email' ) ) ) {
-
-		}
-
-		ob_start();
-
-		echo newsletterglue_generate_content( absint( $_GET[ 'preview_newsletterglue_email' ] ) );
-
-		$message = ob_get_clean();
-
-		echo $message;
-		exit;
-	}
-
-}
-add_action( 'admin_init', 'newsletterglue_preview_emails' );
-
-/**
  * Creates the admin menu links.
  */
 function newsletterglue_get_screen_ids() {
