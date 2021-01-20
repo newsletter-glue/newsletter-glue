@@ -276,7 +276,8 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	// Blog title.
-	$show_title = get_option( 'newsletterglue_add_title' );
+	$show_title 	= get_option( 'newsletterglue_add_title' );
+	$link_to_post 	= get_option( 'newsletterglue_link_title' );
 
 	// Get the email template including css tags.
 	$html = newsletterglue_get_email_template( $post, $subject, $app );
@@ -295,6 +296,11 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$the_content .= newsletterglue_add_logo();
 
 	$title = isset( $post ) && isset( $post->post_title ) ? $post->post_title : $subject;
+
+	// Link to title.
+	if ( $link_to_post !== 'no' ) {
+		$title = '<a href="' . get_permalink( $post->ID ) . '" target="_blank">' . $title . '</a>';
+	}
 
 	// Masthead and heading
 	if ( $position == 'above' ) {
