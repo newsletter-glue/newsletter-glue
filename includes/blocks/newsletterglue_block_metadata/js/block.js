@@ -507,6 +507,8 @@
 				];
 			}
 
+			var read_more_tag = props.attributes.read_online_link === 'blog' ? '{post_permalink}' : '{post_permalink_preview}';
+
 			var metaPermalink = '';
 			if ( props.attributes.show_readonline ) {
 				metaPermalink = [
@@ -514,7 +516,7 @@
 						tagName: 'a',
 						className: 'ngl-metadata-permalink',
 						value: props.attributes.post_link,
-						href: '{post_permalink}'
+						href: read_more_tag
 					} ),
 					el( 'img', {
 						className: 'ngl-metadata-permalink-arrow',

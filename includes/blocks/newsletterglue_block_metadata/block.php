@@ -119,7 +119,10 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			$content = '';
 		}
 
-		$content = str_replace( '{post_permalink}', get_permalink( $post_id ), $content );
+		$post_permalink = get_permalink( $post_id );
+
+		$content = str_replace( '{post_permalink}', $post_permalink, $content );
+		$content = str_replace( '{post_permalink_preview}', add_query_arg( 'preview_email', $post_id, $post_permalink ), $content );
 
 		// Only in blog.
 		if ( ! defined( 'NGL_IN_EMAIL' ) ) {

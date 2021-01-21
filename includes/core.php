@@ -359,6 +359,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	// Process content tags.
 	$html = str_replace( '{content}', $the_content, $html );
 	$html = str_replace( '{post_permalink}', get_permalink( $post->ID ), $html );
+	$html = str_replace( '{post_permalink_preview}', add_query_arg( 'preview_email', $post->ID, get_permalink( $post->ID ) ), $html );
 	$html = preg_replace( '/<!--(.*)-->/Uis', '', $html );
 
 	$html = apply_filters( 'newsletterglue_generate_content', $html, $post );
