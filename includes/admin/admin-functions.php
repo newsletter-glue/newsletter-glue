@@ -34,6 +34,18 @@ function newsletterglue_get_screen_ids() {
 }
 
 /**
+ * Plugin action links.
+ */
+function newsletterglue_plugin_action_links( $links ) {
+
+	$links[ 'settings' ] = '<a href="' . admin_url( 'admin.php?page=ngl-settings' ) . '">' . esc_html__( 'Settings', 'newsletter-glue' ) . '</a>';
+
+	return $links;
+
+}
+add_filter( 'plugin_action_links_' . plugin_basename( NGL_PLUGIN_FILE ), 'newsletterglue_plugin_action_links', 10, 1 );
+
+/**
  * Add deactivate modal layout.
  */
 function newsletterglue_deactivate_modal() {
