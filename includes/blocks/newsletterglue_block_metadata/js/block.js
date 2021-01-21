@@ -99,6 +99,10 @@
 			readingtime: {
 				'type' : 'string',
 			},
+			read_online_link: {
+				'type' : 'string',
+				'default' : 'blog',
+			},
 		},
 		edit: withColors( 'formColor' ) ( function( props ) {
 
@@ -241,6 +245,11 @@
 				props.setAttributes( { alignment: newAlignment } );
 			}
 
+			function changeReadTarget( ev ) {
+				let read_online_link = ev.currentTarget.value;
+				props.setAttributes( { read_online_link } );
+			}
+
 			return (
 
 				el( Fragment, { },
@@ -341,6 +350,28 @@
 									onChange: ( value ) => { props.setAttributes( { divider_style: value } ); },
 									options: dividerStyles,
 								} )
+							),
+
+							el( BaseControl, {
+								label: '"Read online" links to',
+								className: 'ngl-gutenberg-base--fullwidth',
+							},
+								el( ButtonGroup, { className: 'ngl-gutenberg--fullwidth' },
+									el( Button, {
+										value: 'email',
+										isPrimary: ( props.attributes.read_online_link === 'email' ),
+										isSecondary: ( props.attributes.read_online_link !== 'email' ),
+										onClick: changeReadTarget,
+										label: 'Web version of email',
+									}, 'Web version of email' ),
+									el( Button, {
+										value: 'blog',
+										isPrimary: ( props.attributes.read_online_link === 'blog' ),
+										isSecondary: ( props.attributes.read_online_link !== 'blog' ),
+										onClick: changeReadTarget,
+										label: 'Blog post'
+									}, 'Blog post' ),
+								)
 							),
 
 						),
