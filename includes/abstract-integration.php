@@ -65,7 +65,7 @@ abstract class NGL_Abstract_Integration {
 				</div>
 
 				<div class="ngl-field">
-					<a href="<?php echo add_query_arg( 'preview_newsletterglue_email', $post->ID ); ?>" target="_blank" class="ui button secondary"><?php _e( 'Preview email', 'newsletter-glue' ); ?></a>
+					<a href="<?php echo add_query_arg( 'preview_email', $post->ID ); ?>" target="_blank" class="ui button secondary"><?php _e( 'Preview email', 'newsletter-glue' ); ?></a>
 				</div>
 
 			</div>
