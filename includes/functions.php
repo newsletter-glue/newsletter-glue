@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function newsletterglue_get_supported_apps() {
 
 	$apps = array(
+		'activecampaign'	=> __( 'ActiveCampaign', 'newsletter-glue' ),
 		'campaignmonitor'	=> __( 'Campaign Monitor', 'newsletter-glue' ),
 		'mailchimp'			=> __( 'Mailchimp', 'newsletter-glue' ),
 		'mailerlite'		=> __( 'MailerLite', 'newsletter-glue' ),
