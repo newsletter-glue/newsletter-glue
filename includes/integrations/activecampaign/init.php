@@ -395,4 +395,46 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 
 	}
 
+	/**
+	 * Add user to this ESP.
+	 */
+	public function add_user( $data ) {
+		extract( $data );
+
+		if ( empty( $email ) ) {
+			return -1;
+		}
+
+		$fname = '';
+		$lname = '';
+
+		if ( isset( $name ) ) {
+			$name_array = $array = explode( ' ', $name, 2 );
+			$fname = $name_array[0];
+			$lname = isset( $name_array[1] ) ? $name_array[1] : '';
+		}
+
+		$this->api = new ActiveCampaign( $this->api_url, $this->api_key );
+
+		if ( ! empty( $list_id ) ) {
+
+			$args = array(
+				"p[$list_id]" 	=> $list_id,
+				"email"			=> $email,
+				"first_name"	=> $fname,
+				"last_name"		=> $lname,
+			);
+
+			if ( isset( $extra_list ) && ! empty( $extra_list_id ) ) {
+				$args[ "p[$extra_list_id]" ] = $extra_list_id;
+			}
+
+			$this->api->api( 'contact/add', $args );
+
+		}
+
+		return true;
+
+	}
+
 }
