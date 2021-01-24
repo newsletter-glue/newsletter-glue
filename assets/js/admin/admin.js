@@ -364,7 +364,7 @@
 				ngl_show_testing_screen();
 			},
 			success: function( result ) {
-
+				console.log( result );
 				setTimeout( function() {
 					if ( result.response === 'invalid' ) {
 						ngl_show_not_connected_screen();
@@ -648,7 +648,7 @@
 				$( '.ngl-test-result' ).hide();
 			},
 			success: function( response ) {
-
+				console.log( response );
 				$( '.ngl-is-sending' ).hide();
 				$( '.ngl-action-link' ).show();
 				if  ( response.success ) {

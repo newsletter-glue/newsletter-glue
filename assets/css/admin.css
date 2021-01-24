@@ -407,6 +407,10 @@
 	text-align: left;
 }
 
+.ngl-fields .ngl-text-margin {
+	margin-bottom: 10px !important;
+}
+
 .ngl-helper {
 	margin: 8px 0 0;
 	color: rgba(0, 0, 0, 0.6);
