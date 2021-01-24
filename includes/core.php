@@ -380,6 +380,8 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$html = str_replace( array( '%7B', '%7D', '%24' ), array( '{', '}', '$' ), $html );
 	$html = str_replace( '@media only screen and (max-width:596px) {', '@media only screen and (max-width:596px) {' . "\r\n", $html );
 
+	$html = wp_encode_emoji( $html );
+
 	return $html;
 
 }
