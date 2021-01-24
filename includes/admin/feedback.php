@@ -24,7 +24,6 @@ $newsletterglue_feedback_nonce = wp_create_nonce( 'newsletterglue-feedback-nonce
 					<select name="_software" id="_software" required>
 						<option value=""></option>
 						<option value="Aweber">Aweber</option>
-						<option value="ActiveCampaign">ActiveCampaign</option>
 						<option value="Constant Contact">Constant Contact</option>
 						<option value="Drip">Drip</option>
 						<option value="EmailOctopus">EmailOctopus</option>
