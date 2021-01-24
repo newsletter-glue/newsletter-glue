@@ -171,7 +171,6 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 		$defaults = array();
 
 		$defaults[ 'lists' ] 	= $this->get_lists();
-		$defaults[ 'segments' ] = $this->get_segments();
 
 		return $defaults;
 	}
@@ -196,32 +195,6 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 		}
 
 		return $_lists;
-
-	}
-
-	/**
-	 * Get segments.
-	 */
-	public function get_segments() {
-
-		$_segments = array();
-
-		$this->api->version( 2 );
-
-		$segments = $this->api->api( 'segment/list_', array( 'sort' => 'name' ) );
-		$segments = json_decode( $segments );
-
-		if ( ! empty( $segments ) ) {
-			foreach( $segments as $key => $data ) {
-				$array = (array) $data;
-				$id = @$array['id'];
-				if ( $id ) {
-					$_segments[ $id ] = @$array[ 'name' ];
-				}
-			}
-		}
-
-		return $_segments;
 
 	}
 
@@ -303,7 +276,6 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 		$from_name	= isset( $data['from_name'] ) ? $data['from_name'] : '';
 		$from_email	= isset( $data['from_email'] ) ? $data['from_email'] : '';
 		$lists		= isset( $data['lists'] ) && ! empty( $data['lists'] ) && is_array( $data['lists'] ) ? $data[ 'lists' ] : '';
-		$segments	= isset( $data['segments'] ) && ! empty( $data['segments'] ) && is_array( $data['segments'] ) ? $data['segments'] : '';
 		$schedule   = isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
 
 		$post = get_post( $post_id );

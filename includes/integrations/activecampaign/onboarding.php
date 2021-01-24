@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-boarding-step"><?php _e( 'Step 2 of 3', 'newsletter-glue' ); ?></div>
 
-	<h3 style="max-width:100%;"><?php _e( 'Now, let&rsquo;s select your default groups and segments.', 'newsletter-glue' ); ?>
+	<h3 style="max-width:100%;"><?php _e( 'Now, let&rsquo;s select your default lists.', 'newsletter-glue' ); ?>
 		<span><?php _e( 'You can always change this later on in the settings.', 'newsletter-glue' ); ?></span>
 	</h3>
 
@@ -38,29 +38,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					'multiple'		=> true,
 					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),
 				) );
-			?>
-		</div>
-	</div>
-
-	<div class="ngl-settings ngl-metabox-flex">
-		<div class="ngl-metabox-header">
-			<?php esc_html_e( 'Segments', 'newsletter-glue' ); ?>
-		</div>
-		<div class="ngl-field">
-			<?php
-				$segments = newsletterglue_get_option( 'segments', 'activecampaign' );
-
-				newsletterglue_select_field( array(
-					'id' 			=> 'ngl_segments',
-					'legacy'		=> true,
-					'helper'		=> __( 'A specific group of subscribers.', 'newsletter-glue' ),
-					'options'		=> $api->get_segments(),
-					'default'		=> explode( ',', $segments ),
-					'class'			=> 'ngl-ajax',
-					'multiple'		=> true,
-					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),
-				) );
-
 			?>
 		</div>
 	</div>
