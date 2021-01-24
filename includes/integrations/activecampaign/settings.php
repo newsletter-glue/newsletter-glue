@@ -33,7 +33,26 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</div>
 
 	<div class="ngl-metabox-flex">
+		<div class="ngl-metabox-header ngl-metabox-header-c">
+			<?php esc_html_e( 'Segments', 'newsletter-glue' ); ?>
+		</div>
+		<div class="ngl-field">
+			<?php
+				$segments = newsletterglue_get_option( 'segments', $app );
 
+				newsletterglue_select_field( array(
+					'id' 			=> 'ngl_segments',
+					'legacy'		=> true,
+					'helper'		=> __( 'A specific group of subscribers.', 'newsletter-glue' ),
+					'options'		=> $api->get_segments(),
+					'default'		=> explode( ',', $segments ),
+					'class'			=> 'ngl-ajax',
+					'multiple'		=> true,
+					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),
+				) );
+
+			?>
+		</div>
 	</div>
 
 </div>

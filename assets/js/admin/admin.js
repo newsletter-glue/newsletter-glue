@@ -648,7 +648,7 @@
 				$( '.ngl-test-result' ).hide();
 			},
 			success: function( response ) {
-
+				console.log( response );
 				$( '.ngl-is-sending' ).hide();
 				$( '.ngl-action-link' ).show();
 				if  ( response.success ) {

@@ -658,7 +658,7 @@ body {
 }
 
 #template_inner * {
-	max-width: 600px !important;
+	max-width: 100% !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
