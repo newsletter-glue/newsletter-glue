@@ -7,7 +7,7 @@ Tags: newsletter, email, mailchimp, mailerlite, sendinblue
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 7.0
-Stable Tag: 1.1.11
+Stable Tag: 1.1.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,11 @@ We're working on it! Stay tuned!
 10. Newsletter Group Block (for showing/hiding content in your email/blog)
 
 == Changelog ==
+
+= 1.1.12, January 26, 2021 =
+
+* **New integration:** ActiveCampaign is now integrated!
+* Added ability to explore pro blocks and upgrade to PRO from **Newsletter Block Manager**
 
 = 1.1.11, January 8, 2021 =
 
