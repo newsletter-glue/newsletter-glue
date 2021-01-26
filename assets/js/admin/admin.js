@@ -165,7 +165,9 @@
 	// validate the email.
 	function ngl_validate_email() {
 
-		var email 	= $( '#ngl_from_email' ).val();
+		var email_  = $( '#ngl_from_email' );
+		var email 	= email_.val();
+		var elem    = email_.parents( '.ngl-field' );
 		var app 	= $( '#ngl_app' ).val();
 
 		var data = 'action=newsletterglue_ajax_verify_email&security=' + newsletterglue_params.ajaxnonce + '&email=' + email + '&app=' + app;
@@ -175,23 +177,24 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			beforeSend: function() {
-				$( '.ngl-process' ).addClass( 'is-hidden' );
-				$( '.ngl-process.is-waiting' ).removeClass( 'is-hidden' );
+				elem.find( '.ngl-process' ).addClass( 'is-hidden' );
+				elem.find( '.ngl-process.is-waiting' ).removeClass( 'is-hidden' );
 			},
 			success: function( response ) {
-				$( '.ngl-process' ).addClass( 'is-hidden' );
+				console.log( response );
+				elem.find( '.ngl-process' ).addClass( 'is-hidden' );
 				if ( response.success || response === true ) {
 					if ( response.success ) {
-						$( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
-						$( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
+						elem.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
+						elem.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
 					}
-					$( '#ngl_from_email' ).parent().parent().parent().removeClass( 'is-error' );
-					$( '#ngl_from_email' ).attr( 'data-force-unready', '0' );
+					email_.parent().parent().parent().removeClass( 'is-error' );
+					email_.attr( 'data-force-unready', '0' );
 				} else {
-					$( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
-					$( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
-					$( '#ngl_from_email' ).parent().parent().parent().addClass( 'is-error' );
-					$( '#ngl_from_email' ).attr( 'data-force-unready', '1' );
+					elem.find( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
+					elem.find( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
+					email_.parent().parent().parent().addClass( 'is-error' );
+					email_.attr( 'data-force-unready', '1' );
 				}
 				ngl_validate_form();
 			}
@@ -980,6 +983,7 @@
 		if ( $( '#ngl_send_newsletter' ).length ) {
 			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox is-hidden"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
 		}
+		ngl_validate_email();
 	} );
 
 } ) ( jQuery );
