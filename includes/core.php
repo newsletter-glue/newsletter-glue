@@ -33,7 +33,7 @@ function newsletterglue_preview_emails() {
 	}
 
 }
-add_action( 'init', 'newsletterglue_preview_emails' );
+add_action( 'init', 'newsletterglue_preview_emails', 1000 );
 
 /**
  * Returns true if free version is being used.
