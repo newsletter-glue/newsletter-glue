@@ -19,7 +19,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		$this->asset_id = str_replace( '_', '-', $this->id );
 
 		if ( $this->use_block() === 'yes' ) {
-			add_action( 'init', array( $this, 'register_block' ) );
+			add_action( 'init', array( $this, 'register_block' ), 10 );
 			add_action( 'newsletterglue_add_block_styles', array( $this, 'email_css' ) );
 
 			add_filter( 'newsletterglue_article_embed_content', array( $this, 'remove_div' ), 50, 2 );
