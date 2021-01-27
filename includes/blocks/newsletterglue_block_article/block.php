@@ -933,6 +933,10 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 			wp_die();
 		}
 
+		if ( ! preg_match( "~^(?:f|ht)tps?://~i", $url ) ) {
+			$url = 'https://' . $url;
+		}
+
 		if ( empty( $url ) || ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
 			$error = __( 'Invalid URL.', 'newsletter-glue' );
 		}
