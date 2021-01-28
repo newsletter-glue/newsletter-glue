@@ -1,9 +1,9 @@
 === WordPress email posts to subscribers (For Mailchimp, MailerLite, Sendinblue) - Newsletter Glue ===
 
 Plugin name: Newsletter Glue - Email posts to subscribers, connect Mailchimp MailerLite
-Contributors: newsletterglue, lesleysim, ahmedfouade
+Contributors: newsletter glue, ahmedfouade, lesleysim
 Donate link: https://paypal.me/newsletterglue
-Tags: newsletter, email, mailchimp, mailerlite, sendinblue
+Tags: newsletter, email, mailchimp, mailerlite, blog post
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 7.0
@@ -11,60 +11,121 @@ Stable Tag: 1.1.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Send blog posts as email newsletters to your subscribers from WordPress. Connect to Mailchimp, MailerLite, Sendinblue… 
+Newsletter plugin to build and send newsletters inside WordPress.
 
 == Description ==
-**Email subscribers your blog posts without leaving WordPress. Create newsletters using the Gutenberg editor. Connect to Mailchimp, MailerLite, Sendinblue, and more.**
+Newsletter plugin to build and send emails inside your WordPress admin.
 
-## When it's time to share your latest post, do you:
-**Look longingly at Substack**, wishing you could auto-publish to your site and subscribers too?
-
-**Head grudgingly to Mailchimp** and painstakingly re-create your WordPress post as a newsletter?
-
-**Hope to set up an RSS campaign...** One of these days?
-
-**Rely uneasily on RSS**, because there's no way to confirm which version got sent, until it's in your inbox?
-
-**Procrastinate?**
-
-## What if you could just:
-#### Check a box, and hit publish?
+Unlock a new publishing workflow that saves you **hours**, and brings you **more readers**.
 
 https://www.youtube.com/watch?v=0LiLb3KKarE
 
 
-## With Newsletter Glue you can:
-* Connect WordPress to Mailchimp, MailerLite, Sendinblue and Campaign Monitor
-* Email subscribers without leaving WordPress
-* Get easy-to-share past issues, and a search engine-friendly newsletter archive (When your newsletter is a blog post, your newsletter archives are your blog archives.)
-* Send test emails before publishing
-* Choose the audience, segments, and tags for your newsletter
-* Set up in 2 minutes (Literally. I timed it.)
-* Selectively show/hide content blocks in your email/blog
-* Design your email newsletter to look different from your blog
+## The best newsletter plugin for bloggers and newsletter writers
 
-## Watch full feature walk through
+### Newsletter writers
 
-https://www.youtube.com/watch?v=CJWl6m_byxg
+Newsletter writers have loyal readers, but your hard work is hidden in your subscribers' inboxes.
 
-**0:44 Onboarding starts:** I'll go from setting up Newsletter Glue from the first time to sending the first post to subscribers in 2 min 30 secs.
+Newsletter Glue makes it easy to:
 
-**4:07 "Send as newsletter" features inside the WordPress editor:** This is what you see for every post you send. We pre-load defaults for you so you don't have to fill everything out from scratch for every post you send. You can change the defaults in Settings.
+* **Integrate your newsletter archive** elegantly into your blog.
 
-**8:18 Status log:** See the sent/not sent status for every newsletter you send. Even when you send multiple newsletters from one post.
+* Make your newsletter **SEO-friendly** and **readable online.**
 
-**9:05 Connect:** This is where you add new integrations to your email service providers (ESPs). Right now, we've got Mailchimp, MailerLite, Sendinblue, and Campaign Monitor, with lots more ESPs in the future!
 
-**9:51 Settings:** Here's where you can change your email defaults (the pre-filled details in the WordPress editor).
+### Bloggers
 
-There's also a Custom CSS section which you can use to add CSS to your newsletter which won't show up in your post.
+Bloggers benefit from SEO, but you have difficulty building a steady relationship with readers.
+
+Newsletter Glue makes it easy to:
+
+* **Email blog posts to subscribers**. Take minutes instead of hours to write and send posts.
+
+* **Create a weekly roundup newsletter** with all your latest posts. Inside WP admin, in a few minutes.
+
+
+## Stop sacrificing newsletters or blogging. Do both at the same time with Newsletter Glue.
+
+## HOW IT WORKS
+
+* **Step 1**: Connect with our onboarding wizard to Mailchimp, MailerLite, Sendinblue, Campaign Monitor, ActiveCampaign, or Aweber.
+
+* **Step 2**: Build and send newsletters directly inside the Gutenberg editor.
+
+## UNLOCK THESE BENEFITS
+
+* Set up in under 5 minutes. Works immediately, without code.
+
+* Do everything from WordPress. No more jumping between platforms.
+
+* Get a newsletter archive that works just like your blog archive.
+
+* All newsletters are SEO-friendly and readable online.
+
+* Send new and old blog posts to subscribers in seconds.
+
+* Create a weekly roundup newsletter as quickly as writing a blog post.
+
+* Send test emails and view web-based preview
+
+* Choose audience, segments, lists, tags for your newsletter
+
+## THE EASIEST WAY TO STYLE YOUR NEWSLETTER
+
+* **Newsletter theme designer**: No code needed. Customise newsletter logo, featured image,  font style, colour, sizes and much more. Includes mobile options.
+
+* **Custom CSS**: Inject custom CSS into your newsletter.
+
+## UNIQUE CONTENT FOR YOUR NEWSLETTER
+
+* **Show/hide content block:** Lets you hide content from your blog or newsletter. For example: Add a footer to your newsletter that is kept hidden from your blog.
+
+
+## UPGRADE TO PRO FOR MORE POWERFUL NEWSLETTER DESIGNS
+
+Newsletter Glue Pro gives you advanced features to style your newsletter, get more subscribers and save time.
+
+* [Embed social media](https://newsletterglue.com/features/#socialembed): Just paste the link. We handle the rest. Works for Twitter and Youtube.
+
+* [Subscriber forms](https://newsletterglue.com/features/#subscriberform): Add beautiful subscriber forms easily to any blog post. Includes checkbox for GDPR.
+
+* [Post embeds](https://newsletterglue.com/features/#postembed): Quickly add links from your blog or other websites. We turn that into perfectly formatted post embeds.
+
+* [Author byline](https://newsletterglue.com/features/#authorbyline): Add an author byline to each newsletter/blog post. Includes auto-generated avatar and *Follow* button.
+
+* [Metadata](https://newsletterglue.com/features/#metadata): Add reading time, location, link to read online , author bio and more. Takes seconds to add. Everything is auto-generated for you.
+
+* [Callout cards](https://newsletterglue.com/features/#calloutcard): Change backgrounds, add borders and more to bring attention to promotions or featured sections.
+
+> [Get Newsletter Glue Pro now!](https://newsletterglue.com/pricing)
+
+
+## LEARN MORE
+
+* [Documentation](https://docs.newsletterglue.com): Learn how to set up and use our features.
+
+* [Blog](https://newsletterglue.com/blog): Read our guides and tutorials
+
+* [Website](https://newsletterglue.com): Find out more about us and buy the pro version
+
+* [Twitter](https://twitter.com/NewsletterGlue): Follow us on Twitter. We're active there.
+
+
 
  == Frequently Asked Questions == 
 ## FAQ
-= What if I don't use Mailchimp, MailerLite, Sendinblue or Campaign Monitor? =
+= What if I don't use Mailchimp, MailerLite, Sendinblue or Campaign Monitor, ActiveCampaign or Aweber? =
 
 We're in the process of integrating other email service providers (ESP). Check back for more updates soon!
 
+= Does this work with Gutenberg blocks or classic editor?
+
+Newsletter Glue works best with Gutenberg. But you will also be able to use it easily with the classic editor.
+
+= Does this work with page builders?
+
+Newsletter Glue currently does not work with any page builders. But we plan to do so in the near future. Check back soon!
 
 = How will my post look as an email? =
 
@@ -72,11 +133,11 @@ Your post will be sent as a simple and clean email. To see it, you can send a te
 
 = Does this just send plain text? What if I want a custom design? =
 
-You can customise your newsletter design by adding custom CSS in the Settings. Go to Newsletter Glue > Settings > Custom CSS.
+You can customise your newsletter design with the Newsletter Theme Designer. Go to Newsletter Glue > Settings > Newsletter Theme Designer. You can also add custom CSS in the Settings.
 
 The CSS you add here will show up in the emails you send, but not in your blog posts.
 
-To learn more about adding custom CSS to your email newsletter, [head here](https://docs.newsletterglue.com/article/13-custom-css-email).
+To learn more about adding custom CSS to your email newsletter, [head here](https://docs.newsletterglue.com/article/17-newsletter-theme-designer).
 
 = What if I don't want to publish my full post as a newsletter? =
 
@@ -84,33 +145,26 @@ You're not alone. Others use Newsletter Glue as it lets them use the WP editor t
 
 Simply add a new post, and create your newsletter. Don't forget to put it in a different category, so that your newsletter will have its own archive.
 
-= Why not directly send from WordPress using SendGrid or Amazon SES, instead of connecting to an external email service provider? =
+= Why connect to an email service provider (instead of building on inside WordPress? =
 
-There's a lot more to email service providers (ESPs) than sending emails.
+No need to migrate anything. Don't touch your existing setup.
 
-There's subscriber maintenance, tagging, scheduling, automation, sequences and more. Building an entire ESP inside WordPress isn't our focus right now.
+* Email lists, segments, tags
+* Automated email sequences
+* DKIM, SPF records
+* Campaign data
 
-If that's what you're looking for, MailPoet is an amazing option.
+= Do you have a subscriber form I can add to my blog? =
 
-= Do you have a sign-up form I can add to my blog? =
-
-We don't have a sign-up form right now. But we're thinking about building one...
-
-For now, you can use a separate form plugin for this purpose. Mailchimp, MailerLite, Sendinblue and Campaign Monitor also have basic sign up forms to get you up and running quickly.
+We have a subscriber form in our [pro plugin](https://newsletterglue.com).
 
 = I'm planning to set up a members-only newsletter with restricted content. Will your plugin do that? =
 
-Glad you asked! We're launching these features at the end of the year. 
+Glad you asked! Check out this [mega guide](https://newsletterglue.com/blog/build-newsletter/paid-newsletter-setup/) we wrote that takes you step-by-step on how you can do that.
 
-But in the mean time, you can use Paid Member Subscriptions or Paid Memberships Pro to set up your memberships.
+= Do you have a pro plugin? =
 
-You'll also need to set up a corresponding tag inside Mailchimp (or the email service provider you're using) for your paid members. 
-
-And when it comes time to publish, all you need to do is select the right subscriber tag to ensure you're only sending your email to paid members.
-
-= Will you have a premium upgrade? =
-
-We're working on it! Stay tuned!
+Yes! Check it out [here](https://newsletterglue.com).
 
 == Screenshots ==
 
