@@ -300,7 +300,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$title = isset( $post ) && isset( $post->post_title ) ? $post->post_title : $subject;
 
 	// Link to title.
-	if ( $link_to_post !== 'no' ) {
+	if ( $link_to_post === 'yes' ) {
 		$title = '<a href="' . get_permalink( $post->ID ) . '" class="ngl-title-to-post" target="_blank">' . $title . '</a>';
 	}
 
