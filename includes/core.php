@@ -33,7 +33,7 @@ function newsletterglue_preview_emails() {
 	}
 
 }
-add_action( 'init', 'newsletterglue_preview_emails' );
+add_action( 'init', 'newsletterglue_preview_emails', 1000 );
 
 /**
  * Returns true if free version is being used.
@@ -79,7 +79,6 @@ function newsletterglue_send( $post_id = 0, $test = false ) {
 
 	if ( ! $test ) {
 		$data[ 'sent' ] = true;
-		newsletterglue_add_count();
 	}
 
 	update_post_meta( $post_id, '_newsletterglue', $data );
@@ -96,32 +95,6 @@ function newsletterglue_send( $post_id = 0, $test = false ) {
 	$response = $api->send_newsletter( $post_id, $data, $test );
 
 	return $response;
-}
-
-/**
- * Get count.
- */
-function newsletterglue_get_count() {
-
-	return get_option( 'newsletterglue_count' );
-
-}
-
-/**
- * Add count.
- */
-function newsletterglue_add_count() {
-
-	$count = get_option( 'newsletterglue_count' );
-
-	if ( empty( $count ) ) {
-		$count = 1;
-	} else {
-		$count = $count + 1;
-	}
-
-	update_option( 'newsletterglue_count', $count );
-
 }
 
 /**
@@ -327,7 +300,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$title = isset( $post ) && isset( $post->post_title ) ? $post->post_title : $subject;
 
 	// Link to title.
-	if ( $link_to_post !== 'no' ) {
+	if ( $link_to_post === 'yes' ) {
 		$title = '<a href="' . get_permalink( $post->ID ) . '" class="ngl-title-to-post" target="_blank">' . $title . '</a>';
 	}
 
@@ -648,6 +621,9 @@ body {
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
 	font-family: <?php echo newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ); ?>;
 	<?php endif; ?>
+	<?php if ( ! newsletterglue_get_theme_option( 'font' ) && isset( $_GET[ 'preview_email' ] ) ) : ?>
+	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', 'sans-serif';
+	<?php endif; ?>
 }
 
 #template_inner {
@@ -656,6 +632,9 @@ body {
 	padding: <?php echo absint( newsletterglue_get_theme_option( 'container_padding1' ) ); ?>px <?php echo absint( newsletterglue_get_theme_option( 'container_padding2' ) ); ?>px;
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
 	font-family: <?php echo newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ); ?>;
+	<?php endif; ?>
+	<?php if ( ! newsletterglue_get_theme_option( 'font' ) && isset( $_GET[ 'preview_email' ] ) ) : ?>
+	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', 'sans-serif';
 	<?php endif; ?>
 }
 
@@ -686,6 +665,10 @@ p {
 	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px;
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 	text-align: <?php echo newsletterglue_get_theme_option( 'p_align' ); ?>;
+}
+
+ul, ol, li {
+	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 }
 
 a {

@@ -36,6 +36,8 @@ function newsletterglue_settings_page() {
 
 	// Settings UI.
 	require_once NGL_PLUGIN_DIR . 'includes/admin/settings/views/settings.php';
+
+	echo '<input type="hidden" name="ngl_app" id="ngl_app" value="' . $app . '" />';
 }
 
 /**

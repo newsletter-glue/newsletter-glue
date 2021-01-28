@@ -209,8 +209,6 @@
 
 .ngl-form.ngl-portrait {
 	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 .ngl-form.ngl-portrait .ngl-form-button {
@@ -219,8 +217,6 @@
 }
 
 .ngl-form.ngl-landscape {
-	margin-left: auto;
-	margin-right: auto;
 	max-width: 600px !important;
 }
 

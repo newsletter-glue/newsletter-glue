@@ -108,7 +108,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			'ngl_link_title',
 			__( 'Link post title to blog post', 'newsletter-glue' ),
 			__( 'Post title automatically links to the originating blog post.<br /><br />Users click it to read your newsletter on your website.', 'newsletter-glue' ),
-			get_option( 'newsletterglue_link_title' ) ? get_option( 'newsletterglue_link_title' ) : 'yes',
+			get_option( 'newsletterglue_link_title' ) ? get_option( 'newsletterglue_link_title' ) : 'no',
 			true
 		);
 
