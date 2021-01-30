@@ -49,7 +49,7 @@ Newsletter Glue makes it easy to:
 
 ## HOW IT WORKS
 
-* **Step 1**: Connect with our onboarding wizard to Mailchimp, MailerLite, Sendinblue, Campaign Monitor, ActiveCampaign, or Aweber.
+* **Step 1**: Connect with our onboarding wizard to Mailchimp, MailerLite, Sendinblue, Campaign Monitor, ActiveCampaign, or GetResponse.
 
 * **Step 2**: Build and send newsletters directly inside the Gutenberg editor.
 
@@ -115,7 +115,7 @@ Newsletter Glue Pro gives you advanced features to style your newsletter, get mo
 
  == Frequently Asked Questions == 
 ## FAQ
-= What if I don't use Mailchimp, MailerLite, Sendinblue or Campaign Monitor, ActiveCampaign or Aweber? =
+= What if I don't use Mailchimp, MailerLite, Sendinblue or Campaign Monitor, ActiveCampaign or GetResponse? =
 
 We're in the process of integrating other email service providers (ESP). Check back for more updates soon!
 
