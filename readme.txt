@@ -86,28 +86,28 @@ Newsletter Glue makes it easy to:
 
 Newsletter Glue Pro gives you advanced features to style your newsletter, get more subscribers and save time.
 
-* [Embed social media](https://newsletterglue.com/features/#socialembed): Just paste the link. We handle the rest. Works for Twitter and Youtube.
+* [Embed social media](https://newsletterglue.com/features/?utm_source=wporg&utm_medium=readme#socialembed): Just paste the link. We handle the rest. Works for Twitter and Youtube.
 
-* [Subscriber forms](https://newsletterglue.com/features/#subscriberform): Add beautiful subscriber forms easily to any blog post. Includes checkbox for GDPR.
+* [Subscriber forms](https://newsletterglue.com/features/?utm_source=wporg&utm_medium=readme#subscriberform): Add beautiful subscriber forms easily to any blog post. Includes checkbox for GDPR.
 
-* [Post embeds](https://newsletterglue.com/features/#postembed): Quickly add links from your blog or other websites. We turn that into perfectly formatted post embeds.
+* [Post embeds](https://newsletterglue.com/features/?utm_source=wporg&utm_medium=readme#postembed): Quickly add links from your blog or other websites. We turn that into perfectly formatted post embeds.
 
-* [Author byline](https://newsletterglue.com/features/#authorbyline): Add an author byline to each newsletter/blog post. Includes auto-generated avatar and *Follow* button.
+* [Author byline](https://newsletterglue.com/features/?utm_source=wporg&utm_medium=readme#authorbyline): Add an author byline to each newsletter/blog post. Includes auto-generated avatar and *Follow* button.
 
-* [Metadata](https://newsletterglue.com/features/#metadata): Add reading time, location, link to read online , author bio and more. Takes seconds to add. Everything is auto-generated for you.
+* [Metadata](https://newsletterglue.com/features/?utm_source=wporg&utm_medium=readme#metadata): Add reading time, location, link to read online , author bio and more. Takes seconds to add. Everything is auto-generated for you.
 
-* [Callout cards](https://newsletterglue.com/features/#calloutcard): Change backgrounds, add borders and more to bring attention to promotions or featured sections.
+* [Callout cards](https://newsletterglue.com/features/?utm_source=wporg&utm_medium=readme#calloutcard): Change backgrounds, add borders and more to bring attention to promotions or featured sections.
 
-> [Get Newsletter Glue Pro now!](https://newsletterglue.com/pricing)
+> [Get Newsletter Glue Pro now!](https://newsletterglue.com/pricing/?utm_source=wporg&utm_medium=readme)
 
 
 ## LEARN MORE
 
-* [Documentation](https://docs.newsletterglue.com): Learn how to set up and use our features.
+* [Documentation](https://docs.newsletterglue.com/): Learn how to set up and use our features.
 
-* [Blog](https://newsletterglue.com/blog): Read our guides and tutorials
+* [Blog](https://newsletterglue.com/blog/?utm_source=wporg&utm_medium=readme): Read our guides and tutorials
 
-* [Website](https://newsletterglue.com): Find out more about us and buy the pro version
+* [Website](https://newsletterglue.com/?utm_source=wporg&utm_medium=readme): Find out more about us and buy the pro version
 
 * [Twitter](https://twitter.com/NewsletterGlue): Follow us on Twitter. We're active there.
 
@@ -156,15 +156,15 @@ No need to migrate anything. Don't touch your existing setup.
 
 = Do you have a subscriber form I can add to my blog? =
 
-We have a subscriber form in our [pro plugin](https://newsletterglue.com).
+We have a subscriber form in our [pro plugin](https://newsletterglue.com/?utm_source=wporg&utm_medium=readme).
 
 = I'm planning to set up a members-only newsletter with restricted content. Will your plugin do that? =
 
-Glad you asked! Check out this [mega guide](https://newsletterglue.com/blog/build-newsletter/paid-newsletter-setup/) we wrote that takes you step-by-step on how you can do that.
+Glad you asked! Check out this [mega guide](https://newsletterglue.com/blog/build-newsletter/paid-newsletter-setup/?utm_source=wporg&utm_medium=readme) we wrote that takes you step-by-step on how you can do that.
 
 = Do you have a pro plugin? =
 
-Yes! Check it out [here](https://newsletterglue.com).
+Yes! Check it out [here](https://newsletterglue.com/?utm_source=wporg&utm_medium=readme).
 
 == Screenshots ==
 
@@ -180,6 +180,12 @@ Yes! Check it out [here](https://newsletterglue.com).
 10. Newsletter Group Block (for showing/hiding content in your email/blog)
 
 == Changelog ==
+
+= 1.1.13, January 31, 2021 =
+
+* **New integration:** GetResponse is now integrated!
+* **Improvement:** List styling now follows paragraph styling.
+* **Bug fix for Sendinblue users:** Fixed bug causing unverified emails to be wrongly marked as verified. This was preventing emails from getting sent.
 
 = 1.1.12, January 26, 2021 =
 
