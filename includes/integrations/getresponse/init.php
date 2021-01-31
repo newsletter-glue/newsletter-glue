@@ -398,4 +398,37 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 
 	}
 
+	/**
+	 * Add user to this ESP.
+	 */
+	public function add_user( $data ) {
+		extract( $data );
+
+		if ( empty( $email ) ) {
+			return -1;
+		}
+
+		$this->api = new NGL_GetResponse_API( $this->api_key );
+
+		if ( ! empty( $list_id ) ) {
+
+			$args = array(
+				'campaign'		=> array(
+					'campaignId'	=> $list_id
+				),
+				'email'			=> $email,
+			);
+
+			if ( ! empty( $name ) ) {
+				$args[ 'name' ] = esc_html( $name );
+			}
+
+			$result = $this->api->post( '/contacts', $args );
+
+		}
+
+		return true;
+
+	}
+
 }

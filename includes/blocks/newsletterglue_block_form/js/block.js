@@ -315,6 +315,14 @@
 					options: newsletterglue_meta.the_lists,
 				} );
 			}
+			if ( app == 'getresponse' ) {
+				SelectList = el( SelectControl, {
+					label: 'Select a campaign (list)',
+					value: props.attributes.list_id,
+					onChange: ( value ) => { props.setAttributes( { list_id: value } ); },
+					options: newsletterglue_meta.the_lists,
+				} );
+			}
 			if ( app == 'mailchimp' ) {
 				SelectList = el( SelectControl, {
 					label: 'Select an audience',
