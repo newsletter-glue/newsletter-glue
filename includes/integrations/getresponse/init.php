@@ -164,6 +164,8 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 
 		$defaults = array();
 
+		$defaults[ 'lists' ] = $this->get_lists();
+
 		return $defaults;
 
 	}
@@ -204,6 +206,93 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 
 		return $response;
 
+	}
+
+	/**
+	 * Get Lists.
+	 */
+	public function get_lists() {
+		$_lists = array();
+
+		$lists = $this->api->get( '/campaigns' );
+
+		if ( isset( $lists ) ) {
+			foreach( $lists as $key => $data ) {
+				$_lists[ $data[ 'campaignId' ] ] = $data[ 'name' ];
+			}
+		}
+
+		return $_lists;
+	}
+
+	/**
+	 * Send newsletter.
+	 */
+	public function send_newsletter( $post_id = 0, $data = array(), $test = false ) {
+
+		if ( defined( 'NGL_SEND_IN_PROGRESS' ) ) {
+			return;
+		}
+
+		define( 'NGL_SEND_IN_PROGRESS', 'sending' );
+
+		// If no data was provided. Get it from the post.
+		if ( empty( $data ) ) {
+			$data = get_post_meta( $post_id, '_newsletterglue', true );
+		}
+
+		$subject 		= isset( $data['subject'] ) ? urldecode( $data['subject'] ) : '';
+		$from_name		= isset( $data['from_name'] ) ? $data['from_name'] : '';
+		$from_email		= isset( $data['from_email'] ) ? $data['from_email'] : '';
+		$campaign		= isset( $data['lists'] ) ? $data['lists'] : '';
+		//$segment		= isset( $data['segment'] ) && $data['segment'] && ( $data['segment'] != '_everyone' ) ? $data['segment'] : '';
+		$schedule  	 	= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
+		$fromFieldId    = '';
+
+		$post = get_post( $post_id );
+
+		// Empty content.
+		if ( $test && isset( $post->post_status ) && $post->post_status === 'auto-draft' ) {
+
+			$response['fail'] = $this->nothing_to_send();
+
+			return $response;
+		}
+
+		$this->api = new NGL_GetResponse_API( $this->api_key );
+
+		$senders = $this->api->get( '/from-fields' );
+		foreach( $senders as $key => $sender ) {
+			if ( $sender[ 'email' ] == $from_email ) {
+				$fromFieldId = $sender[ 'fromFieldId' ];
+			}
+		}
+
+		$args = array(
+			'content'	=> array(
+				'html'	=> newsletterglue_generate_content( $post, $subject, 'getresponse' ),
+			),
+			'subject'	=> $subject,
+			'campaign'	=> array(
+				'campaignId'	=> $campaign
+			),
+			'fromField'	=> array(
+				'fromFieldId' 	=> $fromFieldId,
+			),
+			'replyTo'	=> array(
+				'fromFieldId' 	=> $fromFieldId,
+			),
+			'editor'	=> 'custom',
+			'type'		=> $schedule === 'immediately' ? 'broadcast' : 'draft',
+			'name'		=> sprintf( __( 'Newsletter Glue - Campaign %s', 'newsletter-glue' ), uniqid() ),
+			'sendSettings' => array(
+				'selectedCampaigns'	=> array( $campaign ),
+			),
+		);
+
+		$newsletter = $this->api->post( '/newsletters', $args );
+
+		return $newsletter;
 	}
 
 }

@@ -2,9 +2,10 @@
 
 class NGL_GetResponse_API {
 
-    const API_BASE_URL 		= 'https://api.getresponse.com/v3';
-    const HTTP_METHOD_GET 	= 'GET';
-    const HTTP_METHOD_POST 	= 'POST';
+    const API_BASE_URL 			= 'https://api.getresponse.com/v3';
+    const HTTP_METHOD_GET 		= 'GET';
+    const HTTP_METHOD_POST 		= 'POST';
+	const HTTP_METHOD_DELETE 	= 'DELETE';
 
     private $apiKey;
     private $lastResponseCode;
@@ -53,7 +54,7 @@ class NGL_GetResponse_API {
         $url = self::API_BASE_URL . $endpoint;
 
         $args = [
-            'timeout' => 10000,
+			'timeout' => 10000,
             'method' => $method,
             'headers' => [
 				'X-Auth-Token' 	=> "api-key {$this->apiKey}",
@@ -62,19 +63,19 @@ class NGL_GetResponse_API {
         ];
 
         if ( $method != self::HTTP_METHOD_GET && $method != self::HTTP_METHOD_DELETE ) {
-            $args[ 'body' ] = wp_json_encode( $body );
+			$args[ 'body' ] = wp_json_encode( $body );
         }
 
-        $response = wp_remote_request($url, $args);
-        $this->lastResponseCode = wp_remote_retrieve_response_code($response);
+		$response = wp_remote_request($url, $args);
+		$this->lastResponseCode = wp_remote_retrieve_response_code($response);
 
         if ( is_wp_error( $response ) ) {
-            $data = [
-                'code' => $response->get_error_code(),
-                'message' => $response->get_error_message()
+			$data = [
+				'code' => $response->get_error_code(),
+				'message' => $response->get_error_message()
             ];
         } else {
-            $data = json_decode( wp_remote_retrieve_body( $response ), true );
+			$data = json_decode( wp_remote_retrieve_body( $response ), true );
         }
 
         return $data;

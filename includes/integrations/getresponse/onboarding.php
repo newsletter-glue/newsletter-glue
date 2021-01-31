@@ -16,27 +16,29 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-boarding-step"><?php _e( 'Step 2 of 3', 'newsletter-glue' ); ?></div>
 
-	<h3 style="max-width:100%;"><?php _e( 'Now, let&rsquo;s select your default lists.', 'newsletter-glue' ); ?>
+	<h3 style="max-width:100%;"><?php _e( 'Now, let&rsquo;s select your default list.', 'newsletter-glue' ); ?>
 		<span><?php _e( 'You can always change this later on in the settings.', 'newsletter-glue' ); ?></span>
 	</h3>
 
 	<div class="ngl-settings ngl-metabox-flex">
-		<div class="ngl-metabox-header ngl-metabox-header-c">
-			<?php esc_html_e( 'Lists', 'newsletter-glue' ); ?>
+		<div class="ngl-metabox-header">
+			<?php esc_html_e( 'Campaign (List)', 'newsletter-glue' ); ?>
 		</div>
 		<div class="ngl-field">
 			<?php
-				$lists  = newsletterglue_get_option( 'lists', 'activecampaign' );
-
+				$list  = newsletterglue_get_option( 'lists', 'mailchimp' );
+				$lists = $api->get_lists();
+				if ( ! $list ) {
+					$list = array_keys( $lists );
+					$list = $list[0];
+				}
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_lists',
 					'legacy'		=> true,
 					'helper'		=> __( 'Who receives your email.', 'newsletter-glue' ),
 					'class'			=> 'ngl-ajax',
-					'options'		=> $api->get_lists(),
-					'default'		=> explode( ',', $lists ),
-					'multiple'		=> true,
-					'placeholder'	=> __( 'None selected', 'newsletter-glue' ),
+					'options'		=> $lists,
+					'default'		=> $list,
 				) );
 			?>
 		</div>
