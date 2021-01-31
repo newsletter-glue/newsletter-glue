@@ -14,6 +14,7 @@ function newsletterglue_get_supported_apps() {
 	$apps = array(
 		'activecampaign'	=> __( 'ActiveCampaign', 'newsletter-glue' ),
 		'campaignmonitor'	=> __( 'Campaign Monitor', 'newsletter-glue' ),
+		'getresponse'		=> __( 'GetResponse', 'newsletter-glue' ),
 		'mailchimp'			=> __( 'Mailchimp', 'newsletter-glue' ),
 		'mailerlite'		=> __( 'MailerLite', 'newsletter-glue' ),
 		'sendinblue'		=> __( 'Sendinblue', 'newsletter-glue' ),

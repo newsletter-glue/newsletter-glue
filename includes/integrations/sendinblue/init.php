@@ -155,7 +155,7 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 		$verified = false;
 		foreach( $senders as $key => $data ) {
 			if ( isset( $data[ 'email' ] ) ) {
-				if ( $email == $data[ 'email' ] ) {
+				if ( $email == $data[ 'email' ] && $data['active'] == true ) {
 					$verified = true;
 				}
 			}

@@ -27,7 +27,6 @@ $newsletterglue_feedback_nonce = wp_create_nonce( 'newsletterglue-feedback-nonce
 						<option value="Constant Contact">Constant Contact</option>
 						<option value="Drip">Drip</option>
 						<option value="EmailOctopus">EmailOctopus</option>
-						<option value="GetResponse">GetResponse</option>
 						<option value="Klaviyo">Klaviyo</option>
 						<option value="MailPoet">MailPoet</option>
 						<option value="Mailjet">Mailjet</option>

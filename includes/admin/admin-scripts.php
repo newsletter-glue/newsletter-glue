@@ -139,6 +139,7 @@ function newsletterglue_js_data() {
 		$dates = array(
 			date( 'l, j M Y', strtotime( $post->post_date ) ),
 			date( 'F j, Y', strtotime( $post->post_date ) ),
+			date( 'd M Y', strtotime( $post->post_date ) ),
 			date( 'Y-m-d', strtotime( $post->post_date ) ),
 			date( 'm/d/Y', strtotime( $post->post_date ) ),
 			date( 'd/m/Y', strtotime( $post->post_date ) ),
