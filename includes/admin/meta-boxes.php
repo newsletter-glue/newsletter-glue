@@ -125,6 +125,16 @@ function newsletterglue_meta_box() {
 		$defaults 	= newsletterglue_get_form_defaults( $post, $api );
 		$settings   = newsletterglue_get_data( $post->ID );
 
+		$hide = false;
+
+		if ( ! isset( $settings->sent ) ) {
+			$hide = true;
+		}
+
+		if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
+			$hide = false;
+		}
+
 		include( 'metabox/views/status.php' );
 		include( 'metabox/views/reset.php' );
 

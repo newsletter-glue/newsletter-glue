@@ -266,7 +266,7 @@ function newsletterglue_ajax_verify_email() {
 		wp_die( -1 );
 	}
 
-	$email 		= isset( $_REQUEST[ 'email' ] ) ? sanitize_email( $_REQUEST[ 'email' ] ) : '';
+	$email 		= isset( $_REQUEST[ 'email' ] ) ? $_REQUEST[ 'email' ] : '';
 	$app 		= isset( $_REQUEST[ 'app' ] ) ? sanitize_text_field( $_REQUEST['app'] ) : '';
 
 	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {

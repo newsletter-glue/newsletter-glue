@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-header">
-			<?php esc_html_e( 'From name', 'newsletter-glue' ); ?>
+			<label for="ngl_from_name"><?php esc_html_e( 'From name', 'newsletter-glue' ); ?></label>
 		</div>
 		<div class="ngl-field">
 			<?php
@@ -28,7 +28,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-header">
-			<?php esc_html_e( 'From email', 'newsletter-glue' ); ?>
+			<label for="ngl_from_email"><?php esc_html_e( 'From email', 'newsletter-glue' ); ?></label>
+			<?php $this->email_verification_info(); ?>
 		</div>
 		<div class="ngl-field">
 			<?php

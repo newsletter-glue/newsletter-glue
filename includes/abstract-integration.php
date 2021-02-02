@@ -20,13 +20,6 @@ abstract class NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Show send as newsletter checkbox.
-	 */
-	public function show_send_option() {
-		include NGL_PLUGIN_DIR . 'includes/admin/metabox/views/send-as-newsletter.php';
-	}
-
-	/**
 	 * Show test email options.
 	 */
 	public function show_test_email( $settings, $defaults, $post ) {
@@ -44,7 +37,7 @@ abstract class NGL_Abstract_Integration {
 			<div class="ngl-metabox-flex">
 
 				<div class="ngl-metabox-header">
-					<?php esc_html_e( 'Send test email to', 'newsletter-glue' ); ?>
+					<label for="ngl_test_email"><?php esc_html_e( 'Send test email', 'newsletter-glue' ); ?></label>
 				</div>
 
 				<div class="ngl-field">
@@ -54,20 +47,20 @@ abstract class NGL_Abstract_Integration {
 							'value'			=> isset( $settings->test_email ) ? $settings->test_email : $defaults->test_email,
 						) );
 					?>
+					<div class="ngl-action">
+						<button class="ui primary button ngl-test-email ngl-is-default" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Send', 'newsletter-glue' ); ?></button>
+						<button class="ui primary button ngl-test-email ngl-alt ngl-is-sending" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><i class="sync alternate icon"></i><?php esc_html_e( 'Sending...', 'newsletter-glue' ); ?></button>
+						<button class="ui primary button ngl-test-email ngl-alt ngl-is-valid" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Sent!', 'newsletter-glue' ); ?></button>
+						<button class="ui primary button ngl-test-email ngl-alt ngl-is-invalid" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Could not send', 'newsletter-glue' ); ?></button>
+					</div>
 				</div>
 
 			</div>
 
 			<div class="ngl-metabox-flex">
-
-				<div class="ngl-metabox-header">
-					<?php esc_html_e( 'Preview email in new tab', 'newsletter-glue' ); ?>
+				<div class="ngl-metabox-flex-link">
+					<a href="<?php echo add_query_arg( 'preview_email', $post->ID, get_preview_post_link() ); ?>" target="_blank" class="ngl-email-preview-button"><?php _e( 'Preview email in browser', 'newsletter-glue' ); ?><i class="external alternate icon"></i></a>
 				</div>
-
-				<div class="ngl-field">
-					<a href="<?php echo add_query_arg( 'preview_email', $post->ID, get_preview_post_link() ); ?>" target="_blank" class="ui button secondary ngl-email-preview-button"><?php _e( 'Preview email', 'newsletter-glue' ); ?></a>
-				</div>
-
 			</div>
 
 		</div>
@@ -86,6 +79,33 @@ abstract class NGL_Abstract_Integration {
 	 */
 	public function show_from_options( $settings, $defaults, $post ) {
 		include NGL_PLUGIN_DIR . 'includes/admin/metabox/views/send-from-settings.php';
+	}
+
+	/**
+	 * Show email verification info.
+	 */
+	public function email_verification_info() {
+		?>
+		<div class="ngl-label-verification">
+			<span class="ngl-process ngl-ajax is-hidden is-waiting">
+				<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
+				<span class="ngl-process-text"><strong><?php _e( 'Verifying...', 'newsletter-glue' ); ?></strong></span>
+			</span>
+
+			<span class="ngl-process ngl-ajax is-hidden is-valid">
+				<span class="ngl-process-icon"><i class="check circle icon"></i></span>
+				<span class="ngl-process-text"></span>
+			</span>
+
+			<span class="ngl-process ngl-ajax is-hidden is-invalid">
+				<span class="ngl-process-icon"><i class="exclamation circle icon"></i></span>
+				<span class="ngl-process-text"></span>
+			</span>
+		</div>
+		<div class="ngl-label-more">
+
+		</div>
+		<?php
 	}
 
 	/**
@@ -127,10 +147,29 @@ abstract class NGL_Abstract_Integration {
 	 */
 	public function get_test_success_msg() {
 
-		$message = __( 'Your email is on its way!<br />Check your inbox in 3-5 minutes.', 'newsletter-glue' ) 
-		. '<br /><span style="color:rgba(0, 0, 0, 0.6) !important;">' . sprintf( __( 'Can&rsquo;t find your email? %s', 'newsletter-glue' ), '<a href="https://docs.newsletterglue.com/article/11-email-delivery" target="_blank">' . __( 'Get help', 'newsletter-glue' ) . '</a>' ) . '.</span>';
+		$message = __( 'Your email is on its way! Check your inbox in 3-5 minutes.', 'newsletter-glue' ) 
+		. '<br />' . sprintf( __( 'Can&rsquo;t find your email? %s', 'newsletter-glue' ), '<a href="https://docs.newsletterglue.com/article/11-email-delivery" target="_blank">' . __( 'Get help.', 'newsletter-glue' ) . '</a>' );
 
 		return $message;
+
+	}
+
+	/**
+	 * Verify email address.
+	 */
+	public function verify_email( $email = '' ) {
+
+		$email = trim( $email );
+
+		if ( ! $email ) {
+			$response = array( 'failed' => __( 'Please enter email', 'newsletter-glue' ) );
+		} elseif ( ! is_email( $email ) ) {
+			$response = array( 'failed'	=> __( 'Invalid email', 'newsletter-glue' ) );
+		} else {
+			$response = array( 'success'=> __( '<strong>Verified.</strong>', 'newsletter-glue' ) );
+		}
+
+		return $response;
 
 	}
 

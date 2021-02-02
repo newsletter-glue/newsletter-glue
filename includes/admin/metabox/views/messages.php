@@ -8,34 +8,22 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 
-<div class="ngl-metabox-flex ngl-ready is-hidden">
+<div class="ngl-metabox-flex alt3">
 
-	<?php if ( $post->post_status != 'publish' ) : ?>
-	<div class="ngl-metabox-cols">
-		<div class="ngl-metabox-msg"><?php _e( 'Your email is ready to publish.' ,'newsletter-glue' ); ?></div>
-		<div class="ngl-metabox-optin">
-			<label>
-				<input type="checkbox" name="ngl_double_optin" id="ngl_double_optin" value="1" checked />
-				<?php _e( 'Send email when post is published.', 'newsletter-glue' ); ?>
-			</label>
+	<div class="ngl-metabox-flex">
+		<div class="ngl-not-ready is-hidden">
+			<div class="ngl-metabox-msg is-error"><?php _e( 'Almost ready. Just fill in the blank red boxes.' ,'newsletter-glue' ); ?></div>
 		</div>
 	</div>
-	<?php endif; ?>
 
-	<?php if ( $post->post_status == 'publish' ) : ?>
-	<div class="ngl-metabox-cols">
-		<div class="ngl-metabox-msg"><?php _e( 'Your email is ready to publish.' ,'newsletter-glue' ); ?></div>
-		<div class="ngl-metabox-optin">
-			<label>
-				<input type="checkbox" name="ngl_double_optin" id="ngl_double_optin" value="1" />
-				<?php _e( 'Send email when post is updated.', 'newsletter-glue' ); ?>
-			</label>
+	<div class="ngl-metabox-flex">
+
+		<div class="ngl-field ngl-field-master">
+			<input type="hidden" name="ngl_double_confirm" id="ngl_double_confirm" value="no" />
+			<input type="checkbox" name="ngl_send_newsletter" id="ngl_send_newsletter" value="1" />
+			<label for="ngl_send_newsletter"><?php _e( 'Send as newsletter', 'newsletter-glue' ); ?></label>
 		</div>
+
 	</div>
-	<?php endif; ?>
 
-</div>
-
-<div class="ngl-metabox-flex ngl-not-ready is-hidden">
-	<div class="ngl-metabox-msg is-error"><?php _e( 'Almost ready! Just fill in the blank red boxes.' ,'newsletter-glue' ); ?></div>
 </div>

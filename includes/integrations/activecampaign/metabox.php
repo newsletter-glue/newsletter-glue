@@ -6,25 +6,13 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$hide = false;
-
-if ( ! isset( $settings->sent ) ) {
-	$hide = true;
-}
-
-if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
-	$hide = false;
-}
-
 ?>
 
 <div class="ngl-metabox ngl-send <?php if ( ! $hide ) echo 'is-hidden'; ?>">
 
 	<input type="hidden" name="ngl_app" id="ngl_app" value="activecampaign" />
 
-	<?php $api->show_send_option(); ?>
-
-	<div class="ngl-metabox-if-checked is-hidden">
+	<div class="ngl-metabox-if-checked">
 
 	<?php $api->show_subject( $settings, $defaults, $post ); ?>
 

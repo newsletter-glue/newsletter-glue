@@ -28,10 +28,6 @@ function newsletterglue_text_field( $args ) {
 		<?php } ?>
 		<input type="<?php echo esc_attr( $type ); ?>" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo esc_attr( $value ); ?>" class="<?php echo esc_attr( $class ); ?>" spellcheck="false" >
 
-		<?php if ( strstr( $class, 'js-limit' ) ) { ?>
-		<div class="ngl-limit">...</div>
-		<?php } ?>
-
 		<?php if ( strstr( $class, 'ngl-ajax' ) && ( $id != 'ngl_from_email' || strstr( $class, 'ngl-donotverify' ) ) ) { ?>
 		<span class="ngl-process ngl-ajax is-hidden is-waiting">
 			<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
@@ -47,25 +43,6 @@ function newsletterglue_text_field( $args ) {
 			<span class="ngl-process-icon"><i class="material-icons">error_outline</i></span>
 			<span class="ngl-process-text"></span>
 		</span>
-		<?php } ?>
-
-		<?php if ( $id === 'ngl_from_email' && ! strstr( $class, 'ngl-donotverify' ) ) { ?>
-
-			<span class="ngl-process <?php if ( strstr( $class, 'ngl-ajax' ) ) echo 'ngl-ajax'; ?> is-hidden is-waiting">
-				<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
-				<span class="ngl-process-text"><strong><?php _e( 'Verifying...', 'newsletter-glue' ); ?></strong></span>
-			</span>
-
-			<span class="ngl-process <?php if ( strstr( $class, 'ngl-ajax' ) ) echo 'ngl-ajax'; ?> is-hidden is-valid">
-				<span class="ngl-process-icon"><i class="check circle outline icon"></i></span>
-				<span class="ngl-process-text"></span>
-			</span>
-
-			<span class="ngl-process <?php if ( strstr( $class, 'ngl-ajax' ) ) echo 'ngl-ajax'; ?> is-hidden is-invalid">
-				<span class="ngl-process-icon"><i class="material-icons">error_outline</i></span>
-				<span class="ngl-process-text"></span>
-			</span>
-
 		<?php } ?>
 
 	</div>

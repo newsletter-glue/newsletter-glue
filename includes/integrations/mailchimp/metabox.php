@@ -6,32 +6,20 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$hide = false;
-
-if ( ! isset( $settings->sent ) ) {
-	$hide = true;
-}
-
-if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
-	$hide = false;
-}
-
 ?>
 
 <div class="ngl-metabox ngl-send ngl-mb-mailchimp <?php if ( ! $hide ) echo 'is-hidden'; ?>">
 
 	<input type="hidden" name="ngl_app" id="ngl_app" value="mailchimp" />
 
-	<?php $api->show_send_option(); ?>
-
-	<div class="ngl-metabox-if-checked is-hidden">
+	<div class="ngl-metabox-if-checked">
 
 	<?php $api->show_subject( $settings, $defaults, $post ); ?>
 
 	<div class="ngl-metabox-flex">
 	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-header ngl-metabox-header-c">
-			<?php esc_html_e( 'Audience', 'newsletter-glue' ); ?>
+			<label for="ngl_audience"><?php esc_html_e( 'Audience', 'newsletter-glue' ); ?></label>
 		</div>
 		<div class="ngl-field">
 			<?php
@@ -65,7 +53,7 @@ if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
 
 	<div class="ngl-metabox-flex ngl-metabox-segment">
 		<div class="ngl-metabox-header">
-			<?php esc_html_e( 'Segment / tag', 'newsletter-glue' ); ?>
+			<label for="ngl_segment"><?php esc_html_e( 'Segment / tag', 'newsletter-glue' ); ?></label>
 		</div>
 		<div class="ngl-field">
 			<?php
