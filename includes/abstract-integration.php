@@ -13,6 +13,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 abstract class NGL_Abstract_Integration {
 
 	/**
+	 * Display settings.
+	 */
+	public function show_settings( $settings, $defaults, $post ) {
+		$this->show_from_options( $settings, $defaults, $post );
+		$this->show_test_email( $settings, $defaults, $post );
+		$this->show_schedule_and_image_options( $settings, $defaults, $post );
+		$this->show_states( $post );
+	}
+
+	/**
 	 * Display general settings.
 	 */
 	public function show_global_settings() {
@@ -166,10 +176,30 @@ abstract class NGL_Abstract_Integration {
 		} elseif ( ! is_email( $email ) ) {
 			$response = array( 'failed'	=> __( 'Invalid email', 'newsletter-glue' ) );
 		} else {
-			$response = array( 'success'=> __( '<strong>Verified.</strong>', 'newsletter-glue' ) );
+			$response = array( 'success'=> '<strong>' . __( 'Verified', 'newsletter-glue' ) . '</strong>' );
 		}
 
 		return $response;
+
+	}
+
+	/**
+	 * Check email address.
+	 */
+	public function is_invalid_email( $email = '' ) {
+		$response = array();
+
+		if ( empty( $email ) ) {
+			$response[ 'fail' ] = __( 'Please enter email', 'newsletter-glue' );
+		} elseif ( ! is_email( $email ) ) {
+			$response[ 'fail' ] = __( 'Invalid email', 'newsletter-glue' );
+		}
+
+		if ( ! empty( $response[ 'fail' ] ) ) {
+			return $response;
+		}
+
+		return false;
 
 	}
 

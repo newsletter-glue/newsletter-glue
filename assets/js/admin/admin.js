@@ -181,6 +181,7 @@
 			beforeSend: function() {
 				elem.find( '.ngl-process' ).addClass( 'is-hidden' );
 				elem.find( '.ngl-process.is-waiting' ).removeClass( 'is-hidden' );
+				elem.find( '.ngl-label-more' ).empty();
 			},
 			success: function( response ) {
 				console.log( response );
@@ -195,6 +196,9 @@
 				} else {
 					elem.find( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
 					elem.find( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
+					if ( response.failed_details ) {
+						elem.find( '.ngl-label-more' ).html( response.failed_details );
+					}
 					email_.parent().parent().parent().addClass( 'is-error' );
 					email_.attr( 'data-force-unready', '1' );
 				}

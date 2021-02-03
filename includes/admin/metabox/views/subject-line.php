@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-metabox-flex">
 
-		<div class="ngl-metabox-header ngl-metabox-header-c">
+		<div class="ngl-metabox-header">
 			<label for="ngl_subject"><?php esc_html_e( 'Subject', 'newsletter-glue' ); ?></label>
 		</div>
 

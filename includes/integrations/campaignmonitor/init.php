@@ -222,23 +222,6 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Verify email address.
-	 */
-	public function verify_email( $email = '' ) {
-
-		if ( ! $email || ! is_email( $email ) ) {
-			$response = array(
-				'failed'	=> __( 'Enter a valid email.', 'newsletter-glue' ),
-			);
-		} else {
-			$response = true;
-		}
-
-		return $response;
-
-	}
-
-	/**
 	 * Send newsletter.
 	 */
 	public function send_newsletter( $post_id = 0, $data = array(), $test = false ) {

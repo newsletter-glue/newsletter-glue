@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 <div class="ngl-metabox ngl-send <?php if ( ! $hide ) echo 'is-hidden'; ?>">
 
-	<input type="hidden" name="ngl_app" id="ngl_app" value="getresponse" />
+	<input type="hidden" name="ngl_app" id="ngl_app" value="<?php echo esc_attr( $app ); ?>" />
 
 	<div class="ngl-metabox-if-checked">
 
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					if ( isset( $settings->lists ) ) {
 						$lists = $settings->lists;
 					} else {
-						$lists = newsletterglue_get_option( 'lists', 'getresponse' );
+						$lists = newsletterglue_get_option( 'lists', $app );
 						if ( ! $lists ) {
 							if ( $defaults->lists ) {
 								$keys = array_keys( $defaults->lists );
@@ -54,13 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 	</div>
 
-	<?php $api->show_from_options( $settings, $defaults, $post ); ?>
-
-	<?php $api->show_schedule_and_image_options( $settings, $defaults, $post ); ?>
-
-	<?php $api->show_states( $post ); ?>
-
-	<?php $api->show_test_email( $settings, $defaults, $post ); ?>
+	<?php $api->show_settings( $settings, $defaults, $post ); ?>
 
 	</div>
 

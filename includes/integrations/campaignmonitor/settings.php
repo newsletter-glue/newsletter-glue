@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <div class="ngl-metabox-flex">
 
 	<div class="ngl-metabox-flex">
-		<div class="ngl-metabox-header ngl-metabox-header-c">
+		<div class="ngl-metabox-header">
 			<?php esc_html_e( 'Lists', 'newsletter-glue' ); ?>
 		</div>
 		<div class="ngl-field">
@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</div>
 
 	<div class="ngl-metabox-flex">
-		<div class="ngl-metabox-header ngl-metabox-header-c">
+		<div class="ngl-metabox-header">
 			<?php esc_html_e( 'Segments', 'newsletter-glue' ); ?>
 		</div>
 		<div class="ngl-field">

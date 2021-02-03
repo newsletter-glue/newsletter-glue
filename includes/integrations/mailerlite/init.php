@@ -249,14 +249,8 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 			$test_email = $data[ 'test_email' ];
 
-			if ( empty( $test_email ) ) {
-				$response[ 'fail' ] = __( 'Please enter email', 'newsletter-glue' );
-			} elseif ( ! is_email( $test_email ) ) {
-				$response[ 'fail' ] = __( 'Please enter a valid email', 'newsletter-glue' );
-			}
-
-			if ( ! empty( $response[ 'fail' ] ) ) {
-				return $response;
+			if ( $this->is_invalid_email( $test_email ) ) {
+				return $this->is_invalid_email( $test_email );
 			}
 
 			add_filter( 'wp_mail_content_type', array( $this, 'wp_mail_content_type' ) );

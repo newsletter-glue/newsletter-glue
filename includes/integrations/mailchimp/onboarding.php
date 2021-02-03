@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</h3>
 
 	<div class="ngl-settings ngl-metabox-flex">
-		<div class="ngl-metabox-header ngl-metabox-header-c">
+		<div class="ngl-metabox-header">
 			<?php esc_html_e( 'Audience', 'newsletter-glue' ); ?>
 		</div>
 		<div class="ngl-field">
@@ -46,7 +46,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-settings ngl-metabox-flex ngl-metabox-segment">
 		<div class="ngl-metabox-header">
-			<?php esc_html_e( 'Segment / tag', 'newsletter-glue' ); ?>
+			<label for="ngl_segment"><?php esc_html_e( 'Segment / tag', 'newsletter-glue' ); ?></label>
+			<?php echo $api->show_loading(); ?>
 		</div>
 		<div class="ngl-field">
 			<?php
@@ -68,7 +69,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			?>
 		</div>
-		<?php echo $api->show_loading(); ?>
 	</div>
 
 	<div class="ngl-boarding-next disabled"><span class="material-icons">arrow_forward</span><span class="ngl-boarding-next-text"><?php _e( 'next', 'newsletter-glue' ); ?></span></div>
