@@ -147,6 +147,16 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 	 */
 	public function verify_email( $email = '' ) {
 
+		if ( ! $email ) {
+			$response = array( 'failed' => __( 'Please enter email', 'newsletter-glue' ) );
+		} elseif ( ! is_email( $email ) ) {
+			$response = array( 'failed'	=> __( 'Invalid email', 'newsletter-glue' ) );
+		}
+
+		if ( ! empty( $response ) ) {
+			return $response;
+		}
+
 		$this->api = new NGL_SendinblueApiClient( $this->api_key );
 
 		$senders = $this->get_senders();
@@ -164,14 +174,14 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 		if ( $verified ) {
 
 			$response = array(
-				'success'	=> __( '<strong>Verified.</strong> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">Learn more</a>', 'newsletter-glue' ),
+				'success'	=> '<strong>' . __( 'Verified', 'newsletter-glue' ) . '</strong>',
 			);
 
 		} else {
 
 			$response = array(
-				'failed'	=> __( '<strong>Email not verified. This means your emails won&rsquo;t send.<br />
-					<a href="https://account.sendinblue.com/senders" target="_blank">Verify email now <i class="external alternate icon"></i></a></strong> Or <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">learn more.</a>', 'newsletter-glue' ),
+				'failed'			=> __( 'Not verified', 'newsletter-glue' ),
+				'failed_details'	=> '<a href="https://account.sendinblue.com/senders/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>',
 			);
 
 		}
@@ -288,8 +298,7 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 		if ( ! $verified ) {
 
 			$result = array(
-				'fail'	=> sprintf( __( 'Your <strong><em>From Email</em></strong> address isn&rsquo;t verified.<br />
-						%s Or %s', 'newsletter-glue' ), '<a href="https://account.sendinblue.com/senders" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>', '<a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' ),
+				'fail'	=> __( 'Your <strong>From Email</strong> address isn&rsquo;t verified.', 'newsletter-glue' ) . '<br />' . '<a href="https://account.sendinblue.com/senders/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>',
 			);
 
 			if ( ! $test ) {

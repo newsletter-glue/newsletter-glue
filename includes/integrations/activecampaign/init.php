@@ -199,61 +199,10 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Verify email address.
-	 */
-	public function verify_email( $email = '' ) {
-
-		if ( ! $email || ! is_email( $email ) ) {
-			$response = array(
-				'failed'	=> __( 'Enter a valid email.', 'newsletter-glue' ),
-			);
-		} else {
-			$response = true;
-		}
-
-		return $response;
-
-	}
-
-	/**
 	 * Set content type as HTML.
 	 */
 	public function wp_mail_content_type() {
 		return 'text/html';
-	}
-
-	/**
-	 * Show test email section.
-	 */
-	public function show_test_email( $settings, $defaults, $post ) {
-		$this->test_column( $settings, $defaults, $post );
-		?>
-		<div class="ngl-metabox-flex no-padding">
-			<div class="ngl-metabox-header">
-			&nbsp;
-			</div>
-			<div class="ngl-field">
-				<div class="ngl-action">
-					<button class="ui primary button ngl-test-email ngl-is-default" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Send test now', 'newsletter-glue' ); ?></button>
-					<button class="ui primary button ngl-test-email ngl-alt ngl-is-sending" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><i class="sync alternate icon"></i><?php esc_html_e( 'Sending...', 'newsletter-glue' ); ?></button>
-					<button class="ui primary button ngl-test-email ngl-alt ngl-is-valid" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Sent!', 'newsletter-glue' ); ?></button>
-					<button class="ui primary button ngl-test-email ngl-alt ngl-is-invalid" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Could not send', 'newsletter-glue' ); ?></button>
-				</div>
-				<div class="ngl-action-link is-hidden">
-					<a href="#" class="ngl-link ngl-retest"><?php esc_html_e( 'Start again', 'newsletter-glue' ); ?></a>
-				</div>
-			</div>
-			<div class="ngl-test-notice">
-				<div class="ngl-test-notice-content"><?php _e( 'Sent by WordPress.<br />Might look slightly different to the final email sent to subscribers by ActiveCampaign.', 'newsletter-glue' ); ?></div>
-				<div class="ngl-test-result ngl-is-valid is-hidden">
-
-				</div>
-				<div class="ngl-test-result ngl-is-invalid is-hidden">
-
-				</div>
-			</div>
-		</div>
-		<?php
 	}
 
 	/**
