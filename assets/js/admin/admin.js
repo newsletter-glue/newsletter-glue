@@ -143,23 +143,21 @@
 			$( '.ngl-ready' ).removeClass( 'is-hidden' );
 			$( '.ngl-not-ready' ).addClass( 'is-hidden' );
 			$( '.ngl-not-ready' ).parents( '.ngl-metabox-flex.alt3' ).removeClass( 'ngl-unready' );
-			$( '.editor-post-publish-button__button.is-primary' ).prop( 'disabled', false );
 			$( '.ngl-newsletter-errors' ).remove();
 			$( '.ngl-top-checkbox' ).removeClass( 'disable-send' );
 		} else {
 			$( '.ngl-ready' ).addClass( 'is-hidden' );
 			$( '.ngl-not-ready' ).removeClass( 'is-hidden' );
 			$( '.ngl-not-ready' ).parents( '.ngl-metabox-flex.alt3' ).addClass( 'ngl-unready' );
-			$( '.editor-post-publish-button__button.is-primary' ).attr( 'disabled', 'disabled' );
 			if ( $( '.ngl-newsletter-errors' ).length == 0 ) {
 				$( '.edit-post-header__settings' ).prepend( '<span class="ngl-newsletter-errors">' + newsletterglue_params.publish_error + '</span>' );
 			}
 			$( '.ngl-top-checkbox' ).addClass( 'disable-send' );
+			$( '#ngl_double_confirm' ).val( 'no' );
 		}
 		
 		if ( ! $( '#ngl_send_newsletter' ).is( ':checked' ) ) {
 			$( '.ngl-newsletter-errors' ).remove();
-			$( '.editor-post-publish-button__button.is-primary' ).prop( 'disabled', false );
 			$( '.ngl-top-checkbox' ).removeClass( 'disable-send' );
 		}
 	}
@@ -510,10 +508,8 @@
 	$( document ).on( 'change', '#ngl_send_newsletter2', function() {
 		if ( $( this ).is( ':checked' ) ) {
 			$( '#ngl_send_newsletter' ).prop( 'checked', true ).trigger( 'change' );
-			$( '#ngl_double_confirm' ).val( 'yes' );
 		} else {
 			$( '#ngl_send_newsletter' ).prop( 'checked', false ).trigger( 'change' );
-			$( '#ngl_double_confirm' ).val( 'no' );
 		}
 	} );
 
