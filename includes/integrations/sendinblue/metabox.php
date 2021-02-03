@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-flex">
 			<div class="ngl-metabox-header">
-				<?php esc_html_e( 'Lists', 'newsletter-glue' ); ?>
+				<label for="ngl_lists"><?php esc_html_e( 'Lists', 'newsletter-glue' ); ?></label>
 			</div>
 			<div class="ngl-field">
 				<?php

@@ -15,11 +15,10 @@ if ( ! class_exists( 'NGL_Abstract_Integration', false ) ) {
  */
 class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 
+	public $app 	= 'campaignmonitor';
 	public $api_key = null;
-
-	public $api = null;
-
-	public $lists = array();
+	public $api 	= null;
+	public $lists 	= array();
 
 	/**
 	 * Constructor.
@@ -481,6 +480,22 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		}
 
 		return true;
+
+	}
+
+	/**
+	 * Get connect settings.
+	 */
+	public function get_connect_settings( $integrations = array() ) {
+
+		$app = $this->app;
+
+		newsletterglue_text_field( array(
+			'id' 			=> "ngl_{$app}_key",
+			'placeholder' 	=> esc_html__( 'Enter API Key', 'newsletter-glue' ),
+			'value'			=> isset( $integrations[ $app ]['api_key'] ) ? $integrations[ $app ]['api_key'] : '',
+			'helper'		=> '<a href="https://help.campaignmonitor.com/api-keys" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
+		) );
 
 	}
 

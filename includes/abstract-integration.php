@@ -23,13 +23,6 @@ abstract class NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Display general settings.
-	 */
-	public function show_global_settings() {
-		include NGL_PLUGIN_DIR . 'includes/admin/settings/views/settings-general.php';
-	}
-
-	/**
 	 * Show test email options.
 	 */
 	public function show_test_email( $settings, $defaults, $post ) {
@@ -69,7 +62,7 @@ abstract class NGL_Abstract_Integration {
 
 			<div class="ngl-metabox-flex">
 				<div class="ngl-metabox-flex-link">
-					<a href="<?php echo add_query_arg( 'preview_email', $post->ID, get_preview_post_link() ); ?>" target="_blank" class="ngl-email-preview-button"><?php _e( 'Preview email in browser', 'newsletter-glue' ); ?><i class="external alternate icon"></i></a>
+					<a href="<?php echo add_query_arg( 'preview_email', $post->ID, get_preview_post_link() ); ?>" target="_blank" class="ngl-email-preview-button"><?php _e( 'Preview email in browser', 'newsletter-glue' ); ?><span>(<?php _e( 'opens in new tab', 'newsletter-glue' ); ?>)</span></a>
 				</div>
 			</div>
 
@@ -105,6 +98,33 @@ abstract class NGL_Abstract_Integration {
 			<span class="ngl-process ngl-ajax is-hidden is-valid">
 				<span class="ngl-process-icon"><i class="check circle icon"></i></span>
 				<span class="ngl-process-text"></span>
+			</span>
+
+			<span class="ngl-process ngl-ajax is-hidden is-invalid">
+				<span class="ngl-process-icon"><i class="exclamation circle icon"></i></span>
+				<span class="ngl-process-text"></span>
+			</span>
+		</div>
+		<div class="ngl-label-more">
+
+		</div>
+		<?php
+	}
+
+	/**
+	 * Show input verification info.
+	 */
+	public function input_verification_info() {
+		?>
+		<div class="ngl-label-verification">
+			<span class="ngl-process ngl-ajax is-hidden is-waiting">
+				<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
+				<span class="ngl-process-text"><strong><?php _e( 'Saving...', 'newsletter-glue' ); ?></strong></span>
+			</span>
+
+			<span class="ngl-process ngl-ajax is-hidden is-valid">
+				<span class="ngl-process-icon"><i class="check circle icon"></i></span>
+				<span class="ngl-process-text"><?php _e( 'Saved', 'newsletter-glue' ); ?></span>
 			</span>
 
 			<span class="ngl-process ngl-ajax is-hidden is-invalid">
@@ -200,6 +220,13 @@ abstract class NGL_Abstract_Integration {
 		}
 
 		return false;
+
+	}
+
+	/**
+	 * Get connect settings.
+	 */
+	public function get_connect_settings( $integrations = array() ) {
 
 	}
 

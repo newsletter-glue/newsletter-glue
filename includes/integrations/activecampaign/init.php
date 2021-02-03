@@ -15,10 +15,10 @@ if ( ! class_exists( 'NGL_Abstract_Integration', false ) ) {
  */
 class NGL_Activecampaign extends NGL_Abstract_Integration {
 
+	public $app 	= 'activecampaign';
 	public $api_url = null;
 	public $api_key = null;
-
-	public $api = null;
+	public $api 	= null;
 
 	/**
 	 * Constructor.
@@ -383,6 +383,29 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 		}
 
 		return true;
+
+	}
+
+	/**
+	 * Get connect settings.
+	 */
+	public function get_connect_settings( $integrations = array() ) {
+
+		$app = $this->app;
+
+		newsletterglue_text_field( array(
+			'id' 			=> "ngl_{$app}_url",
+			'placeholder' 	=> esc_html__( 'Enter API URL', 'newsletter-glue' ),
+			'value'			=> isset( $integrations[ $app ]['api_url'] ) ? $integrations[ $app ]['api_url'] : '',
+			'class'			=> 'ngl-text-margin',
+		) );
+
+		newsletterglue_text_field( array(
+			'id' 			=> "ngl_{$app}_key",
+			'placeholder' 	=> esc_html__( 'Enter API Key', 'newsletter-glue' ),
+			'helper'		=> '<a href="https://www.activecampaign.com/login" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
+			'value'			=> isset( $integrations[ $app ]['api_key'] ) ? $integrations[ $app ]['api_key'] : '',
+		) );
 
 	}
 

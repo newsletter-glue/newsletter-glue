@@ -15,9 +15,9 @@ if ( ! class_exists( 'NGL_Abstract_Integration', false ) ) {
  */
 class NGL_Getresponse extends NGL_Abstract_Integration {
 
+	public $app		= 'getresponse';
 	public $api_url = null;
-
-	public $api = null;
+	public $api 	= null;
 
 	/**
 	 * Constructor.
@@ -209,7 +209,7 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 
 			$response = array(
 				'failed'			=> __( 'Not verified', 'newsletter-glue' ),
-				'failed_details'	=> '<a href="https://app.getresponse.com/email-addresses/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>',
+				'failed_details'	=> '<a href="https://app.getresponse.com/email-addresses/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
 			);
 
 		}
@@ -404,6 +404,22 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 		}
 
 		return true;
+
+	}
+
+	/**
+	 * Get connect settings.
+	 */
+	public function get_connect_settings( $integrations = array() ) {
+
+		$app = $this->app;
+
+		newsletterglue_text_field( array(
+			'id' 			=> "ngl_{$app}_key",
+			'placeholder' 	=> esc_html__( 'Enter API Key', 'newsletter-glue' ),
+			'value'			=> isset( $integrations[ $app ]['api_key'] ) ? $integrations[ $app ]['api_key'] : '',
+			'helper'		=> '<a href="https://app.getresponse.com/api" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
+		) );
 
 	}
 

@@ -15,9 +15,9 @@ if ( ! class_exists( 'NGL_Abstract_Integration', false ) ) {
  */
 class NGL_Sendinblue extends NGL_Abstract_Integration {
 
+	public $app		= 'sendinblue';
 	public $api_key = null;
-
-	public $api = null;
+	public $api 	= null;
 
 	/**
 	 * Constructor.
@@ -181,7 +181,7 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 
 			$response = array(
 				'failed'			=> __( 'Not verified', 'newsletter-glue' ),
-				'failed_details'	=> '<a href="https://account.sendinblue.com/senders/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>',
+				'failed_details'	=> '<a href="https://account.sendinblue.com/senders/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
 			);
 
 		}
@@ -298,7 +298,7 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 		if ( ! $verified ) {
 
 			$result = array(
-				'fail'	=> __( 'Your <strong>From Email</strong> address isn&rsquo;t verified.', 'newsletter-glue' ) . '<br />' . '<a href="https://account.sendinblue.com/senders/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>',
+				'fail'	=> __( 'Your <strong>From Email</strong> address isn&rsquo;t verified.', 'newsletter-glue' ) . '<br />' . '<a href="https://account.sendinblue.com/senders/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
 			);
 
 			if ( ! $test ) {
@@ -334,7 +334,7 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 
 				if ( $result[ 'code' ] == 'account_under_validation' ) {
 					$errors[ 'fail' ] = sprintf( __( 'Your Sendinblue account is being validated. You can&rsquo;t create another campaign.<br />%s', 'newsletter-glue' ),
-						'<a href="https://help.sendinblue.com/hc/en-us/articles/209408165--Why-has-my-Sendinblue-account-not-been-validated-yet-" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>' );
+						'<a href="https://help.sendinblue.com/hc/en-us/articles/209408165--Why-has-my-Sendinblue-account-not-been-validated-yet-" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>' );
 				} else {
 					$errors[ 'fail' ] = $result[ 'message' ];
 				}
@@ -362,7 +362,7 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 				// Validate the latest response.
 				if ( isset( $result[ 'code' ] ) ) {
 					$response[ 'fail' ] = sprintf( __( 'Email address isn&rsquo;t an existing contact.<br />Sendinblue only sends test emails to existing contacts. %s', 'newsletter-glue' ), 
-					'<a href="https://my.sendinblue.com/users/list" target="_blank">' . __( 'Add new contact', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>' );
+					'<a href="https://my.sendinblue.com/users/list" target="_blank">' . __( 'Add new contact', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>' );
 				} else {
 					$response[ 'success' ] = $this->get_test_success_msg();
 				}
@@ -474,6 +474,22 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 		$result = $this->api->createUser( $user );
 
 		return true;
+
+	}
+
+	/**
+	 * Get connect settings.
+	 */
+	public function get_connect_settings( $integrations = array() ) {
+
+		$app = $this->app;
+
+		newsletterglue_text_field( array(
+			'id' 			=> "ngl_{$app}_key",
+			'placeholder' 	=> esc_html__( 'Enter API Key', 'newsletter-glue' ),
+			'value'			=> isset( $integrations[ $app ]['api_key'] ) ? $integrations[ $app ]['api_key'] : '',
+			'helper'		=> '<a href="https://account.sendinblue.com/advanced/api" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
+		) );
 
 	}
 

@@ -169,10 +169,14 @@
 
 		var email_  = $( '#ngl_from_email' );
 		var email 	= email_.val();
-		var elem    = email_.parents( '.ngl-metabox-flex' );
+		var elem    = email_.parent().parent().parent();
 		var app 	= $( '#ngl_app' ).val();
 
 		var data = 'action=newsletterglue_ajax_verify_email&security=' + newsletterglue_params.ajaxnonce + '&email=' + email + '&app=' + app;
+
+		if ( elem.parents( '.ngl-metabox-if-checked' ).hasClass( 'ngl-metabox-placeholder' ) ) {
+			return false;
+		}
 
 		$.ajax( {
 			type : 'post',
@@ -718,7 +722,7 @@
 			return;
 		}
 
-		var el 		= $( this ).parents( '.ngl-ajax-field' );
+		var el 		= $( this ).closest( '.ngl-metabox-flex' );
 		var savebtn = $( '.ngl-settings-save' );
 		var id 		= $( this ).attr( 'id' );
 		var value 	= $( this ).val();
@@ -742,6 +746,7 @@
 			beforeSend: function() {
 				el.find( '.ngl-process' ).addClass( 'is-hidden' );
 				el.find( '.ngl-process.is-waiting' ).removeClass( 'is-hidden' );
+				el.find( '.ngl-label-more' ).empty();
 				savebtn.html( newsletterglue_params.saving );
 
 				if ( id == 'ngl_from_email' ) {
@@ -763,13 +768,16 @@
 				if ( response.failed ) {
 					el.find( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
 					el.find( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
-					el.parent().parent().addClass( 'is-error' );
+					el.addClass( 'is-error' );
+					if ( response.failed_details ) {
+						el.find( '.ngl-label-more' ).html( response.failed_details );
+					}
 				} else if ( response.success ) {
 					el.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
 					el.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
-					el.parent().parent().removeClass( 'is-error' );
+					el.removeClass( 'is-error' );
 				} else {
-					el.parent().parent().removeClass( 'is-error' );
+					el.removeClass( 'is-error' );
 					el.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
 					setTimeout( function() {
 						el.find( '.ngl-process' ).addClass( 'is-hidden' );
@@ -777,7 +785,7 @@
 
 				}
 
-				if ( ! el.parent().parent().hasClass( 'is-error' ) ) {
+				if ( ! el.hasClass( 'is-error' ) ) {
 					if ( id == 'ngl_from_email' ) {
 						if ( $( '.ngl-boarding' ).length ) {
 							setTimeout( function() {

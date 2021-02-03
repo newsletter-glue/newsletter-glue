@@ -367,7 +367,7 @@ function newsletterglue_setting_upload( $id, $title ) {
 					<?php
 						if ( get_option( $id ) ) {
 							$url = get_option( $id );
-							echo '<a href="#" target="_blank" class="ngl-image-trigger">' . basename( $url ) . '</a><a href="' . esc_url( $url ) . '" target="_blank" class="ngl-image-icon"><i class="external alternate icon"></i></a><a href="#" class="ngl-image-remove">' . __( 'remove', 'newsletter-glue' ) . '</a>';
+							echo '<a href="#" target="_blank" class="ngl-image-trigger">' . basename( $url ) . '</a><a href="' . esc_url( $url ) . '" target="_blank" class="ngl-image-icon"><i class="arrow right icon"></i></a><a href="#" class="ngl-image-remove">' . __( 'remove', 'newsletter-glue' ) . '</a>';
 						} else {
 							_e( 'No image selected', 'newsletter-glue' );
 						}
