@@ -118,7 +118,7 @@
 			}
 		} );
 
-		if ( f.find( '#ngl_send_newsletter' ).is( ':checked' ) && f.find( '#ngl_double_optin' ).is( ':checked' ) ) {
+		if ( f.find( '#ngl_send_newsletter' ).is( ':checked' ) ) {
 			$( '#ngl_send_newsletter2' ).prop( 'checked', true );
 			$( '#ngl_double_confirm' ).val( 'yes' );
 		} else {
@@ -142,22 +142,22 @@
 		if ( ready ) {
 			$( '.ngl-ready' ).removeClass( 'is-hidden' );
 			$( '.ngl-not-ready' ).addClass( 'is-hidden' );
-			$( '.editor-post-publish-button__button.is-primary' ).prop( 'disabled', false );
+			$( '.ngl-not-ready' ).parents( '.ngl-metabox-flex.alt3' ).removeClass( 'ngl-unready' );
 			$( '.ngl-newsletter-errors' ).remove();
 			$( '.ngl-top-checkbox' ).removeClass( 'disable-send' );
 		} else {
 			$( '.ngl-ready' ).addClass( 'is-hidden' );
 			$( '.ngl-not-ready' ).removeClass( 'is-hidden' );
-			$( '.editor-post-publish-button__button.is-primary' ).attr( 'disabled', 'disabled' );
+			$( '.ngl-not-ready' ).parents( '.ngl-metabox-flex.alt3' ).addClass( 'ngl-unready' );
 			if ( $( '.ngl-newsletter-errors' ).length == 0 ) {
 				$( '.edit-post-header__settings' ).prepend( '<span class="ngl-newsletter-errors">' + newsletterglue_params.publish_error + '</span>' );
 			}
 			$( '.ngl-top-checkbox' ).addClass( 'disable-send' );
+			$( '#ngl_double_confirm' ).val( 'no' );
 		}
 		
 		if ( ! $( '#ngl_send_newsletter' ).is( ':checked' ) ) {
 			$( '.ngl-newsletter-errors' ).remove();
-			$( '.editor-post-publish-button__button.is-primary' ).prop( 'disabled', false );
 			$( '.ngl-top-checkbox' ).removeClass( 'disable-send' );
 		}
 	}
@@ -167,10 +167,14 @@
 
 		var email_  = $( '#ngl_from_email' );
 		var email 	= email_.val();
-		var elem    = email_.parents( '.ngl-field' );
+		var elem    = email_.parent().parent().parent();
 		var app 	= $( '#ngl_app' ).val();
 
 		var data = 'action=newsletterglue_ajax_verify_email&security=' + newsletterglue_params.ajaxnonce + '&email=' + email + '&app=' + app;
+
+		if ( elem.parents( '.ngl-metabox-if-checked' ).hasClass( 'ngl-metabox-placeholder' ) ) {
+			return false;
+		}
 
 		$.ajax( {
 			type : 'post',
@@ -179,6 +183,7 @@
 			beforeSend: function() {
 				elem.find( '.ngl-process' ).addClass( 'is-hidden' );
 				elem.find( '.ngl-process.is-waiting' ).removeClass( 'is-hidden' );
+				elem.find( '.ngl-label-more' ).empty();
 			},
 			success: function( response ) {
 				console.log( response );
@@ -193,6 +198,9 @@
 				} else {
 					elem.find( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
 					elem.find( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
+					if ( response.failed_details ) {
+						elem.find( '.ngl-label-more' ).html( response.failed_details );
+					}
 					email_.parent().parent().parent().addClass( 'is-error' );
 					email_.attr( 'data-force-unready', '1' );
 				}
@@ -489,30 +497,7 @@
 	} );
 
 	// Toggle metabox options.
-	$( document ).on( 'change', '#ngl_double_optin', function() {
-		if ( $( this ).is( ':checked' ) ) {
-			if ( $( '.ngl-top-checkbox' ).hasClass( 'is-hidden' ) ) {
-				$( '.ngl-top-checkbox' ).removeClass( 'is-hidden' );
-			}
-			$( '#ngl_send_newsletter2' ).prop( 'checked', true );
-			$( '#ngl_double_confirm' ).val( 'yes' );
-		} else {
-			$( '#ngl_send_newsletter2' ).prop( 'checked', false );
-			$( '#ngl_double_confirm' ).val( 'no' );
-		}
-		ngl_validate_form();
-	} );
-
-	// Toggle metabox options.
 	$( document ).on( 'change', '#ngl_send_newsletter', function() {
-		if ( $( this ).is( ':checked' ) ) {
-			if ( $( '.ngl-top-checkbox' ).hasClass( 'is-hidden' ) ) {
-				$( '.ngl-top-checkbox' ).removeClass( 'is-hidden' );
-			}
-			$( '.ngl-metabox-if-checked' ).removeClass( 'is-hidden' );
-		} else {
-			$( '.ngl-metabox-if-checked' ).addClass( 'is-hidden' );
-		}
 		ngl_validate_form();
 		if ( ! $( this ).is( ':checked' ) ) {
 			$( '#ngl_send_newsletter2' ).prop( 'checked', false );
@@ -523,45 +508,14 @@
 	$( document ).on( 'change', '#ngl_send_newsletter2', function() {
 		if ( $( this ).is( ':checked' ) ) {
 			$( '#ngl_send_newsletter' ).prop( 'checked', true ).trigger( 'change' );
-			$( '#ngl_double_confirm' ).val( 'yes' );
 		} else {
 			$( '#ngl_send_newsletter' ).prop( 'checked', false ).trigger( 'change' );
-			$( '#ngl_double_confirm' ).val( 'no' );
 		}
 	} );
 
 	// Revalidate email.
 	$( document ).on( 'change', '#newsletter_glue_metabox #ngl_from_email', function() {
 		ngl_validate_email();
-	} );
-
-	// JS limit for some text inputs.
-	$( '.ngl-metabox input[type=text].js-limit' ).each( function( i, obj ) {
-		var str = $( this ).val();
-		$( this ).attr( 'data-value', str );
-		if ( str.length > 30 ) {
-			$( this ).parent().find( '.ngl-limit' ).show();
-		} else {
-			$( this ).parent().find( '.ngl-limit' ).hide();
-		}
-	} );
-
-	$( document ).on( 'focus', '.ngl-metabox input[type=text].js-limit', function( event ) {
-		$( this ).parent().find( '.ngl-limit' ).hide();
-	} );
-
-	$( document ).on( 'click', '.ngl-metabox .ngl-limit', function( event ) {
-		$( this ).parents( '.ui.input' ).find( '.js-limit' ).focus();
-	} );
-
-	$( document ).on( 'blur', '.ngl-metabox input[type=text].js-limit', function( event ) {
-		var str = $( this ).val();
-		$( this ).attr( 'data-value', str );
-		if ( str.length > 30 ) {
-			$( this ).parent().find( '.ngl-limit' ).show();
-		} else {
-			$( this ).parent().find( '.ngl-limit' ).hide();
-		}
 	} );
 
 	// Run form validation when user edit metabox fields.
@@ -598,7 +552,6 @@
 
 		var data = 'action=newsletterglue_ajax_reset_newsletter&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id;
 
-		$( '#ngl_double_optin' ).prop( 'checked', false );
 		$( '#ngl_double_confirm' ).val( 'no' );
 
 		$.ajax( {
@@ -716,19 +669,13 @@
 
 		// Just sent?
 		if ( $( '.ngl-reset-newsletter' ).is( ':visible' ) ) {
-			$( '#ngl_send_newsletter, #ngl_send_newsletter2, #ngl_double_optin' ).prop( 'checked', false );
+			$( '#ngl_send_newsletter, #ngl_send_newsletter2' ).prop( 'checked', false );
 		}
 
 		// Add message box.
-		if ( ! $( '.ngl-top-checkbox' ).hasClass( 'is-hidden' ) && $( '#ngl_send_newsletter2' ).is( ':checked' ) ) {
+		if ( $( '#ngl_send_newsletter2' ).is( ':checked' ) ) {
 			metabox.addClass( 'is-hidden' );
 			$( '.ngl-msgbox-wrap' ).removeClass( 'is-hidden' );
-			$( '.ngl-top-checkbox' ).addClass( 'is-hidden' );
-		}
-
-		// Remove the checkbox check anyway.
-		if ( ! $( '#ngl_send_newsletter2' ).is( ':checked' ) ) {
-			$( '#ngl_double_optin' ).prop( 'checked', false );
 		}
 
 	} );
@@ -771,7 +718,7 @@
 			return;
 		}
 
-		var el 		= $( this ).parents( '.ngl-ajax-field' );
+		var el 		= $( this ).closest( '.ngl-metabox-flex' );
 		var savebtn = $( '.ngl-settings-save' );
 		var id 		= $( this ).attr( 'id' );
 		var value 	= $( this ).val();
@@ -795,6 +742,7 @@
 			beforeSend: function() {
 				el.find( '.ngl-process' ).addClass( 'is-hidden' );
 				el.find( '.ngl-process.is-waiting' ).removeClass( 'is-hidden' );
+				el.find( '.ngl-label-more' ).empty();
 				savebtn.html( newsletterglue_params.saving );
 
 				if ( id == 'ngl_from_email' ) {
@@ -816,13 +764,16 @@
 				if ( response.failed ) {
 					el.find( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
 					el.find( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
-					el.parent().parent().addClass( 'is-error' );
+					el.addClass( 'is-error' );
+					if ( response.failed_details ) {
+						el.find( '.ngl-label-more' ).html( response.failed_details );
+					}
 				} else if ( response.success ) {
 					el.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
 					el.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
-					el.parent().parent().removeClass( 'is-error' );
+					el.removeClass( 'is-error' );
 				} else {
-					el.parent().parent().removeClass( 'is-error' );
+					el.removeClass( 'is-error' );
 					el.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
 					setTimeout( function() {
 						el.find( '.ngl-process' ).addClass( 'is-hidden' );
@@ -830,7 +781,7 @@
 
 				}
 
-				if ( ! el.parent().parent().hasClass( 'is-error' ) ) {
+				if ( ! el.hasClass( 'is-error' ) ) {
 					if ( id == 'ngl_from_email' ) {
 						if ( $( '.ngl-boarding' ).length ) {
 							setTimeout( function() {
@@ -981,7 +932,7 @@
 	// Show top toolbar checkbox.
 	$( window ).on( 'load', function() {
 		if ( $( '#ngl_send_newsletter' ).length ) {
-			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox is-hidden"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
+			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
 		}
 		ngl_validate_email();
 	} );
