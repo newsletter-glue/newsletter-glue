@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			<?php if ( $block->is_pro && newsletterglue_is_free_version() ) : ?>
 			<div class="ngl-block-upgrade">
-				<a href="https://newsletterglue.com/pricing/" target="_blank"><?php _e( 'Upgrade to unlock &rarr;', 'newsletter-glue' ); ?></a>
+				<a href="https://newsletterglue.com/pricing/" target="_blank"><?php _e( 'Upgrade to unlock pro features &rarr;', 'newsletter-glue' ); ?></a>
 			</div>
 			<?php else : ?>
 			<div class="ngl-block-defaults"><a href="#"><?php _e( 'Set defaults', 'newsletter-glue' ); ?></a></div>
