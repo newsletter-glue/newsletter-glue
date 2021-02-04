@@ -61,7 +61,6 @@
 	align-items: center;
 	justify-content: space-between;
 	font-size: 14px;
-	color: #DD3714;
 }
 
 .ngl-bar a {
@@ -87,7 +86,6 @@
 }
 
 .ngl-label {
-	color: #DD3714;
 	font-weight: 500;
 }
 
@@ -289,7 +287,7 @@
 /* Screens */
 .ngl-card-state {
 	background: #EDFDFB;
-	color: #DD3714;
+	color: #0088A0;
 	flex-direction: column;
 	padding-top: 130px;
 	z-index: 100;
@@ -856,13 +854,15 @@
 }
 
 .ngl-metabox-cb {
+	padding: 2px 0 0;
 	display: flex;
 }
 
 .ngl-metabox-cb input[type=checkbox] {
-	top: 6px;
+	top: 2px;
+    margin-right: 10px !important;
 	position: relative;
-	margin-right: 12px;
+	margin-right: 12px !important;
 }
 
 .ngl-test-result {
@@ -897,11 +897,11 @@
 }
 
 .ngl-test-limit {
-	color: #DD3714;
+	color: #0088A0;
 }
 
 .ngl-test-result.ngl-is-valid .ngl-test-limit a {
-	color: #DD3714 !important;
+	color: #0088A0 !important;
 }
 
 .ngl-test-result.ngl-is-valid .ngl-test-limit a:hover {
@@ -956,6 +956,7 @@
     width: 20px;
     height: 20px;
     margin: 0 20px 0 0;
+	box-sizing: border-box;
 }
 
 .ngl-field input[type=checkbox]:focus {
@@ -965,7 +966,7 @@
 
 .ngl-field input[type=checkbox]:checked:before {
     content: url(data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20d%3D%27M14.83%204.89l1.34.94-5.81%208.38H9.02L5.78%209.67l1.34-1.25%202.57%202.4z%27%20fill%3D%27%231e8cbe%27%2F%3E%3C%2Fsvg%3E);
-	margin: -2px 0 0px -3px;
+	margin: -3px 0 0px -4px;
     width: 25px;
     height: 25px;
 }
@@ -1062,8 +1063,8 @@ i.icon.arrow:after {
     margin: 0;
     line-height: 1;
     background-color: #fff;
-	color: #DD3714;
-	border: 2px solid #DD3714;
+	color: #0088A0;
+	border: 2px solid #0088A0;
     border-radius: 8px;
     width: auto;
 	font-size: 14px;
@@ -1178,7 +1179,7 @@ i.icon.arrow:after {
 }
 
 .ngl-msgbox-link a {
-	color: #DD3714 !important;
+	color: #0088A0 !important;
 }
 
 .ngl-msgbox-link a:hover {
@@ -1190,7 +1191,7 @@ i.icon.arrow:after {
 	right: 10px;
 	bottom: 5px;
 	font-size: 13px;
-	color: #DD3714 !important;
+	color: #0088A0 !important;
 	font-weight: 400;
 	text-decoration: none;
 	box-shadow: none !important;
@@ -1384,7 +1385,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 .ngl-settings a {
-	color: #DD3714;
+	color: #0088A0;
 	box-shadow: none !important;
 }
 
@@ -1483,6 +1484,10 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	box-shadow: 2px 3px 6px #efefef;
 }
 
+.ngl-block-used.ngl-block-locked {
+	box-shadow: none;
+}
+
 .ngl-block-p {
 	background: #f5f5f5;
 	border: 2px solid #ddd;
@@ -1539,7 +1544,8 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	text-decoration: underline !important;
 }
 
-.ngl-block-unused .ngl-block-top .ngl-block-demo {
+.ngl-block-unused .ngl-block-top .ngl-block-demo,
+.ngl-block-locked .ngl-block-top .ngl-block-demo {
 	color: #0D566C !important;
 }
 
@@ -1585,20 +1591,25 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-block-upgrade {
 	position: absolute;
-    right: 0;
+	left: 25px;
     bottom: 15px;
     width: 100%;
+    height: 24px;
+    align-items: center;
+    display: flex;
 }
 
 .ngl-block-upgrade a {
 	box-shadow: none;
-	color: #00A332;
-	font-weight: bold;
+	color: #0088A0;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 13px;
 }
 
 .ngl-block-upgrade a:hover,
 .ngl-block-upgrade a:focus {
-	color: #00962e;
+	color: #0D566C;
 }
 
 .ngl-block-svg-icon {
@@ -1675,7 +1686,8 @@ div.ngl-settings .ui.selection.dropdown .menu {
     transform: translateX(16px);
 }
 
-.ngl-block-unused .ngl-block-top {
+.ngl-block-unused .ngl-block-top,
+.ngl-block-locked .ngl-block-top {
 	background-color: #F8FEFF;
 	color: #B1C2C4 !important;
 }
@@ -1688,12 +1700,12 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	display: none;
 }
 
-.ngl-block-unused .ngl-block-desc {
-	color: #B1C2C4;
+.ngl-block-unused .ngl-block-desc,
+.ngl-block-locked .ngl-block-desc {
+	color: #B1C2C4 !important;
 }
 
 .ngl-block-locked .ngl-block-title,
-.ngl-block-locked .ngl-block-desc,
 .ngl-block-locked .ngl-block-defaults {
 	opacity: 0.7 !important;
 }
@@ -1710,10 +1722,6 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	opacity: 0.5 !important;
 }
 
-.ngl-block-locked .ngl-block-top {
-	opacity: 1 !important;
-}
-
 /* Semantic */
 .ngl-metabox .ui.basic.button {
 	padding: 0.6em 1.5em;
@@ -1721,8 +1729,8 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	font-size: 14px !important;
 	background-color: #fff !important;
 	border-radius: 8px;
-	border: 1px solid #DD3714 !important;
-	color: #DD3714 !important;
+	border: 1px solid #0088A0 !important;
+	color: #0088A0 !important;
 	font-weight: 500;
 	box-shadow: none !important;
 	height: auto;
@@ -2033,6 +2041,20 @@ p.ngl-mobile {
     max-width: 460px;
 }
 
+.ngl-theme-panel .ngl-theme-checkbox-text {
+	line-height: 1;
+}
+
+.ngl-theme-panel .ngl-theme-checkbox-input {
+	padding-top: 0;
+}
+
+.ngl-theme-panel .ngl-theme-checkbox-state {
+    position: absolute;
+    bottom: -5px;
+    left: 28px;
+}
+
 .ngl-theme-panel h2 {
 	margin-top: 2em;
 }
@@ -2224,12 +2246,13 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 .ngl-theme-toggle {
 	position: absolute;
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: normal;
 	right: 400px;
 	top: 20px;
+	font-weight: 600;
 	border-radius: 999px;
-	border: 1px solid #aaa;
+	border: 1px solid #e2e2e2;
 	display: flex;
 	color: #bbb;
 }
@@ -2246,7 +2269,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	top: 0;
 	left: 0;
 	height: 100%;
-	background: #DD3714;
+	background: #0088A0;
 	border-radius: 999px;
 	width: 80px;
 	box-sizing: border-box;
@@ -2315,7 +2338,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 }
 
 .ngl-theme-upload .ui.button {
-	background-color: #DD3714;
+	background-color: #0088A0;
 	padding: 11px 14px;
 	font-size: 13px;
 	font-weight: 500;
@@ -2323,7 +2346,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 .ngl-theme-upload .ui.button:hover,
 .ngl-theme-upload .ui.button:focus {
-	background-color: #c72402;
+	background-color: #17A4C6;
 }
 
 .ngl-theme-upload-name a {
