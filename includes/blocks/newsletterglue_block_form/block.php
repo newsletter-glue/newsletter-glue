@@ -233,7 +233,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		}
 
 		.ngl-form-button {
-			background: #DD3714;
+			background: #0088A0;
 			color: #fff;
 			border-radius: 0;
 			cursor: pointer;
