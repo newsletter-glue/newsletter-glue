@@ -36,7 +36,7 @@
 
 .ngl-wrap {
 	background: #fff;
-	box-shadow: 0 2px 10px #d8d8d8;
+	box-shadow: 0;
 	margin: 60px;
 	padding: 50px 0;
 	font-size: 14px;
@@ -80,7 +80,7 @@
 }
 
 .ngl-logo img {
-	max-width: 200px;
+	max-width: 180px;
 	height: auto;
 	display: block;
 	overflow: hidden;
@@ -111,20 +111,21 @@
 .ngl-icon-link:visited {
 	display: flex;
 	align-items: center;
-	color: #DD3714;
+	color: #003C4E;
 	font-size: 13px;
 	font-weight: 500;
-	padding: 0 5px;
+	padding: 0 10px;
 }
 
 .ngl-icon-link:hover,
 .ngl-icon-link:focus {
-	color: #c72402;
+	color: #0088A0;
 }
 
 .ngl-icon-link span {
 	font-size: 22px;
 	margin: 0 4px 0 0;
+	color: #0088A0 !important;
 }
 
 /* Typography */
@@ -138,6 +139,7 @@
 
 .ngl .ui.large.header .sub.header {
 	font-size: 14px;
+	line-height: 22px;
 	color: rgba(0, 0, 0, 0.6);
 	margin: 8px 0 0;
 }
@@ -161,6 +163,7 @@
 
 .ngl .ui.large.header .sub.header a i.icon {
 	margin: 0 0 0 4px;
+	line-height: 1;
 }
 
 /* Box */
@@ -944,6 +947,29 @@
 	background: transparent !important;
 }
 
+.ngl-field input[type=checkbox] {
+	border-color: #e2e2e2;
+	border-radius: .25rem;
+    border-width: 1px;
+	box-shadow: none;
+	transition: none !important;
+    width: 20px;
+    height: 20px;
+    margin: 0 20px 0 0;
+}
+
+.ngl-field input[type=checkbox]:focus {
+	outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.ngl-field input[type=checkbox]:checked:before {
+    content: url(data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20d%3D%27M14.83%204.89l1.34.94-5.81%208.38H9.02L5.78%209.67l1.34-1.25%202.57%202.4z%27%20fill%3D%27%231e8cbe%27%2F%3E%3C%2Fsvg%3E);
+	margin: -2px 0 0px -3px;
+    width: 25px;
+    height: 25px;
+}
+
 i.icon.arrow {
     position: relative !important;
     top: auto !important;
@@ -1392,11 +1418,11 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 .ngl-metabox-block .ngl-process {
-	margin: 0;
-	padding: 0;
-	position: absolute;
-	top: 0;
-	right: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: -24px;
+    right: 20px;
 }
 
 .ngl-settings .ngl-textarea {
@@ -2245,6 +2271,10 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	margin-left: 0 !important;
 }
 
+.ngl-theme-checkbox-text {
+	line-height: 1.5;
+}
+
 .components-base-control__field.disabled {
 	opacity: 0.7;
 	pointer-events: none;
@@ -2269,8 +2299,8 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 .ngl-theme-checkbox-state {
 	position: absolute;
-	bottom: 0;
-	left: 28px;
+	bottom: -10px;
+	left: 36px;
 }
 
 .ngl-theme-upload {

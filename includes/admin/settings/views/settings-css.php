@@ -27,8 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</span>
 
 			<span class="ngl-process ngl-ajax is-hidden is-valid">
-				<span class="ngl-process-icon"><i class="check circle outline icon"></i></span>
-				<span class="ngl-process-text"><?php _e( 'Saved', 'newsletter-glue' ); ?></span>
+				<span class="ngl-process-icon"><i class="check circle icon"></i></span>
+				<span class="ngl-process-text"><strong><?php _e( 'Saved', 'newsletter-glue' ); ?></strong></span>
 			</span>
 
 			<div class="ngl-field">
