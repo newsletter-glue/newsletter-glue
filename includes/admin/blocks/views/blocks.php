@@ -33,10 +33,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		?>
 		<div class="ngl-block <?php echo ( $block->use_block() === 'yes' ) ? 'ngl-block-used' : 'ngl-block-unused'; ?> <?php echo ( $block->is_pro && newsletterglue_is_free_version() ) ? 'ngl-block-locked' : ''; ?>" data-block="<?php echo esc_attr( $block_id ); ?>">
 
-			<div class="ngl-block-top" style="<?php if ( $block->get_icon_url() ) : ?>background-image: url( <?php echo $block->get_icon_url(); ?> )<?php endif; ?>">
-				<?php if ( $block->is_pro ) : ?>
-				<div class="ngl-block-upgrade-icon"><?php if ( newsletterglue_is_free_version() ) : ?><i class="lock icon"></i><?php endif; ?><?php _e( 'Pro', 'newsletter-glue' ); ?></div>
-				<?php endif; ?>
+			<div class="ngl-block-top">
+				<?php echo $block->get_icon_svg(); ?>
 				<a href="#" class="ngl-block-demo"><?php _e( 'See demo', 'newsletter-glue' ); ?></a>
 			</div>
 
@@ -65,10 +63,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		</div>
 		<?php endforeach; ?>
-
-		<div class="ngl-block ngl-block-p">
-			<?php _e( 'More soon...', 'newsletter-glue' ); ?>
-		</div>
 
 	</div>
 

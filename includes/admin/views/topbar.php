@@ -11,8 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <div class="ngl-bar">
 
 	<div class="ngl-flex ngl-left">
-		<div class="ngl-logo"></div>
-		<div class="ngl-label"><?php echo wp_kses_post( __( '<span>Newsletter</span> Glue', 'newsletter-glue' ) ); ?></div>
+		<div class="ngl-logo"><img src="<?php echo NGL_PLUGIN_URL . '/assets/images/top-bar-logo.svg'; ?>" /></div>
 	</div>
 
 	<?php echo newsletterglue_get_review_button_html( 'top-bar' ); ?>

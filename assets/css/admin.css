@@ -54,10 +54,9 @@
 
 /* Top bar */
 .ngl-bar {
-    min-height: 60px;
-    background: #FFF2EF;
+    min-height: 68px;
+    background: #F8FEFF;
     margin-left: -20px;
-    box-shadow: 0 1px 2px #e4d4f7;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -77,12 +76,14 @@
 }
 
 .ngl-logo {
-	width: 22px;
-	height: 22px;
-	background: url(../images/menu.png) no-repeat center;
-	background-size: 22px 22px;
-	background-position: center center;
 	margin-right: 8px;
+}
+
+.ngl-logo img {
+	max-width: 200px;
+	height: auto;
+	display: block;
+	overflow: hidden;
 }
 
 .ngl-label {
@@ -1431,25 +1432,29 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-block-global a {
 	margin: 0 0 0 25px;
-	color: #DD3714;
-	font-size: 14px;
+	color: #383838;
+	font-size: 13px;
 	box-shadow: none;
 }
 
 .ngl-block-global a:hover {
-	color: #c72402;
+	color: #111;
 }
 
 .ngl-block {
 	min-width: 300px;
-	min-height: 300px;
+	min-height: 250px;
 	border: 1px solid #F1F1F1;
 	background: #fff;
 	margin: 0 0 60px 60px;
-	text-align: center;
 	position: relative;
 	font-size: 14px;
 	box-sizing: border-box;
+	border-radius: 8px;
+}
+
+.ngl-block-used {
+	box-shadow: 2px 3px 6px #efefef;
 }
 
 .ngl-block-p {
@@ -1463,12 +1468,15 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 .ngl-block-top {
-	height: 125px;
-	background: #FFF2EF;
-	position: relative;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 40px 40px;
+	background: #0D566C;
+    position: relative;
+    padding: 0 25px;
+    border-radius: 8px 8px 0 0;
+    transition: background 0.125s ease-in-out;
+    display: flex;
+    align-items: center;
+	min-height: 70px;
+	color: #fff;
 }
 
 .ngl-block-upgrade-icon {
@@ -1492,47 +1500,60 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 .ngl-block-demo {
-	position: absolute;
-	bottom: 15px;
-	right: 20px;
-	color: rgba(0, 0, 0, 0.7) !important;
-	box-shadow: none !important;
+	color: #fff !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 13px;
+    margin-left: auto;
 }
 
 .ngl-block-demo:hover {
-	color: rgba(0, 0, 0, 0.9) !important;
+	text-decoration: underline !important;
+}
+
+.ngl-block-unused .ngl-block-top .ngl-block-demo {
+	color: #0D566C !important;
 }
 
 .ngl-block-title {
 	max-width: 250px;
-	font-size: 16px;
+	font-size: 18px;
 	line-height: 22px;
-	font-weight: bold;
-	padding: 24px 0 0;
+	font-weight: 600;
+	padding: 25px 0 0;
 	margin: auto;
+	color: #003C4E;
 }
 
 .ngl-block-desc {
 	max-width: 250px;
 	margin: 10px auto;
 	line-height: 19px;
+	color: #707070;
+	font-size: 13px;
 }
 
 .ngl-block-defaults {
 	position: absolute;
-	left: 20px;
+	left: 25px;
 	bottom: 15px;
+	height: 24px;
+    align-items: center;
+    display: flex;
 }
 
 .ngl-block-defaults a {
-	color: rgba(0, 0, 0, 0.7);
-	text-decoration: underline;
-	box-shadow: none !important;
+    color: #222;
+    text-decoration: none;
+    box-shadow: none !important;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .ngl-block-defaults a:hover, 
 .ngl-block-defaults a:focus {
-	color: rgba(0, 0, 0, 0.9);
 	text-decoration: underline;
 }
 
@@ -1554,11 +1575,22 @@ div.ngl-settings .ui.selection.dropdown .menu {
 	color: #00962e;
 }
 
+.ngl-block-svg-icon {
+	fill: currentColor !important;
+	width: 34px;
+	height: 34px;
+}
+
 .ngl-block-use {
 	position: absolute;
-	right: 20px;
+	right: 25px;
 	bottom: 15px;
-	color: #DD3714;
+	color: #383838;
+	font-size: 12px;
+	font-weight: 600;
+	height: 24px;
+	display: flex;
+	align-items: center;
 }
 
 .ngl-block-use input[type=checkbox] {
@@ -1573,41 +1605,42 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-block-use label {
 	user-select: none;
+	display: flex;
+	align-items: center;
 }
 
 .ngl-block-use-switch {
 	position: relative;
     cursor: pointer;
-    background-color: #5a5a5a;
+    background-color: #C8E3E5;
     border-radius: 15px;
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -ms-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    -webkit-transition: background-color .125s ease-out;
+    -moz-transition: background-color .125s ease-out;
+    -ms-transition: background-color .125s ease-out;
+    transition: background-color .125s ease-out;
     vertical-align: middle;
     display: inline-block;
-    margin: -2px 0 0 5px;
-    width: 36px;
-    height: 20px;
+    margin: 0 0 0 8px;
+    width: 40px;
+    height: 24px;
 }
 
 .ngl-block-use input[type=checkbox]:checked+.ngl-block-use-switch {
-    background-color: #DD3714;
+    background-color: #0088A0;
 }
 
 .ngl-block-use-switch:before {
-	position: absolute;
-    content: "";
+	background-color: #fff;
+    border-radius: 9999px;
+    box-shadow: 0 3px 1px 0 rgb(37 34 71 / 5%), 0 2px 2px 0 rgb(37 34 71 / 10%), 0 3px 3px 0 rgb(37 34 71 / 5%);
     height: 16px;
+    right: 20px;
+    position: absolute;
+    top: 4px;
+    transition: transform .125s ease-out;
     width: 16px;
-    left: 2px;
-    top: 2px;
-    background-color: #fff;
-    border-radius: 50%;
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -ms-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    content: "";
+    display: block;
 }
 
 .ngl-block-use input[type=checkbox]:checked+.ngl-block-use-switch:before {
@@ -1617,13 +1650,20 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 .ngl-block-unused .ngl-block-top {
-	opacity: 0.7 !important;
+	background-color: #F8FEFF;
+	color: #B1C2C4 !important;
 }
 
-.ngl-block-unused .ngl-block-title,
-.ngl-block-unused .ngl-block-desc,
-.ngl-block-unused .ngl-block-defaults {
+.ngl-block-unused .ngl-block-title {
 	opacity: 0.7;
+}
+
+.ngl-block-unused .ngl-block-defaults {
+	display: none;
+}
+
+.ngl-block-unused .ngl-block-desc {
+	color: #B1C2C4;
 }
 
 .ngl-block-locked .ngl-block-title,
@@ -1633,7 +1673,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 .ngl-block-unused .ngl-block-use {
-	color: #afafaf !important;
+	color: #666 !important;
 }
 
 .ngl-block-locked .ngl-block-defaults {
