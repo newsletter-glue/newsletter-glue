@@ -856,13 +856,15 @@
 }
 
 .ngl-metabox-cb {
+	padding: 2px 0 0;
 	display: flex;
 }
 
 .ngl-metabox-cb input[type=checkbox] {
-	top: 6px;
+	top: 2px;
+    margin-right: 10px !important;
 	position: relative;
-	margin-right: 12px;
+	margin-right: 12px !important;
 }
 
 .ngl-test-result {
@@ -956,6 +958,7 @@
     width: 20px;
     height: 20px;
     margin: 0 20px 0 0;
+	box-sizing: border-box;
 }
 
 .ngl-field input[type=checkbox]:focus {
@@ -965,7 +968,7 @@
 
 .ngl-field input[type=checkbox]:checked:before {
     content: url(data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20d%3D%27M14.83%204.89l1.34.94-5.81%208.38H9.02L5.78%209.67l1.34-1.25%202.57%202.4z%27%20fill%3D%27%231e8cbe%27%2F%3E%3C%2Fsvg%3E);
-	margin: -2px 0 0px -3px;
+	margin: -3px 0 0px -4px;
     width: 25px;
     height: 25px;
 }

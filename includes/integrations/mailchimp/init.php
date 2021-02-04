@@ -480,20 +480,6 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Get schedule options.
-	 */
-	public function get_schedule_options() {
-
-		$options = array(
-			'immediately'	=> __( 'Send now', 'newsletter-glue' ),
-			'draft'			=> __( 'Save as draft in Mailchimp', 'newsletter-glue' ),
-		);
-
-		return $options;
-
-	}
-
-	/**
 	 * Verify email address.
 	 */
 	public function verify_email( $email = '' ) {

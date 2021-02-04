@@ -12,6 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 abstract class NGL_Abstract_Integration {
 
+	public $app = '';
+
 	/**
 	 * Display settings.
 	 */
@@ -227,6 +229,20 @@ abstract class NGL_Abstract_Integration {
 	 * Get connect settings.
 	 */
 	public function get_connect_settings( $integrations = array() ) {
+
+	}
+
+	/**
+	 * Get schedule options.
+	 */
+	public function get_schedule_options() {
+
+		$options = array(
+			'immediately'	=> __( 'Immediately', 'newsletter-glue' ),
+			'draft'			=> sprintf( __( 'Save as draft in %s', 'newsletter-glue' ), newsletterglue_get_name( $this->app ) ),
+		);
+
+		return $options;
 
 	}
 

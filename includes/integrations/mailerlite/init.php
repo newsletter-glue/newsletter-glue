@@ -144,20 +144,6 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Get schedule options.
-	 */
-	public function get_schedule_options() {
-
-		$options = array(
-			'immediately'	=> __( 'Immediately', 'newsletter-glue' ),
-			'draft'			=> __( 'Save as draft in MailerLite', 'newsletter-glue' ),
-		);
-
-		return $options;
-
-	}
-
-	/**
 	 * Get form defaults.
 	 */
 	public function get_form_defaults() {

@@ -207,20 +207,6 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Get schedule options.
-	 */
-	public function get_schedule_options() {
-
-		$options = array(
-			'immediately'	=> __( 'Immediately', 'newsletter-glue' ),
-			'draft'			=> __( 'Save as draft in Campaign Monitor', 'newsletter-glue' ),
-		);
-
-		return $options;
-
-	}
-
-	/**
 	 * Send newsletter.
 	 */
 	public function send_newsletter( $post_id = 0, $data = array(), $test = false ) {
