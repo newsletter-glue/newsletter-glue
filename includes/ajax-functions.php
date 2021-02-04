@@ -266,7 +266,7 @@ function newsletterglue_ajax_verify_email() {
 		wp_die( -1 );
 	}
 
-	$email 		= isset( $_REQUEST[ 'email' ] ) ? sanitize_email( $_REQUEST[ 'email' ] ) : '';
+	$email 		= isset( $_REQUEST[ 'email' ] ) ? $_REQUEST[ 'email' ] : '';
 	$app 		= isset( $_REQUEST[ 'app' ] ) ? sanitize_text_field( $_REQUEST['app'] ) : '';
 
 	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {
@@ -516,7 +516,7 @@ function newsletterglue_ajax_save_image() {
 			'id'		=> $attachment_id,
 			'url'		=> $url,
 			'filename'	=> basename( $url ),
-			'html'		=> '<a href="#" target="_blank" class="ngl-image-trigger">' . basename( $url ) . '</a><a href="' . esc_url( $url ) . '" target="_blank" class="ngl-image-icon"><i class="external alternate icon"></i></a><a href="#" class="ngl-image-remove">' . __( 'remove', 'newsletter-glue' ) . '</a>',
+			'html'		=> '<a href="#" target="_blank" class="ngl-image-trigger">' . basename( $url ) . '</a><a href="' . esc_url( $url ) . '" target="_blank" class="ngl-image-icon"><i class="arrow right icon"></i></a><a href="#" class="ngl-image-remove">' . __( 'remove', 'newsletter-glue' ) . '</a>',
 		);
 
 		update_option( $option_id, $url );

@@ -27,47 +27,6 @@ function newsletterglue_text_field( $args ) {
 		</div>
 		<?php } ?>
 		<input type="<?php echo esc_attr( $type ); ?>" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>" value="<?php echo esc_attr( $value ); ?>" class="<?php echo esc_attr( $class ); ?>" spellcheck="false" >
-
-		<?php if ( strstr( $class, 'js-limit' ) ) { ?>
-		<div class="ngl-limit">...</div>
-		<?php } ?>
-
-		<?php if ( strstr( $class, 'ngl-ajax' ) && ( $id != 'ngl_from_email' || strstr( $class, 'ngl-donotverify' ) ) ) { ?>
-		<span class="ngl-process ngl-ajax is-hidden is-waiting">
-			<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
-			<span class="ngl-process-text"><strong><?php _e( 'Saving...', 'newsletter-glue' ); ?></strong></span>
-		</span>
-
-		<span class="ngl-process ngl-ajax is-hidden is-valid">
-			<span class="ngl-process-icon"><i class="check circle outline icon"></i></span>
-			<span class="ngl-process-text"><?php _e( 'Saved', 'newsletter-glue' ); ?></span>
-		</span>
-
-		<span class="ngl-process ngl-ajax is-hidden is-invalid">
-			<span class="ngl-process-icon"><i class="material-icons">error_outline</i></span>
-			<span class="ngl-process-text"></span>
-		</span>
-		<?php } ?>
-
-		<?php if ( $id === 'ngl_from_email' && ! strstr( $class, 'ngl-donotverify' ) ) { ?>
-
-			<span class="ngl-process <?php if ( strstr( $class, 'ngl-ajax' ) ) echo 'ngl-ajax'; ?> is-hidden is-waiting">
-				<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
-				<span class="ngl-process-text"><strong><?php _e( 'Verifying...', 'newsletter-glue' ); ?></strong></span>
-			</span>
-
-			<span class="ngl-process <?php if ( strstr( $class, 'ngl-ajax' ) ) echo 'ngl-ajax'; ?> is-hidden is-valid">
-				<span class="ngl-process-icon"><i class="check circle outline icon"></i></span>
-				<span class="ngl-process-text"></span>
-			</span>
-
-			<span class="ngl-process <?php if ( strstr( $class, 'ngl-ajax' ) ) echo 'ngl-ajax'; ?> is-hidden is-invalid">
-				<span class="ngl-process-icon"><i class="material-icons">error_outline</i></span>
-				<span class="ngl-process-text"></span>
-			</span>
-
-		<?php } ?>
-
 	</div>
 	<?php if ( $helper ) { ?>
 	<div class="ngl-helper" <?php if ( $helper_right ) echo 'style="text-align:right;"'; ?> ><?php echo wp_kses_post( $helper ); ?></div>
@@ -129,18 +88,6 @@ function newsletterglue_select_field( $args ) {
 			</div>
 		</div>
 
-		<?php } ?>
-
-		<?php if ( strstr( $class, 'ngl-ajax' ) ) { ?>
-		<span class="ngl-process ngl-ajax is-hidden is-waiting">
-			<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
-			<span class="ngl-process-text"><strong><?php _e( 'Saving...', 'newsletter-glue' ); ?></strong></span>
-		</span>
-
-		<span class="ngl-process ngl-ajax is-hidden is-valid">
-			<span class="ngl-process-icon"><i class="check circle outline icon"></i></span>
-			<span class="ngl-process-text"><?php _e( 'Saved', 'newsletter-glue' ); ?></span>
-		</span>
 		<?php } ?>
 
 		<?php if ( $helper ) { ?>

@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-header">
-			<?php esc_html_e( 'Send now or save for later', 'newsletter-glue' ); ?>
+			<label for="ngl_schedule"><?php esc_html_e( 'Send now or save for later', 'newsletter-glue' ); ?></label>
 		</div>
 		<div class="ngl-field">
 			<?php

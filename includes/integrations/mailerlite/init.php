@@ -15,9 +15,9 @@ if ( ! class_exists( 'NGL_Abstract_Integration', false ) ) {
  */
 class NGL_Mailerlite extends NGL_Abstract_Integration {
 
+	public $app 	= 'mailerlite';
 	public $api_key = null;
-
-	public $api = null;
+	public $api 	= null;
 
 	/**
 	 * Constructor.
@@ -144,37 +144,6 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Verify email address.
-	 */
-	public function verify_email( $email = '' ) {
-
-		if ( ! $email || ! is_email( $email ) ) {
-			$response = array(
-				'failed'	=> __( 'Enter a valid email.', 'newsletter-glue' ),
-			);
-		} else {
-			$response = true;
-		}
-
-		return $response;
-
-	}
-
-	/**
-	 * Get schedule options.
-	 */
-	public function get_schedule_options() {
-
-		$options = array(
-			'immediately'	=> __( 'Immediately', 'newsletter-glue' ),
-			'draft'			=> __( 'Save as draft in MailerLite', 'newsletter-glue' ),
-		);
-
-		return $options;
-
-	}
-
-	/**
 	 * Get form defaults.
 	 */
 	public function get_form_defaults() {
@@ -266,9 +235,8 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 			$test_email = $data[ 'test_email' ];
 
-			if ( ! is_email( $test_email ) ) {
-				$response[ 'fail' ] = __( 'Please enter a valid email', 'newsletter-glue' );
-				return $response;
+			if ( $this->is_invalid_email( $test_email ) ) {
+				return $this->is_invalid_email( $test_email );
 			}
 
 			add_filter( 'wp_mail_content_type', array( $this, 'wp_mail_content_type' ) );
@@ -380,40 +348,6 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Show test email section.
-	 */
-	public function show_test_email( $settings, $defaults, $post ) {
-		$this->test_column( $settings, $defaults, $post );
-		?>
-		<div class="ngl-metabox-flex no-padding">
-			<div class="ngl-metabox-header">
-			&nbsp;
-			</div>
-			<div class="ngl-field">
-				<div class="ngl-action">
-					<button class="ui primary button ngl-test-email ngl-is-default" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Send test now', 'newsletter-glue' ); ?></button>
-					<button class="ui primary button ngl-test-email ngl-alt ngl-is-sending" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><i class="sync alternate icon"></i><?php esc_html_e( 'Sending...', 'newsletter-glue' ); ?></button>
-					<button class="ui primary button ngl-test-email ngl-alt ngl-is-valid" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Sent!', 'newsletter-glue' ); ?></button>
-					<button class="ui primary button ngl-test-email ngl-alt ngl-is-invalid" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Could not send', 'newsletter-glue' ); ?></button>
-				</div>
-				<div class="ngl-action-link is-hidden">
-					<a href="#" class="ngl-link ngl-retest"><?php esc_html_e( 'Start again', 'newsletter-glue' ); ?></a>
-				</div>
-			</div>
-			<div class="ngl-test-notice">
-				<div class="ngl-test-notice-content"><?php _e( 'Sent by WordPress.<br />Might look slightly different to the final email sent to subscribers by MailerLite.', 'newsletter-glue' ); ?></div>
-				<div class="ngl-test-result ngl-is-valid is-hidden">
-
-				</div>
-				<div class="ngl-test-result ngl-is-invalid is-hidden">
-
-				</div>
-			</div>
-		</div>
-		<?php
-	}
-
-	/**
 	 * Add user to this ESP.
 	 */
 	public function add_user( $data ) {
@@ -455,6 +389,22 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 		$content .= '<p class="ngl-credits"><a href="{$unsubscribe}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a></p>';
 
 		return $content;
+
+	}
+
+	/**
+	 * Get connect settings.
+	 */
+	public function get_connect_settings( $integrations = array() ) {
+
+		$app = $this->app;
+
+		newsletterglue_text_field( array(
+			'id' 			=> "ngl_{$app}_key",
+			'placeholder' 	=> esc_html__( 'Enter API Key', 'newsletter-glue' ),
+			'value'			=> isset( $integrations[ $app ]['api_key'] ) ? $integrations[ $app ]['api_key'] : '',
+			'helper'		=> '<a href="https://app.mailerlite.com/integrations/api/" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
+		) );
 
 	}
 

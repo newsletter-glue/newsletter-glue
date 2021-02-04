@@ -6,16 +6,6 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$hide = false;
-
-if ( ! isset( $settings->sent ) ) {
-	$hide = true;
-}
-
-if ( get_post_meta( $post->ID, '_ngl_future_send', true ) ) {
-	$hide = false;
-}
-
 ?>
 
 <div class="ngl-metabox ngl-reset <?php if ( $hide ) echo 'is-hidden'; ?>">

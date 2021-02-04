@@ -15,9 +15,9 @@ if ( ! class_exists( 'NGL_Abstract_Integration', false ) ) {
  */
 class NGL_Getresponse extends NGL_Abstract_Integration {
 
+	public $app		= 'getresponse';
 	public $api_url = null;
-
-	public $api = null;
+	public $api 	= null;
 
 	/**
 	 * Constructor.
@@ -142,20 +142,6 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Get schedule options.
-	 */
-	public function get_schedule_options() {
-
-		$options = array(
-			'immediately'	=> __( 'Immediately', 'newsletter-glue' ),
-			'draft'			=> __( 'Save as draft in GetResponse', 'newsletter-glue' ),
-		);
-
-		return $options;
-
-	}
-
-	/**
 	 * Get form defaults.
 	 */
 	public function get_form_defaults() {
@@ -175,6 +161,16 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 	 */
 	public function verify_email( $email = '' ) {
 
+		if ( ! $email ) {
+			$response = array( 'failed' => __( 'Please enter email', 'newsletter-glue' ) );
+		} elseif ( ! is_email( $email ) ) {
+			$response = array( 'failed'	=> __( 'Invalid email', 'newsletter-glue' ) );
+		}
+
+		if ( ! empty( $response ) ) {
+			return $response;
+		}
+
 		$this->api = new NGL_GetResponse_API( $this->api_key );
 
 		$senders = $this->api->get( '/from-fields' );
@@ -192,14 +188,14 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 		if ( $verified ) {
 
 			$response = array(
-				'success'	=> __( '<strong>Verified.</strong> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">Learn more</a>', 'newsletter-glue' ),
+				'success'	=> '<strong>' . __( 'Verified', 'newsletter-glue' ) . '</strong>',
 			);
 
 		} else {
 
 			$response = array(
-				'failed'	=> __( '<strong>Email not verified. This means your emails won&rsquo;t send.<br />
-					<a href="https://app.getresponse.com/email-addresses" target="_blank">Verify email now <i class="external alternate icon"></i></a></strong> Or <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">learn more.</a>', 'newsletter-glue' ),
+				'failed'			=> __( 'Not verified', 'newsletter-glue' ),
+				'failed_details'	=> '<a href="https://app.getresponse.com/email-addresses/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
 			);
 
 		}
@@ -230,40 +226,6 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 	 */
 	public function wp_mail_content_type() {
 		return 'text/html';
-	}
-
-	/**
-	 * Show test email section.
-	 */
-	public function show_test_email( $settings, $defaults, $post ) {
-		$this->test_column( $settings, $defaults, $post );
-		?>
-		<div class="ngl-metabox-flex no-padding">
-			<div class="ngl-metabox-header">
-			&nbsp;
-			</div>
-			<div class="ngl-field">
-				<div class="ngl-action">
-					<button class="ui primary button ngl-test-email ngl-is-default" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Send test now', 'newsletter-glue' ); ?></button>
-					<button class="ui primary button ngl-test-email ngl-alt ngl-is-sending" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><i class="sync alternate icon"></i><?php esc_html_e( 'Sending...', 'newsletter-glue' ); ?></button>
-					<button class="ui primary button ngl-test-email ngl-alt ngl-is-valid" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Sent!', 'newsletter-glue' ); ?></button>
-					<button class="ui primary button ngl-test-email ngl-alt ngl-is-invalid" data-post_id="<?php echo esc_attr( $post->ID ); ?>"><?php esc_html_e( 'Could not send', 'newsletter-glue' ); ?></button>
-				</div>
-				<div class="ngl-action-link is-hidden">
-					<a href="#" class="ngl-link ngl-retest"><?php esc_html_e( 'Start again', 'newsletter-glue' ); ?></a>
-				</div>
-			</div>
-			<div class="ngl-test-notice">
-				<div class="ngl-test-notice-content"><?php _e( 'Sent by WordPress.<br />Might look slightly different to the final email sent to subscribers by GetResponse.', 'newsletter-glue' ); ?></div>
-				<div class="ngl-test-result ngl-is-valid is-hidden">
-
-				</div>
-				<div class="ngl-test-result ngl-is-invalid is-hidden">
-
-				</div>
-			</div>
-		</div>
-		<?php
 	}
 
 	/**
@@ -428,6 +390,22 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 		}
 
 		return true;
+
+	}
+
+	/**
+	 * Get connect settings.
+	 */
+	public function get_connect_settings( $integrations = array() ) {
+
+		$app = $this->app;
+
+		newsletterglue_text_field( array(
+			'id' 			=> "ngl_{$app}_key",
+			'placeholder' 	=> esc_html__( 'Enter API Key', 'newsletter-glue' ),
+			'value'			=> isset( $integrations[ $app ]['api_key'] ) ? $integrations[ $app ]['api_key'] : '',
+			'helper'		=> '<a href="https://app.getresponse.com/api" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
+		) );
 
 	}
 

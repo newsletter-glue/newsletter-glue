@@ -56,7 +56,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 			'ajaxnonce'			=> wp_create_nonce( 'newsletterglue-ajax-nonce' ),
 			'publish_error'		=> __( 'Your newsletter is missing important details. <a href="#">Let&rsquo;s fix that.</a>', 'newsletter-glue' ),
 			'saving'			=> '<i class="sync alternate icon"></i>' . __( 'Saving...', 'newsletter-glue' ),
-			'saved'				=> '<i class="check circle outline icon"></i>' . __( 'Saved', 'newsletter-glue' ),
+			'saved'				=> '<i class="check circle icon"></i>' . __( 'Saved', 'newsletter-glue' ),
 			'save'				=> __( 'Save', 'newsletter-glue' ),
 			'image_size'		=> __( 'Ideal image width: 1200px', 'newsletter-glue' ),
 			'no_featured_image'	=> __( 'No featured image was selected.', 'newsletter-glue' ),

@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		<?php if ( $tab != 'theme' && apply_filters( "newsletterglue_settings_tab_{$tab}_save_button", true ) ) : ?>
 		<div class="ngl-metabox ngl-metabox-flex ngl-metabox-flex2">
-			<a href="#" class="ui button basic ngl-settings-save"><?php _e( 'Save', 'newsletter-glue' ); ?></a>
+			<a href="#" class="ui button ngl-settings-save"><?php _e( 'Save', 'newsletter-glue' ); ?></a>
 		</div>
 		<?php endif; ?>
 

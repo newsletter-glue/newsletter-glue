@@ -39,6 +39,13 @@ abstract class NGL_Abstract_Block {
 	}
 
 	/**
+	 * Block icon.
+	 */
+	public function get_icon_svg() {
+		return '';
+	}
+
+	/**
 	 * Get defaults.
 	 */
 	public function get_defaults() {

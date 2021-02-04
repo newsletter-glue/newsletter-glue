@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					<div class="ui basic noborder button ngl-back" data-screen="ngl-card-base"><i class="arrow left icon"></i><?php esc_html_e( 'Back', 'newsletter-glue' ); ?></div>
 				</div>
 
-				<?php include_once newsletterglue_get_path( $app ) . '/connect.php'; ?>
+				<?php include( 'connect-settings.php' ); ?>
 
 			</div>
 

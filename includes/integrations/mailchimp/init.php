@@ -15,9 +15,9 @@ if ( ! class_exists( 'NGL_Abstract_Integration', false ) ) {
  */
 class NGL_Mailchimp extends NGL_Abstract_Integration {
 
+	public $app		= 'mailchimp';
 	public $api_key = null;
-
-	public $api = null;
+	public $api 	= null;
 
 	/**
 	 * Constructor.
@@ -204,7 +204,8 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 		?>
 		<div class="ngl-metabox-flex ngl-metabox-segment">
 			<div class="ngl-metabox-header">
-				<?php esc_html_e( 'Segment / tag', 'newsletter-glue' ); ?>
+				<label for="ngl_segment"><?php esc_html_e( 'Segment / tag', 'newsletter-glue' ); ?></label>
+				<?php echo $this->show_loading(); ?>
 			</div>
 			<div class="ngl-field">
 				<?php
@@ -214,7 +215,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 					newsletterglue_select_field( array(
 						'id' 			=> 'ngl_segment',
 						'legacy'		=> true,
-						'helper'		=> sprintf( __( 'A specific group of subscribers. %s', 'newsletter-glue' ), '<a href="https://admin.mailchimp.com/audience/" target="_blank">' . __( 'Create segment', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>' ),
+						'helper'		=> sprintf( __( 'A specific group of subscribers. %s', 'newsletter-glue' ), '<a href="https://admin.mailchimp.com/audience/" target="_blank">' . __( 'Create segment', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>' ),
 						'options'		=> $this->get_segments( $audience_id ),
 						'default'		=> $segment,
 						'class'			=> 'ngl-ajax',
@@ -222,7 +223,6 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 				?>
 			</div>
-			<?php echo $this->show_loading(); ?>
 		</div>
 		<?php
 	}
@@ -249,6 +249,12 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 		$audience		= isset( $data['audience'] ) ? $data['audience'] : '';
 		$segment		= isset( $data['segment'] ) && $data['segment'] && ( $data['segment'] != '_everyone' ) ? $data['segment'] : '';
 		$schedule  	 	= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
+
+		if ( $test ) {
+			if ( $this->is_invalid_email( $data[ 'test_email' ] ) ) {
+				return $this->is_invalid_email( $data[ 'test_email' ] );
+			}
+		}
 
 		// API request.
 		$this->api = new NGL_Mailchimp_API( $this->api_key );
@@ -278,8 +284,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 			}
 
 			$result = array(
-				'fail'	=> sprintf( __( 'Your <strong><em>From Email</em></strong> address isn&rsquo;t verified.<br />
-						%s Or %s', 'newsletter-glue' ), '<a href="https://admin.mailchimp.com/account/domains/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>', '<a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' ),
+				'fail'	=> __( 'Your <strong>From Email</strong> address isn&rsquo;t verified.', 'newsletter-glue' ) . '<br />' . '<a href="https://admin.mailchimp.com/account/domains/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
 			);
 
 			return $result;
@@ -451,7 +456,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 				$output[ 'type' ] 		= 'error';
 				$output[ 'message' ] 	= __( 'Unverified domain', 'newsletter-glue' );
 				$output[ 'notice' ]		= sprintf( __( 'Your email newsletter was not sent, because your email address is not verified. %s Or %s', 'newsletter-glue' ), 
-				'<a href="https://admin.mailchimp.com/account/domains/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="external alternate icon"></i></a>', '<a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' );
+				'<a href="https://admin.mailchimp.com/account/domains/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>', '<a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'learn more.', 'newsletter-glue' ) . '</a>' );
 				$output[ 'help' ]       = 'https://docs.newsletterglue.com/article/7-unverified-email';
 			}
 
@@ -475,23 +480,19 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Get schedule options.
-	 */
-	public function get_schedule_options() {
-
-		$options = array(
-			'immediately'	=> __( 'Immediately', 'newsletter-glue' ),
-			'draft'			=> __( 'Save as draft in Mailchimp', 'newsletter-glue' ),
-		);
-
-		return $options;
-
-	}
-
-	/**
 	 * Verify email address.
 	 */
 	public function verify_email( $email = '' ) {
+
+		if ( ! $email ) {
+			$response = array( 'failed' => __( 'Please enter email', 'newsletter-glue' ) );
+		} elseif ( ! is_email( $email ) ) {
+			$response = array( 'failed'	=> __( 'Invalid email', 'newsletter-glue' ) );
+		}
+
+		if ( ! empty( $response ) ) {
+			return $response;
+		}
 
 		$this->api = new NGL_Mailchimp_API( $this->api_key );
 		$this->api->verify_ssl = false;
@@ -505,14 +506,14 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 		if ( isset( $result['verified'] ) && $result['verified'] == true ) {
 
 			$response = array(
-				'success'	=> __( '<strong>Verified.</strong> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">Learn more</a>', 'newsletter-glue' ),
+				'success'	=> '<strong>' . __( 'Verified', 'newsletter-glue' ) . '</strong>',
 			);
 
 		} else {
 
 			$response = array(
-				'failed'	=> __( '<strong>Email not verified. This means your emails won&rsquo;t send.<br />
-					<a href="https://admin.mailchimp.com/account/domains/" target="_blank">Verify email now <i class="external alternate icon"></i></a></strong> Or <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">learn more.</a>', 'newsletter-glue' ),
+				'failed'			=> __( 'Not verified', 'newsletter-glue' ),
+				'failed_details'	=> '<a href="https://admin.mailchimp.com/account/domains/" target="_blank">' . __( 'Verify email now', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a> <a href="https://docs.newsletterglue.com/article/7-unverified-email" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
 			);
 
 		}
@@ -576,6 +577,22 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 		$result = $batch->check_status();
 
 		return true;
+
+	}
+
+	/**
+	 * Get connect settings.
+	 */
+	public function get_connect_settings( $integrations = array() ) {
+
+		$app = $this->app;
+
+		newsletterglue_text_field( array(
+			'id' 			=> "ngl_{$app}_key",
+			'placeholder' 	=> esc_html__( 'Enter API Key', 'newsletter-glue' ),
+			'value'			=> isset( $integrations[ $app ]['api_key'] ) ? $integrations[ $app ]['api_key'] : '',
+			'helper'		=> '<a href="https://admin.mailchimp.com/account/api-key-popup/" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
+		) );
 
 	}
 

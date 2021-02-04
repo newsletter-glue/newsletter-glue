@@ -28,6 +28,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php include_once newsletterglue_get_path( $app ) . '/settings.php'; ?>
 
+	<?php include NGL_PLUGIN_DIR . 'includes/admin/settings/views/settings-general.php'; ?>
+
 	<?php endif; ?>
 
 </div>

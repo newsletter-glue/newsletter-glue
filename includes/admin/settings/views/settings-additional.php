@@ -19,8 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <div class="ngl-metabox">
 
 	<div class="ngl-metabox-flex">
+	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-header">
-			<?php esc_html_e( 'Custom post types', 'newsletter-glue' ); ?>
+			<label for="ngl_post_types"><?php esc_html_e( 'Custom post types', 'newsletter-glue' ); ?></label>
+			<?php $api->input_verification_info(); ?>
 		</div>
 		<div class="ngl-field">
 			<?php
@@ -36,6 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				) );
 			?>
 		</div>
+	</div>
 	</div>
 
 </div>
