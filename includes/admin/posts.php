@@ -49,7 +49,7 @@ function newsletterglue_manage_posts_custom_column( $column, $post_id ) {
 						if ( $data['type'] == 'neutral' ) {
 							$text .= '<span class="ngl-state ngl-neutral">' . $data[ 'message' ] . '</span>';
 						}
-						$text .= '<span><a href="#" class="ngl-modal-log">' . __( 'View log', 'newsletter-glue' ) . '</a>';
+						$text .= '<span><a href="#ngl-status-log" data-post-id="'. absint( $post_id ) . '" class="ngl-modal-log">' . __( 'View log', 'newsletter-glue' ) . '</a>';
 						if ( isset( $data['help'] ) && ! empty( $data['help'] ) ) {
 							$text .= ' | <span class="ngl-error"><a href="' . esc_url( $data[ 'help' ] ) . '">' . __( 'Get help', 'newsletter-glue' ) . '</a></span>';
 						}
@@ -57,11 +57,9 @@ function newsletterglue_manage_posts_custom_column( $column, $post_id ) {
 					}
 				} else {
 					$text .= '<span class="ngl-state">' . __( 'Multiple newsletters', 'newsletter-glue' ) . '</span>';
-					$text .= '<span><a href="#" class="ngl-modal-log">' . __( 'View log', 'newsletter-glue' ) . '</a></span>';
+					$text .= '<span><a href="#ngl-status-log" data-post-id="'. absint( $post_id ) . '" class="ngl-modal-log">' . __( 'View log', 'newsletter-glue' ) . '</a></span>';
 				}
 
-				// Add modal content.
-				echo newsletterglue_generate_status_table( $post_id, $results );
 			}
 
 			if ( ! empty( $text ) ) {
@@ -73,17 +71,6 @@ function newsletterglue_manage_posts_custom_column( $column, $post_id ) {
 
 }
 add_action( 'manage_post_posts_custom_column', 'newsletterglue_manage_posts_custom_column', 99, 2 );
-
-/**
- * Generate newsletter status table.
- */
-function newsletterglue_generate_status_table( $post_id = 0, $results = array() ) {
-
-	$post = get_post( $post_id );
-
-	include NGL_PLUGIN_DIR . 'includes/admin/views/posts-status.php';
-
-}
 
 /**
  * Get past campaigns based on post ID.
@@ -114,7 +101,7 @@ function newsletterglue_get_past_campaigns( $post_id ) {
 function newsletterglue_status_log_modal() {
 	global $pagenow;
 
-	if ( $pagenow !== 'edit.php' ) {
+	if ( $pagenow !== 'edit.php' && $pagenow !== 'post.php' ) {
 		return;
 	}
 

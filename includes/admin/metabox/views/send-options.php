@@ -8,7 +8,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 
-<div class="ngl-metabox-flex">
+<h4 class="ngl-edit-more"><a href="#"><?php _e( 'Edit more settings', 'newsletter-glue' ); ?> <i class="chevron down icon"></i></a></h4>
+
+<div class="ngl-metabox-flex ngl-edit-more-box is-hidden">
 
 	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-header">
