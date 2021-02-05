@@ -1600,15 +1600,29 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-block-upgrade a {
 	box-shadow: none;
-	color: #0088A0;
+	color: #17a4c6;
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 13px;
+	display: flex;
+	align-items: center;
 }
 
 .ngl-block-upgrade a:hover,
 .ngl-block-upgrade a:focus {
 	color: #0D566C;
+}
+
+.ngl-block-upgrade svg {
+	fill:none;
+	stroke: #17a4c6;
+	stroke-linecap: round; stroke-linejoin: round;
+	stroke-width: 1.5px;
+	margin: 0 8px 0 0;
+}
+
+.ngl-block-upgrade a:hover svg {
+	stroke: #0D566C;
 }
 
 .ngl-block-svg-icon {
