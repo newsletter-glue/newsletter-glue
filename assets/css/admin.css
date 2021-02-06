@@ -2183,6 +2183,19 @@ p.ngl-mobile {
 	line-height: 14px;
 	font-size: 13px;
 	margin: 0 10px 0 0;
+	border-color: #e2e2e2;
+	border-radius: 8px !important;
+}
+
+.ngl-theme .components-font-size-picker__number:focus,
+.ngl-theme .components-text-control__input:focus {
+	box-shadow: none !important;
+	border-color: #0088A0 !important;
+}
+
+.ngl-theme .components-text-control__input {
+	border-radius: 8px !important;
+	border-color: #e2e2e2 !important;
 }
 
 .ngl-theme-px {
@@ -2240,13 +2253,15 @@ p.ngl-mobile {
 }
 
 .ngl-theme .ngl-alignment-container div.ui.selection.dropdown {
-    width: 146px !important;
+    width: 140px !important;
     max-width: inherit !important;
     min-width: inherit !important;
     height: 30px;
     padding-top: 7px;
-	border-radius: 4px;
-    border: 1px solid #7e8993 !important;
+	border-radius: 8px;
+	min-height: 30px !important;
+	line-height: 1em;
+	font-size: 13px !important;
 }
 
 div[data-value="arial"] { font-family: "Arial"; }
