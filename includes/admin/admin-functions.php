@@ -412,8 +412,14 @@ function newsletterglue_get_review_button_html( $version = '' ) {
 		$class .= ' ngl-review-post';
 	}
 
+	$text = __( 'Like this plugin? Please review us', 'newsletter-glue' );
+
+	if ( $version == 'post' ) {
+		$text = __( 'Review us', 'newsletter-glue' );
+	}
+
 	return '<div class="ngl-review ' . $class . '" style="opacity: ' . $opacity . '">
-		<a href="https://wordpress.org/support/plugin/newsletter-glue/reviews/#new-post" target="_blank" class="ngl-review-link"><span>' . __( 'Like this plugin? Please review us', 'newsletter-glue' ) . '</span><i class="dashicons dashicons-star-filled"></i><i class="dashicons dashicons-star-filled"></i><i class="dashicons dashicons-star-filled"></i><i class="dashicons dashicons-star-filled"></i><i class="dashicons dashicons-star-filled"></i></a>
+		<a href="https://wordpress.org/support/plugin/newsletter-glue/reviews/#new-post" target="_blank" class="ngl-review-link"><span>' . $text . '</span><i class="dashicons dashicons-star-filled"></i><i class="dashicons dashicons-star-filled"></i><i class="dashicons dashicons-star-filled"></i><i class="dashicons dashicons-star-filled"></i><i class="dashicons dashicons-star-filled"></i></a>
 	</div>';
 
 }

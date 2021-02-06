@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 
-<div class="ngl-metabox ngl-send ngl-mb-mailchimp <?php if ( ! $hide ) echo 'is-hidden'; ?>">
+<div class="ngl-metabox ngl-send ngl-mb-mailchimp">
 
 	<input type="hidden" name="ngl_app" id="ngl_app" value="<?php echo esc_attr( $app ); ?>" />
 
