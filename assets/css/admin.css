@@ -2106,7 +2106,8 @@ p.ngl-mobile {
 }
 
 .ngl-theme-panel .ngl-theme-checkbox-text {
-	line-height: 1;
+	line-height: 1.2;
+	font-size: 13px;
 }
 
 .ngl-theme-panel .ngl-theme-checkbox-input {
@@ -2166,6 +2167,7 @@ p.ngl-mobile {
 .ngl-theme .components-base-control .components-base-control__label {
 	margin-top: 6px;
 	font-weight: 600;
+	font-size: 13px;
 }
 
 .ngl-theme-color {
@@ -2357,7 +2359,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 }
 
 .ngl-theme-supportus {
-	background: #FBF5FF;
+	background: #F8FEFF;
 	padding: 1px 16px;
 }
 
