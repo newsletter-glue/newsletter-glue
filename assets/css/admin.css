@@ -2570,82 +2570,69 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	font-size: 13px;
 }
 
+.ngl-bar .ngl-review {
+	margin: 0;
+}
+
+.ngl-review span {
+	margin: 0 12px 0 0;
+}
+
+.ngl-review i {
+	margin: 0 0.005em;
+    color: #FFB900;
+    font-size: 1.2em;
+    width: 18px;
+    height: 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
 .ngl-review a {
 	display: inline-flex;
-	border-radius: 10px;
+	border-radius: 20px;
 	text-decoration: none;
-	background: #079c2e;
+	background: #10B777;
 	width: auto;
-	padding: 6px 30px;
-	color: #fff;
+	padding: 0 20px !important;
+	color: #fff !important;
 	font-weight: 600;
-	height: 1.6em;
-    line-height: 1.6em;
+	height: 33px;
+    line-height: 33px !important;
 	align-items: center;
 	transition: none;
 	position: relative;
 }
 
-@-webkit-keyframes bounce {
-	0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}	
-	40% {-webkit-transform: translateY(-10px);}
-	60% {-webkit-transform: translateY(-10px);}
-}
- 
-@-moz-keyframes bounce {
-	0%, 20%, 50%, 80%, 100% {-moz-transform: translateY(0);}
-	40% {-moz-transform: translateY(-10px);}
-	60% {-moz-transform: translateY(-10px);}
-}
- 
-@-o-keyframes bounce {
-	0%, 20%, 50%, 80%, 100% {-o-transform: translateY(0);}
-	40% {-o-transform: translateY(-10px);}
-	60% {-o-transform: translateY(-10px);}
-}
-@keyframes bounce {
-	0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-	40% {transform: translateY(-10px);}
-	60% {transform: translateY(-10px);}
-}
-
 .ngl-review a:hover {
-	color: #fff;
 	animation: bounce 2s infinite;
 	-webkit-animation: bounce 2s infinite;
 	-moz-animation: bounce 2s infinite;
 	-o-animation: bounce 2s infinite;
 }
 
-.ngl-review span {
-	margin: 0 8px 0 0;
+@-webkit-keyframes bounce {
+	0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}	
+	40% {-webkit-transform: translateY(-5px);}
+	60% {-webkit-transform: translateY(-5px);}
 }
-
-.ngl-review i {
-	margin: 0 0.005em;
-	color: #ffc800;
-	font-size: 1.1em;
-	width: 1.1em;
-	height: 1.1em;
-	position: relative;
-	top: 0.05em;
+ 
+@-moz-keyframes bounce {
+	0%, 20%, 50%, 80%, 100% {-moz-transform: translateY(0);}
+	40% {-moz-transform: translateY(-5px);}
+	60% {-moz-transform: translateY(-5px);}
 }
-
-.ngl-review-top {
-	margin: 0;
+ 
+@-o-keyframes bounce {
+	0%, 20%, 50%, 80%, 100% {-o-transform: translateY(0);}
+	40% {-o-transform: translateY(-5px);}
+	60% {-o-transform: translateY(-5px);}
 }
-
-.ngl-review-top a {
-	padding: 4px 35px;
-}
-
-.ngl-review-post {
-	margin: 20px 0 0;
-	font-size: 14px;
-}
-
-.ngl-review-post i {
-	font-size: 1.2em;
+@keyframes bounce {
+	0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+	40% {transform: translateY(-5px);}
+	60% {transform: translateY(-5px);}
 }
 
 /* Top toolbar */
