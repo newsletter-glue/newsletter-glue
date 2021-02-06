@@ -75,9 +75,26 @@
 	}
 
 	function ngl_open_modal( el ) {
-		$( '.ngl-modal-overlay' ).removeClass( 'off' );
-		var td = el.parents( 'td' );
-		$( '.ngl-modal-content' ).html( td.find( '.ngl-modal-contents' ).html() );
+		var overlay = $( '.ngl-modal-overlay' );
+
+		overlay.removeClass( 'off' );
+
+		var modal	= $( '.ngl-modal-loader' );
+		var post_id = el.attr( 'data-post-id' );
+		var data = 'action=newsletterglue_ajax_get_log&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id;
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data,
+			beforeSend: function() {
+				overlay.html( '<div class="ngl-modal ngl-modal-loader"><div class="ngl-loading"></div></div>' );
+			},
+			success: function( response ) {
+				overlay.find( '.ngl-modal-loader' ).replaceWith( response );
+			}
+		} );
+
 	}
 
 	function ngl_close_modal() {
@@ -164,6 +181,10 @@
 
 	// validate the email.
 	function ngl_validate_email() {
+
+		if ( $( '#ngl_from_email' ).length == 0 ) {
+			return false;
+		}
 
 		var email_  = $( '#ngl_from_email' );
 		var email 	= email_.val();
@@ -501,6 +522,8 @@
 		ngl_validate_form();
 		if ( ! $( this ).is( ':checked' ) ) {
 			$( '#ngl_send_newsletter2' ).prop( 'checked', false );
+		} else {
+			$( '.ngl-top-checkbox' ).removeClass( 'is-hidden' );
 		}
 	} );
 
@@ -637,9 +660,11 @@
 	} );
 
 	// Show modal.
-	$( document ).on( 'click', '.ngl-modal-log', function( event ) {
+	$( document ).on( 'click', 'a[href="#ngl-status-log"]', function( event ) {
 		event.preventDefault();
-		ngl_open_modal( $( this ) );
+		var trigger = $( this );
+		var post_id = $( this ).attr( 'data-post-id' );
+		ngl_open_modal( trigger );
 		return false;
 	} );
 
@@ -665,17 +690,12 @@
 	// Trigger newsletter sent message.
 	$( document ).on( 'click', '.editor-post-publish-button', function( event ) {
 
-		var metabox = $( '.ngl-send' );
-
-		// Just sent?
-		if ( $( '.ngl-reset-newsletter' ).is( ':visible' ) ) {
-			$( '#ngl_send_newsletter, #ngl_send_newsletter2' ).prop( 'checked', false );
-		}
-
 		// Add message box.
 		if ( $( '#ngl_send_newsletter2' ).is( ':checked' ) ) {
-			metabox.addClass( 'is-hidden' );
+			$( '#ngl_send_newsletter, #ngl_send_newsletter2' ).prop( 'checked', false );
 			$( '.ngl-msgbox-wrap' ).removeClass( 'is-hidden' );
+			$( '.ngl-reset' ).addClass( 'is-hidden' );
+			$( '.ngl-top-checkbox' ).addClass( 'is-hidden' );
 		}
 
 	} );
@@ -906,6 +926,19 @@
 	$( document ).on( 'click', '.ngl-popup-close', function( event ) {
 		event.preventDefault();
 		ngl_close_popup();
+	} );
+
+	$( document ).on( 'click', '.ngl-edit-more a', function( event ) {
+		event.preventDefault();
+		var more = $( '.ngl-edit-more-box' );
+		if ( more.hasClass( 'is-hidden' ) ) {
+			more.removeClass( 'is-hidden' );
+			$( this ).find( 'i' ).removeClass( 'down' ).addClass( 'up' );
+		} else {
+			more.addClass( 'is-hidden' );
+			$( this ).find( 'i' ).addClass( 'down' ).removeClass( 'up' );
+		}
+		return false;
 	} );
 
 	// When block defaults are changed.

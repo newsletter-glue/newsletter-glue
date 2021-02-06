@@ -91,6 +91,10 @@ td.ngl_datetime {
 }
 
 /* Modal */
+table.ngl-table-log {
+	border: none;
+}
+
 .ngl-modal-overlay {
 	position: fixed;
 	width: 100%;
@@ -102,6 +106,31 @@ td.ngl_datetime {
 	align-items: center;
 	justify-content: center;
 	z-index: 9999999999;
+	transition: all .125s ease-in-out;
+}
+
+.ngl-modal-loader {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.ngl-loading {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgb(234 234 234);
+    border-radius: 50%;
+    border-top-color: #8c8c8c;
+	animation: ngl_spin_infinite 1s linear infinite; */
+    -webkit-animation: spin 1s linear infinite;
+}
+
+@keyframes ngl_spin_infinite {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes ngl_spin_infinite {
+  to { -webkit-transform: rotate(360deg); }
 }
 
 .ngl-modal-overlay.off {
@@ -118,6 +147,7 @@ td.ngl_datetime {
 	min-height: 200px;
 	max-height: 80%;
     overflow: auto;
+	border-radius: 8px;
 }
 
 .ngl-modal-overlay.onboarding .ngl-modal {
@@ -127,28 +157,39 @@ td.ngl_datetime {
 
 .ngl-modal-close {
 	position: absolute;
-	top: 5px;
-	right: 5px;
+	top: 6px;
+	right: 10px;
 	text-decoration: none;
 	box-shadow: none !important;
 	padding: 8px;
-	font-size: 24px;
+	font-size: 28px;
+	color: #555 !important;
 }
 
 .ngl-modal-close .dashicons {
-	font-size: 24px;
-	height: 24px;
-	width: 24px;
+	font-size: 28px;
+	height: 28px;
+	width: 28px;
 }
 
 .ngl-modal-content {
-	padding: 50px;
+	padding: 30px;
 }
 
 .ngl-modal-title {
 	padding: 0 0 30px;
 	font-size: 1.8em;
 	font-weight: 500;
+}
+
+.ngl-modal-title a {
+	color: #0D566C !important;
+	text-decoration: none !important;
+	box-shadow: none !important;
+}
+
+.ngl-modal-title a:hover {
+	color: #0088A0 !important;
 }
 
 .ngl-notice.welcome {
