@@ -76,13 +76,6 @@ function newsletterglue_save_meta_box( $post_id, $post ) {
 	// We need this save event to run once to avoid potential endless loops. This would have been perfect:
 	$saved_meta_boxes = true;
 
-	$old_settings = newsletterglue_get_data( $post_id );
-
-	// Sent already? do not do anything.
-	if ( isset( $old_settings->sent ) ) {
-		return;
-	}
-
 	// The "Send" checkbox is not checked.
 	if ( ! isset( $_POST[ 'ngl_double_confirm' ] ) || $_POST[ 'ngl_double_confirm' ] !== 'yes' ) {
 		return;
