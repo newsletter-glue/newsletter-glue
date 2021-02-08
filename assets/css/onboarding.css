@@ -58,14 +58,8 @@
 }
 
 .ngl-boarding-logo img {
-	max-width: 150px;
+	max-width: 200px;
 	display: block;
-}
-
-.ngl-boarding-logo .ngl-logo {
-	width: 40px;
-    height: 40px;
-    background-size: 40px 40px;
 }
 
 /* Modal elements */
@@ -125,12 +119,12 @@
 
 .ngl-boarding-next {
 	right: 40px;
-	background: #0088A0;
+	background: #0D566C;
 	color: #fff;
 }
 
 .ngl-boarding-next:hover {
-	background: #c72402;
+	background: #0088A0;
 }
 
 .ngl-boarding-next.disabled {
@@ -185,19 +179,13 @@
 	font-size: 16px;
 }
 
-.ngl-boarding.alt .ngl-boarding-logo .ngl-logo {
-	width: 26px;
-    height: 26px;
-    background-size: 26px 26px;
-}
-
 .ngl-boarding h3 {
 	text-align: center;
 	display: block;
 	max-width: 240px;
 	margin: auto;
 	font-size: 20px;
-	color: #0088A0;
+	color: #222;
 	font-weight: 700;
 	line-height: 1.4;
 	padding-bottom: 30px;
@@ -233,7 +221,11 @@
 
 .ngl-boarding .ngl-metabox-flex {
 	text-align: left;
-	padding-left: 120px;
+	flex-direction: column;
+    justify-content: center;
+    width: 300px;
+    justify-content: center;
+    margin: auto;
 }
 
 .ngl-boarding .ngl-process.ngl-ajax.is-hidden {
@@ -242,7 +234,6 @@
 
 .ngl-boarding .ngl-process.ngl-ajax {
 	display: flex;
-	margin: 0;
 }
 
 .ngl-boarding .ui.input {
@@ -250,14 +241,18 @@
 }
 
 .ngl-boarding input[type=text] {
-	border: 1px solid #aaa !important;
+	border: 1px solid #e2e2e2 !important;
     box-sizing: inherit;
     min-width: 250px;
     padding: 0.572em 1em;
     line-height: 1;
-	border-radius: 6px;
-	width: 250px;
+	border-radius: 8px;
+	width: 100%;
 	display: block !important;
+}
+
+.ngl-boarding input[type=text]:focus {
+	border-color: #0088A0 !important;
 }
 
 /* Iframe */
