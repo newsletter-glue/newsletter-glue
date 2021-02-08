@@ -91,29 +91,13 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 		return $result;
 	}
 
-
-	/**
-	 * Remove Integration.
-	 */
-	public function remove_integration() {
-		$integrations = get_option( 'newsletterglue_integrations' );
-
-		// Delete the integration.
-		if ( isset( $integrations[ 'activecampaign' ] ) ) {
-			unset( $integrations[ 'activecampaign' ] );
-		}
-
-		if ( empty( $integrations ) ) {
-			delete_option( 'newsletterglue_integrations' );
-		} else {
-			update_option( 'newsletterglue_integrations', $integrations );
-		}
-	}
-
 	/**
 	 * Save Integration.
 	 */
 	public function save_integration( $api_key = '', $api_url = '', $account = array() ) {
+
+		delete_option( 'newsletterglue_integrations' );
+
 		$integrations = get_option( 'newsletterglue_integrations' );
 
 		$integrations[ 'activecampaign' ] = array();

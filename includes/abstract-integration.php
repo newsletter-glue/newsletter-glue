@@ -237,4 +237,16 @@ abstract class NGL_Abstract_Integration {
 
 	}
 
+	/**
+	 * Remove Integration.
+	 */
+	public function remove_integration() {
+
+		delete_option( 'newsletterglue_integrations' );
+
+		$response = array( 'successful' => true );
+
+		return $response;
+	}
+
 }
