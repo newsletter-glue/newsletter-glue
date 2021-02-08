@@ -21,7 +21,6 @@ abstract class NGL_Abstract_Integration {
 		$this->show_from_options( $settings, $defaults, $post );
 		$this->show_test_email( $settings, $defaults, $post );
 		$this->show_schedule_and_image_options( $settings, $defaults, $post );
-		$this->show_states( $post );
 	}
 
 	/**
@@ -148,13 +147,6 @@ abstract class NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Show states.
-	 */
-	public function show_states( $post ) {
-		include NGL_PLUGIN_DIR . 'includes/admin/metabox/views/messages.php';
-	}
-
-	/**
 	 * Show loading state.
 	 */
 	public function show_loading() {
@@ -179,8 +171,7 @@ abstract class NGL_Abstract_Integration {
 	 */
 	public function get_test_success_msg() {
 
-		$message = __( 'Your email is on its way! Check your inbox in 3-5 minutes.', 'newsletter-glue' ) 
-		. '<br />' . sprintf( __( 'Can&rsquo;t find your email? %s', 'newsletter-glue' ), '<a href="https://docs.newsletterglue.com/article/11-email-delivery" target="_blank">' . __( 'Get help.', 'newsletter-glue' ) . '</a>' );
+		$message = __( 'Your email is on its way!', 'newsletter-glue' );
 
 		return $message;
 
