@@ -6,6 +6,8 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+$integrations = get_option( 'newsletterglue_integrations' );
+
 ?>
 
 <div class="ngl-modal-overlay onboarding">
