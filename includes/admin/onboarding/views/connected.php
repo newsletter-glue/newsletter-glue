@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <div class="ngl-boarding alt is-hidden" data-screen="3">
 
 	<div class="ngl-boarding-logo">
-		<img src="<?php echo NGL_PLUGIN_URL . '/assets/images/logo-grey.png'; ?>" alt="" />
+		<div class="ngl-logo"><img src="<?php echo NGL_PLUGIN_URL . '/assets/images/top-bar-logo.svg'; ?>" /></div>
 	</div>
 
 	<h3><?php _e( 'Great, you&rsquo;re connected!', 'newsletter-glue' ); ?></h3>

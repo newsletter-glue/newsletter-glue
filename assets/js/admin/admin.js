@@ -213,6 +213,9 @@
 					if ( response.success ) {
 						elem.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
 						elem.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
+						setTimeout( function() {
+							elem.find( '.ngl-process' ).addClass( 'is-hidden' );
+						}, 1500 );
 					}
 					email_.parent().parent().parent().removeClass( 'is-error' );
 					email_.attr( 'data-force-unready', '0' );
@@ -809,6 +812,9 @@
 							}, 1500 );
 						}
 					}
+					setTimeout( function() {
+						el.find( '.ngl-process' ).addClass( 'is-hidden' );
+					}, 1500 );
 				}
 
 				var modal = $( '.ngl-modal[data-app=campaignmonitor]:visible' );

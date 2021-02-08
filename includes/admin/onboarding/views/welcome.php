@@ -11,8 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <div class="ngl-boarding" data-screen="1">
 
 	<div class="ngl-boarding-logo">
-		<div class="ngl-logo"></div>
-		<div class="ngl-label"><?php _e( '<span>Newsletter</span> Glue', 'newsletter-glue' ); ?></div>
+		<div class="ngl-logo"><img src="<?php echo NGL_PLUGIN_URL . '/assets/images/top-bar-logo.svg'; ?>" /></div>
 	</div>
 
 	<p>👋</p>

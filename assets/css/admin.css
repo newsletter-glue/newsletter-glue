@@ -1397,7 +1397,11 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-boarding div.ui.selection.dropdown {
 	min-width: 250px !important;
-	min-height: 40px;
+	min-height: 39px;
+}
+
+.ngl-boarding .ngl-settings div.ui.selection.dropdown {
+	min-width: 100% !important;
 }
 
 .ngl-credits label {

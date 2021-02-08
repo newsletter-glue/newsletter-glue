@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <div class="ngl-boarding alt ngl-mb-mailchimp is-hidden" data-screen="4">
 
 	<div class="ngl-boarding-logo">
-		<img src="<?php echo NGL_PLUGIN_URL . '/assets/images/logo-grey.png'; ?>" alt="" />
+		<div class="ngl-logo"><img src="<?php echo NGL_PLUGIN_URL . '/assets/images/top-bar-logo.svg'; ?>" /></div>
 	</div>
 
 	<div class="ngl-boarding-step"><?php _e( 'Step 2 of 3', 'newsletter-glue' ); ?></div>
@@ -23,6 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<div class="ngl-settings ngl-metabox-flex">
 		<div class="ngl-metabox-header">
 			<?php esc_html_e( 'Audience', 'newsletter-glue' ); ?>
+			<?php $api->input_verification_info(); ?>
 		</div>
 		<div class="ngl-field">
 			<?php
@@ -47,6 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<div class="ngl-settings ngl-metabox-flex ngl-metabox-segment">
 		<div class="ngl-metabox-header">
 			<label for="ngl_segment"><?php esc_html_e( 'Segment / tag', 'newsletter-glue' ); ?></label>
+			<?php $api->input_verification_info(); ?>
 			<?php echo $api->show_loading(); ?>
 		</div>
 		<div class="ngl-field">
@@ -79,7 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <div class="ngl-boarding alt is-hidden" data-screen="5">
 
 	<div class="ngl-boarding-logo">
-		<img src="<?php echo NGL_PLUGIN_URL . '/assets/images/logo-grey.png'; ?>" alt="" />
+		<div class="ngl-logo"><img src="<?php echo NGL_PLUGIN_URL . '/assets/images/top-bar-logo.svg'; ?>" /></div>
 	</div>
 
 	<div class="ngl-boarding-step"><?php _e( 'Step 3 of 3', 'newsletter-glue' ); ?></div>
@@ -91,6 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<div class="ngl-settings ngl-metabox-flex">
 		<div class="ngl-metabox-header">
 			<?php esc_html_e( 'From name', 'newsletter-glue' ); ?>
+			<?php $api->input_verification_info(); ?>
 		</div>
 		<div class="ngl-field">
 			<?php
@@ -107,6 +110,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<div class="ngl-settings ngl-metabox-flex">
 		<div class="ngl-metabox-header">
 			<?php esc_html_e( 'From email', 'newsletter-glue' ); ?>
+			<?php $api->email_verification_info(); ?>
 		</div>
 		<div class="ngl-field">
 			<?php

@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <div class="ngl-boarding alt is-hidden ngl-boarding-completed" data-screen="6">
 
 	<div class="ngl-boarding-logo">
-		<img src="<?php echo NGL_PLUGIN_URL . '/assets/images/logo-grey.png'; ?>" alt="" />
+		<div class="ngl-logo"><img src="<?php echo NGL_PLUGIN_URL . '/assets/images/top-bar-logo.svg'; ?>" /></div>
 	</div>
 
 	<p style="font-size: 36px;">🎉</p>
