@@ -6,10 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Package Name\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-24 23:32+0100\n"
-"PO-Revision-Date: 2020-12-24 23:32+0100\n"
+"POT-Creation-Date: 2021-02-08 23:31+0100\n"
+"PO-Revision-Date: 2021-02-08 23:31+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -23,137 +23,200 @@ msgstr ""
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: includes/abstract-integration.php:47
-msgid "Send test email to"
+#: includes/abstract-integration.php:44
+msgid "Send test email"
 msgstr ""
 
-#: includes/abstract-integration.php:64
-msgid "Preview email in new tab"
+#: includes/abstract-integration.php:55
+msgid "Send"
 msgstr ""
 
-#: includes/abstract-integration.php:68
-msgid "Preview email"
+#: includes/abstract-integration.php:56
+msgid "Sending..."
 msgstr ""
 
-#: includes/abstract-integration.php:122
-msgid ""
-"Whoops! There&rsquo;s nothing to send.<br />Please save post as draft first."
+#: includes/abstract-integration.php:57
+msgid "Sent!"
 msgstr ""
 
-#: includes/abstract-integration.php:130
-msgid "Your email is on its way!<br />Check your inbox in 3-5 minutes."
+#: includes/abstract-integration.php:58
+msgid "Could not send"
 msgstr ""
 
-#: includes/abstract-integration.php:131
-#, php-format
-msgid "Can&rsquo;t find your email? %s"
+#: includes/abstract-integration.php:66
+msgid "Preview email in browser"
 msgstr ""
 
-#: includes/abstract-integration.php:131 includes/pro.php:167
-#: includes/admin/posts.php:54
-#: includes/admin/connect/views/connect-card.php:100
-#: includes/admin/metabox/views/status.php:22
-#: includes/admin/onboarding/views/onboarding.php:29
-#: includes/admin/views/posts-status.php:42 includes/admin/views/topbar.php:25
-msgid "Get help"
+#: includes/abstract-integration.php:66
+msgid "opens in new tab"
 msgstr ""
 
-#: includes/ajax-functions.php:358 includes/admin/admin-fields.php:38
-#: includes/admin/admin-fields.php:137 includes/admin/admin-functions.php:150
-#: includes/admin/admin-scripts.php:58
-#: includes/admin/settings/views/settings-css.php:25
+#: includes/abstract-integration.php:96
+msgid "Verifying..."
+msgstr ""
+
+#: includes/abstract-integration.php:123 includes/ajax-functions.php:452
+#: includes/admin/admin-functions.php:139 includes/admin/admin-scripts.php:58
+#: includes/admin/settings/views/settings-css.php:26
 #: includes/admin/settings/views/settings-theme.php:31
 msgid "Saving..."
 msgstr ""
 
-#: includes/ajax-functions.php:362 includes/admin/admin-fields.php:43
-#: includes/admin/admin-fields.php:142 includes/admin/admin-functions.php:154
-#: includes/admin/admin-scripts.php:59
-#: includes/admin/settings/views/settings-css.php:30
+#: includes/abstract-integration.php:128 includes/ajax-functions.php:456
+#: includes/admin/admin-functions.php:143 includes/admin/admin-scripts.php:59
+#: includes/admin/settings/views/settings-css.php:31
 #: includes/admin/settings/views/settings-theme.php:35
 msgid "Saved"
 msgstr ""
 
-#: includes/ajax-functions.php:365
+#: includes/abstract-integration.php:166
+msgid ""
+"Whoops! There&rsquo;s nothing to send.<br />Please save post as draft first."
+msgstr ""
+
+#: includes/abstract-integration.php:174
+msgid "Your email is on its way!"
+msgstr ""
+
+#: includes/abstract-integration.php:188 includes/abstract-integration.php:206
+#: includes/integrations/getresponse/init.php:149
+#: includes/integrations/mailchimp/init.php:469
+#: includes/integrations/sendinblue/init.php:136
+msgid "Please enter email"
+msgstr ""
+
+#: includes/abstract-integration.php:190 includes/abstract-integration.php:208
+#: includes/integrations/getresponse/init.php:151
+#: includes/integrations/mailchimp/init.php:471
+#: includes/integrations/sendinblue/init.php:138
+msgid "Invalid email"
+msgstr ""
+
+#: includes/abstract-integration.php:192
+#: includes/integrations/getresponse/init.php:175
+#: includes/integrations/mailchimp/init.php:490
+#: includes/integrations/sendinblue/init.php:162
+msgid "Verified"
+msgstr ""
+
+#: includes/abstract-integration.php:232
+msgid "Immediately"
+msgstr ""
+
+#: includes/abstract-integration.php:233
+#, php-format
+msgid "Save as draft in %s"
+msgstr ""
+
+#: includes/ajax-functions.php:57
+msgid "Subject line"
+msgstr ""
+
+#: includes/ajax-functions.php:58 includes/admin/posts.php:17
+msgid "Newsletter status"
+msgstr ""
+
+#: includes/ajax-functions.php:59
+msgid "Time, Date published"
+msgstr ""
+
+#: includes/ajax-functions.php:80 includes/pro.php:173
+#: includes/admin/posts.php:54
+#: includes/admin/connect/views/connect-card.php:100
+#: includes/admin/metabox/views/reset.php:23
+#: includes/admin/metabox/views/status.php:24
+#: includes/admin/onboarding/views/onboarding.php:31
+#: includes/admin/views/topbar.php:22
+msgid "Get help"
+msgstr ""
+
+#: includes/ajax-functions.php:459
 #: includes/admin/settings/views/settings-theme.php:38
 msgid "Reset to default style"
 msgstr ""
 
-#: includes/ajax-functions.php:366
+#: includes/ajax-functions.php:460
 #: includes/admin/settings/views/settings-theme.php:39
 msgid "Confirm reset (you can&rsquo;t undo after this)"
 msgstr ""
 
-#: includes/ajax-functions.php:367
+#: includes/ajax-functions.php:461
 #: includes/admin/settings/views/settings-theme.php:40
 msgid "Reset"
 msgstr ""
 
-#: includes/ajax-functions.php:367 includes/pro.php:187
+#: includes/ajax-functions.php:461 includes/pro.php:193
 #: includes/admin/connect/views/connect-card.php:120
 #: includes/admin/settings/views/settings-theme.php:40
 msgid "Go back"
 msgstr ""
 
-#: includes/ajax-functions.php:451
+#: includes/ajax-functions.php:545
 msgid "This cannot be empty"
 msgstr ""
 
-#: includes/ajax-functions.php:504 includes/admin/admin-functions.php:359
+#: includes/ajax-functions.php:598 includes/admin/admin-functions.php:370
 #: includes/admin/connect/views/connect-card.php:59
 msgid "remove"
 msgstr ""
 
-#: includes/ajax-functions.php:715 includes/ajax-functions.php:758
+#: includes/ajax-functions.php:809 includes/ajax-functions.php:852
 msgid "No cheating, huh!"
 msgstr ""
 
-#: includes/core.php:310
-#: includes/admin/settings/views/settings-theme-preview.php:67
-#: includes/admin/settings/views/settings-theme-preview.php:109
+#: includes/core.php:325
+#: includes/admin/settings/views/settings-theme-preview.php:71
+#: includes/admin/settings/views/settings-theme-preview.php:115
 #, php-format
 msgid "Seamlessly sent by %s"
 msgstr ""
 
-#: includes/core.php:310 includes/gutenberg.php:39
-#: includes/admin/admin-functions.php:38 includes/admin/admin-menu.php:19
-#: includes/admin/settings/views/settings-theme-preview.php:67
-#: includes/admin/settings/views/settings-theme-preview.php:109
+#: includes/core.php:325 includes/gutenberg.php:37
+#: includes/admin/admin-functions.php:15 includes/admin/admin-menu.php:19
+#: includes/admin/settings/views/settings-theme-preview.php:71
+#: includes/admin/settings/views/settings-theme-preview.php:115
 msgid "Newsletter Glue"
 msgstr ""
 
-#: includes/core.php:511
+#: includes/core.php:535
 msgid "Not set"
 msgstr ""
 
-#: includes/core.php:569
+#: includes/core.php:593
 #, php-format
 msgid "%s mins"
 msgstr ""
 
 #: includes/functions.php:15
-#: includes/integrations/campaignmonitor/connect.php:11
+msgid "ActiveCampaign"
+msgstr ""
+
+#: includes/functions.php:16
 msgid "Campaign Monitor"
 msgstr ""
 
-#: includes/functions.php:16 includes/integrations/mailchimp/connect.php:11
+#: includes/functions.php:17
+msgid "GetResponse"
+msgstr ""
+
+#: includes/functions.php:18
 msgid "Mailchimp"
 msgstr ""
 
-#: includes/functions.php:17 includes/integrations/mailerlite/connect.php:11
+#: includes/functions.php:19
 msgid "MailerLite"
 msgstr ""
 
-#: includes/functions.php:18 includes/integrations/sendinblue/connect.php:11
+#: includes/functions.php:20
 msgid "Sendinblue"
 msgstr ""
 
-#: includes/functions.php:139
+#: includes/functions.php:141
 #, php-format
 msgid "%s from %s"
 msgstr ""
 
-#: includes/gutenberg.php:67
+#: includes/gutenberg.php:65
 msgid "Please wait..."
 msgstr ""
 
@@ -161,146 +224,143 @@ msgstr ""
 msgid "Newsletter Glue: Let's get you started"
 msgstr ""
 
-#: includes/pro.php:67 includes/pro.php:88
+#: includes/pro.php:73 includes/pro.php:94
 msgid "Pro License"
 msgstr ""
 
-#: includes/pro.php:89
+#: includes/pro.php:95
 msgid "Add your Newsletter Glue Pro license here to receive updates."
 msgstr ""
 
-#: includes/pro.php:98 includes/pro.php:121
+#: includes/pro.php:104 includes/pro.php:127
 msgid "Newsletter Glue Pro"
 msgstr ""
 
-#: includes/pro.php:105
+#: includes/pro.php:111
 msgid "License key"
 msgstr ""
 
-#: includes/pro.php:106 includes/pro.php:292
+#: includes/pro.php:112 includes/pro.php:298
 msgid "Get license key"
 msgstr ""
 
-#: includes/pro.php:112
+#: includes/pro.php:118
 msgid "Activate"
 msgstr ""
 
-#: includes/pro.php:124 includes/admin/connect/views/connect-card.php:54
+#: includes/pro.php:130 includes/admin/connect/views/connect-card.php:54
 msgid "test"
 msgstr ""
 
-#: includes/pro.php:128 includes/admin/connect/views/connect-card.php:58
+#: includes/pro.php:134 includes/admin/connect/views/connect-card.php:58
 msgid "edit"
 msgstr ""
 
-#: includes/pro.php:129
+#: includes/pro.php:135
 msgid "deactivate"
 msgstr ""
 
-#: includes/pro.php:138
+#: includes/pro.php:144
 msgid "Verifying license..."
 msgstr ""
 
-#: includes/pro.php:141
+#: includes/pro.php:147
 msgid "Stop verification"
 msgstr ""
 
-#: includes/pro.php:149
+#: includes/pro.php:155
 msgid "Activated!"
 msgstr ""
 
-#: includes/pro.php:156 includes/admin/connect/views/connect-card.php:89
+#: includes/pro.php:162 includes/admin/connect/views/connect-card.php:89
 msgid "Close"
 msgstr ""
 
-#: includes/pro.php:160 includes/admin/connect/views/connect-card.php:93
+#: includes/pro.php:166 includes/admin/connect/views/connect-card.php:93
 msgid "Not connected"
 msgstr ""
 
-#: includes/pro.php:163 includes/admin/connect/views/connect-card.php:96
+#: includes/pro.php:169 includes/admin/connect/views/connect-card.php:96
 msgid "Test again"
 msgstr ""
 
-#: includes/pro.php:164
+#: includes/pro.php:170
 msgid "Edit license details"
 msgstr ""
 
-#: includes/pro.php:175
+#: includes/pro.php:181
 msgid "License deactivated"
 msgstr ""
 
-#: includes/pro.php:183
+#: includes/pro.php:189
 msgid "Deactivate license?"
 msgstr ""
 
-#: includes/pro.php:186 includes/admin/connect/views/connect-card.php:119
+#: includes/pro.php:192 includes/admin/connect/views/connect-card.php:119
 msgid "Confirm"
 msgstr ""
 
-#: includes/pro.php:291
+#: includes/pro.php:297
 msgid ""
 "Thanks for purchasing Newsletter Glue! Get frequent updates as we improve "
 "the plugin."
 msgstr ""
 
-#: includes/pro.php:292
+#: includes/pro.php:298
 msgid "Add license key to get updates"
 msgstr ""
 
-#: includes/admin/admin-fields.php:56
-msgid "Verifying..."
+#: includes/admin/admin-functions.php:41 includes/admin/admin-menu.php:22
+msgid "Settings"
 msgstr ""
 
-#: includes/admin/admin-functions.php:122
+#: includes/admin/admin-functions.php:111
 msgid "Font size"
 msgstr ""
 
-#: includes/admin/admin-functions.php:207
-#: includes/admin/settings/views/settings-theme-panel.php:66
+#: includes/admin/admin-functions.php:196
+#: includes/admin/settings/views/settings-theme-panel.php:68
 msgid "Align left"
 msgstr ""
 
-#: includes/admin/admin-functions.php:208
-#: includes/admin/settings/views/settings-theme-panel.php:67
+#: includes/admin/admin-functions.php:197
+#: includes/admin/settings/views/settings-theme-panel.php:69
 msgid "Align center"
 msgstr ""
 
-#: includes/admin/admin-functions.php:209
-#: includes/admin/settings/views/settings-theme-panel.php:68
+#: includes/admin/admin-functions.php:198
+#: includes/admin/settings/views/settings-theme-panel.php:70
 msgid "Align right"
 msgstr ""
 
-#: includes/admin/admin-functions.php:289
+#: includes/admin/admin-functions.php:300
 msgid "Top-bottom"
 msgstr ""
 
-#: includes/admin/admin-functions.php:303
+#: includes/admin/admin-functions.php:314
 msgid "Left-right"
 msgstr ""
 
-#: includes/admin/admin-functions.php:354
+#: includes/admin/admin-functions.php:365
 msgid "Select image"
 msgstr ""
 
-#: includes/admin/admin-functions.php:361 includes/admin/admin-scripts.php:64
+#: includes/admin/admin-functions.php:372 includes/admin/admin-scripts.php:64
 msgid "No image selected"
 msgstr ""
 
-#: includes/admin/admin-functions.php:405
+#: includes/admin/admin-functions.php:415
 msgid "Like this plugin? Please review us"
 msgstr ""
 
-#: includes/admin/admin-menu.php:21
-#: includes/admin/connect/views/connect.php:14
-#: includes/integrations/campaignmonitor/connect.php:27
-#: includes/integrations/mailchimp/connect.php:27
-#: includes/integrations/mailerlite/connect.php:27
-#: includes/integrations/sendinblue/connect.php:27
-msgid "Connect"
+#: includes/admin/admin-functions.php:418
+msgid "Review us"
 msgstr ""
 
-#: includes/admin/admin-menu.php:22
-msgid "Settings"
+#: includes/admin/admin-menu.php:21
+#: includes/admin/connect/views/connect-settings.php:25
+#: includes/admin/connect/views/connect.php:14
+msgid "Connect"
 msgstr ""
 
 #: includes/admin/admin-menu.php:23
@@ -340,15 +400,18 @@ msgid "check settings"
 msgstr ""
 
 #: includes/admin/admin-scripts.php:66
-#: includes/blocks/newsletterglue_block_article/templates/embed.php:40
 msgid "There&rsquo;s nothing here yet. Add your first post above."
 msgstr ""
 
 #: includes/admin/admin-scripts.php:67
+#: includes/blocks/newsletterglue_block_article/block.php:595
+#: includes/blocks/newsletterglue_block_article/block.php:601
 msgid "Add label"
 msgstr ""
 
 #: includes/admin/admin-scripts.php:68
+#: includes/blocks/newsletterglue_block_article/templates/embed.php:64
+#: includes/blocks/newsletterglue_block_article/templates/embed.php:172
 msgid "Refreshing..."
 msgstr ""
 
@@ -373,7 +436,7 @@ msgstr ""
 msgid "― No list"
 msgstr ""
 
-#: includes/admin/bug-report.php:16 includes/admin/views/topbar.php:21
+#: includes/admin/bug-report.php:16 includes/admin/views/topbar.php:20
 msgid "Report bug"
 msgstr ""
 
@@ -387,23 +450,23 @@ msgid ""
 "site?"
 msgstr ""
 
-#: includes/admin/bug-report.php:28 includes/admin/feedback.php:47
+#: includes/admin/bug-report.php:28 includes/admin/feedback.php:45
 #: includes/admin/request-feature.php:28
 msgid "Name*"
 msgstr ""
 
-#: includes/admin/bug-report.php:33 includes/admin/feedback.php:52
+#: includes/admin/bug-report.php:33 includes/admin/feedback.php:50
 #: includes/admin/request-feature.php:33
 msgid "Email*"
 msgstr ""
 
-#: includes/admin/bug-report.php:41 includes/admin/feedback.php:60
+#: includes/admin/bug-report.php:41 includes/admin/feedback.php:58
 #: includes/admin/request-feature.php:41
 msgid "Submit"
 msgstr ""
 
 #: includes/admin/bug-report.php:42 includes/admin/deactivate.php:260
-#: includes/admin/feedback.php:61 includes/admin/request-feature.php:42
+#: includes/admin/feedback.php:59 includes/admin/request-feature.php:42
 msgid "Cancel"
 msgstr ""
 
@@ -479,20 +542,16 @@ msgstr ""
 msgid "Select email software*"
 msgstr ""
 
-#: includes/admin/feedback.php:42
+#: includes/admin/feedback.php:40
 msgid "Share more details. Help us better understand your needs. (optional)"
 msgstr ""
 
-#: includes/admin/feedback.php:43
+#: includes/admin/feedback.php:41
 msgid "Your message..."
 msgstr ""
 
 #: includes/admin/meta-boxes.php:26
 msgid "Newsletter Glue: Send as newsletter"
-msgstr ""
-
-#: includes/admin/posts.php:17 includes/admin/views/posts-status.php:20
-msgid "Newsletter status"
 msgstr ""
 
 #: includes/admin/posts.php:52 includes/admin/posts.php:60
@@ -503,7 +562,7 @@ msgstr ""
 msgid "Multiple newsletters"
 msgstr ""
 
-#: includes/admin/request-feature.php:16 includes/admin/views/topbar.php:23
+#: includes/admin/request-feature.php:16 includes/admin/views/topbar.php:21
 msgid "Request feature"
 msgstr ""
 
@@ -532,28 +591,20 @@ msgstr ""
 msgid "Disable all"
 msgstr ""
 
-#: includes/admin/blocks/views/blocks.php:37
-msgid "Pro"
-msgstr ""
-
-#: includes/admin/blocks/views/blocks.php:39
+#: includes/admin/blocks/views/blocks.php:38
 msgid "See demo"
 msgstr ""
 
-#: includes/admin/blocks/views/blocks.php:43
-msgid "Set defaults"
+#: includes/admin/blocks/views/blocks.php:46
+msgid "Upgrade to unlock pro features &rarr;"
 msgstr ""
 
-#: includes/admin/blocks/views/blocks.php:47
-msgid "Upgrade to unlock"
+#: includes/admin/blocks/views/blocks.php:49
+msgid "Set defaults"
 msgstr ""
 
 #: includes/admin/blocks/views/blocks.php:52
 msgid "Use block"
-msgstr ""
-
-#: includes/admin/blocks/views/blocks.php:66
-msgid "More soon..."
 msgstr ""
 
 #: includes/admin/connect/views/connect-card.php:18
@@ -597,163 +648,179 @@ msgstr ""
 msgid "Remove connection?"
 msgstr ""
 
+#: includes/admin/connect/views/connect-settings.php:33
+#: includes/admin/settings/views/settings-css.php:15
+#: includes/integrations/getresponse/init.php:182
+#: includes/integrations/mailchimp/init.php:268
+#: includes/integrations/mailchimp/init.php:497
+#: includes/integrations/sendinblue/init.php:169
+#: includes/integrations/sendinblue/init.php:272
+#: includes/integrations/sendinblue/init.php:308
+msgid "Learn more"
+msgstr ""
+
 #: includes/admin/connect/views/connect.php:15
 msgid "Connect via API to your email software."
 msgstr ""
 
-#: includes/admin/metabox/views/connect.php:15
-#: includes/admin/metabox/views/reset.php:26
+#: includes/admin/metabox/views/connect.php:14
+#: includes/admin/settings/views/settings-defaults.php:24
+#: includes/blocks/newsletterglue_block_form/block.php:90
+msgid "Start by connecting your email software &#x21C4;"
+msgstr ""
+
+#: includes/admin/metabox/views/connect.php:24
+#: includes/integrations/mailchimp/metabox.php:22
+#: includes/integrations/mailchimp/onboarding.php:25
+#: includes/integrations/mailchimp/settings.php:15
+msgid "Audience"
+msgstr ""
+
+#: includes/admin/metabox/views/connect.php:31
+#: includes/integrations/activecampaign/metabox.php:38
+#: includes/integrations/activecampaign/onboarding.php:35
+#: includes/integrations/activecampaign/settings.php:25
+#: includes/integrations/campaignmonitor/metabox.php:38
+#: includes/integrations/campaignmonitor/onboarding.php:35
+#: includes/integrations/campaignmonitor/settings.php:25
+#: includes/integrations/getresponse/metabox.php:45
+#: includes/integrations/getresponse/onboarding.php:39
+#: includes/integrations/getresponse/settings.php:29
+#: includes/integrations/mailchimp/metabox.php:45
+#: includes/integrations/mailchimp/onboarding.php:39
+#: includes/integrations/mailchimp/settings.php:29
+#: includes/integrations/mailerlite/metabox.php:38
+#: includes/integrations/mailerlite/onboarding.php:35
+#: includes/integrations/mailerlite/settings.php:25
+#: includes/integrations/sendinblue/metabox.php:38
+#: includes/integrations/sendinblue/onboarding.php:35
+#: includes/integrations/sendinblue/settings.php:25
+msgid "Who receives your email."
+msgstr ""
+
+#: includes/admin/metabox/views/connect.php:41
+#: includes/integrations/mailchimp/init.php:188
+#: includes/integrations/mailchimp/metabox.php:56
+#: includes/integrations/mailchimp/onboarding.php:50
+#: includes/integrations/mailchimp/settings.php:40
+#: includes/integrations/mailerlite/onboarding.php:48
+msgid "Segment / tag"
+msgstr ""
+
+#: includes/admin/metabox/views/connect.php:48
+#: includes/integrations/mailchimp/init.php:199
+#: includes/integrations/mailchimp/metabox.php:72
+#: includes/integrations/mailchimp/onboarding.php:66
+#: includes/integrations/mailchimp/settings.php:56
+#: includes/integrations/mailerlite/metabox.php:63
+#: includes/integrations/mailerlite/onboarding.php:58
+#: includes/integrations/mailerlite/settings.php:49
+#, php-format
+msgid "A specific group of subscribers. %s"
+msgstr ""
+
+#: includes/admin/metabox/views/connect.php:48
+#: includes/integrations/mailchimp/init.php:199
+#: includes/integrations/mailchimp/metabox.php:72
+#: includes/integrations/mailchimp/onboarding.php:66
+#: includes/integrations/mailchimp/settings.php:56
+#: includes/integrations/mailerlite/metabox.php:63
+#: includes/integrations/mailerlite/onboarding.php:58
+#: includes/integrations/mailerlite/settings.php:49
+msgid "Create segment"
+msgstr ""
+
+#: includes/admin/metabox/views/messages.php:18
 #: includes/admin/metabox/views/send-as-newsletter.php:14
 msgid "Send as newsletter"
 msgstr ""
 
-#: includes/admin/metabox/views/connect.php:21
+#: includes/admin/metabox/views/messages.php:25
+msgid "Almost ready. Just fill in the blank red boxes."
+msgstr ""
+
+#: includes/admin/metabox/views/reset.php:15
+msgid "You’ve sent this post as a newsletter before."
+msgstr ""
+
+#: includes/admin/metabox/views/reset.php:19
+#: includes/admin/metabox/views/status.php:19
+msgid "View status log"
+msgstr ""
+
 #: includes/admin/metabox/views/send-as-newsletter.php:21
 msgid "Send this blog post as an email newsletter..."
 msgstr ""
 
-#: includes/admin/metabox/views/connect.php:27
-#: includes/admin/settings/views/settings-defaults.php:24
-#: includes/blocks/newsletterglue_block_form/block.php:81
-msgid "Start by connecting your email software &#x21C4;"
-msgstr ""
-
-#: includes/admin/metabox/views/messages.php:15
-#: includes/admin/metabox/views/messages.php:30
-msgid "Your email is ready to publish."
-msgstr ""
-
-#: includes/admin/metabox/views/messages.php:19
-msgid "Send email when post is published."
-msgstr ""
-
-#: includes/admin/metabox/views/messages.php:22
-#: includes/admin/metabox/views/messages.php:37
-msgid "New"
-msgstr ""
-
-#: includes/admin/metabox/views/messages.php:34
-msgid "Send email when post is updated."
-msgstr ""
-
-#: includes/admin/metabox/views/messages.php:46
-msgid "Almost ready! Just fill in the blank red boxes."
-msgstr ""
-
-#: includes/admin/metabox/views/reset.php:31
-#, php-format
-msgid ""
-"You&rsquo;ve already saved an email for this post as a draft in %s. Want to "
-"create another one?"
-msgstr ""
-
-#: includes/admin/metabox/views/reset.php:33
-msgid ""
-"You&rsquo;ve already sent this post as a newsletter. Want to send it again?"
-msgstr ""
-
-#: includes/admin/metabox/views/reset.php:40
-msgid "Create new newsletter"
-msgstr ""
-
-#: includes/admin/metabox/views/reset.php:40
-msgid "Send newsletter again"
-msgstr ""
-
 #: includes/admin/metabox/views/send-from-settings.php:15
-#: includes/integrations/campaignmonitor/onboarding.php:87
-#: includes/integrations/campaignmonitor/settings.php:65
-#: includes/integrations/mailchimp/onboarding.php:93
-#: includes/integrations/mailchimp/settings.php:70
-#: includes/integrations/mailerlite/onboarding.php:87
-#: includes/integrations/mailerlite/settings.php:65
-#: includes/integrations/sendinblue/onboarding.php:64
-#: includes/integrations/sendinblue/settings.php:41
+#: includes/admin/settings/views/settings-general.php:15
+#: includes/integrations/activecampaign/onboarding.php:65
+#: includes/integrations/campaignmonitor/onboarding.php:89
+#: includes/integrations/getresponse/onboarding.php:67
+#: includes/integrations/mailchimp/onboarding.php:95
+#: includes/integrations/mailerlite/onboarding.php:89
+#: includes/integrations/sendinblue/onboarding.php:65
 msgid "From name"
 msgstr ""
 
 #: includes/admin/metabox/views/send-from-settings.php:21
-#: includes/integrations/campaignmonitor/onboarding.php:93
-#: includes/integrations/campaignmonitor/settings.php:71
-#: includes/integrations/mailchimp/onboarding.php:99
-#: includes/integrations/mailchimp/settings.php:76
-#: includes/integrations/mailerlite/onboarding.php:93
-#: includes/integrations/mailerlite/settings.php:71
-#: includes/integrations/sendinblue/onboarding.php:70
-#: includes/integrations/sendinblue/settings.php:47
+#: includes/admin/settings/views/settings-general.php:22
+#: includes/integrations/activecampaign/onboarding.php:72
+#: includes/integrations/campaignmonitor/onboarding.php:96
+#: includes/integrations/getresponse/onboarding.php:74
+#: includes/integrations/mailchimp/onboarding.php:102
+#: includes/integrations/mailerlite/onboarding.php:96
+#: includes/integrations/sendinblue/onboarding.php:72
 msgid "Your subscribers will see this name in their inboxes."
 msgstr ""
 
 #: includes/admin/metabox/views/send-from-settings.php:31
-#: includes/integrations/campaignmonitor/onboarding.php:103
-#: includes/integrations/campaignmonitor/settings.php:81
-#: includes/integrations/mailchimp/onboarding.php:109
-#: includes/integrations/mailchimp/settings.php:86
-#: includes/integrations/mailerlite/onboarding.php:103
-#: includes/integrations/mailerlite/settings.php:81
-#: includes/integrations/sendinblue/onboarding.php:80
-#: includes/integrations/sendinblue/settings.php:57
+#: includes/admin/settings/views/settings-general.php:32
+#: includes/integrations/activecampaign/onboarding.php:82
+#: includes/integrations/campaignmonitor/onboarding.php:106
+#: includes/integrations/getresponse/onboarding.php:84
+#: includes/integrations/mailchimp/onboarding.php:112
+#: includes/integrations/mailerlite/onboarding.php:106
+#: includes/integrations/sendinblue/onboarding.php:82
 msgid "From email"
 msgstr ""
 
-#: includes/admin/metabox/views/send-from-settings.php:37
-#: includes/integrations/campaignmonitor/onboarding.php:113
-#: includes/integrations/campaignmonitor/settings.php:87
-#: includes/integrations/mailchimp/onboarding.php:119
-#: includes/integrations/mailchimp/settings.php:92
-#: includes/integrations/mailerlite/onboarding.php:113
-#: includes/integrations/mailerlite/settings.php:87
-#: includes/integrations/sendinblue/onboarding.php:90
-#: includes/integrations/sendinblue/settings.php:63
+#: includes/admin/metabox/views/send-from-settings.php:38
+#: includes/admin/settings/views/settings-general.php:39
+#: includes/integrations/activecampaign/onboarding.php:93
+#: includes/integrations/campaignmonitor/onboarding.php:117
+#: includes/integrations/getresponse/onboarding.php:95
+#: includes/integrations/mailchimp/onboarding.php:123
+#: includes/integrations/mailerlite/onboarding.php:117
+#: includes/integrations/sendinblue/onboarding.php:93
 msgid "Subscribers will see and reply to this email address."
 msgstr ""
 
-#: includes/admin/metabox/views/send-options.php:15
+#: includes/admin/metabox/views/send-options.php:11
+msgid "Edit more settings"
+msgstr ""
+
+#: includes/admin/metabox/views/send-options.php:17
 msgid "Send now or save for later"
 msgstr ""
 
-#: includes/admin/metabox/views/send-options.php:36
-#: includes/admin/settings/views/settings-theme-panel.php:75
+#: includes/admin/metabox/views/send-options.php:38
+#: includes/admin/settings/views/settings-theme-panel.php:77
 msgid "Featured image"
 msgstr ""
 
-#: includes/admin/metabox/views/send-options.php:46
+#: includes/admin/metabox/views/send-options.php:48
 msgid ""
 "Add featured image to the top of this newsletter.<br />Ideal image width: "
 "1200px"
 msgstr ""
 
-#: includes/admin/metabox/views/send-test.php:17
-#: includes/integrations/mailerlite/init.php:394
-msgid "Send test now"
-msgstr ""
-
-#: includes/admin/metabox/views/send-test.php:18
-#: includes/integrations/mailerlite/init.php:395
-msgid "Sending..."
-msgstr ""
-
-#: includes/admin/metabox/views/send-test.php:19
-#: includes/integrations/mailerlite/init.php:396
-msgid "Sent!"
-msgstr ""
-
 #: includes/admin/metabox/views/send-test.php:20
-#: includes/integrations/mailerlite/init.php:397
-msgid "Could not send"
-msgstr ""
-
-#: includes/admin/metabox/views/send-test.php:23
-#: includes/integrations/mailerlite/init.php:400
 msgid "Start again"
 msgstr ""
 
-#: includes/admin/metabox/views/status.php:16
+#: includes/admin/metabox/views/status.php:15
 msgid "Your email newsletter is on its way!"
-msgstr ""
-
-#: includes/admin/metabox/views/status.php:17
-msgid "Edit and send again..."
 msgstr ""
 
 #: includes/admin/metabox/views/subject-line.php:16
@@ -768,7 +835,7 @@ msgstr ""
 msgid "Preview text"
 msgstr ""
 
-#: includes/admin/metabox/views/subject-line.php:43
+#: includes/admin/metabox/views/subject-line.php:42
 msgid ""
 "Snippet of text that appears after your subject in subscribers' inboxes."
 msgstr ""
@@ -803,27 +870,35 @@ msgstr ""
 
 #: includes/admin/onboarding/views/connect.php:25
 #: includes/admin/onboarding/views/connected.php:32
-#: includes/integrations/campaignmonitor/onboarding.php:68
-#: includes/integrations/campaignmonitor/onboarding.php:121
-#: includes/integrations/mailchimp/onboarding.php:74
-#: includes/integrations/mailchimp/onboarding.php:127
-#: includes/integrations/mailerlite/onboarding.php:68
-#: includes/integrations/mailerlite/onboarding.php:121
-#: includes/integrations/sendinblue/onboarding.php:45
-#: includes/integrations/sendinblue/onboarding.php:98
+#: includes/integrations/activecampaign/onboarding.php:46
+#: includes/integrations/activecampaign/onboarding.php:101
+#: includes/integrations/campaignmonitor/onboarding.php:70
+#: includes/integrations/campaignmonitor/onboarding.php:125
+#: includes/integrations/getresponse/onboarding.php:48
+#: includes/integrations/getresponse/onboarding.php:103
+#: includes/integrations/mailchimp/onboarding.php:76
+#: includes/integrations/mailchimp/onboarding.php:131
+#: includes/integrations/mailerlite/onboarding.php:70
+#: includes/integrations/mailerlite/onboarding.php:125
+#: includes/integrations/sendinblue/onboarding.php:46
+#: includes/integrations/sendinblue/onboarding.php:101
 msgid "next"
 msgstr ""
 
 #: includes/admin/onboarding/views/connect.php:26
 #: includes/admin/onboarding/views/connected.php:33
-#: includes/integrations/campaignmonitor/onboarding.php:69
-#: includes/integrations/campaignmonitor/onboarding.php:122
-#: includes/integrations/mailchimp/onboarding.php:75
-#: includes/integrations/mailchimp/onboarding.php:128
-#: includes/integrations/mailerlite/onboarding.php:69
-#: includes/integrations/mailerlite/onboarding.php:122
-#: includes/integrations/sendinblue/onboarding.php:46
-#: includes/integrations/sendinblue/onboarding.php:99
+#: includes/integrations/activecampaign/onboarding.php:47
+#: includes/integrations/activecampaign/onboarding.php:102
+#: includes/integrations/campaignmonitor/onboarding.php:71
+#: includes/integrations/campaignmonitor/onboarding.php:126
+#: includes/integrations/getresponse/onboarding.php:49
+#: includes/integrations/getresponse/onboarding.php:104
+#: includes/integrations/mailchimp/onboarding.php:77
+#: includes/integrations/mailchimp/onboarding.php:132
+#: includes/integrations/mailerlite/onboarding.php:71
+#: includes/integrations/mailerlite/onboarding.php:126
+#: includes/integrations/sendinblue/onboarding.php:47
+#: includes/integrations/sendinblue/onboarding.php:102
 msgid "prev"
 msgstr ""
 
@@ -831,56 +906,51 @@ msgstr ""
 msgid "Great, you&rsquo;re connected!"
 msgstr ""
 
-#: includes/admin/onboarding/views/onboarding.php:30
+#: includes/admin/onboarding/views/onboarding.php:32
 msgid "Skip"
 msgstr ""
 
-#: includes/admin/onboarding/views/welcome.php:15
-#: includes/admin/views/topbar.php:15
-msgid "<span>Newsletter</span> Glue"
-msgstr ""
-
-#: includes/admin/onboarding/views/welcome.php:19
+#: includes/admin/onboarding/views/welcome.php:18
 msgid "Hi friend,"
 msgstr ""
 
-#: includes/admin/onboarding/views/welcome.php:20
+#: includes/admin/onboarding/views/welcome.php:19
 msgid "Ready to send a post to your subscribers?"
 msgstr ""
 
-#: includes/admin/onboarding/views/welcome.php:21
+#: includes/admin/onboarding/views/welcome.php:20
 msgid "Let&rsquo;s get you started!"
 msgstr ""
 
-#: includes/admin/onboarding/views/welcome.php:24
+#: includes/admin/onboarding/views/welcome.php:23
 msgid "Get started"
 msgstr ""
 
-#: includes/admin/onboarding/views/welcome.php:27
+#: includes/admin/onboarding/views/welcome.php:26
 msgid "This will only take a minute."
 msgstr ""
 
-#: includes/admin/settings/settings.php:47
+#: includes/admin/settings/settings.php:49
 #: includes/admin/settings/views/settings-defaults.php:13
 msgid "Email Defaults"
 msgstr ""
 
-#: includes/admin/settings/settings.php:48
+#: includes/admin/settings/settings.php:50
 #: includes/admin/settings/views/settings-theme.php:13
 msgid "Newsletter theme designer"
 msgstr ""
 
-#: includes/admin/settings/settings.php:49
+#: includes/admin/settings/settings.php:51
 #: includes/admin/settings/views/settings-css.php:13
 msgid "Custom CSS"
 msgstr ""
 
-#: includes/admin/settings/settings.php:50
+#: includes/admin/settings/settings.php:52
 msgid "Additional"
 msgstr ""
 
 #: includes/admin/settings/views/settings-additional.php:13
-#: includes/admin/settings/views/settings-additional.php:23
+#: includes/admin/settings/views/settings-additional.php:24
 msgid "Custom post types"
 msgstr ""
 
@@ -889,7 +959,7 @@ msgid ""
 "Newsletter Glue will be enabled for the custom post types you select here."
 msgstr ""
 
-#: includes/admin/settings/views/settings-additional.php:35
+#: includes/admin/settings/views/settings-additional.php:37
 msgid "Select post types..."
 msgstr ""
 
@@ -898,19 +968,15 @@ msgstr ""
 msgid "Add custom CSS to all your newsletters. %s"
 msgstr ""
 
-#: includes/admin/settings/views/settings-css.php:15
-msgid "Learn more."
-msgstr ""
-
-#: includes/admin/settings/views/settings-css.php:34
+#: includes/admin/settings/views/settings-css.php:35
 msgid "Enter custom CSS here..."
 msgstr ""
 
-#: includes/admin/settings/views/settings-css.php:39
+#: includes/admin/settings/views/settings-css.php:43
 msgid "Advanced"
 msgstr ""
 
-#: includes/admin/settings/views/settings-css.php:47
+#: includes/admin/settings/views/settings-css.php:49
 msgid ""
 "<strong>Strip Newsletter Glue&rsquo;s default CSS from your newsletters.</"
 "strong><br />This also removes all styling chosen in Newsletter Theme "
@@ -1029,116 +1095,130 @@ msgstr ""
 msgid "Add logo"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:64
+#: includes/admin/settings/views/settings-theme-panel.php:62
+msgid "Add URL for logo"
+msgstr ""
+
+#: includes/admin/settings/views/settings-theme-panel.php:66
 msgid "Align"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:69
+#: includes/admin/settings/views/settings-theme-panel.php:71
 msgid "Full width"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:79
+#: includes/admin/settings/views/settings-theme-panel.php:81
 msgid "Add featured image"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:80
+#: includes/admin/settings/views/settings-theme-panel.php:82
 msgid ""
 "Add featured image to the top of each newsletter.<br /><br />Ideal image "
 "width: 1200px"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:86
+#: includes/admin/settings/views/settings-theme-panel.php:88
 msgid "Position featured image"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:88
+#: includes/admin/settings/views/settings-theme-panel.php:90
 msgid "Below headline"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:89
+#: includes/admin/settings/views/settings-theme-panel.php:91
 msgid "Above headline"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:95
+#: includes/admin/settings/views/settings-theme-panel.php:97
 msgid "Blog post title"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:99
+#: includes/admin/settings/views/settings-theme-panel.php:101
 msgid "Add blog post title"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:100
+#: includes/admin/settings/views/settings-theme-panel.php:102
 msgid ""
 "Add blog post title to the top of each newsletter.<br /><br />Remove it for "
 "more control over your newsletter design."
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:112
+#: includes/admin/settings/views/settings-theme-panel.php:109
+msgid "Link post title to blog post"
+msgstr ""
+
+#: includes/admin/settings/views/settings-theme-panel.php:110
+msgid ""
+"Post title automatically links to the originating blog post.<br /><br /"
+">Users click it to read your newsletter on your website."
+msgstr ""
+
+#: includes/admin/settings/views/settings-theme-panel.php:122
 msgid "Support us"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:116
+#: includes/admin/settings/views/settings-theme-panel.php:126
 msgid "Sent by"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:117
+#: includes/admin/settings/views/settings-theme-panel.php:127
 #, php-format
 msgid ""
 "Add \"Seamlessly sent by Newsletter Glue\" to the bottom of your newsletter."
 "<br /><br />Then, %s, so we can say thank you!"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-panel.php:117
+#: includes/admin/settings/views/settings-theme-panel.php:127
 msgid "let us know on Twitter"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-preview.php:43
-#: includes/admin/settings/views/settings-theme-preview.php:85
+#: includes/admin/settings/views/settings-theme-preview.php:47
+#: includes/admin/settings/views/settings-theme-preview.php:91
 msgid "H1: Blog post title"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-preview.php:49
-#: includes/admin/settings/views/settings-theme-preview.php:91
+#: includes/admin/settings/views/settings-theme-preview.php:53
+#: includes/admin/settings/views/settings-theme-preview.php:97
 msgid "H1: I made myself a snowball"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-preview.php:51
-#: includes/admin/settings/views/settings-theme-preview.php:93
+#: includes/admin/settings/views/settings-theme-preview.php:55
+#: includes/admin/settings/views/settings-theme-preview.php:99
 msgid "H2: As perfect as could be."
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-preview.php:53
-#: includes/admin/settings/views/settings-theme-preview.php:95
+#: includes/admin/settings/views/settings-theme-preview.php:57
+#: includes/admin/settings/views/settings-theme-preview.php:101
 msgid "H3: I thought I&rsquo;d keep it as a pet"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-preview.php:55
-#: includes/admin/settings/views/settings-theme-preview.php:97
+#: includes/admin/settings/views/settings-theme-preview.php:59
+#: includes/admin/settings/views/settings-theme-preview.php:103
 msgid "And let it sleep with me.<br />I made it some pajamas"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-preview.php:57
-#: includes/admin/settings/views/settings-theme-preview.php:99
+#: includes/admin/settings/views/settings-theme-preview.php:61
+#: includes/admin/settings/views/settings-theme-preview.php:105
 msgid "H4: And a pillow for its head."
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-preview.php:59
-#: includes/admin/settings/views/settings-theme-preview.php:101
+#: includes/admin/settings/views/settings-theme-preview.php:63
+#: includes/admin/settings/views/settings-theme-preview.php:107
 msgid "H5: Then last night it ran away,"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-preview.php:61
-#: includes/admin/settings/views/settings-theme-preview.php:103
+#: includes/admin/settings/views/settings-theme-preview.php:65
+#: includes/admin/settings/views/settings-theme-preview.php:109
 msgid "H6: But first it wet the bed."
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-preview.php:63
-#: includes/admin/settings/views/settings-theme-preview.php:105
+#: includes/admin/settings/views/settings-theme-preview.php:67
+#: includes/admin/settings/views/settings-theme-preview.php:111
 msgid "Snowball, Shel Silverstein"
 msgstr ""
 
-#: includes/admin/settings/views/settings-theme-preview.php:65
-#: includes/admin/settings/views/settings-theme-preview.php:107
+#: includes/admin/settings/views/settings-theme-preview.php:69
+#: includes/admin/settings/views/settings-theme-preview.php:113
 msgid "Read more"
 msgstr ""
 
@@ -1154,61 +1234,48 @@ msgstr ""
 msgid "Mobile"
 msgstr ""
 
-#: includes/admin/views/posts-status.php:19
-msgid "Subject line"
-msgstr ""
-
-#: includes/admin/views/posts-status.php:21
-msgid "Time, Date published"
-msgstr ""
-
-#: includes/blocks/newsletterglue_block_article/block.php:59
+#: includes/blocks/newsletterglue_block_article/block.php:74
 msgid "Post embeds"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_article/block.php:66
-#: includes/blocks/newsletterglue_block_article/block.php:101
+#: includes/blocks/newsletterglue_block_article/block.php:81
+#: includes/blocks/newsletterglue_block_article/block.php:116
 msgid "Bulk embed articles and customise their layout."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_article/block.php:100
+#: includes/blocks/newsletterglue_block_article/block.php:115
 msgid "NG: Post embeds"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_article/block.php:571
-#: includes/blocks/newsletterglue_block_article/block.php:577
-msgid "Add label"
-msgstr ""
-
-#: includes/blocks/newsletterglue_block_article/block.php:761
+#: includes/blocks/newsletterglue_block_article/block.php:876
 msgid "No description found."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_article/block.php:832
-msgid "Please search for a post or type some URL."
-msgstr ""
-
-#: includes/blocks/newsletterglue_block_article/block.php:840
-msgid "Invalid post."
-msgstr ""
-
-#: includes/blocks/newsletterglue_block_article/block.php:850
-msgid "This post is already embedded."
-msgstr ""
-
-#: includes/blocks/newsletterglue_block_article/block.php:875
 #: includes/blocks/newsletterglue_block_article/block.php:950
-#: includes/blocks/newsletterglue_block_article/templates/embed.php:65
+#: includes/blocks/newsletterglue_block_article/block.php:969
+#: includes/blocks/newsletterglue_block_article/block.php:1049
+msgid "Invalid URL."
+msgstr ""
+
+#: includes/blocks/newsletterglue_block_article/block.php:996
+#: includes/blocks/newsletterglue_block_article/block.php:1086
+#: includes/blocks/newsletterglue_block_article/block.php:1158
 msgid "Refresh"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_article/block.php:890
-#: includes/blocks/newsletterglue_block_article/block.php:958
-#: includes/blocks/newsletterglue_block_article/templates/embed.php:64
-msgid "Remove post"
+#: includes/blocks/newsletterglue_block_article/block.php:1041
+msgid "Please search for a post or type some URL."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_article/block.php:913
+#: includes/blocks/newsletterglue_block_article/block.php:1052
+msgid "Invalid post."
+msgstr ""
+
+#: includes/blocks/newsletterglue_block_article/block.php:1062
+msgid "This post is already embedded."
+msgstr ""
+
+#: includes/blocks/newsletterglue_block_article/block.php:1106
 msgid "Add another post"
 msgstr ""
 
@@ -1218,7 +1285,6 @@ msgstr ""
 #: includes/blocks/newsletterglue_block_form/settings.php:17
 #: includes/blocks/newsletterglue_block_metadata/settings.php:17
 #: includes/blocks/newsletterglue_block_show_hide_content/settings.php:17
-#: includes/blocks/newsletterglue_block_social/settings.php:17
 msgid "Customise how this block shows up in the post editor."
 msgstr ""
 
@@ -1228,7 +1294,6 @@ msgstr ""
 #: includes/blocks/newsletterglue_block_form/settings.php:20
 #: includes/blocks/newsletterglue_block_metadata/settings.php:20
 #: includes/blocks/newsletterglue_block_show_hide_content/settings.php:20
-#: includes/blocks/newsletterglue_block_social/settings.php:20
 msgid "Show/hide block"
 msgstr ""
 
@@ -1238,7 +1303,6 @@ msgstr ""
 #: includes/blocks/newsletterglue_block_form/settings.php:26
 #: includes/blocks/newsletterglue_block_metadata/settings.php:26
 #: includes/blocks/newsletterglue_block_show_hide_content/settings.php:26
-#: includes/blocks/newsletterglue_block_social/settings.php:26
 msgid "Show in blog post"
 msgstr ""
 
@@ -1248,515 +1312,419 @@ msgstr ""
 #: includes/blocks/newsletterglue_block_form/settings.php:34
 #: includes/blocks/newsletterglue_block_metadata/settings.php:34
 #: includes/blocks/newsletterglue_block_show_hide_content/settings.php:34
-#: includes/blocks/newsletterglue_block_social/settings.php:34
 msgid "Show in email newsletter"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_article/templates/embed.php:21
+#: includes/blocks/newsletterglue_block_article/templates/embed.php:25
 msgid "Post embed"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_article/templates/embed.php:27
+#: includes/blocks/newsletterglue_block_article/templates/embed.php:31
 msgid "Search for a post or enter URL here…"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_article/templates/embed.php:32
+#: includes/blocks/newsletterglue_block_article/templates/embed.php:36
 msgid "Add"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_article/templates/embed.php:36
-msgid "Reorder, change or remove posts"
+#: includes/blocks/newsletterglue_block_article/templates/embed.php:65
+#: includes/blocks/newsletterglue_block_article/templates/embed.php:173
+msgid "Confirm remove"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_author/block.php:34
+#: includes/blocks/newsletterglue_block_author/block.php:43
 msgid "Author byline"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_author/block.php:41
-#: includes/blocks/newsletterglue_block_author/block.php:77
+#: includes/blocks/newsletterglue_block_author/block.php:50
+#: includes/blocks/newsletterglue_block_author/block.php:86
 msgid "Add an author byline and follow button to your newsletter."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_author/block.php:76
+#: includes/blocks/newsletterglue_block_author/block.php:85
 msgid "NG: Author byline"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_author/block.php:78
+#: includes/blocks/newsletterglue_block_author/block.php:87
 msgid "Follow"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_callout/block.php:32
+#: includes/blocks/newsletterglue_block_callout/block.php:41
 msgid "Callout card"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_callout/block.php:39
+#: includes/blocks/newsletterglue_block_callout/block.php:48
 msgid ""
 "Customise the background and border of this card to help its content stand "
 "out."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_form/block.php:36
+#: includes/blocks/newsletterglue_block_form/block.php:45
 msgid "Subscriber form"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_form/block.php:43
+#: includes/blocks/newsletterglue_block_form/block.php:52
 msgid "New subscribers can sign up to your mailing list with this form."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_form/block.php:360
+#: includes/blocks/newsletterglue_block_form/block.php:374
 msgid "Please enter an email."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_form/block.php:362
+#: includes/blocks/newsletterglue_block_form/block.php:376
 msgid "Please enter a valid email."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_form/block.php:387
+#: includes/blocks/newsletterglue_block_form/block.php:401
 msgid "We could not subscribe you at this time. Try again later."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_metadata/block.php:34
+#: includes/blocks/newsletterglue_block_metadata/block.php:45
 msgid "Newsletter meta data"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_metadata/block.php:41
+#: includes/blocks/newsletterglue_block_metadata/block.php:52
 msgid "Add standard meta data to each post."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_metadata/block.php:74
+#: includes/blocks/newsletterglue_block_metadata/block.php:85
 msgid "Reading time:"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_metadata/block.php:75
+#: includes/blocks/newsletterglue_block_metadata/block.php:86
 msgid "Issue #"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_metadata/block.php:76
+#: includes/blocks/newsletterglue_block_metadata/block.php:87
 msgid "Read online"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_show_hide_content/block.php:34
+#: includes/blocks/newsletterglue_block_show_hide_content/block.php:41
 msgid "Show/hide content"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_show_hide_content/block.php:41
+#: includes/blocks/newsletterglue_block_show_hide_content/block.php:48
 msgid "Hide selected content from your blog/newsletter."
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_social/block.php:36
-msgid "Social embed"
+#: includes/integrations/activecampaign/init.php:218
+#: includes/integrations/getresponse/init.php:256
+msgid "Please enter a valid email"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_social/block.php:43
-msgid "Embed posts from social media by pasting a link."
+#: includes/integrations/activecampaign/init.php:226
+#: includes/integrations/getresponse/init.php:264
+#: includes/integrations/mailerlite/init.php:231
+#, php-format
+msgid "[Test] %s"
 msgstr ""
 
-#: includes/blocks/newsletterglue_block_social/block.php:224
-msgid "Please enter URL first."
-msgstr ""
-
-#: includes/blocks/newsletterglue_block_social/block.php:226
-msgid "Please enter a valid URL."
-msgstr ""
-
-#: includes/blocks/newsletterglue_block_social/block.php:246
-#: includes/blocks/newsletterglue_block_social/block.php:305
-msgid "An error has occured."
-msgstr ""
-
-#: includes/blocks/newsletterglue_block_social/block.php:250
-msgid "We could not retrieve any content from the provided URL."
-msgstr ""
-
-#: includes/blocks/newsletterglue_block_social/templates/embed.php:15
-msgid "Paste link here"
-msgstr ""
-
-#: includes/blocks/newsletterglue_block_social/templates/embed.php:19
-msgid "works for"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/connect.php:20
-#: includes/integrations/mailchimp/connect.php:20
-#: includes/integrations/mailerlite/connect.php:20
-#: includes/integrations/sendinblue/connect.php:20
-msgid "Enter API Key"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/connect.php:22
-#: includes/integrations/mailchimp/connect.php:21
-#: includes/integrations/mailerlite/connect.php:22
-#: includes/integrations/sendinblue/connect.php:22
-msgid "Get API key"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/connect.php:35
-#: includes/integrations/mailchimp/connect.php:35
-#: includes/integrations/mailerlite/connect.php:35
-#: includes/integrations/sendinblue/connect.php:35
-#: includes/integrations/sendinblue/init.php:328
-msgid "Learn more"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/init.php:216
-#: includes/integrations/mailchimp/init.php:488
-#: includes/integrations/mailerlite/init.php:169
-#: includes/integrations/sendinblue/init.php:189
-msgid "Immediately"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/init.php:217
-msgid "Save as draft in Campaign Monitor"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/init.php:231
-#: includes/integrations/mailerlite/init.php:153
-msgid "Enter a valid email."
-msgstr ""
-
-#: includes/integrations/campaignmonitor/init.php:277
-#: includes/integrations/campaignmonitor/init.php:390
-msgid "Please enter a valid email address to test your campaign."
-msgstr ""
-
-#: includes/integrations/campaignmonitor/init.php:297
+#: includes/integrations/activecampaign/init.php:263
+#: includes/integrations/campaignmonitor/init.php:246
+#: includes/integrations/getresponse/init.php:297
 #, php-format
 msgid "Newsletter Glue - Campaign %s"
 msgstr ""
 
-#: includes/integrations/campaignmonitor/init.php:334
-msgid "HTML content has to be valid and served via a remote URL."
-msgstr ""
-
-#: includes/integrations/campaignmonitor/init.php:418
-#: includes/integrations/mailchimp/init.php:466
-#: includes/integrations/mailerlite/init.php:367
-#: includes/integrations/sendinblue/init.php:406
+#: includes/integrations/activecampaign/init.php:302
+#: includes/integrations/campaignmonitor/init.php:373
+#: includes/integrations/getresponse/init.php:332
+#: includes/integrations/mailchimp/init.php:447
+#: includes/integrations/mailerlite/init.php:320
+#: includes/integrations/sendinblue/init.php:386
 msgid "Saved as draft"
 msgstr ""
 
-#: includes/integrations/campaignmonitor/init.php:423
-#: includes/integrations/mailchimp/init.php:474
-#: includes/integrations/mailerlite/init.php:375
-#: includes/integrations/sendinblue/init.php:413
+#: includes/integrations/activecampaign/init.php:308
+#: includes/integrations/campaignmonitor/init.php:378
+#: includes/integrations/getresponse/init.php:338
+#: includes/integrations/mailchimp/init.php:455
+#: includes/integrations/mailerlite/init.php:328
+#: includes/integrations/sendinblue/init.php:393
 msgid "Sent"
 msgstr ""
 
-#: includes/integrations/campaignmonitor/init.php:430
-msgid "Duplicate Campaign Name"
+#: includes/integrations/activecampaign/init.php:368
+msgid "Enter API URL"
 msgstr ""
 
-#: includes/integrations/campaignmonitor/init.php:434
-msgid "Campaign Subject Required"
+#: includes/integrations/activecampaign/init.php:375
+#: includes/integrations/campaignmonitor/init.php:462
+#: includes/integrations/getresponse/init.php:389
+#: includes/integrations/mailchimp/init.php:573
+#: includes/integrations/mailerlite/init.php:389
+#: includes/integrations/sendinblue/init.php:460
+msgid "Enter API Key"
 msgstr ""
 
-#: includes/integrations/campaignmonitor/init.php:438
-msgid "From Name Required"
+#: includes/integrations/activecampaign/init.php:376
+#: includes/integrations/campaignmonitor/init.php:464
+#: includes/integrations/getresponse/init.php:391
+#: includes/integrations/mailchimp/init.php:575
+#: includes/integrations/mailerlite/init.php:391
+#: includes/integrations/sendinblue/init.php:462
+msgid "Get API key"
 msgstr ""
 
-#: includes/integrations/campaignmonitor/init.php:442
-msgid "Invalid From Email Address"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/init.php:446
-msgid "Reply-To Address Required"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/init.php:450
-msgid "HTML Content URL Required"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/init.php:454
-msgid "List IDs or Segments Required"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/init.php:458
-msgid "Campaign Name Required"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/metabox.php:34
+#: includes/integrations/activecampaign/metabox.php:22
+#: includes/integrations/activecampaign/onboarding.php:25
+#: includes/integrations/activecampaign/settings.php:15
+#: includes/integrations/campaignmonitor/metabox.php:22
 #: includes/integrations/campaignmonitor/onboarding.php:25
 #: includes/integrations/campaignmonitor/settings.php:15
-#: includes/integrations/sendinblue/metabox.php:33
+#: includes/integrations/sendinblue/metabox.php:22
 #: includes/integrations/sendinblue/onboarding.php:25
 #: includes/integrations/sendinblue/settings.php:15
 msgid "Lists"
 msgstr ""
 
-#: includes/integrations/campaignmonitor/metabox.php:50
-#: includes/integrations/campaignmonitor/onboarding.php:34
-#: includes/integrations/campaignmonitor/settings.php:24
-#: includes/integrations/mailchimp/metabox.php:57
-#: includes/integrations/mailchimp/onboarding.php:38
-#: includes/integrations/mailchimp/settings.php:28
-#: includes/integrations/mailerlite/metabox.php:50
-#: includes/integrations/mailerlite/onboarding.php:34
-#: includes/integrations/mailerlite/settings.php:24
-#: includes/integrations/sendinblue/metabox.php:49
-#: includes/integrations/sendinblue/onboarding.php:34
-#: includes/integrations/sendinblue/settings.php:24
-msgid "Who receives your email."
+#: includes/integrations/activecampaign/metabox.php:42
+#: includes/integrations/activecampaign/onboarding.php:40
+#: includes/integrations/activecampaign/settings.php:30
+#: includes/integrations/mailerlite/metabox.php:42
+#: includes/integrations/mailerlite/metabox.php:67
+#: includes/integrations/mailerlite/onboarding.php:40
+#: includes/integrations/mailerlite/onboarding.php:63
+#: includes/integrations/mailerlite/settings.php:30
+#: includes/integrations/mailerlite/settings.php:54
+msgid "None selected"
 msgstr ""
 
-#: includes/integrations/campaignmonitor/metabox.php:54
-#: includes/integrations/campaignmonitor/onboarding.php:39
-#: includes/integrations/campaignmonitor/settings.php:29
-msgid "Select list(s)"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/metabox.php:62
-#: includes/integrations/campaignmonitor/onboarding.php:47
-#: includes/integrations/campaignmonitor/settings.php:37
-#: includes/integrations/mailerlite/metabox.php:62
-#: includes/integrations/mailerlite/settings.php:37
-msgid "Segments"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/metabox.php:75
-#: includes/integrations/campaignmonitor/onboarding.php:56
-#: includes/integrations/campaignmonitor/settings.php:47
-msgid "A specific group of subscribers."
-msgstr ""
-
-#: includes/integrations/campaignmonitor/metabox.php:79
-#: includes/integrations/campaignmonitor/onboarding.php:61
-#: includes/integrations/campaignmonitor/settings.php:52
-msgid "Select segment(s)"
-msgstr ""
-
+#: includes/integrations/activecampaign/onboarding.php:17
 #: includes/integrations/campaignmonitor/onboarding.php:17
+#: includes/integrations/getresponse/onboarding.php:17
 #: includes/integrations/mailchimp/onboarding.php:17
 #: includes/integrations/mailerlite/onboarding.php:17
 #: includes/integrations/sendinblue/onboarding.php:17
 msgid "Step 2 of 3"
 msgstr ""
 
+#: includes/integrations/activecampaign/onboarding.php:19
+msgid "Now, let&rsquo;s select your default lists."
+msgstr ""
+
+#: includes/integrations/activecampaign/onboarding.php:20
+#: includes/integrations/activecampaign/onboarding.php:60
+#: includes/integrations/campaignmonitor/onboarding.php:20
+#: includes/integrations/campaignmonitor/onboarding.php:84
+#: includes/integrations/getresponse/onboarding.php:20
+#: includes/integrations/getresponse/onboarding.php:62
+#: includes/integrations/mailchimp/onboarding.php:20
+#: includes/integrations/mailchimp/onboarding.php:90
+#: includes/integrations/mailerlite/onboarding.php:20
+#: includes/integrations/mailerlite/onboarding.php:84
+#: includes/integrations/sendinblue/onboarding.php:20
+#: includes/integrations/sendinblue/onboarding.php:60
+msgid "You can always change this later on in the settings."
+msgstr ""
+
+#: includes/integrations/activecampaign/onboarding.php:57
+#: includes/integrations/campaignmonitor/onboarding.php:81
+#: includes/integrations/getresponse/onboarding.php:59
+#: includes/integrations/mailchimp/onboarding.php:87
+#: includes/integrations/mailerlite/onboarding.php:81
+#: includes/integrations/sendinblue/onboarding.php:57
+msgid "Step 3 of 3"
+msgstr ""
+
+#: includes/integrations/activecampaign/onboarding.php:59
+#: includes/integrations/campaignmonitor/onboarding.php:83
+#: includes/integrations/getresponse/onboarding.php:61
+#: includes/integrations/mailchimp/onboarding.php:89
+#: includes/integrations/mailerlite/onboarding.php:83
+#: includes/integrations/sendinblue/onboarding.php:59
+msgid "Last step! Personalise your emails."
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:226
+#: includes/integrations/campaignmonitor/init.php:345
+msgid "Please enter a valid email address to test your campaign."
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:283
+msgid "HTML content has to be valid and served via a remote URL."
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:289
+msgid "Email content contains JavaScript. Please remove it and try again."
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:385
+msgid "Duplicate Campaign Name"
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:389
+msgid "Campaign Subject Required"
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:393
+msgid "From Name Required"
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:397
+msgid "Invalid From Email Address"
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:401
+msgid "Reply-To Address Required"
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:405
+msgid "HTML Content URL Required"
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:409
+msgid "List IDs or Segments Required"
+msgstr ""
+
+#: includes/integrations/campaignmonitor/init.php:413
+msgid "Campaign Name Required"
+msgstr ""
+
+#: includes/integrations/campaignmonitor/metabox.php:42
+#: includes/integrations/campaignmonitor/onboarding.php:40
+#: includes/integrations/campaignmonitor/settings.php:30
+msgid "Select list(s)"
+msgstr ""
+
+#: includes/integrations/campaignmonitor/metabox.php:50
+#: includes/integrations/campaignmonitor/onboarding.php:48
+#: includes/integrations/campaignmonitor/settings.php:38
+#: includes/integrations/mailerlite/metabox.php:50
+#: includes/integrations/mailerlite/settings.php:38
+msgid "Segments"
+msgstr ""
+
+#: includes/integrations/campaignmonitor/metabox.php:63
+#: includes/integrations/campaignmonitor/onboarding.php:58
+#: includes/integrations/campaignmonitor/settings.php:49
+msgid "A specific group of subscribers."
+msgstr ""
+
+#: includes/integrations/campaignmonitor/metabox.php:67
+#: includes/integrations/campaignmonitor/onboarding.php:63
+#: includes/integrations/campaignmonitor/settings.php:54
+msgid "Select segment(s)"
+msgstr ""
+
 #: includes/integrations/campaignmonitor/onboarding.php:19
 msgid "Now, let&rsquo;s select your default list IDs and/or segments."
 msgstr ""
 
-#: includes/integrations/campaignmonitor/onboarding.php:20
-#: includes/integrations/campaignmonitor/onboarding.php:82
-#: includes/integrations/mailchimp/onboarding.php:20
-#: includes/integrations/mailchimp/onboarding.php:88
-#: includes/integrations/mailerlite/onboarding.php:20
-#: includes/integrations/mailerlite/onboarding.php:82
-#: includes/integrations/sendinblue/onboarding.php:20
-#: includes/integrations/sendinblue/onboarding.php:59
-msgid "You can always change this later on in the settings."
+#: includes/integrations/getresponse/init.php:181
+#: includes/integrations/mailchimp/init.php:496
+#: includes/integrations/sendinblue/init.php:168
+msgid "Not verified"
 msgstr ""
 
-#: includes/integrations/campaignmonitor/onboarding.php:79
-#: includes/integrations/mailchimp/onboarding.php:85
-#: includes/integrations/mailerlite/onboarding.php:79
-#: includes/integrations/sendinblue/onboarding.php:56
-msgid "Step 3 of 3"
-msgstr ""
-
-#: includes/integrations/campaignmonitor/onboarding.php:81
-#: includes/integrations/mailchimp/onboarding.php:87
-#: includes/integrations/mailerlite/onboarding.php:81
-#: includes/integrations/sendinblue/onboarding.php:58
-msgid "Last step! Personalise your emails."
-msgstr ""
-
-#: includes/integrations/mailchimp/init.php:186
-msgid "Everyone in audience"
-msgstr ""
-
-#: includes/integrations/mailchimp/init.php:207
-#: includes/integrations/mailchimp/metabox.php:68
-#: includes/integrations/mailchimp/onboarding.php:49
-#: includes/integrations/mailchimp/settings.php:39
-#: includes/integrations/mailerlite/onboarding.php:47
-msgid "Segment / tag"
-msgstr ""
-
-#: includes/integrations/mailchimp/init.php:217
-#: includes/integrations/mailchimp/metabox.php:83
-#: includes/integrations/mailchimp/onboarding.php:63
-#: includes/integrations/mailchimp/settings.php:53
-#: includes/integrations/mailerlite/metabox.php:75
-#: includes/integrations/mailerlite/onboarding.php:56
-#: includes/integrations/mailerlite/settings.php:47
-#, php-format
-msgid "A specific group of subscribers. %s"
-msgstr ""
-
-#: includes/integrations/mailchimp/init.php:217
-#: includes/integrations/mailchimp/metabox.php:83
-#: includes/integrations/mailchimp/onboarding.php:63
-#: includes/integrations/mailchimp/settings.php:53
-#: includes/integrations/mailerlite/metabox.php:75
-#: includes/integrations/mailerlite/onboarding.php:56
-#: includes/integrations/mailerlite/settings.php:47
-msgid "Create segment"
-msgstr ""
-
-#: includes/integrations/mailchimp/init.php:282
-#: includes/integrations/sendinblue/init.php:295
-#, php-format
-msgid ""
-"Your <strong><em>From Email</em></strong> address isn&rsquo;t verified.<br /"
-">\n"
-"\t\t\t\t\t\t%s Or %s"
-msgstr ""
-
-#: includes/integrations/mailchimp/init.php:283
-#: includes/integrations/mailchimp/init.php:459
-#: includes/integrations/sendinblue/init.php:296
+#: includes/integrations/getresponse/init.php:182
+#: includes/integrations/mailchimp/init.php:268
+#: includes/integrations/mailchimp/init.php:440
+#: includes/integrations/mailchimp/init.php:497
+#: includes/integrations/sendinblue/init.php:169
+#: includes/integrations/sendinblue/init.php:272
 msgid "Verify email now"
 msgstr ""
 
-#: includes/integrations/mailchimp/init.php:283
-#: includes/integrations/mailchimp/init.php:459
-#: includes/integrations/sendinblue/init.php:296
-msgid "learn more."
+#: includes/integrations/getresponse/metabox.php:22
+#: includes/integrations/getresponse/onboarding.php:25
+#: includes/integrations/getresponse/settings.php:15
+msgid "Campaign (List)"
 msgstr ""
 
-#: includes/integrations/mailchimp/init.php:389
+#: includes/integrations/getresponse/onboarding.php:19
+msgid "Now, let&rsquo;s select your default list."
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:167
+msgid "Everyone in audience"
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:268
+#: includes/integrations/sendinblue/init.php:272
+msgid "Your <strong>From Email</strong> address isn&rsquo;t verified."
+msgstr ""
+
+#: includes/integrations/mailchimp/init.php:370
 msgid "Whoops! The subject line is empty.<br />Fill it out to send."
 msgstr ""
 
-#: includes/integrations/mailchimp/init.php:432
+#: includes/integrations/mailchimp/init.php:413
 msgid "Try testing again tomorrow?"
 msgstr ""
 
-#: includes/integrations/mailchimp/init.php:434
+#: includes/integrations/mailchimp/init.php:415
 #, php-format
 msgid ""
 "You&rsquo;ve sent too many test emails today. Mailchimp only allows %s test "
 "emails every 24 hours for your account."
 msgstr ""
 
-#: includes/integrations/mailchimp/init.php:450
+#: includes/integrations/mailchimp/init.php:431
 msgid "Missing subject"
 msgstr ""
 
-#: includes/integrations/mailchimp/init.php:457
+#: includes/integrations/mailchimp/init.php:438
 msgid "Unverified domain"
 msgstr ""
 
-#: includes/integrations/mailchimp/init.php:458
+#: includes/integrations/mailchimp/init.php:439
 #, php-format
 msgid ""
 "Your email newsletter was not sent, because your email address is not "
 "verified. %s Or %s"
 msgstr ""
 
-#: includes/integrations/mailchimp/init.php:489
-msgid "Save as draft in Mailchimp"
-msgstr ""
-
-#: includes/integrations/mailchimp/init.php:513
-#: includes/integrations/sendinblue/init.php:167
-msgid ""
-"<strong>Verified.</strong> <a href=\"https://docs.newsletterglue.com/"
-"article/7-unverified-email\" target=\"_blank\">Learn more</a>"
-msgstr ""
-
-#: includes/integrations/mailchimp/init.php:519
-msgid ""
-"<strong>Email not verified. This means your emails won&rsquo;t send.<br />\n"
-"\t\t\t\t\t<a href=\"https://admin.mailchimp.com/account/domains/\" target="
-"\"_blank\">Verify email now <i class=\"arrow right icon\"></i></a></"
-"strong> Or <a href=\"https://docs.newsletterglue.com/article/7-unverified-"
-"email\" target=\"_blank\">learn more.</a>"
-msgstr ""
-
-#: includes/integrations/mailchimp/metabox.php:34
-#: includes/integrations/mailchimp/onboarding.php:25
-#: includes/integrations/mailchimp/settings.php:15
-msgid "Audience"
+#: includes/integrations/mailchimp/init.php:440
+msgid "learn more."
 msgstr ""
 
 #: includes/integrations/mailchimp/onboarding.php:19
 msgid "Now, let&rsquo;s select your default audience."
 msgstr ""
 
-#: includes/integrations/mailerlite/init.php:170
-msgid "Save as draft in MailerLite"
-msgstr ""
-
-#: includes/integrations/mailerlite/init.php:270
-msgid "Please enter a valid email"
-msgstr ""
-
-#: includes/integrations/mailerlite/init.php:278
-#, php-format
-msgid "[Test] %s"
-msgstr ""
-
-#: includes/integrations/mailerlite/init.php:321
+#: includes/integrations/mailerlite/init.php:274
 msgid ""
 "Your email client does not support HTML emails. Open newsletter here: "
 "{$url}. If you do not want to receive emails from us, click here: "
 "{$unsubscribe}"
 msgstr ""
 
-#: includes/integrations/mailerlite/init.php:404
-msgid ""
-"Sent by WordPress.<br />Might look slightly different to the final email "
-"sent to subscribers by MailerLite."
-msgstr ""
-
-#: includes/integrations/mailerlite/init.php:455
+#: includes/integrations/mailerlite/init.php:374
 msgid "Unsubscribe"
 msgstr ""
 
-#: includes/integrations/mailerlite/metabox.php:34
+#: includes/integrations/mailerlite/metabox.php:22
 #: includes/integrations/mailerlite/onboarding.php:25
 #: includes/integrations/mailerlite/settings.php:15
 msgid "Groups"
-msgstr ""
-
-#: includes/integrations/mailerlite/metabox.php:54
-#: includes/integrations/mailerlite/metabox.php:79
-#: includes/integrations/mailerlite/onboarding.php:39
-#: includes/integrations/mailerlite/onboarding.php:61
-#: includes/integrations/mailerlite/settings.php:29
-#: includes/integrations/mailerlite/settings.php:52
-msgid "None selected"
 msgstr ""
 
 #: includes/integrations/mailerlite/onboarding.php:19
 msgid "Now, let&rsquo;s select your default groups and segments."
 msgstr ""
 
-#: includes/integrations/sendinblue/init.php:173
-msgid ""
-"<strong>Email not verified. This means your emails won&rsquo;t send.<br />\n"
-"\t\t\t\t\t<a href=\"https://account.sendinblue.com/senders\" target=\"_blank"
-"\">Verify email now <i class=\"arrow right icon\"></i></a></strong> "
-"Or <a href=\"https://docs.newsletterglue.com/article/7-unverified-email\" "
-"target=\"_blank\">learn more.</a>"
-msgstr ""
-
-#: includes/integrations/sendinblue/init.php:190
-msgid "Save as draft in Sendinblue"
-msgstr ""
-
-#: includes/integrations/sendinblue/init.php:327
+#: includes/integrations/sendinblue/init.php:307
 #, php-format
 msgid ""
 "Your Sendinblue account is being validated. You can&rsquo;t create another "
 "campaign.<br />%s"
 msgstr ""
 
-#: includes/integrations/sendinblue/init.php:355
+#: includes/integrations/sendinblue/init.php:335
 #, php-format
 msgid ""
 "Email address isn&rsquo;t an existing contact.<br />Sendinblue only sends "
 "test emails to existing contacts. %s"
 msgstr ""
 
-#: includes/integrations/sendinblue/init.php:356
+#: includes/integrations/sendinblue/init.php:336
 msgid "Add new contact"
 msgstr ""
 
-#: includes/integrations/sendinblue/metabox.php:53
-#: includes/integrations/sendinblue/onboarding.php:39
-#: includes/integrations/sendinblue/settings.php:29
+#: includes/integrations/sendinblue/metabox.php:42
+#: includes/integrations/sendinblue/onboarding.php:40
+#: includes/integrations/sendinblue/settings.php:30
 msgid "All contact lists"
 msgstr ""
 
