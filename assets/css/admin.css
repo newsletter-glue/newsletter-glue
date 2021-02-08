@@ -591,6 +591,7 @@
 	align-items: center;
 	min-height: 20px;
 	line-height: 20px;
+	flex-wrap: wrap;
 }
 
 .ngl-metabox-header .ngl-process {
