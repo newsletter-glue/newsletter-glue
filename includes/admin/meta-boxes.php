@@ -142,6 +142,8 @@ function newsletterglue_meta_box() {
 
 		include newsletterglue_get_path( $app ) . '/metabox.php';
 
+		include( 'metabox/views/messages.php' );
+
 		wp_nonce_field( 'newsletterglue_save_data', 'newsletterglue_meta_nonce' );
 
 	}

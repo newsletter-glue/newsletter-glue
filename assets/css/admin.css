@@ -580,7 +580,6 @@
 .ngl-metabox {
 	max-width: 1000px;
 	padding: 20px 0 0;
-	border-right: 1px solid #fcfcfc;
 }
 
 .ngl-metabox-header {
@@ -657,10 +656,14 @@
 .ngl-top-msg {
 	display: flex;
 	align-items: center;
-	padding: 3px 20px;
+	padding: 0 20px 0 0;
 	font-weight: bold;
 	color: #0088A0;
 	font-size: 16px;
+}
+
+.ngl-metabox-if-checked {
+	padding: 0 0 0 20px;
 }
 
 .ngl-top-msg svg {
@@ -696,9 +699,17 @@
 
 .ngl-metabox-flex.alt3 {
 	background: #F8FEFF;
-	padding: 17px 20px;
+	padding: 17px 40px;
 	margin: 20px 0 0;
-	min-height: 50px;
+	min-height: 84px;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.ngl-metabox-flex-toggle {
+	flex-basis: auto !important;
+    flex-grow: 0 !important;
+    margin: 0 40px 0 0;
 }
 
 .ngl-metabox-flex.alt3.ngl-unready {
@@ -1021,6 +1032,7 @@
 
 i.icon.arrow {
     position: relative !important;
+	z-index: auto !important;
     top: auto !important;
     left: auto !important;
     right: auto !important;
@@ -1043,7 +1055,6 @@ i.icon.arrow:after {
 
 .ngl-field.ngl-field-master {
 	display: flex;
-    justify-content: flex-end;
     padding: 0;
 }
 
@@ -1055,7 +1066,7 @@ i.icon.arrow:after {
     align-items: center;
     justify-content: center;
     padding: 10px;
-	padding-right: 54px;
+	padding-left: 54px;
 	position: relative;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -1072,7 +1083,7 @@ i.icon.arrow:after {
     content: "";
     display: block;
     position: absolute;
-    right: 0;
+    left: 0;
     top: 6px;
 }
 
@@ -1089,7 +1100,7 @@ i.icon.arrow:after {
     border-radius: 9999px;
     box-shadow: 0 3px 1px 0 rgb(37 34 71 / 5%), 0 2px 2px 0 rgb(37 34 71 / 10%), 0 3px 3px 0 rgb(37 34 71 / 5%);
     height: 16px;
-    right: 20px;
+    left: 4px;
     position: absolute;
     top: 10px;
     transition: transform .125s ease-out;
@@ -1895,7 +1906,8 @@ div.ngl-settings .ui.selection.dropdown .menu {
 
 .ngl-metabox .ui.selection.dropdown.multiple {
 	padding: 0.3em 1.5em 0.3em 0.5em;
-	height: 39px;
+	min-height: 39px;
+	height: auto;
 }
 
 .ngl-metabox .ui.selection.dropdown > .dropdown.icon,
@@ -2005,6 +2017,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 h4.ngl-edit-more {
 	padding: 30px 20px 14px 20px;
 	margin: 0;
+	text-align: right;
 }
 
 h4.ngl-edit-more a {
