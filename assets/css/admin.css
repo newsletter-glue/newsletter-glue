@@ -461,7 +461,7 @@
 }
 
 .ngl-metabox-flex-link a {
-	font-size: 15px;
+	font-size: 14px;
 	text-decoration: none !important;
 	color: #0D566C !important;
 	box-shadow: none !important;
@@ -872,7 +872,7 @@
 	padding: 0 30px;
 	color: #C91101;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
     display: inline-flex;
     height: 48px;
     justify-content: center;
@@ -2033,7 +2033,7 @@ h4.ngl-edit-more a {
 	color: #222 !important;
 	text-decoration: none !important;
 	box-shadow: none !important;
-	font-size: 15px;
+	font-size: 14px;
 }
 
 /* Theme Panel */
