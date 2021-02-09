@@ -181,6 +181,10 @@ Yes! Check it out [here](https://newsletterglue.com/?utm_source=wporg&utm_medium
 
 == Changelog ==
 
+= 1.2.0, February 9, 2021 =
+
+* **New improvement:** We've made huge improvements to our publishing workflow. Our new "Send as newsletter" interface is cleaner and dramatically reduces the chances of you accidentally sending emails when publishing or updating your post.
+
 = 1.1.13, January 31, 2021 =
 
 * **New integration:** GetResponse is now integrated!
