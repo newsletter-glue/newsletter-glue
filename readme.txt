@@ -1,6 +1,6 @@
-=== Newsletter Glue - Best WordPress newsletter plugin ===
+=== Newsletter Glue - Best WordPress email newsletter plugin ===
 
-Plugin name: Newsletter Glue - Email posts to subscribers, connect Mailchimp MailerLite
+Plugin name: Newsletter Glue - Create and send email newsletters inside WordPress
 Contributors: newsletterglue, ahmedfouade, lesleysim
 Donate link: https://paypal.me/newsletterglue
 Tags: newsletter, email, mailchimp, mailerlite, blog post
