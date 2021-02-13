@@ -901,6 +901,7 @@
 	background: #EDFDFB;
 	padding: 10px 40px;
 	font-weight: 500;
+	margin: 0 0 0 20px;
 }
 
 .ngl-metabox-msg.is-notice a {
@@ -1336,7 +1337,7 @@ i.icon.arrow:after {
 }
 
 .ngl-settings .ngl-metabox-msg {
-	margin: 0;
+	margin: 0 0 0 20px;
 }
 
 .ngl-settings h3 {
@@ -1984,7 +1985,8 @@ div.ngl-settings .ui.selection.dropdown .menu {
     content: "\f335";
 }
 
-.ngl-metabox-placeholder * {
+.ngl-metabox-placeholder *,
+.ngl-metabox-placeholder h4.ngl-edit-more a {
 	color: #B1C2C4 !important;
 	pointer-events: none !important;
 }
