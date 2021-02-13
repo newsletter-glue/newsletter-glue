@@ -29,6 +29,9 @@ function newsletterglue_settings_page() {
 			$api->connect();
 		}
 
+	} else {
+		include_once NGL_PLUGIN_DIR . 'includes/integrations/core/init.php';
+		$api = new NGL_Integration_Core();
 	}
 
 	// Header.
