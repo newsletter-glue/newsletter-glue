@@ -31,7 +31,6 @@ $newsletterglue_feedback_nonce = wp_create_nonce( 'newsletterglue-feedback-nonce
 						<option value="MailPoet">MailPoet</option>
 						<option value="Mailjet">Mailjet</option>
 						<option value="Mailster">Mailster</option>
-						<option value="Sendy">Sendy</option>
 						<option value="Something else">Something else</option>
 					</select>
 				</div>

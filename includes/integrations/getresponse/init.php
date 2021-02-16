@@ -206,13 +206,6 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Set content type as HTML.
-	 */
-	public function wp_mail_content_type() {
-		return 'text/html';
-	}
-
-	/**
 	 * Send newsletter.
 	 */
 	public function send_newsletter( $post_id = 0, $data = array(), $test = false ) {

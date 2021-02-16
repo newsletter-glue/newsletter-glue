@@ -181,6 +181,9 @@ function newsletterglue_save_data( $post_id, $data ) {
 	}
 
 	if ( isset( $meta ) && ! empty( $meta ) ) {
+		if ( empty( $meta[ 'brand' ] ) ) {
+			$meta[ 'brand' ] = '';
+		}
 		if ( empty( $meta[ 'lists' ] ) ) {
 			$meta[ 'lists' ] = '';
 		}

@@ -16,30 +16,39 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="ngl-boarding-step"><?php _e( 'Step 2 of 3', 'newsletter-glue' ); ?></div>
 
-	<h3 style="max-width:100%;"><?php _e( 'Now, let&rsquo;s select your default list.', 'newsletter-glue' ); ?>
+	<h3 style="max-width:100%;"><?php _e( 'Now, please enter your default brand ID and lists.', 'newsletter-glue' ); ?>
 		<span><?php _e( 'You can always change this later on in the settings.', 'newsletter-glue' ); ?></span>
 	</h3>
 
 	<div class="ngl-settings ngl-metabox-flex">
 		<div class="ngl-metabox-header">
-			<?php esc_html_e( 'Campaign (List)', 'newsletter-glue' ); ?>
+			<?php esc_html_e( 'List ID(s)', 'newsletter-glue' ); ?>
 			<?php $api->input_verification_info(); ?>
 		</div>
 		<div class="ngl-field">
 			<?php
-				$list  = newsletterglue_get_option( 'lists', 'getresponse' );
-				$lists = $api->get_lists();
-				if ( ! $list ) {
-					$list = array_keys( $lists );
-					$list = $list[0];
-				}
-				newsletterglue_select_field( array(
+				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_lists',
-					'legacy'		=> true,
-					'helper'		=> __( 'Who receives your email.', 'newsletter-glue' ),
+					'helper'		=> __( 'Comma-separated list of lists IDs. List ID is hashed, alpha-numeric.', 'newsletter-glue' ),
+					'value'			=> newsletterglue_get_option( 'lists', 'sendy' ),
 					'class'			=> 'ngl-ajax',
-					'options'		=> $lists,
-					'default'		=> $list,
+				) );
+			?>
+		</div>
+	</div>
+
+	<div class="ngl-settings ngl-metabox-flex">
+		<div class="ngl-metabox-header">
+			<?php esc_html_e( 'Brand ID', 'newsletter-glue' ); ?>
+			<?php $api->input_verification_info(); ?>
+		</div>
+		<div class="ngl-field">
+			<?php
+				newsletterglue_text_field( array(
+					'id' 			=> 'ngl_brand',
+					'helper'		=> __( 'You can find the numeric brand ID in your Sendy dashboard.', 'newsletter-glue' ),
+					'value'			=> newsletterglue_get_option( 'brand', 'sendy' ),
+					'class'			=> 'ngl-ajax',
 				) );
 			?>
 		</div>
@@ -72,7 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_from_name',
 					'helper'		=> __( 'Your subscribers will see this name in their inboxes.', 'newsletter-glue' ),
-					'value'			=> newsletterglue_get_option( 'from_name', 'getresponse' ),
+					'value'			=> newsletterglue_get_option( 'from_name', 'sendy' ),
 					'class'			=> 'ngl-ajax',
 				) );
 			?>
@@ -86,7 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 		<div class="ngl-field">
 			<?php
-				$email = newsletterglue_get_option( 'from_email', 'getresponse' );
+				$email = newsletterglue_get_option( 'from_email', 'sendy' );
 				if ( ! $email ) {
 					$email = get_option( 'admin_email' );
 				}

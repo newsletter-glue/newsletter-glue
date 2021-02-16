@@ -300,13 +300,6 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Set content type as HTML.
-	 */
-	public function wp_mail_content_type() {
-		return 'text/html';
-	}
-
-	/**
 	 * Prepare result for plugin.
 	 */
 	public function prepare_message( $result ) {
