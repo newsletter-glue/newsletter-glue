@@ -177,11 +177,14 @@ abstract class NGL_Abstract_Integration {
 	 * Test success.
 	 */
 	public function get_test_success_msg() {
+		return ' ';
+	}
 
-		$message = __( 'Your email is on its way!', 'newsletter-glue' );
-
-		return $message;
-
+	/**
+	 * Returns true if test emails are sent by WordPress.
+	 */
+	public function test_email_by_wordpress() {
+		return false;
 	}
 
 	/**

@@ -169,6 +169,13 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 	}
 
 	/**
+	 * Returns true if test emails are sent by WordPress.
+	 */
+	public function test_email_by_wordpress() {
+		return true;
+	}
+
+	/**
 	 * Send newsletter.
 	 */
 	public function send_newsletter( $post_id = 0, $data = array(), $test = false ) {
