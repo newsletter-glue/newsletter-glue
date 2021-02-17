@@ -41,7 +41,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	 */
 	public function get_api_key() {
 		$integrations = get_option( 'newsletterglue_integrations' );
-		$integration  = isset( $integrations[ 'campaignmonitor' ] ) ? $integrations[ 'campaignmonitor'] : '';
+		$integration  = isset( $integrations[ $this->app ] ) ? $integrations[ $this->app] : '';
 		$this->api_key = isset( $integration[ 'api_key' ] ) ? $integration[ 'api_key' ] : '';
 	}
 
@@ -56,9 +56,9 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		// Test mode. no key provided.
 		if ( ! $api_key ) {
 			$integrations 		= get_option( 'newsletterglue_integrations' );
-			$campaignmonitor    = isset( $integrations[ 'campaignmonitor' ] ) ? $integrations[ 'campaignmonitor'] : '';
-			if ( isset( $campaignmonitor[ 'api_key'] ) ) {
-				$api_key = $campaignmonitor[ 'api_key' ];
+			$options    		= isset( $integrations[ $this->app ] ) ? $integrations[ $this->app] : '';
+			if ( isset( $options[ 'api_key'] ) ) {
+				$api_key = $options[ 'api_key' ];
 			}
 		}
 
@@ -112,18 +112,18 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 
 		$integrations = get_option( 'newsletterglue_integrations' );
 
-		$integrations[ 'campaignmonitor' ] = array();
-		$integrations[ 'campaignmonitor' ][ 'api_key' ] = $api_key;
+		$integrations[ $this->app ] = array();
+		$integrations[ $this->app ][ 'api_key' ] = $api_key;
 
 		update_option( 'newsletterglue_integrations', $integrations );
 
 		// Add default options.
 		$globals = get_option( 'newsletterglue_options' );
-		$options = ! empty( $globals ) && isset( $globals[ 'campaignmonitor' ] ) ? $globals[ 'campaignmonitor' ] : '';
+		$options = ! empty( $globals ) && isset( $globals[ $this->app ] ) ? $globals[ $this->app ] : '';
 
 		if ( ! $options ) {
 
-			$globals[ 'campaignmonitor' ] = array(
+			$globals[ $this->app ] = array(
 				'from_name' 	=> newsletterglue_get_default_from_name(),
 				'from_email'	=> isset( $account[ 'EmailAddress' ] ) ? $account[ 'EmailAddress' ] : '',
 			);
@@ -236,7 +236,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		$uploadfile = $uploaddir['path'] . '/' . $filename;
 		$htmlurl 	= $uploaddir['url'] . '/' . $filename;
 		$handle 	= fopen( $uploadfile, 'w+' );
-		fwrite( $handle, newsletterglue_generate_content( $post, $subject, 'campaignmonitor' ) );
+		fwrite( $handle, newsletterglue_generate_content( $post, $subject, $this->app ) );
 		fclose( $handle );
 
 		$campaign_info = array(

@@ -38,7 +38,7 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 	public function get_api_key() {
 
 		$integrations = get_option( 'newsletterglue_integrations' );
-		$integration  = isset( $integrations[ 'activecampaign' ] ) ? $integrations[ 'activecampaign'] : '';
+		$integration  = isset( $integrations[ $this->app ] ) ? $integrations[ $this->app] : '';
 
 		$this->api_key 		= isset( $integration[ 'api_key' ] ) ? $integration[ 'api_key' ] : '';
 		$this->api_url		= isset( $integration[ 'api_url' ] ) ? $integration[ 'api_url' ] : '';
@@ -56,13 +56,13 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 
 		// Test mode. no key provided.
 		if ( ! $api_key ) {
-			$integrations 	 = get_option( 'newsletterglue_integrations' );
-			$activecampaign  = isset( $integrations[ 'activecampaign' ] ) ? $integrations[ 'activecampaign'] : '';
-			if ( isset( $activecampaign[ 'api_key'] ) ) {
-				$api_key = $activecampaign[ 'api_key' ];
+			$integrations 	= get_option( 'newsletterglue_integrations' );
+			$options  		= isset( $integrations[ $this->app ] ) ? $integrations[ $this->app] : '';
+			if ( isset( $options[ 'api_key'] ) ) {
+				$api_key = $options[ 'api_key' ];
 			}
-			if ( isset( $activecampaign[ 'api_url'] ) ) {
-				$api_url = $activecampaign[ 'api_url' ];
+			if ( isset( $options[ 'api_url'] ) ) {
+				$api_url = $options[ 'api_url' ];
 			}
 		}
 
@@ -100,19 +100,19 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 
 		$integrations = get_option( 'newsletterglue_integrations' );
 
-		$integrations[ 'activecampaign' ] = array();
-		$integrations[ 'activecampaign' ][ 'api_key' ] 		= $api_key;
-		$integrations[ 'activecampaign' ][ 'api_url' ] 		= $api_url;
+		$integrations[ $this->app ] = array();
+		$integrations[ $this->app ][ 'api_key' ] 		= $api_key;
+		$integrations[ $this->app ][ 'api_url' ] 		= $api_url;
 
 		update_option( 'newsletterglue_integrations', $integrations );
 
 		// Add default options.
 		$globals = get_option( 'newsletterglue_options' );
-		$options = ! empty( $globals ) && isset( $globals[ 'activecampaign' ] ) ? $globals[ 'activecampaign' ] : '';
+		$options = ! empty( $globals ) && isset( $globals[ $this->app ] ) ? $globals[ $this->app ] : '';
 
 		if ( ! $options ) {
 
-			$globals[ 'activecampaign' ] = array(
+			$globals[ $this->app ] = array(
 				'from_name' 	=> newsletterglue_get_default_from_name(),
 				'from_email'	=> isset( $account[ 'email' ] ) ? $account[ 'email' ] : '',
 			);
@@ -221,7 +221,7 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 
 			add_filter( 'wp_mail_content_type', array( $this, 'wp_mail_content_type' ) );
 
-			$body = newsletterglue_generate_content( $post, $subject, 'activecampaign' );
+			$body = newsletterglue_generate_content( $post, $subject, $this->app );
 
 			wp_mail( $test_email, sprintf( __( '[Test] %s', 'newsletter-glue' ), $subject ), $body );
 
@@ -245,7 +245,7 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 			'format'			=> 'mime',
 			'reply2'			=> $from_email,
 			'htmlconstructor' 	=> 'editor',
-			'html'				=> newsletterglue_generate_content( $post, $subject, 'activecampaign' ),
+			'html'				=> newsletterglue_generate_content( $post, $subject, $this->app ),
 			'charset' 			=> 'utf-8',
 			'encoding'			=> 'quoted-printable',
 		);

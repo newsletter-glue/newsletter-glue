@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_lists',
 					'helper'		=> __( 'Comma-separated list of lists IDs. List ID is hashed, alpha-numeric.', 'newsletter-glue' ),
-					'value'			=> newsletterglue_get_option( 'lists', 'sendy' ),
+					'value'			=> newsletterglue_get_option( 'lists', $app ),
 					'class'			=> 'ngl-ajax',
 				) );
 			?>
@@ -81,7 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_from_name',
 					'helper'		=> __( 'Your subscribers will see this name in their inboxes.', 'newsletter-glue' ),
-					'value'			=> newsletterglue_get_option( 'from_name', 'sendy' ),
+					'value'			=> newsletterglue_get_option( 'from_name', $app ),
 					'class'			=> 'ngl-ajax',
 				) );
 			?>
@@ -95,7 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 		<div class="ngl-field">
 			<?php
-				$email = newsletterglue_get_option( 'from_email', 'sendy' );
+				$email = newsletterglue_get_option( 'from_email', $app );
 				if ( ! $email ) {
 					$email = get_option( 'admin_email' );
 				}

@@ -56,12 +56,12 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 		// Test mode. no key provided.
 		if ( ! $api_key ) {
 			$integrations	= get_option( 'newsletterglue_integrations' );
-			$sendy  		= isset( $integrations[ 'sendy' ] ) ? $integrations[ 'sendy'] : '';
-			if ( isset( $sendy[ 'api_key'] ) ) {
-				$api_key = $sendy[ 'api_key' ];
+			$options  		= isset( $integrations[ $this->app ] ) ? $integrations[ $this->app] : '';
+			if ( isset( $options[ 'api_key'] ) ) {
+				$api_key = $options[ 'api_key' ];
 			}
-			if ( isset( $sendy[ 'api_url'] ) ) {
-				$api_url = $sendy[ 'api_url' ];
+			if ( isset( $options[ 'api_url'] ) ) {
+				$api_url = $options[ 'api_url' ];
 			}
 		}
 
@@ -100,19 +100,19 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 
 		$integrations = get_option( 'newsletterglue_integrations' );
 
-		$integrations[ 'sendy' ] = array();
-		$integrations[ 'sendy' ][ 'api_key' ] = $api_key;
-		$integrations[ 'sendy' ][ 'api_url' ] = $api_url;
+		$integrations[ $this->app ] = array();
+		$integrations[ $this->app ][ 'api_key' ] = $api_key;
+		$integrations[ $this->app ][ 'api_url' ] = $api_url;
 
 		update_option( 'newsletterglue_integrations', $integrations );
 
 		// Add default options.
 		$globals = get_option( 'newsletterglue_options' );
-		$options = ! empty( $globals ) && isset( $globals[ 'sendy' ] ) ? $globals[ 'sendy' ] : '';
+		$options = ! empty( $globals ) && isset( $globals[ $this->app ] ) ? $globals[ $this->app ] : '';
 
 		if ( ! $options ) {
 
-			$globals[ 'sendy' ] = array(
+			$globals[ $this->app ] = array(
 				'from_name' 	=> newsletterglue_get_default_from_name(),
 			);
 
@@ -195,7 +195,7 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 
 			add_filter( 'wp_mail_content_type', array( $this, 'wp_mail_content_type' ) );
 
-			$body = newsletterglue_generate_content( $post, $subject, 'mailerlite' );
+			$body = newsletterglue_generate_content( $post, $subject, $this->app );
 
 			wp_mail( $test_email, sprintf( __( '[Test] %s', 'newsletter-glue' ), $subject ), $body );
 

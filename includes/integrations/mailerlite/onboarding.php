@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 		<div class="ngl-field">
 			<?php
-				$groups  = newsletterglue_get_option( 'groups', 'mailerlite' );
+				$groups  = newsletterglue_get_option( 'groups', $app );
 
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_groups',
@@ -50,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 		<div class="ngl-field">
 			<?php
-				$segments = newsletterglue_get_option( 'segments', 'mailerlite' );
+				$segments = newsletterglue_get_option( 'segments', $app );
 
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_segments',
@@ -94,7 +94,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_from_name',
 					'helper'		=> __( 'Your subscribers will see this name in their inboxes.', 'newsletter-glue' ),
-					'value'			=> newsletterglue_get_option( 'from_name', 'mailerlite' ),
+					'value'			=> newsletterglue_get_option( 'from_name', $app ),
 					'class'			=> 'ngl-ajax',
 				) );
 			?>
@@ -108,7 +108,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 		<div class="ngl-field">
 			<?php
-				$email = newsletterglue_get_option( 'from_email', 'mailerlite' );
+				$email = newsletterglue_get_option( 'from_email', $app );
 				if ( ! $email ) {
 					$email = get_option( 'admin_email' );
 				}
