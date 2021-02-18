@@ -205,6 +205,60 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 
 		}
 
+		// Send a campaign live or draft.
+		$this->api = new NGL_Sendy_API( untrailingslashit( $this->api_url ), $this->api_key );
+
+		$args = array(
+			'from_name'		=> $from_name,
+			'from_email'	=> $from_email,
+			'reply_to'		=> $from_email,
+			'boolean'		=> true,
+			'title'			=> $subject,
+			'subject'		=> $subject,
+			'html_text'		=> newsletterglue_generate_content( $post, $subject, $this->app ),
+			'list_ids'		=> $lists,
+			'brand_id'		=> ( $brand ) ? $brand : 1,
+			'send_campaign'	=> ( $schedule === 'immediately' ) ? 1 : 0
+		);
+
+		$campaign = $this->api->post( '/api/campaigns/create.php', $args );
+
+		if ( $schedule === 'draft' ) {
+			$result = array( 'status' => 'draft' );
+		} else {
+			$result = array( 'status' => 'sent' );
+		}
+
+		newsletterglue_add_campaign_data( $post_id, $subject, $this->prepare_message( ( array ) $result ), '' );
+
+		return $campaign;
+
+	}
+
+	/**
+	 * Prepare result for plugin.
+	 */
+	public function prepare_message( $result ) {
+		$output = array();
+
+		if ( isset( $result['status'] ) ) {
+
+			if ( $result['status'] == 'draft' ) {
+				$output[ 'status' ]		= 200;
+				$output[ 'type' ]		= 'neutral';
+				$output[ 'message' ]    = __( 'Saved as draft', 'newsletter-glue' );
+			}
+
+			if ( $result['status'] == 'sent' ) {
+				$output[ 'status' ] 	= 200;
+				$output[ 'type'   ] 	= 'success';
+				$output[ 'message' ] 	= __( 'Sent', 'newsletter-glue' );
+			}
+
+		}
+
+		return $output;
+
 	}
 
 }

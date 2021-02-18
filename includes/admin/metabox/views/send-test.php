@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			<div class="ngl-test-result ngl-is-invalid is-hidden"></div>
 			<?php if ( $this->test_email_by_wordpress() ) : ?>
 			<div class="ngl-test-notice">
-				<?php _e( 'This test email is sent by WordPress. Formatting and deliverability might differ from your email service.', 'newsletter-glue' ); ?>
+				<?php echo sprintf( __( 'This test email is sent by WordPress. Formatting and deliverability might differ slightly from email campaigns sent by %s.', 'newsletter-glue' ), newsletterglue_get_name( $this->app ) ); ?>
 			</div>
 			<?php endif; ?>
 		</div>
