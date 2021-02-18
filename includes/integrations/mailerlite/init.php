@@ -38,7 +38,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	public function get_api_key() {
 
 		$integrations = get_option( 'newsletterglue_integrations' );
-		$integration  = isset( $integrations[ 'mailerlite' ] ) ? $integrations[ 'mailerlite'] : '';
+		$integration  = isset( $integrations[ $this->app ] ) ? $integrations[ $this->app ] : '';
 
 		$this->api_key 		= isset( $integration[ 'api_key' ] ) ? $integration[ 'api_key' ] : '';
 
@@ -55,9 +55,9 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 		// Test mode. no key provided.
 		if ( ! $api_key ) {
 			$integrations 	= get_option( 'newsletterglue_integrations' );
-			$mailerlite    	= isset( $integrations[ 'mailerlite' ] ) ? $integrations[ 'mailerlite'] : '';
-			if ( isset( $mailerlite[ 'api_key'] ) ) {
-				$api_key = $mailerlite[ 'api_key' ];
+			$options    	= isset( $integrations[ $this->app ] ) ? $integrations[ $this->app ] : '';
+			if ( isset( $options[ 'api_key'] ) ) {
+				$api_key = $options[ 'api_key' ];
 			}
 		}
 
@@ -98,18 +98,18 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 		$integrations = get_option( 'newsletterglue_integrations' );
 
-		$integrations[ 'mailerlite' ] = array();
-		$integrations[ 'mailerlite' ][ 'api_key' ] 		= $api_key;
+		$integrations[ $this->app ] = array();
+		$integrations[ $this->app ][ 'api_key' ] 		= $api_key;
 
 		update_option( 'newsletterglue_integrations', $integrations );
 
 		// Add default options.
 		$globals = get_option( 'newsletterglue_options' );
-		$options = ! empty( $globals ) && isset( $globals[ 'mailerlite' ] ) ? $globals[ 'mailerlite' ] : '';
+		$options = ! empty( $globals ) && isset( $globals[ $this->app ] ) ? $globals[ $this->app ] : '';
 
 		if ( ! $options ) {
 
-			$globals[ 'mailerlite' ] = array(
+			$globals[ $this->app ] = array(
 				'from_name' 	=> newsletterglue_get_default_from_name(),
 				'from_email'	=> isset( $account[ 'from' ] ) ? $account[ 'from' ] : '',
 			);
@@ -180,6 +180,13 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	}
 
 	/**
+	 * Returns true if test emails are sent by WordPress.
+	 */
+	public function test_email_by_wordpress() {
+		return true;
+	}
+
+	/**
 	 * Send newsletter.
 	 */
 	public function send_newsletter( $post_id = 0, $data = array(), $test = false ) {
@@ -226,7 +233,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 			add_filter( 'wp_mail_content_type', array( $this, 'wp_mail_content_type' ) );
 
-			$body = newsletterglue_generate_content( $post, $subject, 'mailerlite' );
+			$body = newsletterglue_generate_content( $post, $subject, $this->app );
 
 			wp_mail( $test_email, sprintf( __( '[Test] %s', 'newsletter-glue' ), $subject ), $body );
 
@@ -274,7 +281,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 			$plain_content = __( 'Your email client does not support HTML emails. Open newsletter here: {$url}. If you do not want to receive emails from us, click here: {$unsubscribe}', 'newsletter-glue' );
 
 			$contentData = array(
-				'html'	=> newsletterglue_generate_content( $post, $subject, 'mailerlite' ),
+				'html'	=> newsletterglue_generate_content( $post, $subject, $this->app ),
 				'plain' => $plain_content,
 			);
 
@@ -297,13 +304,6 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 		return $result;
 
-	}
-
-	/**
-	 * Set content type as HTML.
-	 */
-	public function wp_mail_content_type() {
-		return 'text/html';
 	}
 
 	/**

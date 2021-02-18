@@ -37,7 +37,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	 */
 	public function get_api_key() {
 		$integrations = get_option( 'newsletterglue_integrations' );
-		$integration  = isset( $integrations[ 'mailchimp' ] ) ? $integrations[ 'mailchimp'] : '';
+		$integration  = isset( $integrations[ $this->app ] ) ? $integrations[ $this->app] : '';
 		$this->api_key = isset( $integration[ 'api_key' ] ) ? $integration[ 'api_key' ] : '';
 	}
 
@@ -51,10 +51,10 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 		// Test mode. no key provided.
 		if ( ! $api_key ) {
-			$integrations = get_option( 'newsletterglue_integrations' );
-			$mailchimp    = isset( $integrations[ 'mailchimp' ] ) ? $integrations[ 'mailchimp'] : '';
-			if ( isset( $mailchimp[ 'api_key'] ) ) {
-				$api_key = $mailchimp[ 'api_key' ];
+			$integrations 	= get_option( 'newsletterglue_integrations' );
+			$options		= isset( $integrations[ $this->app ] ) ? $integrations[ $this->app ] : '';
+			if ( isset( $options[ 'api_key'] ) ) {
+				$api_key = $options[ 'api_key' ];
 			}
 		}
 
@@ -96,18 +96,18 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 		$integrations = get_option( 'newsletterglue_integrations' );
 
-		$integrations[ 'mailchimp' ] = array();
-		$integrations[ 'mailchimp' ][ 'api_key' ] = $api_key;
+		$integrations[ $this->app ] = array();
+		$integrations[ $this->app ][ 'api_key' ] = $api_key;
 
 		update_option( 'newsletterglue_integrations', $integrations );
 
 		// Add default options.
 		$globals = get_option( 'newsletterglue_options' );
-		$options = ! empty( $globals ) && isset( $globals[ 'mailchimp' ] ) ? $globals[ 'mailchimp' ] : '';
+		$options = ! empty( $globals ) && isset( $globals[ $this->app ] ) ? $globals[ $this->app ] : '';
 
 		if ( ! $options ) {
 
-			$globals[ 'mailchimp' ] = array(
+			$globals[ $this->app ] = array(
 				'from_name' 	=> newsletterglue_get_default_from_name(),
 				'from_email'	=> isset( $account[ 'email' ] ) ? $account[ 'email' ] : '',
 			);
@@ -306,7 +306,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 			// Manage campaign content
 			$result = $this->api->put( 'campaigns/' . $campaign_id . '/content', [
-				'html'	=> newsletterglue_generate_content( $post, $subject, 'mailchimp' ),
+				'html'	=> newsletterglue_generate_content( $post, $subject, $this->app ),
 			] );
 
 			if ( $test ) {

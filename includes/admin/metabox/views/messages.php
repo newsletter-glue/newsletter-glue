@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="ngl-field ngl-field-master">
 			<input type="hidden" name="ngl_double_confirm" id="ngl_double_confirm" value="no" />
 			<input type="checkbox" name="ngl_send_newsletter" id="ngl_send_newsletter" value="1" />
-			<label for="ngl_send_newsletter"><?php _e( 'Send as newsletter', 'newsletter-glue' ); ?></label>
+			<label for="ngl_send_newsletter"><?php _e( 'Send as newsletter', 'newsletter-glue' ); ?> <span class="ngl-field-master-help"><?php _e( '(when post is published/updated)', 'newsletter-glue' ); ?></span></label>
 		</div>
 
 	</div>

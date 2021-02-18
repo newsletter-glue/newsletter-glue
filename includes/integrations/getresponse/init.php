@@ -37,7 +37,7 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 	public function get_api_key() {
 
 		$integrations = get_option( 'newsletterglue_integrations' );
-		$integration  = isset( $integrations[ 'getresponse' ] ) ? $integrations[ 'getresponse'] : '';
+		$integration  = isset( $integrations[ $this->app ] ) ? $integrations[ $this->app] : '';
 
 		$this->api_key 		= isset( $integration[ 'api_key' ] ) ? $integration[ 'api_key' ] : '';
 
@@ -54,9 +54,9 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 		// Test mode. no key provided.
 		if ( ! $api_key ) {
 			$integrations	= get_option( 'newsletterglue_integrations' );
-			$getresponse  	= isset( $integrations[ 'getresponse' ] ) ? $integrations[ 'getresponse'] : '';
-			if ( isset( $getresponse[ 'api_key'] ) ) {
-				$api_key = $getresponse[ 'api_key' ];
+			$options  		= isset( $integrations[ $this->app ] ) ? $integrations[ $this->app] : '';
+			if ( isset( $options[ 'api_key'] ) ) {
+				$api_key = $options[ 'api_key' ];
 			}
 		}
 
@@ -95,18 +95,18 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 
 		$integrations = get_option( 'newsletterglue_integrations' );
 
-		$integrations[ 'getresponse' ] = array();
-		$integrations[ 'getresponse' ][ 'api_key' ] = $api_key;
+		$integrations[ $this->app ] = array();
+		$integrations[ $this->app ][ 'api_key' ] = $api_key;
 
 		update_option( 'newsletterglue_integrations', $integrations );
 
 		// Add default options.
 		$globals = get_option( 'newsletterglue_options' );
-		$options = ! empty( $globals ) && isset( $globals[ 'getresponse' ] ) ? $globals[ 'getresponse' ] : '';
+		$options = ! empty( $globals ) && isset( $globals[ $this->app ] ) ? $globals[ $this->app ] : '';
 
 		if ( ! $options ) {
 
-			$globals[ 'getresponse' ] = array(
+			$globals[ $this->app ] = array(
 				'from_name' 	=> newsletterglue_get_default_from_name(),
 				'from_email'	=> isset( $account[ 'email' ] ) ? $account[ 'email' ] : '',
 			);
@@ -206,10 +206,10 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 	}
 
 	/**
-	 * Set content type as HTML.
+	 * Returns true if test emails are sent by WordPress.
 	 */
-	public function wp_mail_content_type() {
-		return 'text/html';
+	public function test_email_by_wordpress() {
+		return true;
 	}
 
 	/**
@@ -280,7 +280,7 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 
 		$args = array(
 			'content'	=> array(
-				'html'	=> newsletterglue_generate_content( $post, $subject, 'getresponse' ),
+				'html'	=> newsletterglue_generate_content( $post, $subject, $this->app ),
 			),
 			'subject'	=> $subject,
 			'campaign'	=> array(
