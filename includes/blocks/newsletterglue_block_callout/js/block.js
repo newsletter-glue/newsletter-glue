@@ -93,7 +93,7 @@
 				paddingRight : props.attributes.cta_padding,
 				marginTop : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
 				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
-				textAlign: props.attributes.alignment
+				textAlign: props.attributes.alignment ? props.attributes.alignment : 'left',
 			};
 
 			function onChangeAlignment( newAlignment ) {
@@ -258,7 +258,7 @@
 				paddingRight : props.attributes.cta_padding,
 				marginTop : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
 				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
-				textAlign: props.attributes.alignment
+				textAlign: props.attributes.alignment ? props.attributes.alignment : 'left',
 			};
 
             return (
