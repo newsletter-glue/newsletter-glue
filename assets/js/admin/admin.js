@@ -699,6 +699,10 @@
 			$( '.ngl-msgbox-wrap' ).removeClass( 'is-hidden' );
 			$( '.ngl-reset' ).addClass( 'is-hidden' );
 			$( '.ngl-top-checkbox' ).addClass( 'is-hidden' );
+		} else {
+			if ( $( '#ngl_double_confirm' ).val() == 'yes' ) {
+				$( '#ngl_double_confirm' ).val( 'no' );
+			}
 		}
 
 	} );
