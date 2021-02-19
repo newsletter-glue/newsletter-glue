@@ -29,6 +29,7 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 
 		$this->get_api_key();
 
+		add_filter( 'newsletterglue_email_content_sendy', array( $this, 'newsletterglue_email_content_sendy' ), 10, 3 );
 	}
 
 	/**
@@ -258,6 +259,17 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 		}
 
 		return $output;
+
+	}
+
+	/**
+	 * Customize content.
+	 */
+	public function newsletterglue_email_content_sendy( $content, $post, $subject ) {
+
+		$content .= '<p class="ngl-unsubscribe"><a href="[unsubscribe]">' . __( 'Click here to unsubscribe', 'newsletter-glue' ) . '</a></p>';
+
+		return $content;
 
 	}
 
