@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				newsletterglue_setting_checkbox(
 					'ngl_disable_plugin_css',
 					'',
-					__( '<strong>Strip Newsletter Glue&rsquo;s default CSS from your newsletters.</strong><br />This also removes all styling chosen in Newsletter Theme Designer and newsletter blocks. Only custom CSS in the above box will be inserted into your newsletter.', 'newsletter-glue' ),
+					__( '<strong>Only use custom CSS in the above box.</strong><br />All default and Newsletter Theme Designer styling will be removed from your newsletter. Only check this box if you plan to style your newsletter from scratch.', 'newsletter-glue' ),
 					get_option( 'newsletterglue_disable_plugin_css' )
 				);
 				?>
