@@ -353,7 +353,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	// Fixes emogrifier encoding bugs.
-	$html = str_replace( array( '%7B', '%7D', '%24' ), array( '{', '}', '$' ), $html );
+	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D' ), array( '{', '}', '$', '[', ']' ), $html );
 	$html = str_replace( '@media only screen and (max-width:596px) {', '@media only screen and (max-width:596px) {' . "\r\n", $html );
 
 	$html = wp_encode_emoji( $html );
@@ -733,7 +733,8 @@ ul.blocks-gallery-grid {
 	padding-right: 2%;
 }
 
-p.ngl-credits {
+p.ngl-credits,
+p.ngl-unsubscribe {
 	font-size: 13px;
 	text-align: center;
 	color: #999 !important;
@@ -741,9 +742,16 @@ p.ngl-credits {
 	margin: 0 !important;
 }
 
-p.ngl-credits a {
+p.ngl-credits a,
+p.ngl-unsubscribe a {
 	color: #999 !important;
 	text-decoration: underline;
+}
+
+p.ngl-unsubscribe {
+	margin-top: 50px !important;
+	padding-top: 20px !important;
+	border-top: 1px solid #eee !important;
 }
 
 .ngl-masthead {

@@ -371,7 +371,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	 */
 	public function newsletterglue_email_content_mailerlite( $content, $post, $subject ) {
 
-		$content .= '<p class="ngl-credits"><a href="{$unsubscribe}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a></p>';
+		$content .= '<p class="ngl-unsubscribe"><a href="{$unsubscribe}">' . __( 'Click here to unsubscribe', 'newsletter-glue' ) . '</a></p>';
 
 		return $content;
 
