@@ -30,6 +30,8 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 		$this->get_api_key();
 
 		add_filter( 'newsletterglue_email_content_sendy', array( $this, 'newsletterglue_email_content_sendy' ), 10, 3 );
+
+		add_action( 'newsletterglue_edit_more_settings', array( $this, 'newsletterglue_edit_more_settings' ), 50, 2 );
 	}
 
 	/**
@@ -267,10 +269,50 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 	 */
 	public function newsletterglue_email_content_sendy( $content, $post, $subject ) {
 
-		$content .= '<p class="ngl-unsubscribe"><a href="[unsubscribe]">' . __( 'Click here to unsubscribe', 'newsletter-glue' ) . '</a></p>';
+		$post_id		= $post->ID;
+		$data 			= get_post_meta( $post_id, '_newsletterglue', true );
+		$default_unsub 	= '<a href="[unsubscribe]">' . __( 'Click here to unsubscribe', 'newsletter-glue' ) . '</a>';
+		$unsub		 	= ! empty( $data[ 'unsub' ] ) ? $data[ 'unsub' ] : $default_unsub;
+
+		if ( ! strstr( $unsub, '[unsubscribe]' ) ) {
+			$unsub = $default_unsub;
+		}
+
+		$content .= '<p class="ngl-unsubscribe">' . wp_kses_post( $unsub ) . '</p>';
 
 		return $content;
 
+	}
+
+	/**
+	 * Add extra settings to metabox.
+	 */
+	public function newsletterglue_edit_more_settings( $app, $settings ) {
+		if ( $app === 'sendy' ) {
+			$default_unsub = '<a href="[unsubscribe]">' . __( 'Click here to unsubscribe', 'newsletter-glue' ) . '</a>';
+			$unsub = ! empty( $settings->unsub ) ? $settings->unsub : $default_unsub;
+
+			if ( ! strstr( $unsub, '[unsubscribe]' ) ) {
+				$unsub = $default_unsub;
+			}
+			?>
+			<div class="ngl-metabox-flexfull">
+				<div class="ngl-metabox-flex">
+					<div class="ngl-metabox-flex">
+						<div class="ngl-metabox-header">
+							<label for="ngl_unsub"><?php esc_html_e( 'Edit unsubscribe message', 'newsletter-glue' ); ?></label>
+						</div>
+						<div class="ngl-field">
+							<textarea name="ngl_unsub" id="ngl_unsub"><?php echo $unsub; ?></textarea>
+						</div>
+					</div>
+					<div class="ngl-metabox-flex">
+
+					</div>
+				</div>
+			</div>
+			<?php
+		}
 	}
 
 }

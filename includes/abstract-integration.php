@@ -239,7 +239,7 @@ abstract class NGL_Abstract_Integration {
 	public function get_schedule_options() {
 
 		$options = array(
-			'immediately'	=> __( 'Immediately', 'newsletter-glue' ),
+			'immediately'	=> __( 'Send now', 'newsletter-glue' ),
 			'draft'			=> sprintf( __( 'Save as draft in %s', 'newsletter-glue' ), newsletterglue_get_name( $this->app ) ),
 		);
 

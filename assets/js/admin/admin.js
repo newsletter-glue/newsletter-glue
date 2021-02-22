@@ -610,7 +610,7 @@
 
 		var data = 'action=newsletterglue_ajax_test_email&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id;
 
-		mb.find( 'input[type=text], select, input[type=hidden]' ).each( function() {
+		mb.find( 'input[type=text], select, input[type=hidden], textarea' ).each( function() {
 			data = data + '&' + $( this ).attr( 'id' ) + '=' + encodeURIComponent( $( this ).val() );
 		} );
 
@@ -967,7 +967,7 @@
 		} );
 
 	} );
-	
+
 	$( document ).on( 'change', '.ngl-settings-mailchimp #ngl_audience, .ngl-mb-mailchimp #ngl_audience', function( event ) {
 
 	} );

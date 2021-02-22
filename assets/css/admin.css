@@ -654,6 +654,10 @@
 	min-height: 84px !important;
 }
 
+.ngl-metabox-flex.ngl-edit-more-box {
+	flex-wrap: wrap;
+}
+
 .ngl-top-msg {
 	display: flex;
 	align-items: center;
@@ -1036,6 +1040,22 @@
     height: 25px;
 }
 
+.ngl-field textarea {
+	height: 80px;
+	width: 100%;
+    font-size: 14px !important;
+    color: #222 !important;
+    background: #fff !important;
+    border-color: #e2e2e2 !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.ngl-field textarea:focus {
+	border-color: #0088A0 !important;
+	box-shadow: none !important;
+}
+
 i.icon.arrow {
     position: relative !important;
 	z-index: auto !important;
@@ -1270,6 +1290,15 @@ i.icon.arrow:after {
 }
 
 .ngl-metabox-loading img {
+}
+
+.ngl-metabox-flexfull {
+	flex-basis: 100%;
+	padding: 20px 0 0;
+}
+
+.ngl-metabox-flexfull .ngl-metabox-flex {
+	padding-bottom: 0;
 }
 
 .ngl-new-tag {

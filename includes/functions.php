@@ -189,6 +189,6 @@ function newsletterglue_sanitize( $var ) {
 	if ( is_array( $var ) ) {
 		return array_map( 'newsletterglue_sanitize', $var );
 	} else {
-		return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;
+		return is_scalar( $var ) ? wp_kses_post( $var ) : $var;
 	}
 }

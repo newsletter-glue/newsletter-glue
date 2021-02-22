@@ -147,7 +147,10 @@ class NGL_License {
 			'status'		=> $license_data->license,
 			'message'		=> ! empty( $message ) ? $message : null,
 			'expires'		=> ! empty( $license_data->expires ) ? $license_data->expires : null,
+			'data'			=> $license_data
 		);
+
+		update_option( 'newsletterglue_license_info', $license_data );
 
 		return $result;
 	}
