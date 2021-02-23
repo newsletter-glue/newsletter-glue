@@ -7,7 +7,7 @@ Tags: newsletter, email, mailchimp, mailerlite, blog post
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 7.0
-Stable Tag: 1.2.2
+Stable Tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -187,6 +187,10 @@ Yes! Check it out [here](https://newsletterglue.com).
 10. Newsletter Group Block (for showing/hiding content in your email/blog)
 
 == Changelog ==
+
+= 1.2.3, February 23, 2021 =
+
+* **Bug fix:** Sending a newsletter on Firefox is not working. This is now fixed.
 
 = 1.2.1, February 15, 2021 =
 
