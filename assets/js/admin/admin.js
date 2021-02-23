@@ -522,6 +522,9 @@
 
 	// Toggle metabox options.
 	$( document ).on( 'change', '#ngl_send_newsletter', function() {
+		if ( $( '.ngl-top-checkbox' ).length == 0 ) {
+			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
+		}
 		ngl_validate_form();
 		if ( ! $( this ).is( ':checked' ) ) {
 			$( '#ngl_send_newsletter2' ).prop( 'checked', false );
