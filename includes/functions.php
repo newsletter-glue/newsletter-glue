@@ -18,6 +18,7 @@ function newsletterglue_get_supported_apps() {
 		'mailchimp'			=> __( 'Mailchimp', 'newsletter-glue' ),
 		'mailerlite'		=> __( 'MailerLite', 'newsletter-glue' ),
 		'sendinblue'		=> __( 'Sendinblue', 'newsletter-glue' ),
+		'sendy'				=> __( 'Sendy', 'newsletter-glue' ),
 	);
 
 	return apply_filters( 'newsletterglue_get_supported_apps', $apps );
@@ -188,6 +189,6 @@ function newsletterglue_sanitize( $var ) {
 	if ( is_array( $var ) ) {
 		return array_map( 'newsletterglue_sanitize', $var );
 	} else {
-		return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;
+		return is_scalar( $var ) ? wp_kses_post( $var ) : $var;
 	}
 }
