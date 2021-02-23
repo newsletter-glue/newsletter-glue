@@ -522,6 +522,9 @@
 
 	// Toggle metabox options.
 	$( document ).on( 'change', '#ngl_send_newsletter', function() {
+		if ( $( '.ngl-top-checkbox' ).length == 0 ) {
+			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
+		}
 		ngl_validate_form();
 		if ( ! $( this ).is( ':checked' ) ) {
 			$( '#ngl_send_newsletter2' ).prop( 'checked', false );
@@ -610,7 +613,7 @@
 
 		var data = 'action=newsletterglue_ajax_test_email&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id;
 
-		mb.find( 'input[type=text], select, input[type=hidden]' ).each( function() {
+		mb.find( 'input[type=text], select, input[type=hidden], textarea' ).each( function() {
 			data = data + '&' + $( this ).attr( 'id' ) + '=' + encodeURIComponent( $( this ).val() );
 		} );
 
@@ -967,7 +970,7 @@
 		} );
 
 	} );
-	
+
 	$( document ).on( 'change', '.ngl-settings-mailchimp #ngl_audience, .ngl-mb-mailchimp #ngl_audience', function( event ) {
 
 	} );
