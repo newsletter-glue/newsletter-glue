@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_body">
 								<tr>
 									<td></td>
-									<td width="600" id="template_inner" style="word-break: break-all;">
+									<td width="600" id="template_inner" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">
 									{content}
 									</td>
 									<td></td>
