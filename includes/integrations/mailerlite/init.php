@@ -31,7 +31,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 		add_filter( 'newsletterglue_email_content_mailerlite', array( $this, 'newsletterglue_email_content_mailerlite' ), 10, 3 );
 
-		add_action( 'newsletterglue_edit_more_settings', array( $this, 'newsletterglue_edit_more_settings' ), 50, 2 );
+		add_action( 'newsletterglue_edit_more_settings', array( $this, 'newsletterglue_edit_more_settings' ), 50, 3 );
 	}
 
 	/**
@@ -114,6 +114,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 			$globals[ $this->app ] = array(
 				'from_name' 	=> newsletterglue_get_default_from_name(),
 				'from_email'	=> isset( $account[ 'from' ] ) ? $account[ 'from' ] : '',
+				'unsub'			=> $this->default_unsub(),
 			);
 
 			update_option( 'newsletterglue_options', $globals );
@@ -391,12 +392,8 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 		$post_id		= $post->ID;
 		$data 			= get_post_meta( $post_id, '_newsletterglue', true );
-		$default_unsub 	= '<a href="{$unsubscribe}">' . __( 'Click here to unsubscribe', 'newsletter-glue' ) . '</a>';
+		$default_unsub  = $this->default_unsub();
 		$unsub		 	= ! empty( $data[ 'unsub' ] ) ? $data[ 'unsub' ] : $default_unsub;
-
-		if ( ! strstr( $unsub, '{$unsubscribe}' ) ) {
-			$unsub = $default_unsub;
-		}
 
 		$content .= '<p class="ngl-unsubscribe">' . wp_kses_post( $unsub ) . '</p>';
 
@@ -405,25 +402,36 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	}
 
 	/**
+	 * Default unsub.
+	 */
+	public function default_unsub() {
+		return '<a href="{$unsubscribe}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a> to stop receiving these emails.';
+	}
+
+	/**
 	 * Add extra settings to metabox.
 	 */
-	public function newsletterglue_edit_more_settings( $app, $settings ) {
-		if ( $app === 'mailerlite' ) {
-			$default_unsub = '<a href="{$unsubscribe}">' . __( 'Click here to unsubscribe', 'newsletter-glue' ) . '</a>';
-			$unsub = ! empty( $settings->unsub ) ? $settings->unsub : $default_unsub;
+	public function newsletterglue_edit_more_settings( $app, $settings, $ajax = false ) {
+		if ( $app === $this->app ) {
 
-			if ( ! strstr( $unsub, '{$unsubscribe}' ) ) {
-				$unsub = $default_unsub;
-			}
+			$default_unsub = $this->default_unsub();
+			$unsub = ! empty( $settings->unsub ) ? $settings->unsub : newsletterglue_get_option( 'unsub', $app );
+
 			?>
 			<div class="ngl-metabox-flexfull">
 				<div class="ngl-metabox-flex">
 					<div class="ngl-metabox-flex">
 						<div class="ngl-metabox-header">
 							<label for="ngl_unsub"><?php esc_html_e( 'Edit unsubscribe message', 'newsletter-glue' ); ?></label>
+							<div class="ngl-label-verification">
+								<a href="#" class="ngl-textarea-append" data-selector="ngl_unsub" data-value="<?php echo esc_html(  '<a href="{$unsubscribe}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a>' ); ?>"><?php _e( 'Insert unsubscribe tag', 'newsletter-glue' ); ?></a>
+							</div>
+							<div class="ngl-label-more">
+								<a href="#" class="ngl-textarea-reset" data-selector="ngl_unsub"><?php _e( 'Reset', 'newsletter-glue' ); ?></a>
+							</div>
 						</div>
 						<div class="ngl-field">
-							<textarea name="ngl_unsub" id="ngl_unsub"><?php echo $unsub; ?></textarea>
+							<textarea name="ngl_unsub" id="ngl_unsub" data-default="<?php echo esc_html( $default_unsub ); ?>"><?php echo $unsub; ?></textarea>
 						</div>
 					</div>
 					<div class="ngl-metabox-flex">

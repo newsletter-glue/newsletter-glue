@@ -492,12 +492,12 @@ function newsletterglue_ajax_save_field() {
 		wp_die( -1 );
 	}
 
-	$id 	= isset( $_REQUEST[ 'id' ] ) ? str_replace( 'ngl_', '', sanitize_text_field( $_REQUEST[ 'id' ] ) ) : '';
+	$id 	= isset( $_REQUEST[ 'id' ] ) ? str_replace( 'ngl_', '', wp_kses_post( $_REQUEST[ 'id' ] ) ) : '';
 
 	if ( $id == 'custom_css' ) {
 		$value = isset( $_REQUEST['value'] ) ? nl2br( $_REQUEST['value'] ) : '';
 	} else {
-		$value 	= isset( $_REQUEST['value'] ) ? sanitize_text_field( trim( $_REQUEST['value'] ) ) : '';
+		$value 	= isset( $_REQUEST['value'] ) ? wp_kses_post( trim( $_REQUEST['value'] ) ) : '';
 	}
 
 	$value  = urldecode( $value );
