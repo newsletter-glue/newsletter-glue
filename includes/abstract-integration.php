@@ -15,6 +15,17 @@ abstract class NGL_Abstract_Integration {
 	public $app = '';
 
 	/**
+	 * Get settings.
+	 */
+	public function get_settings() {
+
+		$settings = new stdclass;
+
+		return $settings;
+
+	}
+
+	/**
 	 * Set content type as HTML.
 	 */
 	public function wp_mail_content_type() {

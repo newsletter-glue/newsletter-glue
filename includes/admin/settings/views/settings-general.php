@@ -45,3 +45,5 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</div>
 
 </div>
+
+<?php do_action( 'newsletterglue_edit_more_settings', $app, $api->get_settings(), true ); ?>

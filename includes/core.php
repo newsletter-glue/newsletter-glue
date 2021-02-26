@@ -193,6 +193,12 @@ function newsletterglue_save_data( $post_id, $data ) {
 		if ( empty( $meta[ 'segments' ] ) ) {
 			$meta[ 'segments' ] = '';
 		}
+		if ( empty( $meta[ 'track_opens' ] ) ) {
+			$meta[ 'track_opens' ] = 0;
+		}
+		if ( empty( $meta[ 'track_clicks' ] ) ) {
+			$meta[ 'track_clicks' ] = 0;
+		}
 		update_post_meta( $post_id, '_newsletterglue', $meta );
 	}
 

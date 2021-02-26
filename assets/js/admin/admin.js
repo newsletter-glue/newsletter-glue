@@ -761,9 +761,13 @@
 			}
 		}
 
+		var isTextarea = $( this ).is( 'textarea' );
+
 		value = encodeURIComponent( value );
 
 		var data = 'action=newsletterglue_ajax_save_field&security=' + newsletterglue_params.ajaxnonce + '&id=' + id + '&value=' + value;
+
+		console.log( data );
 
 		$.ajax( {
 			type : 'post',
@@ -772,7 +776,9 @@
 			beforeSend: function() {
 				el.find( '.ngl-process' ).addClass( 'is-hidden' );
 				el.find( '.ngl-process.is-waiting' ).removeClass( 'is-hidden' );
-				el.find( '.ngl-label-more' ).empty();
+				if ( ! isTextarea ) {
+					el.find( '.ngl-label-more' ).empty();
+				}
 				savebtn.html( newsletterglue_params.saving );
 
 				if ( id == 'ngl_from_email' ) {
@@ -795,7 +801,7 @@
 					el.find( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
 					el.find( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
 					el.addClass( 'is-error' );
-					if ( response.failed_details ) {
+					if ( response.failed_details && ! isTextarea ) {
 						el.find( '.ngl-label-more' ).html( response.failed_details );
 					}
 				} else if ( response.success ) {
@@ -896,6 +902,35 @@
 			url : newsletterglue_params.ajaxurl,
 			data : 'action=newsletterglue_ajax_use_block&security=' + newsletterglue_params.ajaxnonce + '&id=' + id + '&value=' + value
 		} );
+
+	} );
+
+	// Reset textarea.
+	$( document ).on( 'click', '.ngl-textarea-reset', function( event ) {
+		event.preventDefault();
+
+		var id = $( '#' + $( this ).attr( 'data-selector' ) );
+
+		id.val( id.attr( 'data-default' ) );
+
+		id.trigger( 'change' );
+
+		return false;
+
+	} );
+
+	// Add tag.
+	$( document ).on( 'click', '.ngl-textarea-append', function( event ) {
+		event.preventDefault();
+
+		var id = $( '#' + $( this ).attr( 'data-selector' ) );
+		var content = $( this ).attr( 'data-value' );
+
+		id.val( id.val() + ' ' + content );
+
+		id.trigger( 'change' );
+
+		return false;
 
 	} );
 

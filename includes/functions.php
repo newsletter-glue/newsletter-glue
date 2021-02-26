@@ -126,6 +126,10 @@ function newsletterglue_get_option( $option_id = '', $app = '' ) {
 		return $options[ $app ][ $option_id ];
 	}
 
+	if ( ! isset( $options[ $app ][ $option_id ] ) ) {
+		return -1;
+	}
+
 	return false;
 }
 

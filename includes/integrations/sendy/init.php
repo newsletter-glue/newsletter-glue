@@ -31,7 +31,7 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 
 		add_filter( 'newsletterglue_email_content_sendy', array( $this, 'newsletterglue_email_content_sendy' ), 10, 3 );
 
-		add_action( 'newsletterglue_edit_more_settings', array( $this, 'newsletterglue_edit_more_settings' ), 50, 2 );
+		add_action( 'newsletterglue_edit_more_settings', array( $this, 'newsletterglue_edit_more_settings' ), 50, 3 );
 	}
 
 	/**
@@ -169,12 +169,14 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 			$data = get_post_meta( $post_id, '_newsletterglue', true );
 		}
 
-		$subject 	= isset( $data['subject'] ) ? $data['subject'] : '';
-		$from_name	= isset( $data['from_name'] ) ? $data['from_name'] : '';
-		$from_email	= isset( $data['from_email'] ) ? $data['from_email'] : '';
-		$lists		= ! empty( $data['lists'] ) ? $data['lists'] : '';
-		$brand		= ! empty( $data['brand'] ) ? $data['brand'] : '';
-		$schedule   = isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
+		$subject 		= isset( $data['subject'] ) ? $data['subject'] : '';
+		$from_name		= isset( $data['from_name'] ) ? $data['from_name'] : '';
+		$from_email		= isset( $data['from_email'] ) ? $data['from_email'] : '';
+		$lists			= ! empty( $data['lists'] ) ? $data['lists'] : '';
+		$brand			= ! empty( $data['brand'] ) ? $data['brand'] : '';
+		$schedule   	= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
+		$track_opens 	= isset( $data[ 'track_opens' ] ) ? 1 : 0;
+		$track_clicks 	= isset( $data[ 'track_clicks' ] ) ? 1 : 0;
 
 		$post = get_post( $post_id );
 
@@ -221,7 +223,9 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 			'html_text'		=> newsletterglue_generate_content( $post, $subject, $this->app ),
 			'list_ids'		=> $lists,
 			'brand_id'		=> ( $brand ) ? $brand : 1,
-			'send_campaign'	=> ( $schedule === 'immediately' ) ? 1 : 0
+			'send_campaign'	=> ( $schedule === 'immediately' ) ? 1 : 0,
+			'track_opens'	=> $track_opens,
+			'track_clicks'	=> $track_clicks,
 		);
 
 		$campaign = $this->api->post( '/api/campaigns/create.php', $args );
@@ -265,18 +269,28 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 	}
 
 	/**
+	 * Get settings.
+	 */
+	public function get_settings() {
+		$settings = new stdclass;
+
+		$settings->unsub 		= newsletterglue_get_option( 'unsub', $this->app );
+
+		$settings->track_clicks = newsletterglue_get_option( 'track_clicks', $this->app );
+		$settings->track_opens  = newsletterglue_get_option( 'track_opens', $this->app );
+
+		return $settings;
+	}
+
+	/**
 	 * Customize content.
 	 */
 	public function newsletterglue_email_content_sendy( $content, $post, $subject ) {
 
 		$post_id		= $post->ID;
 		$data 			= get_post_meta( $post_id, '_newsletterglue', true );
-		$default_unsub 	= '<a href="[unsubscribe]">' . __( 'Click here to unsubscribe', 'newsletter-glue' ) . '</a>';
+		$default_unsub  = '<a href="[unsubscribe]">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a> to stop receiving these emails.';
 		$unsub		 	= ! empty( $data[ 'unsub' ] ) ? $data[ 'unsub' ] : $default_unsub;
-
-		if ( ! strstr( $unsub, '[unsubscribe]' ) ) {
-			$unsub = $default_unsub;
-		}
 
 		$content .= '<p class="ngl-unsubscribe">' . wp_kses_post( $unsub ) . '</p>';
 
@@ -287,27 +301,46 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 	/**
 	 * Add extra settings to metabox.
 	 */
-	public function newsletterglue_edit_more_settings( $app, $settings ) {
-		if ( $app === 'sendy' ) {
-			$default_unsub = '<a href="[unsubscribe]">' . __( 'Click here to unsubscribe', 'newsletter-glue' ) . '</a>';
-			$unsub = ! empty( $settings->unsub ) ? $settings->unsub : $default_unsub;
+	public function newsletterglue_edit_more_settings( $app, $settings, $ajax = false ) {
+		if ( $app === $this->app ) {
 
-			if ( ! strstr( $unsub, '[unsubscribe]' ) ) {
-				$unsub = $default_unsub;
-			}
+			$default_unsub = '<a href="[unsubscribe]">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a> to stop receiving these emails.';
+			$unsub = ! empty( $settings->unsub ) ? $settings->unsub : '';
+
+			$track_clicks = isset( $settings->track_clicks ) ? $settings->track_clicks : 1;
+			$track_opens  = isset( $settings->track_opens ) ? $settings->track_opens : 1;
 			?>
 			<div class="ngl-metabox-flexfull">
 				<div class="ngl-metabox-flex">
 					<div class="ngl-metabox-flex">
 						<div class="ngl-metabox-header">
 							<label for="ngl_unsub"><?php esc_html_e( 'Edit unsubscribe message', 'newsletter-glue' ); ?></label>
+							<div class="ngl-label-verification">
+								<a href="#" class="ngl-textarea-append" data-selector="ngl_unsub" data-value="<?php echo esc_html(  '<a href="[unsubscribe]">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a>' ); ?>"><?php _e( 'Insert unsubscribe tag', 'newsletter-glue' ); ?></a>
+							</div>
+							<div class="ngl-label-more">
+								<a href="#" class="ngl-textarea-reset" data-selector="ngl_unsub"><?php _e( 'Reset', 'newsletter-glue' ); ?></a>
+							</div>
 						</div>
 						<div class="ngl-field">
-							<textarea name="ngl_unsub" id="ngl_unsub"><?php echo $unsub; ?></textarea>
+							<textarea name="ngl_unsub" id="ngl_unsub" data-default="<?php echo esc_html( $default_unsub ); ?>"><?php echo $unsub; ?></textarea>
 						</div>
 					</div>
 					<div class="ngl-metabox-flex">
-
+						<div class="ngl-metabox-header">
+							<?php esc_html_e( 'Tracking', 'newsletter-glue' ); ?>
+							<?php $this->input_verification_info(); ?>
+						</div>
+						<div class="ngl-field">
+							<div class="ngl-field ngl-field-master">
+								<input type="checkbox" name="ngl_track_clicks" id="ngl_track_clicks" value="1" <?php checked( $track_clicks, 1 ); ?> />
+								<label for="ngl_track_clicks"><?php _e( 'Track clicks', 'newsletter-glue' ); ?></label>
+							</div>
+							<div class="ngl-field ngl-field-master">
+								<input type="checkbox" name="ngl_track_opens" id="ngl_track_opens" value="1" <?php checked( $track_opens, 1 ); ?> />
+								<label for="ngl_track_opens"><?php _e( 'Track opens', 'newsletter-glue' ); ?></label>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
