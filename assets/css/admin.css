@@ -858,6 +858,22 @@
 	color: #0088A0 !important;
 }
 
+a.ngl-textarea-append {
+	margin: 0 0 0 10px;
+}
+
+a.ngl-textarea-append,
+a.ngl-textarea-reset {
+	color: #777 !important;
+	font-weight: normal !important;
+	text-decoration: none !important;
+}
+
+a.ngl-textarea-append:hover,
+a.ngl-textarea-reset:hover {
+	color: #555 !important;
+}
+
 .ngl-label-more a i.icon {
 	margin: 0 0 0 4px;
 	height: 100%;
@@ -1049,6 +1065,7 @@
     border-color: #e2e2e2 !important;
     border-radius: 8px !important;
     transition: all 0.2s ease-in-out;
+	box-sizing: border-box;
 }
 
 .ngl-field textarea:focus {
@@ -1082,6 +1099,12 @@ i.icon.arrow:after {
 .ngl-field.ngl-field-master {
 	display: flex;
     padding: 0;
+}
+
+.ngl-field .ngl-field.ngl-field-master label {
+	color: inherit !important;
+	text-transform: none;
+	font-weight: normal;
 }
 
 .ngl-field-master-help {
@@ -1297,8 +1320,16 @@ i.icon.arrow:after {
 	padding: 20px 0 0;
 }
 
+.ngl-settings .ngl-metabox-flexfull {
+	padding: 0;
+}
+
 .ngl-metabox-flexfull .ngl-metabox-flex {
 	padding-bottom: 0;
+}
+
+.ngl-settings .ngl-metabox-flexfull > .ngl-metabox-flex {
+	padding-bottom: 20px;
 }
 
 .ngl-new-tag {
