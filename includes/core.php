@@ -921,3 +921,42 @@ function newsletterglue_remove_div( $html, $class ) {
 
     return $dom->saveHTML();
 }
+
+/**
+ * Get tier.
+ */
+function newsletterglue_get_tier() {
+
+	$tier = false;
+
+	if ( ! get_option( 'newsletterglue_pro_license' ) ) {
+		return false;
+	}
+
+	$data = get_option( 'newsletterglue_license_info' );
+
+	if ( ! isset( $data->price_id ) ) {
+		return false;
+	}
+
+	switch( $data->price_id ) {
+		case 5 :
+			$tier = 'friends';
+		break;
+		case 4 :
+			$tier = 'founding';
+		break;
+		case 3 :
+			$tier = 'writer';
+		break;
+		case 2 :
+			$tier = 'publisher';
+		break;
+		case 1 :
+			$tier = 'agency';
+		break;
+	}
+
+	return $tier;
+
+}
