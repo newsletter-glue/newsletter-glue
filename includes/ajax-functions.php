@@ -61,6 +61,7 @@ function newsletterglue_ajax_get_log() {
 			</thead>
 
 			<tbody>
+				<?php if ( ! empty( $results ) ) : ?>
 				<?php foreach( $results as $time => $data ) : if ( ! isset( $data['type'] ) ) continue; ?>
 				<tr>
 					<td class="ngl_subject"><?php echo esc_html( $data[ 'subject' ] ); ?></td>
@@ -86,6 +87,7 @@ function newsletterglue_ajax_get_log() {
 					<td class="ngl_datetime"><?php echo date_i18n( 'G:i, Y/m/d', $time ); ?></td>
 				</tr>
 				<?php endforeach; ?>
+				<?php endif; ?>
 			</tbody>
 
 		</table>

@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 
-<div class="ngl-metabox">
+<div class="ngl-metabox ngl-no-connection">
 
 	<div class="ngl-metabox-flex alt4">
 		<div class="ngl-metabox-msg is-notice"><a href="<?php echo esc_url( admin_url( 'admin.php?page=ngl-connect' ) ); ?>" target="_blank"><?php _e( 'Start by connecting your email software &#x21C4;', 'newsletter-glue' ); ?></a></div>
@@ -56,6 +56,26 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php $api->show_settings( $settings, $defaults, $post ); ?>
 
+	</div>
+
+</div>
+
+<div class="ngl-metabox ngl-metabox-flex alt3 ngl-unready">
+
+	<div class="ngl-metabox-flex ngl-metabox-flex-toggle">
+
+		<div class="ngl-field ngl-field-master">
+			<input type="hidden" name="ngl_double_confirm" id="ngl_double_confirm" value="no" />
+			<input type="checkbox" name="ngl_send_newsletter" id="ngl_send_newsletter" value="1" />
+			<label for="ngl_send_newsletter"><?php _e( 'Send as newsletter', 'newsletter-glue' ); ?> <span class="ngl-field-master-help"><?php _e( '(when post is published/updated)', 'newsletter-glue' ); ?></span></label>
+		</div>
+
+	</div>
+
+	<div class="ngl-metabox-flex">
+		<div class="ngl-not-ready is-hidden">
+			<div class="ngl-metabox-msg is-error"><?php _e( 'Almost ready. Just fill in the blank red boxes.' ,'newsletter-glue' ); ?></div>
+		</div>
 	</div>
 
 </div>

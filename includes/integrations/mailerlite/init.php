@@ -395,6 +395,10 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 		$default_unsub  = $this->default_unsub();
 		$unsub		 	= ! empty( $data[ 'unsub' ] ) ? $data[ 'unsub' ] : $default_unsub;
 
+		if ( empty( $unsub ) ) {
+			$unsub = $this->default_unsub();
+		}
+
 		$content .= '<p class="ngl-unsubscribe">' . wp_kses_post( $unsub ) . '</p>';
 
 		return $content;

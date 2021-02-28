@@ -74,6 +74,8 @@ add_action( 'publish_future_post', 'newsletterglue_publish_future_post' );
  */
 function newsletterglue_send( $post_id = 0, $test = false ) {
 
+	$response = null;
+
 	$post = get_post( $post_id );
 	$data = get_post_meta( $post_id, '_newsletterglue', true );
 
@@ -920,4 +922,43 @@ function newsletterglue_remove_div( $html, $class ) {
     }
 
     return $dom->saveHTML();
+}
+
+/**
+ * Get tier.
+ */
+function newsletterglue_get_tier() {
+
+	$tier = false;
+
+	if ( ! get_option( 'newsletterglue_pro_license' ) ) {
+		return false;
+	}
+
+	$data = get_option( 'newsletterglue_license_info' );
+
+	if ( ! isset( $data->price_id ) ) {
+		return false;
+	}
+
+	switch( $data->price_id ) {
+		case 5 :
+			$tier = 'friends';
+		break;
+		case 4 :
+			$tier = 'founding';
+		break;
+		case 3 :
+			$tier = 'writer';
+		break;
+		case 2 :
+			$tier = 'publisher';
+		break;
+		case 1 :
+			$tier = 'agency';
+		break;
+	}
+
+	return $tier;
+
 }

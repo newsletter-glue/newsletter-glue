@@ -137,12 +137,11 @@ function newsletterglue_meta_box() {
 			$hide = false;
 		}
 
-		include( 'metabox/views/status.php' );
-		include( 'metabox/views/reset.php' );
+		include( 'metabox/views/before-metabox.php' );
 
 		include newsletterglue_get_path( $app ) . '/metabox.php';
 
-		include( 'metabox/views/messages.php' );
+		include( 'metabox/views/after-metabox.php' );
 
 		wp_nonce_field( 'newsletterglue_save_data', 'newsletterglue_meta_nonce' );
 

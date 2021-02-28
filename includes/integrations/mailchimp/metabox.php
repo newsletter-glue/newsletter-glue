@@ -8,15 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 
-<div class="ngl-metabox ngl-send ngl-mb-mailchimp">
+<div class="ngl-metabox-flex">
 
-	<input type="hidden" name="ngl_app" id="ngl_app" value="<?php echo esc_attr( $app ); ?>" />
-
-	<div class="ngl-metabox-if-checked">
-
-	<?php $api->show_subject( $settings, $defaults, $post ); ?>
-
-	<div class="ngl-metabox-flex">
 	<div class="ngl-metabox-flex">
 		<div class="ngl-metabox-header">
 			<label for="ngl_audience"><?php esc_html_e( 'Audience', 'newsletter-glue' ); ?></label>
@@ -75,11 +68,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				) );
 			?>
 		</div>
-	</div>
-	</div>
-
-	<?php $api->show_settings( $settings, $defaults, $post ); ?>
-
 	</div>
 
 </div>
