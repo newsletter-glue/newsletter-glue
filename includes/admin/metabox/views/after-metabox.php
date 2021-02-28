@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 
+	<?php $api->show_settings( $settings, $defaults, $post ); ?>
+
+	</div>
+
+</div>
+
 <div class="ngl-metabox ngl-metabox-flex alt3">
 
 	<div class="ngl-metabox-flex ngl-metabox-flex-toggle">

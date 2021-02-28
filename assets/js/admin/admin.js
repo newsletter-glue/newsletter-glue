@@ -522,7 +522,7 @@
 
 	// Toggle metabox options.
 	$( document ).on( 'change', '#ngl_send_newsletter', function() {
-		if ( $( '.ngl-top-checkbox' ).length == 0 ) {
+		if ( $( '.ngl-top-checkbox' ).length == 0 && $( '.ngl-no-connection' ).length == 0 ) {
 			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
 		}
 		ngl_validate_form();
@@ -1012,7 +1012,7 @@
 
 	// Show top toolbar checkbox.
 	$( window ).on( 'load', function() {
-		if ( $( '#ngl_send_newsletter' ).length ) {
+		if ( $( '#ngl_send_newsletter' ).length && $( '.ngl-no-connection' ).length == 0 ) {
 			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
 		}
 		ngl_validate_email();

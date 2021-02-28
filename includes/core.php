@@ -74,6 +74,8 @@ add_action( 'publish_future_post', 'newsletterglue_publish_future_post' );
  */
 function newsletterglue_send( $post_id = 0, $test = false ) {
 
+	$response = null;
+
 	$post = get_post( $post_id );
 	$data = get_post_meta( $post_id, '_newsletterglue', true );
 
