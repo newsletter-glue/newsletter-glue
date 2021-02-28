@@ -5,7 +5,7 @@
  * Description: Email posts to subscribers from the WordPress editor. Works with Mailchimp, MailerLite, Sendinblue…
  * Author: Newsletter Glue
  * Author URI: https://newsletterglue.com
- * Version: 1.2.3
+ * Version: 1.2.4
  * Text Domain: newsletter-glue
  * Domain Path: /i18n/languages/
  */
@@ -71,7 +71,7 @@ final class Newsletter_Glue {
 
 		// Plugin version.
 		if ( ! defined( 'NGL_VERSION' ) ) {
-			define( 'NGL_VERSION', '1.2.3' );
+			define( 'NGL_VERSION', '1.2.4' );
 		}
 
 		// Plugin Folder Path.
