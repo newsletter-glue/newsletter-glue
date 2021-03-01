@@ -2730,6 +2730,28 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	-o-animation: bounce 2s infinite;
 }
 
+.ngl-review.ngl-license-review a {
+	background: #0088A0 !important;
+	transition: all 0.25s ease-in-out;
+	padding: 0 12px !important;
+	font-size: 13px !important;
+}
+
+.ngl-review.ngl-license-review a:hover {
+	animation: none !important;
+	background: #17A4C6 !important;
+}
+
+.ngl-review.ngl-license-review span {
+	margin: 0 10px 0 6px;
+}
+
+.ngl-review.ngl-license-review i {
+	color: #fff;
+	margin: 0 !important;
+	font-size: 1.1em;
+}
+
 @-webkit-keyframes bounce {
 	0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}	
 	40% {-webkit-transform: translateY(-5px);}

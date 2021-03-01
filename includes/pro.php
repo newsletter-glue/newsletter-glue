@@ -46,6 +46,9 @@ class NGL_Pro {
 
 		// Custom CSS.
 		add_action( 'newsletterglue_email_styles', array( $this, 'embed_css' ), 50 );
+
+		// Add notice.
+		add_action( 'newsletterglue_common_action_hook', array( $this, 'add_license_notice' ), 10 );
 	}
 
 	/**
@@ -747,6 +750,22 @@ class NGL_Pro {
 			width: 30px !important;
 			height: 30px !important;
 		}
+		<?php
+	}
+
+	/**
+	 * License notice button.
+	 */
+	public function add_license_notice() {
+
+		if ( get_option( 'newsletterglue_pro_license' ) ) {
+			return;
+		}
+
+		?>
+		<div class="ngl-review ngl-license-review">
+			<a href="<?php echo admin_url( 'admin.php?page=ngl-settings&tab=license' ); ?>" class="ngl-review-link"><span><?php _e( 'Activate license key to use Newsletter Glue Pro', 'newsletter-glue' ); ?></span><i class="ui icon key"></i></a>
+		</div>
 		<?php
 	}
 

@@ -387,6 +387,10 @@ function newsletterglue_setting_upload( $id, $title ) {
 function newsletterglue_get_review_button_html( $version = '' ) {
 	$class = '';
 
+	if ( ! newsletterglue_is_free_version() ) {
+		return;
+	}
+
 	$eligible_time = newsletterglue_is_review_eligible();
 	$opacity = 1.0;
 

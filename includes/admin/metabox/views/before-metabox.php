@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</div>
 
 	<div class="ngl-top-msg-right">
+		<?php do_action( 'newsletterglue_common_action_hook' ); ?>
 		<?php echo newsletterglue_get_review_button_html( 'post' ); ?>
 		<a href="https://docs.newsletterglue.com/article/11-email-delivery" target="_blank" class="ngl-get-help"><i class="question circle outline icon"></i><?php echo __( 'Get help', 'newsletter-glue' ); ?></a>
 	</div>
@@ -38,6 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</div>
 
 	<div class="ngl-top-msg-right">
+		<?php do_action( 'newsletterglue_common_action_hook' ); ?>
 		<a href="https://docs.newsletterglue.com/article/11-email-delivery" target="_blank" class="ngl-get-help"><i class="question circle outline icon"></i><?php echo __( 'Get help', 'newsletter-glue' ); ?></a>
 	</div>
 
