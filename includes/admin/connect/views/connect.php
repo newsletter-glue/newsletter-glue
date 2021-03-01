@@ -8,6 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 
+<?php do_action( 'newsletterglue_before_admin_connect' ); ?>
+
 <div class="ngl ngl-wrap">
 
 	<div class="ui large header">

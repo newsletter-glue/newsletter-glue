@@ -49,6 +49,9 @@ class NGL_Pro {
 
 		// Add notice.
 		add_action( 'newsletterglue_common_action_hook', array( $this, 'add_license_notice' ), 10 );
+
+		add_action( 'newsletterglue_before_admin_connect', array( $this, 'add_license_activation_form' ) );
+		add_action( 'newsletterglue_before_admin_blocks', array( $this, 'add_license_activation_form' ) );
 	}
 
 	/**
@@ -765,6 +768,28 @@ class NGL_Pro {
 		?>
 		<div class="ngl-review ngl-license-review">
 			<a href="<?php echo admin_url( 'admin.php?page=ngl-settings&tab=license' ); ?>" class="ngl-review-link"><span><?php _e( 'Activate license key to use Newsletter Glue Pro', 'newsletter-glue' ); ?></span><i class="ui icon key"></i></a>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Add license activation form.
+	 */
+	public function add_license_activation_form() {
+		?>
+		<div class="ngl-license-wrap">
+			<div class="ngl-license-wrap-title"><?php _e( 'Activate license key to start using Newsletter Glue.', 'newsletter-glue' ); ?></div>
+			<div class="ngl-license-wrap-label"><label for="ngl_add_license"><?php _e( 'License key', 'newsletter-glue' ); ?></label></div>
+			<div class="ngl-license-wrap-flex">
+				<input type="text" name="ngl_add_license" id="ngl_add_license" />
+				<a href="#"><?php _e( 'Get started', 'newsletter-glue' ); ?></a>
+			</div>
+			<div class="ngl-license-wrap-goto">
+				<a href="https://newsletterglue.com/account/" target="_blank"><?php echo __( 'Get license key', 'newsletter-glue' ); ?> <i class="arrow right icon"></i></a>
+			</div>
+			<div class="ngl-license-wrap-help">
+				<?php echo sprintf( __( 'Don’t have a license key or can’t find it? %s', 'newsletter-glue' ), '<a href="https://docs.newsletterglue.com/article/27-license-key" target="_blank">' . __( 'Get help', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>' ); ?>
+			</div>
 		</div>
 		<?php
 	}

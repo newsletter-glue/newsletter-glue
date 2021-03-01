@@ -8,6 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 
+<?php do_action( 'newsletterglue_before_admin_blocks' ); ?>
+
 <div class="ngl ngl-wrap ngl-blocks">
 
 	<div class="ui large header">
