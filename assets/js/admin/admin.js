@@ -1051,7 +1051,7 @@
 		$( this ).addClass( 'is-hidden' );
 		el.find( '.ngl-license-wrap-action' ).addClass( 'is-hidden' );
 		el.find( 'a.ngl-base-state' ).removeClass( 'is-hidden' );
-		el.find( 'input[type=text]' ).val( '' );
+		el.find( 'input[type=text]' ).val( '' ).focus();
 		return false;
 	} );
 
