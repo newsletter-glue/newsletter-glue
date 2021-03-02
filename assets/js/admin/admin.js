@@ -976,6 +976,7 @@
 		ngl_close_popup();
 	} );
 
+	// Edit more settings.
 	$( document ).on( 'click', '.ngl-edit-more a', function( event ) {
 		event.preventDefault();
 		var more = $( '.ngl-edit-more-box' );
@@ -1006,6 +1007,55 @@
 
 	} );
 
+	// Validate license.
+	$( document ).on( 'click', '.ngl-license-wrap-flex a.ngl-license-wrap-action', function( event ) {
+		event.preventDefault();
+		var el 		= $( this ).parents( '.ngl-license-wrap' );
+		var target  = el.find( '.ngl-license-wrap-flex a.ngl-license-wrap-action' );
+		var field 	= el.find( '#newsletterglue_pro_license' );
+		var key 	= field.val();
+
+		if ( ! key ) {
+			field.focus();
+			return;
+		}
+
+		var data = 'action=newsletterglue_check_license&newsletterglue_pro_license=' + key + '&security=' + newsletterglue_params.ajaxnonce;
+
+		$.ajax( {
+			type : 'post',
+			url : newsletterglue_params.ajaxurl,
+			data : data,
+			beforeSend: function() {
+				target.addClass( 'is-hidden' );
+				el.find( 'a.ngl-verifying-state' ).removeClass( 'is-hidden' );
+				field.prop( 'disabled', true );
+			},
+			success: function( response ) {
+				field.prop( 'disabled', false );
+				if ( response.status === 'invalid' ) {
+					target.addClass( 'is-hidden' );
+					el.find( 'a.ngl-invalid-state' ).removeClass( 'is-hidden' );
+					el.find( '.ngl-license-try-again' ).removeClass( 'is-hidden' );
+				}
+			}
+		} );
+
+		return false;
+	} );
+
+	// Try again.
+	$( document ).on( 'click', '.ngl-license-try-again', function( event ) {
+		event.preventDefault();
+		var el 		= $( this ).parents( '.ngl-license-wrap' );
+		$( this ).addClass( 'is-hidden' );
+		el.find( '.ngl-license-wrap-action' ).addClass( 'is-hidden' );
+		el.find( 'a.ngl-base-state' ).removeClass( 'is-hidden' );
+		el.find( 'input[type=text]' ).val( '' );
+		return false;
+	} );
+
+	// Change audience.
 	$( document ).on( 'change', '.ngl-settings-mailchimp #ngl_audience, .ngl-mb-mailchimp #ngl_audience', function( event ) {
 
 	} );

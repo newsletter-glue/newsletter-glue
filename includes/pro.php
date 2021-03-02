@@ -776,13 +776,19 @@ class NGL_Pro {
 	 * Add license activation form.
 	 */
 	public function add_license_activation_form() {
+		if ( get_option( 'newsletterglue_pro_license' ) ) {
+			return;
+		}
 		?>
 		<div class="ngl-license-wrap">
 			<div class="ngl-license-wrap-title"><?php _e( 'Activate license key to start using Newsletter Glue.', 'newsletter-glue' ); ?></div>
-			<div class="ngl-license-wrap-label"><label for="ngl_add_license"><?php _e( 'License key', 'newsletter-glue' ); ?></label></div>
+			<div class="ngl-license-wrap-label"><label for="newsletterglue_pro_license"><?php _e( 'License key', 'newsletter-glue' ); ?></label></div>
 			<div class="ngl-license-wrap-flex">
-				<input type="text" name="ngl_add_license" id="ngl_add_license" />
-				<a href="#"><?php _e( 'Get started', 'newsletter-glue' ); ?></a>
+				<input type="text" name="newsletterglue_pro_license" id="newsletterglue_pro_license" />
+				<a href="#" class="ngl-license-wrap-action ngl-base-state"><?php _e( 'Get started', 'newsletter-glue' ); ?></a>
+				<a href="#" class="ngl-license-wrap-action ngl-verifying-state is-hidden"><i class="sync alternate icon"></i><?php _e( 'Verifying', 'newsletter-glue' ); ?></a>
+				<a href="#" class="ngl-license-wrap-action ngl-invalid-state is-hidden"><?php _e( 'Invalid key', 'newsletter-glue' ); ?></a>
+				<a href="#" class="ngl-license-try-again is-hidden"><?php _e( 'Try again', 'newsletter-glue' ); ?></a>
 			</div>
 			<div class="ngl-license-wrap-goto">
 				<a href="https://newsletterglue.com/account/" target="_blank"><?php echo __( 'Get license key', 'newsletter-glue' ); ?> <i class="arrow right icon"></i></a>
