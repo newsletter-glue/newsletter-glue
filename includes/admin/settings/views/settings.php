@@ -38,6 +38,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php endif; ?>
 
+	<?php do_action( 'newsletterglue_common_action_hook' ); ?>
+
 	<?php echo newsletterglue_get_review_button_html( 'settings' ); ?>
 
 </div>

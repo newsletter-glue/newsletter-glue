@@ -14,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="ngl-logo"><img src="<?php echo NGL_PLUGIN_URL . '/assets/images/top-bar-logo.svg'; ?>" /></div>
 	</div>
 
+	<?php do_action( 'newsletterglue_common_action_hook' ); ?>
+
 	<?php echo newsletterglue_get_review_button_html( 'top-bar' ); ?>
 
 	<div class="ngl-flex ngl-right">

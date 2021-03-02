@@ -18,6 +18,7 @@ function newsletterglue_get_supported_apps() {
 		'mailchimp'			=> __( 'Mailchimp', 'newsletter-glue' ),
 		'mailerlite'		=> __( 'MailerLite', 'newsletter-glue' ),
 		'sendinblue'		=> __( 'Sendinblue', 'newsletter-glue' ),
+		'sendy'				=> __( 'Sendy', 'newsletter-glue' ),
 	);
 
 	return apply_filters( 'newsletterglue_get_supported_apps', $apps );
