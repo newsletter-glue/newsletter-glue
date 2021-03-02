@@ -1037,6 +1037,10 @@
 					target.addClass( 'is-hidden' );
 					el.find( 'a.ngl-invalid-state' ).removeClass( 'is-hidden' );
 					el.find( '.ngl-license-try-again' ).removeClass( 'is-hidden' );
+				} else {
+					el.find( '.ngl-license-wrap-success' ).removeClass( 'is-hidden' );
+					el.find( '.ngl-license-wrap-close' ).removeClass( 'is-hidden' );
+					$( '.ngl-license-review' ).remove();
 				}
 			}
 		} );
@@ -1052,6 +1056,14 @@
 		el.find( '.ngl-license-wrap-action' ).addClass( 'is-hidden' );
 		el.find( 'a.ngl-base-state' ).removeClass( 'is-hidden' );
 		el.find( 'input[type=text]' ).val( '' ).focus();
+		return false;
+	} );
+
+	// Close license form.
+	$( document ).on( 'click', '.ngl-license-wrap-close', function( event ) {
+		event.preventDefault();
+		$( this ).parents( '.ngl-license-wrap' ).remove();
+		$( '.ngl-license-review' ).remove();
 		return false;
 	} );
 

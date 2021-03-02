@@ -48,7 +48,7 @@ function newsletterglue_uninstall( $network_wide = false ) {
 	delete_transient( '_ngl_onboarding' );
 
 }
-//register_deactivation_hook( NGL_PLUGIN_FILE, 'newsletterglue_uninstall' );
+register_deactivation_hook( NGL_PLUGIN_FILE, 'newsletterglue_uninstall' );
 
 /**
  * Run the Install process.
