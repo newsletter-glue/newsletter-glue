@@ -52,6 +52,7 @@ class NGL_Pro {
 
 		add_action( 'newsletterglue_before_admin_connect', array( $this, 'add_license_activation_form' ) );
 		add_action( 'newsletterglue_before_admin_blocks', array( $this, 'add_license_activation_form' ) );
+		add_action( 'newsletterglue_onboarding_welcome', array( $this, 'add_license_activation_form' ) );
 	}
 
 	/**
@@ -782,7 +783,7 @@ class NGL_Pro {
 		?>
 		<div class="ngl-license-wrap">
 			<div class="ngl-license-wrap-title"><?php _e( 'Activate license key to start using Newsletter Glue.', 'newsletter-glue' ); ?></div>
-			<div class="ngl-license-wrap-label"><label for="newsletterglue_pro_license"><?php _e( 'License key', 'newsletter-glue' ); ?></label></div>
+			<div class="ngl-license-wrap-label"><label for="newsletterglue_pro_license"><?php _e( 'Enter license key', 'newsletter-glue' ); ?></label></div>
 			<div class="ngl-license-wrap-flex">
 				<input type="text" name="newsletterglue_pro_license" id="newsletterglue_pro_license" />
 				<a href="#" class="ngl-license-wrap-action ngl-base-state"><?php _e( 'Get started', 'newsletter-glue' ); ?></a>
