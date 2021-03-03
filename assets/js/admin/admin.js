@@ -1038,11 +1038,13 @@
 					el.find( 'a.ngl-invalid-state' ).removeClass( 'is-hidden' );
 					el.find( '.ngl-license-try-again' ).removeClass( 'is-hidden' );
 				} else {
+					// Onboarding.
 					if ( $( '.ngl-boarding-change' ).length > 0 && $( '.ngl-boarding' ).is( ':visible' ) ) {
 						el.parents( '.ngl-boarding' ).find( '.ngl-boarding-change' ).trigger( 'click' );
-						el.parents( '.ngl-boarding' ).find( '.ngl-boarding-btn, .ngl-boarding-help' ).show();
-						el.remove();
+						target.addClass( 'is-hidden' );
+						el.find( 'a.ngl-base-state' ).removeClass( 'is-hidden' );
 					} else {
+						// Other places.
 						el.find( '.ngl-license-wrap-success' ).removeClass( 'is-hidden' );
 						el.find( '.ngl-license-wrap-close' ).removeClass( 'is-hidden' );
 						$( '.ngl-license-review' ).remove();

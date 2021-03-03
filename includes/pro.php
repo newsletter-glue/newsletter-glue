@@ -777,15 +777,13 @@ class NGL_Pro {
 	 * Add license activation form.
 	 */
 	public function add_license_activation_form() {
-		if ( get_option( 'newsletterglue_pro_license' ) ) {
-			return;
-		}
+		if ( ! get_option( 'newsletterglue_pro_license' ) || newsletterglue_is_onboarding_page() ) {
 		?>
 		<div class="ngl-license-wrap">
 			<div class="ngl-license-wrap-title"><?php _e( 'Activate license key to start using Newsletter Glue.', 'newsletter-glue' ); ?></div>
 			<div class="ngl-license-wrap-label"><label for="newsletterglue_pro_license"><?php _e( 'Enter license key', 'newsletter-glue' ); ?></label></div>
 			<div class="ngl-license-wrap-flex">
-				<input type="text" name="newsletterglue_pro_license" id="newsletterglue_pro_license" />
+				<input type="text" name="newsletterglue_pro_license" id="newsletterglue_pro_license" value="<?php echo esc_attr( get_option( 'newsletterglue_pro_license' ) ); ?>" />
 				<a href="#" class="ngl-license-wrap-action ngl-base-state"><?php _e( 'Get started', 'newsletter-glue' ); ?></a>
 				<a href="#" class="ngl-license-wrap-action ngl-verifying-state is-hidden"><i class="sync alternate icon"></i><?php _e( 'Verifying', 'newsletter-glue' ); ?></a>
 				<a href="#" class="ngl-license-wrap-action ngl-invalid-state is-hidden"><?php _e( 'Invalid key', 'newsletter-glue' ); ?></a>
@@ -808,6 +806,7 @@ class NGL_Pro {
 			<a href="#" class="ngl-license-wrap-close is-hidden"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve"><g><g><path d="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717    L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859    c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287    l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285    L284.286,256.002z"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg></a>
 		</div>
 		<?php
+		}
 	}
 
 }

@@ -94,7 +94,7 @@ function newsletterglue_send( $post_id = 0, $test = false ) {
 	$api = new $classname();
 
 	// Send the newsletter.
-	$response = $api->send_newsletter( $post_id, $data, $test );
+	//$response = $api->send_newsletter( $post_id, $data, $test );
 
 	return $response;
 }

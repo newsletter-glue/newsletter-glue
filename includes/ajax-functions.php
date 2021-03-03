@@ -56,7 +56,7 @@ function newsletterglue_ajax_get_log() {
 				<tr>
 					<td scope="col" class="ngl_subject"><?php esc_html_e( 'Subject line', 'newsletter-glue' ); ?></td>
 					<td scope="col" class="ngl_status"><?php esc_html_e( 'Newsletter status', 'newsletter-glue' ); ?></td>
-					<td scope="col" class="ngl_datetime"><?php esc_html_e( 'Time, Date published', 'newsletter-glue' ); ?></td>
+					<td scope="col" class="ngl_datetime"><?php esc_html_e( 'Time, Date', 'newsletter-glue' ); ?></td>
 				</tr>
 			</thead>
 
