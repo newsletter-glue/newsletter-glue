@@ -36,6 +36,13 @@ function newsletterglue_preview_emails() {
 add_action( 'init', 'newsletterglue_preview_emails', 1000 );
 
 /**
+ * Checks if post is scheduled.
+ */
+function newsletterglue_is_post_scheduled( $post_id ) {
+	return get_post_meta( $post_id, '_ngl_future_send', true ) ? true : false;
+}
+
+/**
  * Returns true if free version is being used.
  */
 function newsletterglue_is_free_version() {
@@ -94,7 +101,7 @@ function newsletterglue_send( $post_id = 0, $test = false ) {
 	$api = new $classname();
 
 	// Send the newsletter.
-	//$response = $api->send_newsletter( $post_id, $data, $test );
+	$response = $api->send_newsletter( $post_id, $data, $test );
 
 	return $response;
 }
@@ -111,13 +118,20 @@ function newsletterglue_reset_newsletter( $post_id = 0 ) {
 		unset( $data[ 'sent' ] );
 	}
 
-	// Cancel draft status.
-	$data[ 'schedule' ] = 'immediately';
-
 	update_post_meta( $post_id, '_newsletterglue', $data );
 
 	delete_post_meta( $post_id, '_ngl_future_send' );
 
+	// campaigns.
+	$campaigns = get_post_meta( $post_id, '_ngl_results', true );
+	if ( $campaigns && is_array( $campaigns ) ) {
+		foreach( $campaigns as $key => $item ) {
+			if ( isset( $item[ 'type' ] ) && $item[ 'type' ] == 'schedule' ) {
+				unset( $campaigns[ $key ] );
+			}
+		}
+	}
+	update_post_meta( $post_id, '_ngl_results', $campaigns );
 }
 
 /**

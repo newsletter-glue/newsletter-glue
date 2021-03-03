@@ -83,7 +83,16 @@ function newsletterglue_get_current_page_url() {
 function newsletterglue_add_campaign_data( $post_id, $subject = '', $result = '', $id = '' ) {
 
 	$results   = ( array ) get_post_meta( $post_id, '_ngl_results', true );
-	$time      = current_time( 'timestamp' );
+	$time      = time();
+
+	// Remove any scheduled events.
+	if ( isset( $result[ 'type' ] ) && $result[ 'type' ] === 'schedule' ) {
+		foreach( $results as $key => $data ) {
+			if ( isset( $data[ 'type' ] ) && $data[ 'type' ] === 'schedule' ) {
+				unset( $results[ $key ] );
+			}
+		}
+	}
 
 	if ( $subject ) {
 		$result[ 'subject' ] = $subject;

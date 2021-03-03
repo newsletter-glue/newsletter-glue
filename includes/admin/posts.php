@@ -49,6 +49,9 @@ function newsletterglue_manage_posts_custom_column( $column, $post_id ) {
 						if ( $data['type'] == 'neutral' ) {
 							$text .= '<span class="ngl-state ngl-neutral">' . $data[ 'message' ] . '</span>';
 						}
+						if ( $data['type'] == 'schedule' ) {
+							$text .= '<span class="ngl-state ngl-schedule">' . $data[ 'message' ] . '</span>';
+						}
 						$text .= '<span><a href="#ngl-status-log" data-post-id="'. absint( $post_id ) . '" class="ngl-modal-log">' . __( 'View log', 'newsletter-glue' ) . '</a>';
 						if ( isset( $data['help'] ) && ! empty( $data['help'] ) ) {
 							$text .= ' | <span class="ngl-error"><a href="' . esc_url( $data[ 'help' ] ) . '">' . __( 'Get help', 'newsletter-glue' ) . '</a></span>';

@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 </div>
 
-<div class="ngl-metabox ngl-metabox-flex alt3">
+<div class="ngl-metabox ngl-metabox-flex alt3 ngl-sending-box <?php if ( ! $hide ) echo 'is-hidden'; ?>">
 
 	<div class="ngl-metabox-flex ngl-metabox-flex-toggle">
 

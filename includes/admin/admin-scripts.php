@@ -66,7 +66,8 @@ function newsletterglue_load_admin_scripts( $hook ) {
 			'no_posts_found'	=> __( 'There&rsquo;s nothing here yet. Add your first post above.', 'newsletter-glue' ),
 			'write_labels'		=> __( 'Add label', 'newsletter-glue' ),
 			'refreshing_html'	=> __( 'Refreshing...', 'newsletter-glue' ),
-			'refreshed_html'	=> __( 'Refreshed!', 'newsletter-glue' )
+			'refreshed_html'	=> __( 'Refreshed!', 'newsletter-glue' ),
+			'unknown_error'		=> __( 'Unknown error occured.', 'newsletter-glue' ),
 		) ) );
 
 		wp_enqueue_style( 'newsletterglue_material_icons' );

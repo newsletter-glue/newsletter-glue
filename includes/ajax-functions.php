@@ -48,7 +48,9 @@ function newsletterglue_ajax_get_log() {
 
 	<div class="ngl-modal-content">
 
-		<div class="ngl-modal-title"><a href="<?php echo get_edit_post_link( $post_id ); ?>"><?php echo esc_html( $post->post_title ); ?></a></div>
+		<div class="ngl-modal-title">
+			<a href="<?php echo get_edit_post_link( $post_id ); ?>"><?php echo esc_html( $post->post_title ); ?></a>
+		</div>
 
 		<table class="wp-list-table widefat fixed striped posts ngl-table-log">
 
@@ -63,6 +65,12 @@ function newsletterglue_ajax_get_log() {
 			<tbody>
 				<?php if ( ! empty( $results ) ) : ?>
 				<?php foreach( $results as $time => $data ) : if ( ! isset( $data['type'] ) ) continue; ?>
+				<?php
+					$campaign_time = get_date_from_gmt( date( 'Y-m-d H:i:s', $time ), 'G:i, Y/m/d' );
+					if ( ! empty( $data[ 'type' ] ) && $data[ 'type' ] == 'schedule' ) {
+						$campaign_time = get_the_time( 'G:i, Y/m/d', $post->ID );
+					}
+				?>
 				<tr>
 					<td class="ngl_subject"><?php echo esc_html( $data[ 'subject' ] ); ?></td>
 					<td class="ngl_status">
@@ -77,6 +85,9 @@ function newsletterglue_ajax_get_log() {
 							if ( $data['type'] == 'neutral' ) {
 								$text .= '<span class="ngl-state ngl-neutral">' . esc_html( $data[ 'message' ] ) . '</span>';
 							}
+							if ( $data['type'] == 'schedule' ) {
+								$text .= '<span class="ngl-state ngl-schedule">' . esc_html( $data[ 'message' ] ) . '</span>';
+							}
 							if ( isset( $data['help'] ) && ! empty( $data[ 'help' ] ) ) {
 								$text .= '<span class="ngl-error"><a href="' . esc_url( $data[ 'help' ] ) . '">' . esc_html__( 'Get help', 'newsletter-glue' ) . '</a></span>';
 							}
@@ -84,7 +95,7 @@ function newsletterglue_ajax_get_log() {
 							echo $text;
 						?>
 					</td>
-					<td class="ngl_datetime"><?php echo date_i18n( 'G:i, Y/m/d', $time ); ?></td>
+					<td class="ngl_datetime"><?php echo $campaign_time; ?></td>
 				</tr>
 				<?php endforeach; ?>
 				<?php endif; ?>

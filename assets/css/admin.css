@@ -662,8 +662,7 @@
 .ngl-top-msg {
 	display: flex;
 	align-items: center;
-	padding: 0 20px 0 0;
-	font-weight: bold;
+	padding: 0;
 	color: #0088A0;
 	font-size: 16px;
 }
@@ -676,10 +675,17 @@
 	margin: 0 16px 0 0;
 }
 
+.ngl-top-msg-view {
+	text-align: right;
+	padding: 30px 0 0;
+}
+
 .ngl-top-msg-view a {
 	text-decoration: none !important;
 	box-shadow: none !important;
 	color: #0D566C !important;
+	font-weight: 600;
+	margin: 0 0 0 40px;
 }
 
 .ngl-top-msg-view a:hover {
@@ -704,12 +710,19 @@
 }
 
 .ngl-metabox-flex.alt3 {
-	background: #F8FEFF;
-	padding: 17px 40px;
-	margin: 20px 0 0;
+	background: #fff;
+	padding: 40px 100px;
+	margin: 0;
 	min-height: 84px;
 	max-width: 100%;
 	box-sizing: border-box;
+	align-items: flex-start;
+}
+
+.ngl-metabox-flex.alt3.ngl-sending-box {
+	padding: 17px 40px;
+    background: #edffff;
+    align-items: center;
 }
 
 .ngl-metabox-flex-toggle {
@@ -2097,7 +2110,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 h4.ngl-edit-more {
-	padding: 30px 20px 14px 20px;
+	padding: 30px 20px;
 	margin: 0;
 	text-align: right;
 	font-weight: normal;
