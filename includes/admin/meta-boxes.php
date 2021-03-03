@@ -86,7 +86,18 @@ function newsletterglue_save_meta_box( $post_id, $post ) {
 
 	// Send it.
 	if ( $post->post_status == 'future' ) {
+
+		// Schedule newsletter.
 		update_post_meta( $post_id, '_ngl_future_send', 'yes' );
+
+		$scheduled = array(
+			'status'		=> 200,
+			'type'			=> 'schedule',
+			'message'		=> __( 'Scheduled', 'newsletter-glue' ),
+		);
+
+		newsletterglue_add_campaign_data( $post_id, $_POST[ 'ngl_subject' ], $scheduled, 0 );
+
 	} else {
 		newsletterglue_send( $post_id );
 	}

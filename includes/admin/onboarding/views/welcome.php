@@ -6,7 +6,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$show_getstarted = newsletterglue_is_free_version() || get_option( 'newsletterglue_pro_license' ) ? true : false;
+$show_getstarted = newsletterglue_is_free_version() ? true : false;
 
 ?>
 

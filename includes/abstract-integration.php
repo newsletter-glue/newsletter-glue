@@ -188,7 +188,7 @@ abstract class NGL_Abstract_Integration {
 	 * Test success.
 	 */
 	public function get_test_success_msg() {
-		return ' ';
+		return '&nbsp;';
 	}
 
 	/**
