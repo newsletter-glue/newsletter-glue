@@ -522,7 +522,7 @@
 
 	// Toggle metabox options.
 	$( document ).on( 'change', '#ngl_send_newsletter', function() {
-		if ( $( '.ngl-top-checkbox' ).length == 0 && $( '.ngl-no-connection' ).length == 0 ) {
+		if ( $( '.ngl-top-checkbox' ).length == 0 && $( '.ngl-no-connection' ).length == 0 && $( '.ngl-msgbox-wrap:visible' ).length == 0 && $( '.ngl-reset:visible' ).length == 0 ) {
 			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
 		}
 		ngl_validate_form();
@@ -577,7 +577,7 @@
 		event.preventDefault();
 
 		var el = $( this );
-		var post_id = $( this ).attr( 'data-post_id' );
+		var post_id = $( this ).attr( 'data-post-id' );
 
 		var data = 'action=newsletterglue_ajax_reset_newsletter&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id;
 
@@ -593,10 +593,7 @@
 			success: function( result ) {
 				el.removeClass( 'loading' );
 				$( '.ngl-reset, .ngl-msgbox-wrap' ).addClass( 'is-hidden' );
-				$( '.ngl-send' ).removeClass( 'is-hidden' );
-				if ( ! $( '#ngl_send_newsletter' ).is( ':checked' ) ) {
-					$( '#ngl_send_newsletter' ).trigger( 'click' );
-				}
+				$( '.ngl-send, .ngl-sending-box' ).removeClass( 'is-hidden' );
 			}
 		} );
 
@@ -636,12 +633,16 @@
 				console.log( response );
 				$( '.ngl-is-sending' ).hide();
 				$( '.ngl-action-link' ).show();
-				if  ( response.success ) {
+				if  ( response && response.success ) {
 					$( '.ngl-is-valid' ).show();
 					$( '.ngl-test-result.ngl-is-valid' ).show().html( response.success );
 				} else {
 					$( '.ngl-is-invalid' ).show();
-					$( '.ngl-test-result.ngl-is-invalid' ).show().html( response.fail );
+					if ( response && response.fail ) {
+						$( '.ngl-test-result.ngl-is-invalid' ).show().html( response.fail );
+					} else {
+						$( '.ngl-test-result.ngl-is-invalid' ).show().html( newsletterglue_params.unknown_error );
+					}
 				}
 
 			}
@@ -702,6 +703,7 @@
 			$( '.ngl-msgbox-wrap' ).removeClass( 'is-hidden' );
 			$( '.ngl-reset' ).addClass( 'is-hidden' );
 			$( '.ngl-top-checkbox' ).addClass( 'is-hidden' );
+			$( '.ngl-send, .ngl-sending-box' ).addClass( 'is-hidden' );
 		} else {
 			if ( $( '#ngl_double_confirm' ).val() == 'yes' ) {
 				$( '#ngl_double_confirm' ).val( 'no' );
@@ -1038,11 +1040,13 @@
 					el.find( 'a.ngl-invalid-state' ).removeClass( 'is-hidden' );
 					el.find( '.ngl-license-try-again' ).removeClass( 'is-hidden' );
 				} else {
+					// Onboarding.
 					if ( $( '.ngl-boarding-change' ).length > 0 && $( '.ngl-boarding' ).is( ':visible' ) ) {
 						el.parents( '.ngl-boarding' ).find( '.ngl-boarding-change' ).trigger( 'click' );
-						el.parents( '.ngl-boarding' ).find( '.ngl-boarding-btn, .ngl-boarding-help' ).show();
-						el.remove();
+						target.addClass( 'is-hidden' );
+						el.find( 'a.ngl-base-state' ).removeClass( 'is-hidden' );
 					} else {
+						// Other places.
 						el.find( '.ngl-license-wrap-success' ).removeClass( 'is-hidden' );
 						el.find( '.ngl-license-wrap-close' ).removeClass( 'is-hidden' );
 						$( '.ngl-license-review' ).remove();
@@ -1080,7 +1084,7 @@
 
 	// Show top toolbar checkbox.
 	$( window ).on( 'load', function() {
-		if ( $( '#ngl_send_newsletter' ).length && $( '.ngl-no-connection' ).length == 0 ) {
+		if ( $( '#ngl_send_newsletter' ).length && $( '.ngl-no-connection' ).length == 0 && $( '.ngl-msgbox-wrap:visible' ).length == 0 && $( '.ngl-reset:visible' ).length == 0 ) {
 			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
 		}
 		ngl_validate_email();
