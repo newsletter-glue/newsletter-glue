@@ -48,7 +48,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			<a href="#ngl-status-log" data-post-id="<?php echo absint( $post->ID ); ?>"><?php _e( 'View status log', 'newsletter-glue' ); ?></a>
 			<?php
 				if ( newsletterglue_is_post_scheduled( $post->ID ) ) {
-					echo '<a href="#" class="ngl-reset-newsletter" data-post-id="' . absint( $post->ID ) . '">' . __( 'Unschedule', 'newsletter-glue' ) . '</a>';
+					echo '<a href="#" class="ngl-reset-newsletter-pre">' . __( 'Unschedule', 'newsletter-glue' ) . '</a>';
+					echo '<div class="ngl-unschedule-confirm is-hidden">
+								<span class="ngl-unschedule-confirm-msg">' . __( 'Newsletter won’t be sent when post is published.', 'newsletter-glue' ) . '</span>
+								<span class="ngl-unschedule-confirm-actions">
+									<a href="#" class="ngl-reset-newsletter" data-post-id="' . absint( $post->ID ) . '">' . __( 'Confirm unschedule', 'newsletter-glue' ) . '</a>
+									<a href="#" class="ngl-unschedule-undo">' . __( 'Go back', 'newsletter-glue' ) . '</a>
+								</span>
+							</div>
+						';
 				} else {
 					echo '<a href="#" class="ngl-reset-newsletter" data-post-id="' . absint( $post->ID ) . '">' . __( 'Send another newsletter', 'newsletter-glue' ) . '</a>';
 				}

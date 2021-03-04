@@ -68,6 +68,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 			'refreshing_html'	=> __( 'Refreshing...', 'newsletter-glue' ),
 			'refreshed_html'	=> __( 'Refreshed!', 'newsletter-glue' ),
 			'unknown_error'		=> __( 'Unknown error occured.', 'newsletter-glue' ),
+			'loader'			=> '<span class="ngl-state-loader"><img src="' . NGL_PLUGIN_URL . 'assets/images/loading.gif" /><i>' . __( 'Working on your newsletter...', 'newsletter-glue' ) . '</span>',
 		) ) );
 
 		wp_enqueue_style( 'newsletterglue_material_icons' );
