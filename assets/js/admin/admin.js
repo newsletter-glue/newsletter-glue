@@ -704,6 +704,26 @@
 			$( '.ngl-reset' ).addClass( 'is-hidden' );
 			$( '.ngl-top-checkbox' ).addClass( 'is-hidden' );
 			$( '.ngl-send, .ngl-sending-box' ).addClass( 'is-hidden' );
+
+			if ( $( '.block-editor-writing-flow' ).length ) {
+				$( '.ngl-msgbox-wrap' ).find( 'div' ).css( { opacity: 0, 'pointer-events' : 'none' } );
+				$( '.ngl-msgbox-wrap' ).html( newsletterglue_params.loader );
+				setTimeout( function() {
+					var post_id = $( '#post_ID' ).val();
+					var data = 'action=newsletterglue_ajax_get_newsletter_state&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id;
+					$.ajax( {
+						type : 'post',
+						url : newsletterglue_params.ajaxurl,
+						data : data,
+						success: function( response ) {
+							if ( response ) {
+								$( '.ngl-msgbox-wrap' ).empty().html( response );
+							}
+						}
+					} );
+				}, 3000 );
+			}
+
 		} else {
 			if ( $( '#ngl_double_confirm' ).val() == 'yes' ) {
 				$( '#ngl_double_confirm' ).val( 'no' );
@@ -1055,6 +1075,24 @@
 			}
 		} );
 
+		return false;
+	} );
+
+	// Open reset links.
+	$( document ).on( 'click', '.ngl-reset-newsletter-pre', function( event ) {
+		event.preventDefault();
+		if ( $( '.ngl-unschedule-confirm' ).hasClass( 'is-hidden' ) ) {
+			$( '.ngl-unschedule-confirm' ).removeClass( 'is-hidden' );
+		}
+		return false;
+	} );
+
+	// Undo reset links.
+	$( document ).on( 'click', '.ngl-unschedule-undo', function( event ) {
+		event.preventDefault();
+		if ( ! $( '.ngl-unschedule-confirm' ).hasClass( 'is-hidden' ) ) {
+			$( '.ngl-unschedule-confirm' ).addClass( 'is-hidden' );
+		}
 		return false;
 	} );
 
