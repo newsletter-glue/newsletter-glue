@@ -665,6 +665,7 @@
 	padding: 0;
 	color: #0088A0;
 	font-size: 16px;
+	justify-content: flex-end;
 }
 
 .ngl-metabox-if-checked {
@@ -673,6 +674,11 @@
 
 .ngl-top-msg svg {
 	margin: 0 16px 0 0;
+}
+
+.ngl-msg-contain {
+	min-height: 160px;
+	min-width: 400px;
 }
 
 .ngl-top-msg-view {
@@ -709,14 +715,69 @@
 	color: #5b7275 !important;
 }
 
+.ngl-unschedule-confirm {
+    padding: 15px 0 0;
+    color: #888;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    left: 331px;
+}
+
+.ngl-unschedule-confirm-actions {
+	padding: 5px 0 0;
+}
+
+.ngl-unschedule-confirm-actions a {
+	color: #999;
+}
+
+.ngl-unschedule-confirm-actions a:hover {
+	color: #666;
+}
+
+.ngl-unschedule-confirm-actions a:first-child {
+	color: #C91101 !important;
+    font-weight: 600;
+}
+
+.ngl-unschedule-confirm a {
+	padding: 0;
+	margin: 0 30px 0 0;
+	font-weight: 400;
+}
+
 .ngl-metabox-flex.alt3 {
 	background: #fff;
-	padding: 40px 100px;
+	padding: 50px 50px 20px 50px;
 	margin: 0;
 	min-height: 84px;
 	max-width: 100%;
 	box-sizing: border-box;
 	align-items: flex-start;
+}
+
+.ngl-state-loader {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: 30px;
+	flex-direction: column;
+}
+
+.ngl-state-loader img {
+	display: block;
+	max-width: 140px;
+}
+
+.ngl-state-loader i {
+	display: block;
+    font-style: normal;
+    position: relative;
+    top: -40px;
+    color: #999;
 }
 
 .ngl-metabox-flex.alt3.ngl-sending-box {
@@ -733,6 +794,8 @@
 
 .ngl-metabox-flex.alt3.ngl-unready {
 	background: #FAFCFC;
+	padding: 17px 40px;
+    align-items: center;
 }
 
 .ngl-metabox-flex.alt3.ngl-unready label {
