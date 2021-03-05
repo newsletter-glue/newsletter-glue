@@ -64,11 +64,21 @@ add_filter( 'menu_order', 'newsletterglue_menu_order' );
  * Removes the parent menu item.
  */
 function newsletterglue_menu_order_fix() {
+
 	global $submenu;
 
-	if ( isset( $submenu['newsletter-glue'] ) ) {
-		// Remove 'newsletter-glue' sub menu item.
-		unset( $submenu['newsletter-glue'][0] );
+	if ( isset( $submenu ) && is_array( $submenu ) ) {
+		foreach( $submenu as $key => $array ) {
+			if ( $key === 'newsletter-glue' ) {
+				foreach( $array as $index => $value ) {
+					if ( isset( $value[2] ) && $value[2] === 'newsletter-glue' ) {
+						unset( $submenu[ 'newsletter-glue' ][ $index ] );
+					}
+				}
+			}
+		}
 	}
+
 }
-add_action( 'admin_head', 'newsletterglue_menu_order_fix' );
+add_action( 'admin_menu', 'newsletterglue_menu_order_fix', 1000 );
+add_action( 'admin_menu_editor-menu_replaced', 'newsletterglue_menu_order_fix', 1000 );
