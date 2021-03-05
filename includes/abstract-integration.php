@@ -42,6 +42,14 @@ abstract class NGL_Abstract_Integration {
 	}
 
 	/**
+	 * Last onboarding screen.
+	 */
+	public function load_last_onboarding_screen() {
+		$app = $this->app;
+		include NGL_PLUGIN_DIR . 'includes/admin/onboarding/views/last-step.php';
+	}
+
+	/**
 	 * Show test email options.
 	 */
 	public function show_test_email( $settings, $defaults, $post ) {
