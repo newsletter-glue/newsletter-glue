@@ -7,7 +7,7 @@ Tags: newsletter, email, mailchimp, mailerlite, blog post
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 7.0
-Stable Tag: 1.2.3
+Stable Tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -187,6 +187,25 @@ Yes! Check it out [here](https://newsletterglue.com).
 10. Newsletter Group Block (for showing/hiding content in your email/blog)
 
 == Changelog ==
+
+= 1.2.4, March 5, 2021 =
+
+**Improvements**
+
+* Updated the way notifications appear once your newsletter has been sent or scheduled. This makes it clearer that a newsletter has been sent.
+
+**Improved post scheduling workflow**
+
+* You can now unschedule posts inside the **Send as newsletter** metabox.
+* Scheduled post status can now be seen in the newsletter status log.
+
+**Bug fix**
+
+* Fixed bug caused by very long word without line breaks resulting in broken formatting.
+
+**Compatibility**
+
+* Fixed compatibility issue with **Admin Menu Editor** plugin causing our plugin settings to display **Cannot load newsletter-glue** message.
 
 = 1.2.3, February 23, 2021 =
 
