@@ -44,6 +44,8 @@ function newsletterglue_uninstall( $network_wide = false ) {
 	// Delete options.
 	$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'newsletterglue\_%';" );
 	$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '%\_newsletterglue\_%';" );
+	$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'ngl_articles\_%';" );
+	$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'ngl_embed\_%';" );
 
 	delete_transient( '_ngl_onboarding' );
 
