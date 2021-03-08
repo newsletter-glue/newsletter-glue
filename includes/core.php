@@ -693,7 +693,9 @@ p {
 }
 
 ul, ol, li {
+	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px;
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
+	text-align: <?php echo newsletterglue_get_theme_option( 'p_align' ); ?>;
 }
 
 a {

@@ -178,8 +178,8 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 		$lists			= ! empty( $data['lists'] ) ? $data['lists'] : '';
 		$brand			= ! empty( $data['brand'] ) ? $data['brand'] : '';
 		$schedule   	= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
-		$track_opens 	= isset( $data[ 'track_opens' ] ) ? 1 : 0;
-		$track_clicks 	= isset( $data[ 'track_clicks' ] ) ? 1 : 0;
+		$track_opens 	= ! empty( $data[ 'track_opens' ] ) ? 1 : 0;
+		$track_clicks 	= ! empty( $data[ 'track_clicks' ] ) ? 1 : 0;
 
 		$post = get_post( $post_id );
 
