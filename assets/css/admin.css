@@ -52,6 +52,14 @@
 	padding-right: 40px !important;
 }
 
+.ngl-cards {
+	display: flex;
+}
+
+.ngl-cards .ngl-card {
+	margin: 0 60px 0 0;
+}
+
 /* Top bar */
 .ngl-bar {
     min-height: 68px;
