@@ -48,7 +48,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	/**
 	 * Add Integration.
 	 */
-	public function add_integration() {
+	public function add_integration( $key ) {
 
 		// Get API key from input.
 		$api_key = isset( $_POST['ngl_campaignmonitor_key'] ) ? sanitize_text_field( $_POST['ngl_campaignmonitor_key'] ) : '';
@@ -56,7 +56,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		// Test mode. no key provided.
 		if ( ! $api_key ) {
 			$integrations 		= get_option( 'newsletterglue_integrations' );
-			$options    		= isset( $integrations[ $this->app ] ) ? $integrations[ $this->app] : '';
+			$options    		= isset( $integrations[ $key ] ) ? $integrations[ $key ] : '';
 			if ( isset( $options[ 'api_key'] ) ) {
 				$api_key = $options[ 'api_key' ];
 			}
@@ -76,7 +76,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 
 		if ( ! $valid_account ) {
 
-			$this->remove_integration();
+			$this->remove_integration( $key );
 
 			$result = array( 'response' => 'invalid' );
 
@@ -92,9 +92,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 				$account[ 'Name' ]		= $client_data[0]->Name;
 			}
 
-			$this->save_integration( $api_key, $account );
-
-			$result = array( 'response' => 'successful' );
+			$result = $this->save_integration( $key, $api_key, $account );
 
 			update_option( 'newsletterglue_campaignmonitor', $account );
 
@@ -106,16 +104,14 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	/**
 	 * Save Integration.
 	 */
-	public function save_integration( $api_key = '', $account = '' ) {
+	public function save_integration( $key, $api_key = '', $account = '' ) {
 
-		delete_option( 'newsletterglue_integrations' );
+		$integration = array(
+			'key'		=> $key,
+			'api_key'	=> $api_key,
+		);
 
-		$integrations = get_option( 'newsletterglue_integrations' );
-
-		$integrations[ $this->app ] = array();
-		$integrations[ $this->app ][ 'api_key' ] = $api_key;
-
-		update_option( 'newsletterglue_integrations', $integrations );
+		$result = $this->update_integration( $integration );
 
 		// Add default options.
 		$globals = get_option( 'newsletterglue_options' );
@@ -131,6 +127,8 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 			update_option( 'newsletterglue_options', $globals );
 
 		}
+
+		return $result;
 	}
 
 	/**
@@ -453,7 +451,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	/**
 	 * Get connect settings.
 	 */
-	public function get_connect_settings( $integrations = array() ) {
+	public function get_connect_settings( $integrations = array(), $key = null ) {
 
 		$app = $this->app;
 

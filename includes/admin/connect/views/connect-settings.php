@@ -19,7 +19,7 @@ $api 	= new $class;
 
 	<form action="" method="get">
 
-		<?php $api->get_connect_settings( $integrations ); ?>
+		<?php $api->get_connect_settings( $integrations, $key ); ?>
 
 		<div class="ngl-btn">
 			<button class="ui primary button" type="submit"><i class="sync alternate icon"></i><?php esc_html_e( 'Connect', 'newsletter-glue' ); ?></button>

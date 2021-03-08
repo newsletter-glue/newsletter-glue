@@ -24,29 +24,38 @@
 		}
 	}
 
-	function ngl_show_testing_screen() {
-		$( '.ngl-card-state.is-testing' ).removeClass( 'ngl-hidden' );
-		$( '.ngl-card-state.is-invalid' ).addClass( 'ngl-hidden' );
+	function ngl_show_testing_screen( context ) {
+		context.find( '.ngl-card-state.is-testing' ).removeClass( 'ngl-hidden' );
+		context.find( '.ngl-card-state.is-invalid' ).addClass( 'ngl-hidden' );
 	}
 
-	function ngl_show_not_connected_screen() {
-		$( '.ngl-card-state.is-testing' ).addClass( 'ngl-hidden' );
-		$( '.ngl-card-state.is-invalid' ).removeClass( 'ngl-hidden' );
+	function ngl_show_not_connected_screen( context ) {
+		context.find( '.ngl-card-state.is-testing' ).addClass( 'ngl-hidden' );
+		context.find( '.ngl-card-state.is-invalid' ).removeClass( 'ngl-hidden' );
 	}
 
-	function ngl_show_connected_screen() {
+	function ngl_show_connected_screen( context ) {
 
-		$( '.ngl-card-state.is-testing' ).addClass( 'ngl-hidden' );
-		$( '.ngl-card-state.is-working' ).removeClass( 'ngl-hidden' );
+		context.find( '.ngl-card-state.is-testing' ).addClass( 'ngl-hidden' );
+		context.find( '.ngl-card-state.is-working' ).removeClass( 'ngl-hidden' );
 
-		if ( $( '.ngl-card-view' ).length ) {
+		if ( context.find( '.ngl-card-view' ).length ) {
 			setTimeout( function() {
-				$( '.ngl-card-state, .ngl-card-add2' ).addClass( 'ngl-hidden' );
-				if ( $( '.ngl-card-view-' + ngl_app ).length ) {
-					$( '.ngl-card-view-' + ngl_app ).removeClass( 'ngl-hidden' );
+				context.find( '.ngl-card-state, .ngl-card-add2' ).addClass( 'ngl-hidden' );
+				if ( context.find( '.ngl-card-view-' + ngl_app ).length ) {
+					context.find( '.ngl-card-view-' + ngl_app ).removeClass( 'ngl-hidden' );
 				} else {
-					$( '.ngl-card-view' ).removeClass( 'ngl-hidden' );
+					context.find( '.ngl-card-view' ).removeClass( 'ngl-hidden' );
 				}
+				var cloned = $( '.ngl-card-masked' ).clone();
+				cloned.insertBefore( '.ngl-card-masked' );
+				cloned.removeClass( 'ngl-card-masked' );
+				cloned.find( '.ngl-app' ).dropdown( 'setting', 'onChange', function( val ) {
+					var context = $( this ).parents( '.ngl-card' );
+					context.find( '.ngl-card-base' ).addClass( 'ngl-hidden' );
+					context.find( '.ngl-card-' + val ).removeClass( 'ngl-hidden' );
+					ngl_app = val;
+				} );
 			}, 2000 );
 		} else {
 			// We are in onboarding.
@@ -302,14 +311,15 @@
 
 	// When a app is selected.
 	$( '.ngl-app' ).dropdown( 'setting', 'onChange', function( val ) {
-		$( this ).parents( '.ngl-card-base' ).addClass( 'ngl-hidden' );
-		$( '.ngl-card-' + val ).removeClass( 'ngl-hidden' );
+		var context = $( this ).parents( '.ngl-card' );
+		context.find( '.ngl-card-base' ).addClass( 'ngl-hidden' );
+		context.find( '.ngl-card-' + val ).removeClass( 'ngl-hidden' );
 		ngl_app = val;
 	} );
 
 	// Back one screen.
 	$( document ).on( 'click', '.ngl-back', function( event ) {
-		
+		event.preventDefault();
 		if ( ! ngl_back_screen ) {
 			var screen = $( this ).attr( 'data-screen' );
 			$( '.ngl-app' ).dropdown( 'clear' );
@@ -318,6 +328,7 @@
 		} else {
 			$( this ).parent().parent().addClass( 'ngl-hidden' );
 		}
+		return false;
 	} );
 
 	// License form.
@@ -373,9 +384,13 @@
 	$( document ).on( 'submit', '.ngl-fields form', function( event ) {
 		event.preventDefault();
 
+		var context = $( this ).parents( '.ngl-card' );
+		var key		= context.attr( 'data-key' ) ? context.attr( 'data-key' ) : 'increment';
 		var theform = $( this );
 		var app 	= $( this ).parents( '.ngl-card-add2' ).attr( 'data-app' );
-		var data 	= theform.serialize() + '&action=newsletterglue_ajax_connect_api&security=' + newsletterglue_params.ajaxnonce + '&app=' + app;
+		var data 	= theform.serialize() + '&action=newsletterglue_ajax_connect_api&security=' + newsletterglue_params.ajaxnonce + '&app=' + app + '&key=' + key;
+
+		console.log( data );
 
 		var stop_form = false;
 		if ( ! $( '.ngl-card-' + app ).hasClass( 'ngl-hidden' ) ) {
@@ -396,16 +411,17 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			beforeSend: function() {
-				ngl_show_testing_screen();
+				ngl_show_testing_screen( context );
 			},
 			success: function( result ) {
 				console.log( result );
+				context.attr( 'data-key', result.key );
 				setTimeout( function() {
 					if ( result.response === 'invalid' ) {
-						ngl_show_not_connected_screen();
+						ngl_show_not_connected_screen( context );
 					}
 					if ( result.response === 'successful' ) {
-						ngl_show_connected_screen();
+						ngl_show_connected_screen( context );
 					}
 				}, 1000 );
 			}
@@ -427,12 +443,13 @@
 	$( document ).on( 'click', '.ngl-ajax-test-connection', function( event ) {
 		event.preventDefault();
 
-		ngl_app = $( this ).parents( '.ngl-card-view' ).attr( 'data-app' );
+		var context = $( this ).parents( '.ngl-card' );
+		ngl_app = context.find( '.ngl-card-view' ).attr( 'data-app' );
 
 		if ( ngl_app ) {
-			$( '.ngl-card-add2.ngl-card-' + ngl_app + ' .ngl-fields form' ).trigger( 'submit' );
+			context.find( '.ngl-card-add2.ngl-card-' + ngl_app + ' .ngl-fields form' ).trigger( 'submit' );
 		} else {
-			$( '.ngl-card-add2 .ngl-license-form' ).trigger( 'submit' );
+			context.find( '.ngl-card-add2 .ngl-license-form' ).trigger( 'submit' );
 		}
 
 		return false;
@@ -461,15 +478,16 @@
 	// Edit connection details.
 	$( document ).on( 'click', '.ngl-ajax-edit-connection', function( event ) {
 		event.preventDefault();
-		$( '.ngl-card-state.is-invalid' ).addClass( 'ngl-hidden' );
+		var context = $( this ).parents( '.ngl-card' );
+		context.find( '.ngl-card-state.is-invalid' ).addClass( 'ngl-hidden' );
 		if ( $( this ).parents( '.ngl-card-view' ).is( ':visible' ) ) {
-			ngl_app = $( this ).parents( '.ngl-card-view' ).attr( 'data-app' );
-			ngl_back_screen = $( this ).parents( '.ngl-card-view-' + ngl_app );
+			ngl_app = context.find( '.ngl-card-view' ).attr( 'data-app' );
+			ngl_back_screen = context.find( '.ngl-card-view-' + ngl_app );
 		}
 		if ( ngl_app ) {
-			$( '.ngl-card-add2.ngl-card-' + ngl_app ).removeClass( 'ngl-hidden' );
+			context.find( '.ngl-card-add2.ngl-card-' + ngl_app ).removeClass( 'ngl-hidden' );
 		} else {
-			$( '.ngl-card-add2.ngl-hidden' ).removeClass( 'ngl-hidden' );
+			context.find( '.ngl-card-add2.ngl-hidden' ).removeClass( 'ngl-hidden' );
 		}
 		return false;
 	} );
@@ -477,9 +495,11 @@
 	// Remove connection.
 	$( document ).on( 'click', '.ngl-ajax-remove-connection', function( event ) {
 		event.preventDefault();
-		ngl_app = $( this ).parents( '.ngl-card-view' ).attr( 'data-app' );
-		$( '.ngl-ajax-remove' ).attr( 'data-ngl_app', ngl_app );
-		$( '.ngl-card-state.confirm-remove' ).removeClass( 'ngl-hidden' );
+		var context = $( this ).parents( '.ngl-card' );
+		ngl_app = context.find( '.ngl-card-view:not(.ngl-hidden)' ).attr( 'data-app' );
+		context.find( '.ngl-ajax-remove' ).attr( 'data-ngl_app', ngl_app );
+		context.find( '.ngl-card-state.confirm-remove' ).removeClass( 'ngl-hidden' );
+		console.log( ngl_app );
 		return false;
 	} );
 
@@ -487,9 +507,11 @@
 	$( document ).on( 'click', '.ngl-ajax-remove', function( event ) {
 		event.preventDefault();
 
-		$( '.ngl-card-state.confirm-remove' ).addClass( 'ngl-hidden' );
-		$( '.ngl-card-state.is-removed' ).removeClass( 'ngl-hidden' );
-		$( '.ngl-app' ).dropdown( 'clear' );
+		var context = $( this ).parents( '.ngl-card' );
+		var key     = context.attr( 'data-key' );
+		context.find( '.ngl-card-state.confirm-remove' ).addClass( 'ngl-hidden' );
+		context.find( '.ngl-card-state.is-removed' ).removeClass( 'ngl-hidden' );
+		context.find( '.ngl-app' ).dropdown( 'clear' );
 
 		var app = $( this ).attr( 'data-ngl_app' );
 		if ( app ) {
@@ -499,10 +521,12 @@
 		}
 
 		if ( app ) {
-			var data = 'action=' + action + '&security=' + newsletterglue_params.ajaxnonce + '&app=' + app;
+			var data = 'action=' + action + '&security=' + newsletterglue_params.ajaxnonce + '&app=' + app + '&key=' + key;
 		} else {
 			var data = 'action=' + action + '&security=' + newsletterglue_params.ajaxnonce;
 		}
+
+		console.log( data );
 
 		$.ajax( {
 			type : 'post',
@@ -511,7 +535,7 @@
 			success: function( result ) {
 
 				setTimeout( function() {
-					ngl_show_first_screen();
+					context.remove();
 				}, 2000 );
 
 			}
