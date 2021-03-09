@@ -125,6 +125,10 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 			$content = '';
 		}
 
+		if ( defined( 'NGL_IN_EMAIL' ) && $content ) {
+			$content = $this->tableize( $content );
+		}
+
 		return $content;
 
 	}
@@ -254,6 +258,39 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		$content = newsletterglue_remove_div( $content, 'ngl-author' );
 
 		return $content;
+	}
+
+	/**
+	 * Tableize.
+	 */
+	public function tableize( $content ) {
+
+		$html = new simple_html_dom();
+		$html->load( $content );
+		$block = $html->find('div.wp-block-newsletterglue-author',0)->outertext;
+
+		$wrap = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr><td class="ngl-td-clean">';
+		$wrap .= $block;
+		$wrap .= '</td></tr></table>';
+
+		$content = str_replace( $block, $wrap, $content );
+
+		$author_pic  = $html->find('div.ngl-author-pic',0)->outertext;
+		$author_meta = $html->find('div.ngl-author-meta',0)->outertext;
+
+		$author_pic_wrap = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr><td class="ngl-td-clean" style="width: 70px; vertical-align: top;">';
+		$author_pic_wrap .= $author_pic;
+		$author_pic_wrap .= '</td>';
+
+		$author_meta_wrap = '<td class="ngl-td-clean">';
+		$author_meta_wrap .= $author_meta;
+		$author_meta_wrap .= '</td></tr></table>';
+
+		$content = str_replace( $author_pic, $author_pic_wrap, $content );
+		$content = str_replace( $author_meta, $author_meta_wrap, $content );
+
+		return $content;
+
 	}
 
 }
