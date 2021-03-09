@@ -294,7 +294,6 @@ function newsletterglue_ajax_connect_api() {
 
 	// Get app.
 	$app = isset( $_POST['app'] ) ? sanitize_text_field( $_POST['app'] ) : '';
-	$key = isset( $_POST['key'] ) ? sanitize_text_field( $_POST['key'] ) : 'increment';
 
 	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {
 		wp_die( -1 );
@@ -304,7 +303,7 @@ function newsletterglue_ajax_connect_api() {
 
 	$classname 	= 'NGL_' . ucfirst( $app );
 	$api		= new $classname();
-	$result 	= $api->add_integration( $key );
+	$result 	= $api->add_integration();
 
 	wp_send_json( $result );
 
@@ -326,7 +325,6 @@ function newsletterglue_ajax_remove_api() {
 
 	// Get app.
 	$app = isset( $_POST['app'] ) ? sanitize_text_field( $_POST['app'] ) : '';
-	$key = isset( $_POST['key'] ) ? absint( $_POST['key'] ) : '';
 
 	if ( ! in_array( $app, array_keys( newsletterglue_get_supported_apps() ) ) ) {
 		wp_die( -1 );
@@ -336,7 +334,7 @@ function newsletterglue_ajax_remove_api() {
 
 	$classname 	= 'NGL_' . ucfirst( $app );
 	$api		= new $classname();
-	$result 	= $api->remove_integration( $key );
+	$result 	= $api->remove_integration();
 
 	wp_send_json( $result );
 

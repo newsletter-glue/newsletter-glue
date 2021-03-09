@@ -48,7 +48,7 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 	/**
 	 * Add Integration.
 	 */
-	public function add_integration( $key ) {
+	public function add_integration() {
 
 		// Get API key from input.
 		$api_key 	= isset( $_POST['ngl_activecampaign_key'] ) ? sanitize_text_field( $_POST['ngl_activecampaign_key'] ) : '';
@@ -57,7 +57,7 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 		// Test mode. no key provided.
 		if ( ! $api_key ) {
 			$integrations 	= get_option( 'newsletterglue_integrations' );
-			$options  		= isset( $integrations[ $key ] ) ? $integrations[ $key ] : '';
+			$options  		= isset( $integrations[ $this->app ] ) ? $integrations[ $this->app] : '';
 			if ( isset( $options[ 'api_key'] ) ) {
 				$api_key = $options[ 'api_key' ];
 			}
@@ -72,7 +72,7 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 
 		if ( ! isset( $account->email ) ) {
 
-			$this->remove_integration( $key );
+			$this->remove_integration();
 
 			$result = array( 'response' => 'invalid' );
 
@@ -80,7 +80,9 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 
 		} else {
 
-			$result = $this->save_integration( $key, $api_key, $api_url, ( array ) $account );
+			$this->save_integration( $api_key, $api_url, ( array ) $account );
+
+			$result = array( 'response' => 'successful' );
 
 			update_option( 'newsletterglue_activecampaign', ( array ) $account );
 
@@ -92,15 +94,17 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 	/**
 	 * Save Integration.
 	 */
-	public function save_integration( $key, $api_key = '', $api_url = '', $account = array() ) {
+	public function save_integration( $api_key = '', $api_url = '', $account = array() ) {
 
-		$integration = array(
-			'key'		=> $key,
-			'api_key'	=> $api_key,
-			'api_url'	=> $api_url,
-		);
+		delete_option( 'newsletterglue_integrations' );
 
-		$result = $this->update_integration( $integration );
+		$integrations = get_option( 'newsletterglue_integrations' );
+
+		$integrations[ $this->app ] = array();
+		$integrations[ $this->app ][ 'api_key' ] 		= $api_key;
+		$integrations[ $this->app ][ 'api_url' ] 		= $api_url;
+
+		update_option( 'newsletterglue_integrations', $integrations );
 
 		// Add default options.
 		$globals = get_option( 'newsletterglue_options' );
@@ -116,8 +120,6 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 			update_option( 'newsletterglue_options', $globals );
 
 		}
-
-		return $result;
 	}
 
 	/**
@@ -357,7 +359,7 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 	/**
 	 * Get connect settings.
 	 */
-	public function get_connect_settings( $integrations = array(), $key = null ) {
+	public function get_connect_settings( $integrations = array() ) {
 
 		$app = $this->app;
 

@@ -248,7 +248,7 @@ abstract class NGL_Abstract_Integration {
 	/**
 	 * Get connect settings.
 	 */
-	public function get_connect_settings( $integrations = array(), $key = null ) {
+	public function get_connect_settings( $integrations = array() ) {
 
 	}
 
@@ -269,61 +269,13 @@ abstract class NGL_Abstract_Integration {
 	/**
 	 * Remove Integration.
 	 */
-	public function remove_integration( $key = null ) {
+	public function remove_integration() {
 
-		$integrations = get_option( 'newsletterglue_integrations' );
-
-		if ( isset( $integrations[ $key ] ) ) {
-			unset( $integrations[ $key ] );
-		}
-
-		if ( ! empty( $integrations ) ) {
-			update_option( 'newsletterglue_integrations', $integrations );
-		} else {
-			delete_option( 'newsletterglue_integrations' );
-		}
+		delete_option( 'newsletterglue_integrations' );
 
 		$response = array( 'successful' => true );
 
 		return $response;
-	}
-
-	/**
-	 * Update Integration.
-	 */
-	public function update_integration( $integration ) {
-
-		$key = $integration[ 'key' ];
-
-		$integrations = get_option( 'newsletterglue_integrations' );
-
-		if ( $key === 'increment' ) {
-			if ( ! empty( $integrations ) ) {
-				$key = max( array_keys( $integrations ) ) + 1;
-			} else {
-				$key = 0;
-			}
-		}
-
-		$integrations[ $key ] = array();
-
-		foreach( $integration as $input => $value ) {
-			if ( $input != 'key' ) {
-				$integrations[ $key ][ $input ] = $value;
-			}
-		}
-
-		$integrations[ $key ][ 'esp' ] = $this->app;
-
-		update_option( 'newsletterglue_integrations', $integrations );
-
-		$response = array(
-			'response'	=> 'successful',
-			'key'		=> $key,
-		);
-
-		return $response;
-
 	}
 
 }

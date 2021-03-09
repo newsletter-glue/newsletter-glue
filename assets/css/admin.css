@@ -52,19 +52,6 @@
 	padding-right: 40px !important;
 }
 
-.ngl-cards {
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.ngl-cards .ngl-card {
-	margin: 0 60px 60px 0;
-}
-
-.ngl-card-masked {
-	display: none !important;
-}
-
 /* Top bar */
 .ngl-bar {
     min-height: 68px;
@@ -272,7 +259,7 @@
 	background: #fff;
     flex-direction: column;
 	border: 1px solid #e2e2e2;
-	z-index: 30;
+	z-index: 40;
 }
 
 .ngl-card-view-logo {

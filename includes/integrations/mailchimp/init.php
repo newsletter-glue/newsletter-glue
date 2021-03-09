@@ -44,7 +44,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	/**
 	 * Add Integration.
 	 */
-	public function add_integration( $key ) {
+	public function add_integration() {
 
 		// Get API key from input.
 		$api_key = isset( $_POST['ngl_mailchimp_key'] ) ? sanitize_text_field( $_POST['ngl_mailchimp_key'] ) : '';
@@ -52,7 +52,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 		// Test mode. no key provided.
 		if ( ! $api_key ) {
 			$integrations 	= get_option( 'newsletterglue_integrations' );
-			$options		= isset( $integrations[ $key ] ) ? $integrations[ $key ] : '';
+			$options		= isset( $integrations[ $this->app ] ) ? $integrations[ $this->app ] : '';
 			if ( isset( $options[ 'api_key'] ) ) {
 				$api_key = $options[ 'api_key' ];
 			}
@@ -68,7 +68,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 		if ( ! $valid_account ) {
 
-			$this->remove_integration( $key );
+			$this->remove_integration();
 
 			$result = array( 'response' => 'invalid' );
 
@@ -76,7 +76,9 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 		} else {
 
-			$result = $this->save_integration( $key, $api_key, $account );
+			$this->save_integration( $api_key, $account );
+
+			$result = array( 'response' => 'successful' );
 
 			update_option( 'newsletterglue_mailchimp', $account );
 
@@ -88,14 +90,16 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	/**
 	 * Save Integration.
 	 */
-	public function save_integration( $key, $api_key = '', $account = '' ) {
+	public function save_integration( $api_key = '', $account = '' ) {
 
-		$integration = array(
-			'key'		=> $key,
-			'api_key'	=> $api_key,
-		);
+		delete_option( 'newsletterglue_integrations' );
 
-		$result = $this->update_integration( $integration );
+		$integrations = get_option( 'newsletterglue_integrations' );
+
+		$integrations[ $this->app ] = array();
+		$integrations[ $this->app ][ 'api_key' ] = $api_key;
+
+		update_option( 'newsletterglue_integrations', $integrations );
 
 		// Add default options.
 		$globals = get_option( 'newsletterglue_options' );
@@ -111,8 +115,6 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 			update_option( 'newsletterglue_options', $globals );
 
 		}
-
-		return $result;
 	}
 
 	/**
@@ -562,7 +564,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	/**
 	 * Get connect settings.
 	 */
-	public function get_connect_settings( $integrations = array(), $key = null ) {
+	public function get_connect_settings( $integrations = array() ) {
 
 		$app = $this->app;
 
