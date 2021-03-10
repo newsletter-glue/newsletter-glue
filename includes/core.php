@@ -668,17 +668,15 @@ body {
 }
 
 body, #wrapper {
-	background:#000;
-	min-height:1000px;
-	color:#fff;
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:12px;
+	color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
 }
 
-span.yshortcuts { color:#000; background-color:none; border:none;}
+span.yshortcuts { color: #000; background-color:none; border:none;}
 span.yshortcuts:hover,
 span.yshortcuts:active,
-span.yshortcuts:focus {color:#000; background-color:none; border:none;}
+span.yshortcuts:focus {color: #000; background-color:none; border:none;}
 
 table td {
 	border-collapse: collapse;
