@@ -191,7 +191,7 @@ $show_edit_controls = false;
 						echo $display_date;
 					else :
 						if ( $image_position == 'left' ) :
-							echo '<div class="ngl-article-left-mobile -emogrifier-keep">' . $display_image . '</div>';
+							echo '<div class="ngl-article-left-mobile -emogrifier-keep">' . $display_image . $display_labels . $display_title . $display_excerpt . $display_date . '</div>';
 							echo '<div class="ngl-article-left">' . $display_image . '</div>';
 							echo '<div class="ngl-article-right">';
 								echo $display_labels;
@@ -201,7 +201,7 @@ $show_edit_controls = false;
 							echo '</div>';
 						endif;
 						if ( $image_position == 'right' ) :
-							echo '<div class="ngl-article-left-mobile -emogrifier-keep">' . $display_image . '</div>';
+							echo '<div class="ngl-article-left-mobile -emogrifier-keep">' . $display_image . $display_labels . $display_title . $display_excerpt . $display_date . '</div>';
 							echo '<div class="ngl-article-left">';
 								echo $display_labels;
 								echo $display_title;

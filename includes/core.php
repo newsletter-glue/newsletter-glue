@@ -857,6 +857,7 @@ ul.blocks-gallery-grid {
 	border: 0;
 	padding: 0;
 	width: 100%;
+	font-size: inherit !important;
 }
 
 #template_body table.ngl-table-tiny {

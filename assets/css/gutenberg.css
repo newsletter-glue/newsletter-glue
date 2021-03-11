@@ -498,7 +498,9 @@ p.ngl-form-checkbox input[type=checkbox] {
 	}
 
 	.ngl-article-img-right .ngl-article-right,
-	.ngl-article-img-left .ngl-article-left	{
+	.ngl-article-img-right .ngl-article-left,
+	.ngl-article-img-left .ngl-article-left,
+	.ngl-article-img-left .ngl-article-right {
 		display: none !important;
 	}
 

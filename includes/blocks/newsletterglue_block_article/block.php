@@ -300,8 +300,13 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		include( NGL_PLUGIN_DIR . 'includes/blocks/' . $this->id . '/templates/embed.php' );
 
-		return ob_get_clean();
+		$content = ob_get_clean();
+		
+		if ( defined( 'NGL_IN_EMAIL' ) && $content ) {
+			$content = $this->tableize( $content, $attributes );
+		}
 
+		return $content;
 	}
 
 	/**
@@ -341,8 +346,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	public function email_css() {
 		?>
 .ngl-articles {
-	margin-top: 20px;
-	margin-bottom: 20px;
+	padding: 20px 0;
 }
 
 .ngl-article img {
@@ -455,6 +459,10 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		display: block !important;
 	}
 
+	.ngl-table-article {
+		display: none !important;
+	}
+
 	.ngl-article-left,
 	.ngl-article-right {
 		width: 100% !important;
@@ -462,7 +470,9 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	}
 
 	.ngl-article-img-right .ngl-article-right,
-	.ngl-article-img-left .ngl-article-left	{
+	.ngl-article-img-right .ngl-article-left,
+	.ngl-article-img-left .ngl-article-left,
+	.ngl-article-img-left .ngl-article-right {
 		display: none !important;
 	}
 
@@ -1202,6 +1212,61 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		}
 
 		return $fallback;
+
+	}
+
+	/**
+	 * Tableize.
+	 */
+	public function tableize( $content, $attributes = array() ) {
+
+		$output = new simple_html_dom();
+		$output->load( $content );
+
+		$table_ratio 	= isset( $attributes[ 'table_ratio' ] ) ? $attributes[ 'table_ratio' ] : 'full';
+		$image_position = isset( $attributes[ 'image_position' ] ) ? $attributes[ 'image_position' ] : 'left';
+
+		$width = 'auto';
+
+		// Left side.
+		$replace = 'div.ngl-article.ngl-article-img-left > .ngl-article-left, div.ngl-article.ngl-article-img-right > .ngl-article-left';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			if ( $table_ratio == '30_70' ) {
+				$width = '30%';
+			}
+			if ( $table_ratio == '70_30' ) {
+				$width = '70%';
+			}
+			if ( $table_ratio == '50_50' ) {
+				$width = '50%';
+			}
+			$output->find( $replace, $key )->outertext = '<td style="width: ' . $width . '; vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
+		}
+
+		// Right side.
+		$replace = 'div.ngl-article.ngl-article-img-left > .ngl-article-right, div.ngl-article.ngl-article-img-right > .ngl-article-right';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			if ( $table_ratio == '30_70' ) {
+				$width = '70%';
+			}
+			if ( $table_ratio == '70_30' ) {
+				$width = '30%';
+			}
+			if ( $table_ratio == '50_50' ) {
+				$width = '50%';
+			}
+			$output->find( $replace, $key )->outertext = '<td style="width:20px;vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean"></td><td style="width: ' . $width . ';vertical-align: top;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
+		}
+
+		// Left and Right article wrappers.
+		$replace = 'div.ngl-article.ngl-article-img-left, div.ngl-article.ngl-article-img-right';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean ngl-table-article" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;"><tr>' . $element->innertext . '</tr></table>';
+		}
+
+		$output->save();
+
+		return ( string ) $output;
 
 	}
 
