@@ -442,7 +442,13 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	// Add columns wrapper as a table.
 	$replace = '.wp-block-columns';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->outertext = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table>';
+		$output->find( $replace, $key )->innertext = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: auto;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 25px;"><tr>' . $element->innertext . '</tr></table>';
+	}
+
+	// Change all figures.
+	$replace = 'figure.wp-block-table';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$output->find( $replace, $key )->outertext = '<div style="margin-bottom: 25px;">' . $element->innertext . '</div>';
 	}
 
 	$output->save();
@@ -836,17 +842,20 @@ ul.blocks-gallery-grid {
 }
 
 #template_body td table {
-	table-layout: fixed;
+	table-layout: auto;
 	width: 100%;
 	border-collapse: collapse;
-	border: 1px solid #dbdbdb;
+	border: 0;
+}
+
+#template_body table.has-fixed-layout {
+	table-layout: fixed !important;
 }
 
 #template_body td table td {
-	width: 50%;
 	padding: 10px;
 	font-size: 16px;
-	border: 1px solid #dcd7ca;
+	border: 1px solid #eee;
 }
 
 #template_body td table img {
