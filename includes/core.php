@@ -989,6 +989,15 @@ p.ngl-unsubscribe {
 		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
 	}
 
+	p.ngl-credits,
+	p.ngl-unsubscribe {
+		font-size: 13px !important;
+	}
+
+	p.ngl-unsubscribe {
+		padding-bottom: 20px !important;
+	}
+
 	#template_inner img {
 		width: auto;
 		height: auto;
