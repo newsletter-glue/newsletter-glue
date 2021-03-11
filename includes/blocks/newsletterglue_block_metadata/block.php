@@ -196,6 +196,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		.ngl-metadata {
 			font-size: 12px;
 			padding: 20px 0;
+			min-height: 30px;
 		}
 
 		.ngl-metadata > div {
@@ -293,7 +294,27 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 
 		$replace = '.wp-block-newsletterglue-metadata';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->innertext = '<table class="ngl-table-tiny" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table>';
+
+			$align = 'left';
+
+			// Has style.
+			if ( $output->find( $replace, $key )->style ) {
+				$s = $output->find( $replace, $key )->style;
+				$results = [];
+				$styles = explode(';', $s);
+
+				foreach ($styles as $style) {
+					$properties = explode(':', $style);
+					if (2 === count($properties)) {
+						$results[trim($properties[0])] = trim($properties[1]);
+					}
+				}
+				if ( isset( $results[ 'text-align' ] ) ) {
+					$align = $results[ 'text-align' ];
+				}
+			}
+
+			$output->find( $replace, $key )->innertext = '<table class="ngl-table-tiny" align="' . $align . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table>';
 		}
 
 		$output->save();
