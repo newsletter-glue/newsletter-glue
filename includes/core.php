@@ -401,7 +401,22 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 	$html = wp_encode_emoji( $html );
 
-	return $html;
+	$output = new simple_html_dom();
+	$output->load( $html );
+
+	$replace = '.wp-block-columns .wp-block-column';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$output->find( $replace, $key )->outertext = '<td style="vertical-align: top;padding-right: 20px;" valign="top">' . $element->innertext . '</td>';
+	}
+
+	$replace = '.wp-block-columns';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$output->find( $replace, $key )->outertext = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table>';
+	}
+
+	$output->save();
+
+	return $output;
 
 }
 
@@ -815,13 +830,6 @@ ul.blocks-gallery-grid {
 
 #template_body table.ngl-table-clean {
 	border: 0;
-}
-
-.wp-block-columns .wp-block-column {
-	display: inline-block;
-	width: 45%;
-	vertical-align: top;
-	padding-right: 2%;
 }
 
 p.ngl-credits,

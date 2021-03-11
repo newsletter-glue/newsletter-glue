@@ -265,31 +265,27 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 	 */
 	public function tableize( $content ) {
 
-		$html = new simple_html_dom();
-		$html->load( $content );
-		$block = $html->find('div.wp-block-newsletterglue-author',0)->outertext;
+		$output = new simple_html_dom();
+		$output->load( $content );
 
-		$wrap = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr><td class="ngl-td-clean">';
-		$wrap .= $block;
-		$wrap .= '</td></tr></table>';
+		$replace = 'div.ngl-author-pic';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$output->find( $replace, $key )->outertext = '<td style="vertical-align: top;width:66px;" valign="top" class="ngl-td-clean">' . $element->outertext . '</td>';
+		}
 
-		$content = str_replace( $block, $wrap, $content );
+		$replace = 'div.ngl-author-meta';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$output->find( $replace, $key )->outertext = '<td style="vertical-align: top;" valign="top" class="ngl-td-clean">' . $element->outertext . '</td>';
+		}
 
-		$author_pic  = $html->find('div.ngl-author-pic',0)->outertext;
-		$author_meta = $html->find('div.ngl-author-meta',0)->outertext;
+		$replace = 'div.wp-block-newsletterglue-author';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$output->find( $replace, $key )->outertext = '<div class="wp-block-newsletterglue-author ngl-author"><table class="ngl-table-clean" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table></div>';
+		}
 
-		$author_pic_wrap = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr><td class="ngl-td-clean" style="width: 70px; vertical-align: top;">';
-		$author_pic_wrap .= $author_pic;
-		$author_pic_wrap .= '</td>';
+		$output->save();
 
-		$author_meta_wrap = '<td class="ngl-td-clean">';
-		$author_meta_wrap .= $author_meta;
-		$author_meta_wrap .= '</td></tr></table>';
-
-		$content = str_replace( $author_pic, $author_pic_wrap, $content );
-		$content = str_replace( $author_meta, $author_meta_wrap, $content );
-
-		return $content;
+		return $output;
 
 	}
 

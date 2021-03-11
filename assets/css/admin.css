@@ -657,6 +657,7 @@
 
 .ngl-metabox-flex.ngl-edit-more-box {
 	flex-wrap: wrap;
+	padding-bottom: 40px;
 }
 
 .ngl-top-msg {
