@@ -385,6 +385,12 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	}
 
+	// Fixes emogrifier encoding bugs.
+	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D' ), array( '{', '}', '$', '[', ']' ), $html );
+	$html = str_replace( '@media only screen and (max-width:596px) {', '@media only screen and (max-width:596px) {' . "\r\n", $html );
+
+	$html = wp_encode_emoji( $html );
+
 	return apply_filters( 'newsletterglue_generated_html_output', $html, $post->ID, $app );
 
 }
@@ -395,18 +401,42 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output', 50, 3 );
 function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
-	// Fixes emogrifier encoding bugs.
-	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D' ), array( '{', '}', '$', '[', ']' ), $html );
-	$html = str_replace( '@media only screen and (max-width:596px) {', '@media only screen and (max-width:596px) {' . "\r\n", $html );
-
-	$html = wp_encode_emoji( $html );
-
 	$output = new simple_html_dom();
 	$output->load( $html );
 
+	// Output column.
 	$replace = '.wp-block-columns .wp-block-column';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->outertext = '<td style="vertical-align: top;padding-right: 20px;" valign="top">' . $element->innertext . '</td>';
+
+		$width = '';
+
+		// Has style.
+		if ( $output->find( $replace, $key )->style ) {
+			$s = $output->find( $replace, $key )->style;
+			$results = [];
+			$styles = explode(';', $s);
+
+			foreach ($styles as $style) {
+				$properties = explode(':', $style);
+				if (2 === count($properties)) {
+					$results[trim($properties[0])] = trim($properties[1]);
+				}
+			}
+			if ( isset( $results[ 'flex-basis' ] ) ) {
+				$width = 'width: ' . $results[ 'flex-basis' ] . ';';
+			}
+		}
+
+		$valign = 'top';
+
+		if ( strstr( $output->find( $replace, $key )->outertext, 'is-vertically-aligned-center' ) ) {
+			$valign = 'center';
+		}
+		if ( strstr( $output->find( $replace, $key )->outertext, 'is-vertically-aligned-bottom' ) ) {
+			$valign = 'bottom';
+		}
+
+		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';padding-right: 20px;" valign="' . $valign . '">' . $element->innertext . '</td>';
 	}
 
 	$replace = '.wp-block-columns';
@@ -416,7 +446,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return $output;
+	return ( string ) $output;
 
 }
 
@@ -826,6 +856,20 @@ ul.blocks-gallery-grid {
 	border: 0;
 	padding: 0;
 	width: 100%;
+}
+
+#template_body table.ngl-table-tiny {
+	border: 0 !important;
+	table-layout: auto;
+	width: auto;
+}
+
+#template_body td.ngl-td-tiny {
+	border: 0;
+	padding: 0;
+	width: auto !important;
+	font-size: inherit;
+	white-space: nowrap;
 }
 
 #template_body table.ngl-table-clean {

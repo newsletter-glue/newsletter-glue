@@ -268,6 +268,12 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		$output = new simple_html_dom();
 		$output->load( $content );
 
+		$replace = 'div.ngl-author-pic img';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$element->width 	= '50';
+			$element->height 	= '50';
+		}
+
 		$replace = 'div.ngl-author-pic';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			$output->find( $replace, $key )->outertext = '<td style="vertical-align: top;width:66px;" valign="top" class="ngl-td-clean">' . $element->outertext . '</td>';
@@ -280,12 +286,12 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 
 		$replace = 'div.wp-block-newsletterglue-author';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<div class="wp-block-newsletterglue-author ngl-author"><table class="ngl-table-clean" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table></div>';
+			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table>';
 		}
 
 		$output->save();
 
-		return $output;
+		return ( string ) $output;
 
 	}
 

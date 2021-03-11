@@ -149,6 +149,10 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			$content 	= preg_replace( '/<div class=\"ngl-metadata-readtime-ajax\">[^<]+<\/div>/', '<div class="ngl-metadata-readtime-ajax">' . $read_time . '</div>', $content );
 		}
 
+		if ( defined( 'NGL_IN_EMAIL' ) && $content ) {
+			$content = $this->tableize( $content );
+		}
+
 		return $content;
 
 	}
@@ -229,8 +233,8 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		}
 
 		.ngl-metadata-pic {
-			width: 36px;
-			height: 36px;
+			width: 30px;
+			height: 30px;
 		}
 
 		.ngl-metadata-pic img {
@@ -239,7 +243,15 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			border-radius: 999px;
 			margin: 0 6px 0 0;
 			position: relative;
-			top: 2px;
+		}
+
+		.ngl-metadata .ngl-metadata-readtime,
+		.ngl-metadata .ngl-metadata-pic {
+			padding-right: 0;
+		}
+		.ngl-metadata .ngl-metadata-readtime-ajax,
+		.ngl-metadata .ngl-metadata-pic {
+			padding-left: 0;
 		}
 		<?php
 	}
@@ -251,6 +263,43 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		$content = newsletterglue_remove_div( $content, 'ngl-metadata' );
 
 		return $content;
+	}
+
+	/**
+	 * Tableize.
+	 */
+	public function tableize( $content ) {
+
+		$output = new simple_html_dom();
+		$output->load( $content );
+
+		$replace = 'div.wp-block-newsletterglue-metadata .ngl-metadata-pic img';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$element->width 	= '30';
+			$element->height 	= '30';
+		}
+
+		$replace = 'div.wp-block-newsletterglue-metadata .ngl-metadata-permalink-arrow, .ngl-metadata-permalink-arrow';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$element->width 	= '10';
+			$element->height 	= '10';
+		}
+
+		// Inner divs.
+		$replace = '.wp-block-newsletterglue-metadata > div, .wp-block-newsletterglue-metadata > a.ngl-metadata-permalink, .wp-block-newsletterglue-metadata > .ngl-metadata-permalink-arrow';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$output->find( $replace, $key )->outertext = '<td class="ngl-td-tiny" style="vertical-align: center;padding: 0 2px;" valign="center">' . $element->outertext . '</td>';
+		}
+
+		$replace = '.wp-block-newsletterglue-metadata';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$output->find( $replace, $key )->innertext = '<table class="ngl-table-tiny" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table>';
+		}
+
+		$output->save();
+
+		return ( string ) $output;
+
 	}
 
 }
