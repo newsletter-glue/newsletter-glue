@@ -268,22 +268,26 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		$output = new simple_html_dom();
 		$output->load( $content );
 
+		// Force image width/height attributes.
 		$replace = 'div.ngl-author-pic img';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			$element->width 	= '50';
 			$element->height 	= '50';
 		}
 
+		// Picture cell.
 		$replace = 'div.ngl-author-pic';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			$output->find( $replace, $key )->outertext = '<td style="vertical-align: top;width:66px;" valign="top" class="ngl-td-clean">' . $element->outertext . '</td>';
 		}
 
+		// Meta cell.
 		$replace = 'div.ngl-author-meta';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			$output->find( $replace, $key )->outertext = '<td style="vertical-align: top;" valign="top" class="ngl-td-clean">' . $element->outertext . '</td>';
 		}
 
+		// Put every author bio in a table.
 		$replace = 'div.wp-block-newsletterglue-author';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table>';

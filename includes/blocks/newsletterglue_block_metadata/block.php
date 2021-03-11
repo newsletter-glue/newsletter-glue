@@ -274,6 +274,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		$output = new simple_html_dom();
 		$output->load( $content );
 
+		// Force image width/height attributes.
 		$replace = 'div.wp-block-newsletterglue-metadata .ngl-metadata-pic img';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			$element->width 	= '30';
@@ -292,6 +293,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			$output->find( $replace, $key )->outertext = '<td class="ngl-td-tiny" style="vertical-align: center;padding: 0 2px;" valign="center">' . $element->outertext . '</td>';
 		}
 
+		// Look for each metadata block. and put it in table.
 		$replace = '.wp-block-newsletterglue-metadata';
 		foreach( $output->find( $replace ) as $key => $element ) {
 

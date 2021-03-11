@@ -439,6 +439,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';padding-right: 20px;" valign="' . $valign . '">' . $element->innertext . '</td>';
 	}
 
+	// Add columns wrapper as a table.
 	$replace = '.wp-block-columns';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$output->find( $replace, $key )->outertext = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table>';
