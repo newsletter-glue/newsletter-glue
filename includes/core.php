@@ -13,6 +13,10 @@ function newsletterglue_preview_emails() {
 
 	if ( ! empty( $_GET['preview_email'] ) ) {
 
+		if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+			return;
+		}
+
 		$post_id = absint( $_GET[ 'preview_email' ] );
 
 		$test = get_post( $post_id );
