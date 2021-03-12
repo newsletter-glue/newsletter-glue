@@ -157,60 +157,9 @@
 							);
 			}
 
-			return (
-
-				el( Fragment, {},
-
-					// This is block settings in sidebar.
-					el( InspectorControls, {},
-
-						el( PanelBody, { title: 'Profile settings', initialOpen: true },
-
-							el( BaseControl, {},
-								el( MediaUpload, {
-									onSelect: onSelectImage,
-									type: 'image',
-									render: function( obj ) {
-										return [
-
-											el( 'a', {
-													href: '#',
-													className: 'ngl-gutenberg-btn',
-													onClick: obj.open
-												},
-												el( 'svg', { className: '', width: '20', height: '20', viewBox: '0 0 24 24' },
-													el( 'path', { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z" } )
-												),
-												el( 'span', {},
-													'Change profile image'
-												),
-											),
-
-											el( 'a', { href: '#', onClick: removeImage },
-												props.attributes.profile_pic ? 'Reset' : ''
-											)
-
-										];
-									}
-								} )
-							),
-
-							el( BaseControl, { className: 'ngl-gutenberg-help' },
-								'Ideal image size 100x100 pixels.'
-							)
-
-						),
-
-						el( PanelBody, { title: 'Follow button', initialOpen: true },
-
-							el( BaseControl, {},
-								el( ToggleControl, {
-									label: 'Show Follow button',
-									onChange: ( value ) => { props.setAttributes( { show_button: value } ); },
-									checked: props.attributes.show_button,
-								} )
-							),
-
+			var show_button_options = '';
+			if ( props.attributes.show_button ) {
+				show_button_options = [
 							el( BaseControl, {},
 								el( SelectControl, {
 									label: 'Social media platform',
@@ -269,7 +218,65 @@
 									resetFallbackValue: 5,
 									onChange: ( value ) => { props.setAttributes( { border_radius: value } ); },
 								} ),
+							)
+					];
+			}
+
+			return (
+
+				el( Fragment, {},
+
+					// This is block settings in sidebar.
+					el( InspectorControls, {},
+
+						el( PanelBody, { title: 'Profile settings', initialOpen: true },
+
+							el( BaseControl, {},
+								el( MediaUpload, {
+									onSelect: onSelectImage,
+									type: 'image',
+									render: function( obj ) {
+										return [
+
+											el( 'a', {
+													href: '#',
+													className: 'ngl-gutenberg-btn',
+													onClick: obj.open
+												},
+												el( 'svg', { className: '', width: '20', height: '20', viewBox: '0 0 24 24' },
+													el( 'path', { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z" } )
+												),
+												el( 'span', {},
+													'Change profile image'
+												),
+											),
+
+											el( 'a', { href: '#', onClick: removeImage },
+												props.attributes.profile_pic ? 'Reset' : ''
+											)
+
+										];
+									}
+								} )
 							),
+
+							el( BaseControl, { className: 'ngl-gutenberg-help' },
+								'Ideal image size 100x100 pixels.'
+							)
+
+						),
+
+						el( PanelBody, { title: 'Follow button', initialOpen: true },
+
+							el( BaseControl, {},
+								el( ToggleControl, {
+									label: 'Show Follow button',
+									onChange: ( value ) => { props.setAttributes( { show_button: value } ); },
+									checked: props.attributes.show_button,
+								} )
+							),
+
+							show_button_options
 
 						),
 
