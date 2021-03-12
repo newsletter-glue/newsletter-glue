@@ -63,6 +63,10 @@
 				'type' : 'boolean',
 				'default' : block.show_in_email ? true : false,
 			},
+			show_button: {
+				'type' : 'boolean',
+				'default' : 1,
+			},
     		profile_pic: {
     			'type' : 'string',
     		},
@@ -131,6 +135,28 @@
 				var followURL = 'https://twitch.tv/' + username;
 			}
 
+			var show_cta = '';
+			if ( props.attributes.show_button ) {
+				show_cta = 	el( 'div', { className: 'ngl-author-cta' },
+								el( 'span', {
+										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
+										style: { borderRadius: props.attributes.border_radius },
+									},
+									el( 'img', {
+										src: block.assets_uri + platform + outline + '.png'
+									} ),
+									el( RichText, {
+										tagName: 'span',
+										value: props.attributes.button_text,
+										className: 'ngl-author-btn-text',
+										format: 'string',
+										onChange: onChangeButtonText,
+										placeholder: 'Enter button text...',
+									} )
+								)
+							);
+			}
+
 			return (
 
 				el( Fragment, {},
@@ -176,6 +202,14 @@
 						),
 
 						el( PanelBody, { title: 'Follow button', initialOpen: true },
+
+							el( BaseControl, {},
+								el( ToggleControl, {
+									label: 'Show Follow button',
+									onChange: ( value ) => { props.setAttributes( { show_button: value } ); },
+									checked: props.attributes.show_button,
+								} )
+							),
 
 							el( BaseControl, {},
 								el( SelectControl, {
@@ -286,24 +320,7 @@
 									placeholder: newsletterglue_meta.author_bio ? newsletterglue_meta.author_bio : 'Enter user description...',
 								} )
 							),
-							el( 'div', { className: 'ngl-author-cta' },
-								el( 'span', {
-										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
-										style: { borderRadius: props.attributes.border_radius },
-									},
-									el( 'img', {
-										src: block.assets_uri + platform + outline + '.png'
-									} ),
-									el( RichText, {
-										tagName: 'span',
-										value: props.attributes.button_text,
-										className: 'ngl-author-btn-text',
-										format: 'string',
-										onChange: onChangeButtonText,
-										placeholder: 'Enter button text...',
-									} )
-								)
-							)
+							show_cta
 						)
 					)
 
@@ -337,6 +354,28 @@
 				var followURL = 'https://twitch.tv/' + username;
 			}
 
+			var show_cta = '';
+			if ( props.attributes.show_button ) {
+				show_cta = 	el( 'div', { className: 'ngl-author-cta' },
+								el( 'a', {
+										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
+										style: { borderRadius: props.attributes.border_radius },
+										href: followURL,
+										target: '_blank',
+										rel: 'noopener noreferrer'
+									},
+									el( 'img', {
+										src: block.assets_uri + platform + outline + '.png'
+									} ),
+									el( RichText.Content, {
+										tagName: 'span',
+										value: props.attributes.button_text,
+										className: 'ngl-author-btn-text',
+									} )
+								)
+							);
+			}
+
 			return (
 
 					el( 'div', { className: 'ngl-author' },
@@ -358,24 +397,7 @@
 									className: 'ngl-author-bio-content',
 								} )
 							),
-							el( 'div', { className: 'ngl-author-cta' },
-								el( 'a', {
-										className: 'ngl-author-btn ngl-author-btn-' + props.attributes.button_style + ' ngl-author-' + platform,
-										style: { borderRadius: props.attributes.border_radius },
-										href: followURL,
-										target: '_blank',
-										rel: 'noopener noreferrer'
-									},
-									el( 'img', {
-										src: block.assets_uri + platform + outline + '.png'
-									} ),
-									el( RichText.Content, {
-										tagName: 'span',
-										value: props.attributes.button_text,
-										className: 'ngl-author-btn-text',
-									} )
-								)
-							)
+							show_cta
 						)
 					)
 

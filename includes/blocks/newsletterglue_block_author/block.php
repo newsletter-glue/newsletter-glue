@@ -268,6 +268,18 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		$output = new simple_html_dom();
 		$output->load( $content );
 
+		if ( ! strstr( $content, 'ngl-author-cta' ) ) {
+			$no_button = true;
+		} else {
+			$no_button = false;
+		}
+
+		if ( $no_button ) {
+			$valign = 'center';
+		} else {
+			$valign = 'top';
+		}
+
 		// Force image width/height attributes.
 		$replace = 'div.ngl-author-pic img';
 		foreach( $output->find( $replace ) as $key => $element ) {
@@ -278,13 +290,13 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		// Picture cell.
 		$replace = 'div.ngl-author-pic';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<td style="vertical-align: top;width:66px;" valign="top" class="ngl-td-clean">' . $element->outertext . '</td>';
+			$output->find( $replace, $key )->outertext = '<td style="vertical-align: ' . $valign . ';width:66px;" valign="' . $valign . '" class="ngl-td-clean">' . $element->outertext . '</td>';
 		}
 
 		// Meta cell.
 		$replace = 'div.ngl-author-meta';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<td style="vertical-align: top;" valign="top" class="ngl-td-clean">' . $element->outertext . '</td>';
+			$output->find( $replace, $key )->outertext = '<td style="vertical-align: ' . $valign . ';" valign="' . $valign . '" class="ngl-td-clean">' . $element->outertext . '</td>';
 		}
 
 		// Put every author bio in a table.
