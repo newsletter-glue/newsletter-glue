@@ -657,6 +657,7 @@
 
 .ngl-metabox-flex.ngl-edit-more-box {
 	flex-wrap: wrap;
+	padding-bottom: 40px;
 }
 
 .ngl-top-msg {
@@ -2220,11 +2221,6 @@ h4.ngl-edit-more a {
 
 .ngl-theme.ngl-mobile .ngl-email-container {
 	margin: 0 10px;
-}
-
-.ngl-theme.ngl-mobile .ngl-email {
-	border-left: 1px solid #ddd;
-	border-right: 1px solid #ddd;
 }
 
 .ngl-theme.ngl-mobile .ngl-theme-preview {

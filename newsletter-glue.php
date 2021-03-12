@@ -100,6 +100,8 @@ final class Newsletter_Glue {
 	 */
 	private function includes() {
 
+		require_once NGL_PLUGIN_DIR . 'includes/libraries/simple_html_dom.php';
+
 		require_once NGL_PLUGIN_DIR . 'includes/ajax-functions.php';
 		require_once NGL_PLUGIN_DIR . 'includes/functions.php';
 		require_once NGL_PLUGIN_DIR . 'includes/install.php';
