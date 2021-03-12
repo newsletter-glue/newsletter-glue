@@ -145,10 +145,13 @@ function newsletterglue_get_default_from_name() {
 
 	$user_id 	= get_current_user_id();
 	$first_name = get_user_meta( $user_id, 'first_name', true );
+	$last_name  = get_user_meta( $user_id, 'last_name', true );
 	$site_name  = get_bloginfo( 'name' );
 
-	if ( $first_name ) {
-		$from_name = sprintf( __( '%s from %s', 'newsletter-glue' ), $first_name, $site_name );
+	if ( $first_name && $last_name ) {
+		$from_name = $first_name . ' ' . $last_name;
+	} else if ( $first_name ) {
+		$from_name = $first_name;
 	} else {
 		$from_name = $site_name;
 	}
