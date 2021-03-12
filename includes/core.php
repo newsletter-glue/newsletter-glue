@@ -13,6 +13,10 @@ function newsletterglue_preview_emails() {
 
 	if ( ! empty( $_GET['preview_email'] ) ) {
 
+		if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+			return;
+		}
+
 		$post_id = absint( $_GET[ 'preview_email' ] );
 
 		$test = get_post( $post_id );
@@ -22,7 +26,17 @@ function newsletterglue_preview_emails() {
 
 		ob_start();
 
-		echo newsletterglue_generate_content( $post_id );
+		$data = get_post_meta( $test->ID, '_newsletterglue', true );
+
+		$app = isset( $data[ 'app' ] ) ? $data[ 'app' ] : '';
+
+		if ( $app ) {
+			include_once newsletterglue_get_path( $app ) . '/init.php';
+			$classname = 'NGL_' . ucfirst( $app );
+			$api = new $classname();
+		}
+
+		echo newsletterglue_generate_content( $post_id, ! empty( $data[ 'subject' ] ) ? $data[ 'subject' ] : '', $app );
 
 		$message = ob_get_clean();
 
@@ -34,6 +48,70 @@ function newsletterglue_preview_emails() {
 
 }
 add_action( 'init', 'newsletterglue_preview_emails', 1000 );
+
+/**
+ * View newsletter in web.
+ */
+function newsletterglue_view_in_web() {
+
+	if ( ! empty( $_GET['view_newsletter'] ) ) {
+
+		$post_id = ! empty( $_GET[ 'id' ] ) ? absint( $_GET[ 'id' ] ) : 0;
+		$token   = $_GET[ 'view_newsletter' ];
+
+		$test = get_post( $post_id );
+		if ( ! isset( $test->ID ) ) {
+			return;
+		}
+
+		$current_token = get_post_meta( $test->ID, '_newsletterglue_token', true );
+		if ( $token !== $current_token ) {
+			return;
+		}
+
+		ob_start();
+
+		$data = get_post_meta( $test->ID, '_newsletterglue', true );
+
+		$app = isset( $data[ 'app' ] ) ? $data[ 'app' ] : '';
+
+		if ( $app ) {
+			include_once newsletterglue_get_path( $app ) . '/init.php';
+			$classname = 'NGL_' . ucfirst( $app );
+			$api = new $classname();
+		}
+
+		echo newsletterglue_generate_content( $post_id, ! empty( $data[ 'subject' ] ) ? $data[ 'subject' ] : '', $app );
+
+		$message = ob_get_clean();
+
+		echo $message;
+
+		exit;
+
+	}
+
+}
+add_action( 'init', 'newsletterglue_view_in_web', 1000 );
+
+/**
+ * Generate web link for a post ID.
+ */
+function newsletterglue_generate_web_link( $post_id = 0 ) {
+
+	// Get token.
+	$token = get_post_meta( $post_id, '_newsletterglue_token', true );
+	if ( ! $token ) {
+		$token = bin2hex( random_bytes( 16 ) );
+		update_post_meta( $post_id, '_newsletterglue_token', $token );
+	}
+
+	$view_in_web = add_query_arg( 'view_newsletter', $token, home_url() );
+	$view_in_web = add_query_arg( 'id', $post_id, $view_in_web );
+
+	return $view_in_web;
+
+}
 
 /**
  * Checks if post is scheduled.
@@ -218,6 +296,13 @@ function newsletterglue_save_data( $post_id, $data ) {
 		update_post_meta( $post_id, '_newsletterglue', $meta );
 	}
 
+	// Set token.
+	$token = get_post_meta( $post_id, '_newsletterglue_token', true );
+	if ( ! $token ) {
+		$token = bin2hex( random_bytes( 16 ) );
+		update_post_meta( $post_id, '_newsletterglue_token', $token );
+	}
+
 }
 
 /**
@@ -355,6 +440,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$the_content = apply_filters( 'newsletterglue_email_content', $the_content, $post, $subject, $app );
 
 	// Process content tags.
+	$html = str_replace( '{title}', $subject, $html );
 	$html = str_replace( '{content}', $the_content, $html );
 	$html = str_replace( '{post_permalink}', get_permalink( $post->ID ), $html );
 	$html = str_replace( '{post_permalink_preview}', add_query_arg( 'preview_email', $post->ID, get_permalink( $post->ID ) ), $html );
@@ -371,7 +457,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 		$emogrifier = new $emogrifier_class( $html );
 		$html    	= $emogrifier->emogrify();
 	} catch ( Exception $e ) {
-		// Do not display errors.
+
 	}
 
 	// Fixes emogrifier encoding bugs.
@@ -380,7 +466,69 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	$html = wp_encode_emoji( $html );
 
-	return $html;
+	return apply_filters( 'newsletterglue_generated_html_output', $html, $post->ID, $app );
+
+}
+
+/**
+ * Customize output - fix output issues.
+ */
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output', 50, 3 );
+function newsletterglue_generated_html_output( $html, $post_id, $app ) {
+
+	$output = new simple_html_dom();
+	$output->load( $html );
+
+	// Output column.
+	$replace = '.wp-block-columns .wp-block-column';
+	foreach( $output->find( $replace ) as $key => $element ) {
+
+		$width = '';
+
+		// Has style.
+		if ( $output->find( $replace, $key )->style ) {
+			$s = $output->find( $replace, $key )->style;
+			$results = [];
+			$styles = explode(';', $s);
+
+			foreach ($styles as $style) {
+				$properties = explode(':', $style);
+				if (2 === count($properties)) {
+					$results[trim($properties[0])] = trim($properties[1]);
+				}
+			}
+			if ( isset( $results[ 'flex-basis' ] ) ) {
+				$width = 'width: ' . $results[ 'flex-basis' ] . ';';
+			}
+		}
+
+		$valign = 'top';
+
+		if ( strstr( $output->find( $replace, $key )->outertext, 'is-vertically-aligned-center' ) ) {
+			$valign = 'center';
+		}
+		if ( strstr( $output->find( $replace, $key )->outertext, 'is-vertically-aligned-bottom' ) ) {
+			$valign = 'bottom';
+		}
+
+		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';padding-right: 20px;" valign="' . $valign . '">' . $element->innertext . '</td>';
+	}
+
+	// Add columns wrapper as a table.
+	$replace = '.wp-block-columns';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$output->find( $replace, $key )->innertext = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: auto;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 25px;"><tr>' . $element->innertext . '</tr></table>';
+	}
+
+	// Change all figures.
+	$replace = 'figure.wp-block-table';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$output->find( $replace, $key )->outertext = '<div style="margin-bottom: 25px;">' . $element->innertext . '</div>';
+	}
+
+	$output->save();
+
+	return ( string ) $output;
 
 }
 
@@ -630,12 +778,47 @@ function newsletterglue_add_theme_designer_css() {
 	if ( get_option( 'newsletterglue_disable_plugin_css' ) == 1 ) {
 		return;
 	}
-	?>
+?>
+
+.ExternalClass {width:100%;}
+
+.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+	line-height: 100%;
+}
 
 body {
-	-webkit-text-size-adjust: 100%;
 	line-height: 1.5;
+	-webkit-text-size-adjust: none;
+	-ms-text-size-adjust: none;
 	margin: 0;
+	padding: 0;
+}
+
+body, #wrapper {
+	color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+span.yshortcuts { color: #000; background-color:none; border:none;}
+span.yshortcuts:hover,
+span.yshortcuts:active,
+span.yshortcuts:focus {color: #000; background-color:none; border:none;}
+
+table td {
+	border-collapse: collapse;
+}
+
+p {margin:0; padding:0; margin-bottom:0;}
+
+h1, h2, h3, h4, h5, h6 {
+	color: black; 
+	line-height: 100%; 
+}
+
+a, a:link {
+	color:#2A5DB0;
+	text-decoration: underline;
 }
 
 #wrapper {
@@ -646,19 +829,20 @@ body {
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
 	font-family: <?php echo newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ); ?>;
 	<?php endif; ?>
-	<?php if ( ! newsletterglue_get_theme_option( 'font' ) && isset( $_GET[ 'preview_email' ] ) ) : ?>
+	<?php if ( ! newsletterglue_get_theme_option( 'font' ) && ( isset( $_GET[ 'preview_email' ] ) || isset( $_GET[ 'view_newsletter' ] ) ) ) : ?>
 	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', 'sans-serif';
 	<?php endif; ?>
 }
 
 #template_inner {
+	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 	background: <?php echo newsletterglue_get_theme_option( 'container_bg' ); ?>;
 	box-sizing: border-box;
 	padding: <?php echo absint( newsletterglue_get_theme_option( 'container_padding1' ) ); ?>px <?php echo absint( newsletterglue_get_theme_option( 'container_padding2' ) ); ?>px;
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
 	font-family: <?php echo newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ); ?>;
 	<?php endif; ?>
-	<?php if ( ! newsletterglue_get_theme_option( 'font' ) && isset( $_GET[ 'preview_email' ] ) ) : ?>
+	<?php if ( ! newsletterglue_get_theme_option( 'font' ) && ( isset( $_GET[ 'preview_email' ] ) || isset( $_GET[ 'view_newsletter' ] ) ) ) : ?>
 	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', 'sans-serif';
 	<?php endif; ?>
 }
@@ -693,7 +877,9 @@ p {
 }
 
 ul, ol, li {
+	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px;
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
+	text-align: <?php echo newsletterglue_get_theme_option( 'p_align' ); ?>;
 }
 
 a {
@@ -731,28 +917,49 @@ ul.blocks-gallery-grid {
 }
 
 #template_body td table {
-	table-layout: fixed;
+	table-layout: auto;
 	width: 100%;
 	border-collapse: collapse;
-	border: 1px solid #dbdbdb;
+	border: 0;
+}
+
+#template_body table.has-fixed-layout {
+	table-layout: fixed !important;
 }
 
 #template_body td table td {
-	width: 50%;
 	padding: 10px;
 	font-size: 16px;
-	border: 1px solid #dcd7ca;
+	border: 1px solid #eee;
 }
 
 #template_body td table img {
 	margin: 0;
 }
 
-.wp-block-columns .wp-block-column {
-	display: inline-block;
-	width: 45%;
-	vertical-align: top;
-	padding-right: 2%;
+#template_body td.ngl-td-clean {
+	border: 0;
+	padding: 0;
+	width: 100%;
+	font-size: inherit !important;
+}
+
+#template_body table.ngl-table-tiny {
+	border: 0 !important;
+	table-layout: auto;
+	width: auto;
+}
+
+#template_body td.ngl-td-tiny {
+	border: 0;
+	padding: 0;
+	width: auto !important;
+	font-size: inherit;
+	white-space: nowrap;
+}
+
+#template_body table.ngl-table-clean {
+	border: 0;
 }
 
 p.ngl-credits,
@@ -864,6 +1071,15 @@ p.ngl-unsubscribe {
 
 	p, ul, ol {
 		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
+	}
+
+	p.ngl-credits,
+	p.ngl-unsubscribe {
+		font-size: 13px !important;
+	}
+
+	p.ngl-unsubscribe {
+		padding-bottom: 20px !important;
 	}
 
 	#template_inner img {

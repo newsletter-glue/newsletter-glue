@@ -7,10 +7,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="margin:0;padding:0">
 <head>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+
+	<title>{title}</title>
 
 	<style type="text/css">
 
@@ -30,17 +36,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</style>
 
 </head>
-<body>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="margin:0;padding:0;" yahoo="fix">
 
 <div id="wrapper" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
 
-	<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="template_wrapper">
+	<table border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0" id="template_wrapper" >
 		<tr>
 			<td align="center" valign="top">
 				<table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_container">
 					<tr>
 						<td align="center" valign="top">
-							<table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_body">
+							<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0" id="template_body">
 								<tr>
 									<td></td>
 									<td width="600" id="template_inner" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">
