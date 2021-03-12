@@ -46,6 +46,70 @@ function newsletterglue_preview_emails() {
 add_action( 'init', 'newsletterglue_preview_emails', 1000 );
 
 /**
+ * View newsletter in web.
+ */
+function newsletterglue_view_in_web() {
+
+	if ( ! empty( $_GET['view_newsletter'] ) ) {
+
+		$post_id = ! empty( $_GET[ 'id' ] ) ? absint( $_GET[ 'id' ] ) : 0;
+		$token   = $_GET[ 'view_newsletter' ];
+
+		$test = get_post( $post_id );
+		if ( ! isset( $test->ID ) ) {
+			return;
+		}
+
+		$current_token = get_post_meta( $test->ID, '_newsletterglue_token', true );
+		if ( $token !== $current_token ) {
+			return;
+		}
+
+		ob_start();
+
+		$data = get_post_meta( $test->ID, '_newsletterglue', true );
+
+		$app = isset( $data[ 'app' ] ) ? $data[ 'app' ] : '';
+
+		if ( $app ) {
+			include_once newsletterglue_get_path( $app ) . '/init.php';
+			$classname = 'NGL_' . ucfirst( $app );
+			$api = new $classname();
+		}
+
+		echo newsletterglue_generate_content( $post_id, ! empty( $data[ 'subject' ] ) ? $data[ 'subject' ] : '', $app );
+
+		$message = ob_get_clean();
+
+		echo $message;
+
+		exit;
+
+	}
+
+}
+add_action( 'init', 'newsletterglue_view_in_web', 1000 );
+
+/**
+ * Generate web link for a post ID.
+ */
+function newsletterglue_generate_web_link( $post_id = 0 ) {
+
+	// Get token.
+	$token = get_post_meta( $post_id, '_newsletterglue_token', true );
+	if ( ! $token ) {
+		$token = bin2hex( random_bytes( 16 ) );
+		update_post_meta( $post_id, '_newsletterglue_token', $token );
+	}
+
+	$view_in_web = add_query_arg( 'view_newsletter', $token, home_url() );
+	$view_in_web = add_query_arg( 'id', $post_id, $view_in_web );
+
+	return $view_in_web;
+
+}
+
+/**
  * Checks if post is scheduled.
  */
 function newsletterglue_is_post_scheduled( $post_id ) {
@@ -226,6 +290,13 @@ function newsletterglue_save_data( $post_id, $data ) {
 			$meta[ 'track_clicks' ] = 0;
 		}
 		update_post_meta( $post_id, '_newsletterglue', $meta );
+	}
+
+	// Set token.
+	$token = get_post_meta( $post_id, '_newsletterglue_token', true );
+	if ( ! $token ) {
+		$token = bin2hex( random_bytes( 16 ) );
+		update_post_meta( $post_id, '_newsletterglue_token', $token );
 	}
 
 }
