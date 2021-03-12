@@ -573,7 +573,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
 
 		$post_id = isset( $_REQUEST[ 'post_id' ] ) ? sanitize_text_field( $_REQUEST[ 'post_id' ] ) : '';
-		$excerpt = isset( $_REQUEST[ 'excerpt' ] ) ? sanitize_text_field( $_REQUEST[ 'excerpt' ] ) : '';
+		$excerpt = isset( $_REQUEST[ 'excerpt' ] ) ? wp_kses_post( $_REQUEST[ 'excerpt' ] ) : '';
 
 		$custom_data = get_option( 'newsletterglue_article_custom_data' );
 
