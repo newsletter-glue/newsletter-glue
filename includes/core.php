@@ -778,6 +778,9 @@ function newsletterglue_add_theme_designer_css() {
 	if ( get_option( 'newsletterglue_disable_plugin_css' ) == 1 ) {
 		return;
 	}
+
+	$email_font = newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . ", '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', Arial, 'Helvetica', 'sans-serif'";
+
 ?>
 
 .ExternalClass {width:100%;}
@@ -827,10 +830,10 @@ a, a:link {
 	padding-top: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
 	padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
-	font-family: <?php echo newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ); ?>;
+	font-family: <?php echo $email_font; ?>;
 	<?php endif; ?>
 	<?php if ( ! newsletterglue_get_theme_option( 'font' ) && ( isset( $_GET[ 'preview_email' ] ) || isset( $_GET[ 'view_newsletter' ] ) ) ) : ?>
-	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', 'sans-serif';
+	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', Arial, 'Helvetica', 'sans-serif';
 	<?php endif; ?>
 }
 
@@ -840,10 +843,10 @@ a, a:link {
 	box-sizing: border-box;
 	padding: <?php echo absint( newsletterglue_get_theme_option( 'container_padding1' ) ); ?>px <?php echo absint( newsletterglue_get_theme_option( 'container_padding2' ) ); ?>px;
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
-	font-family: <?php echo newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ); ?>;
+	font-family: <?php echo $email_font; ?>;
 	<?php endif; ?>
 	<?php if ( ! newsletterglue_get_theme_option( 'font' ) && ( isset( $_GET[ 'preview_email' ] ) || isset( $_GET[ 'view_newsletter' ] ) ) ) : ?>
-	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', 'sans-serif';
+	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', Arial, 'Helvetica', 'sans-serif';
 	<?php endif; ?>
 }
 
@@ -999,14 +1002,19 @@ p.ngl-unsubscribe {
 	text-align: right;
 }
 
+.wp-block-buttons {
+	margin: 0 0 25px;
+}
+
+.wp-block-buttons .wp-block-button {
+	display: inline-block !important;
+	padding: 0 !important;
+}
+
 .wp-block-button.aligncenter,
 .wp-block-buttons.aligncenter,
 .wp-block-calendar {
 	text-align: center;
-}
-
-.wp-block-button {
-	padding: 0 0 25px;
 }
 
 .wp-block-button__link {
@@ -1021,6 +1029,15 @@ p.ngl-unsubscribe {
 	min-width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px !important;
 	border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?> !important;
 	border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px;
+}
+
+.wp-block-button.wp-block-button__width-100 {
+	width: 100% !important;
+	padding: 0 !important;
+}
+
+.wp-block-button.wp-block-button__width-100 .wp-block-button__link {
+	width: 100% !important;
 }
 
 .wp-block-button.is-style-outline .wp-block-button__link {
