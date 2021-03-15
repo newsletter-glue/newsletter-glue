@@ -991,6 +991,14 @@ p.ngl-unsubscribe {
 	padding-top: 25px;
 }
 
+.wp-block-buttons.is-content-justification-center {
+	text-align: center;
+}
+
+.wp-block-buttons.is-content-justification-right {
+	text-align: right;
+}
+
 .wp-block-button.aligncenter,
 .wp-block-buttons.aligncenter,
 .wp-block-calendar {
@@ -1012,7 +1020,14 @@ p.ngl-unsubscribe {
 	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;
 	min-width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px !important;
 	border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?> !important;
-	border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px !important;
+	border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link {
+	background-color: transparent !important;
+	border-width: 2px !important;
+	padding: 10px 24px;
+	color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?> !important;
 }
 
 .ngl-hide-in-email {
