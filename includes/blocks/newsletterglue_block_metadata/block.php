@@ -197,6 +197,23 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			font-size: 12px;
 			padding: 20px 0;
 			min-height: 30px;
+			overflow-x: auto;
+		}
+		
+		.ngl-metadata img {
+			display: inline-block !important;
+			margin: 0 !important;
+		}
+
+		.ngl-metadata img.ngl-metadata-permalink-arrow {
+			margin: 0 0 0 4px !important;
+		}
+
+		.ngl-metadata img.avatar {
+			vertical-align: middle !important;
+			width: 30px !important;
+			height: 30px !important;
+			border-radius: 999px;
 		}
 
 		.ngl-metadata > div {
@@ -213,11 +230,10 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 
 		.ngl-metadata-map-pin {
 			width: 12px !important;
-			display: inline-block !important;
-			margin: 0 4px 0 0 !important;
-			position: relative !important;
-			top: 9px !important;
-			vertical-align: top !important;
+			max-width: 12px !important;
+			min-width: 12px !important;
+			display: block !important;
+			margin: 0 !important;
 		}
 
 		.ngl-metadata-permalink-arrow {
@@ -244,6 +260,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			border-radius: 999px;
 			margin: 0 6px 0 0;
 			position: relative;
+			display: inline-block !important;
 		}
 
 		.ngl-metadata .ngl-metadata-readtime,
@@ -287,10 +304,16 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			$element->height 	= '10';
 		}
 
-		// Inner divs.
-		$replace = '.wp-block-newsletterglue-metadata > div, .wp-block-newsletterglue-metadata > a.ngl-metadata-permalink, .wp-block-newsletterglue-metadata > .ngl-metadata-permalink-arrow';
+		$replace = '.wp-block-newsletterglue-metadata > .ngl-metadata-map-pin';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<td class="ngl-td-tiny" style="vertical-align: center;padding: 0 2px;" valign="center">' . $element->outertext . '</td>';
+			$element->width 	= '12';
+			$element->height 	= '14';
+		}
+
+		// Inner divs.
+		$replace = '.wp-block-newsletterglue-metadata > div';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$output->find( $replace, $key )->outertext = '&nbsp;' . $element->innertext . '&nbsp;';
 		}
 
 		// Look for each metadata block. and put it in table.
@@ -316,7 +339,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 				}
 			}
 
-			$output->find( $replace, $key )->innertext = '<table class="ngl-table-tiny" align="' . $align . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr>' . $element->innertext . '</tr></table>';
+			$output->find( $replace, $key )->innertext = $output->find( $replace, $key )->innertext = '<table class="ngl-table-tiny" align="' . $align . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr><td class="ngl-td-tiny" valign="center">' . $element->innertext . '</td></tr></table>';
 		}
 
 		$output->save();

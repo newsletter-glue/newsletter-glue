@@ -459,25 +459,10 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		display: block !important;
 	}
 
-	.ngl-table-article {
-		display: none !important;
-	}
-
+	.ngl-table-article,
 	.ngl-article-left,
 	.ngl-article-right {
-		width: 100% !important;
-		margin: 0 !important;
-	}
-
-	.ngl-article-img-right .ngl-article-right,
-	.ngl-article-img-right .ngl-article-left,
-	.ngl-article-img-left .ngl-article-left,
-	.ngl-article-img-left .ngl-article-right {
 		display: none !important;
-	}
-
-	.ngl-article-img-left .ngl-article-right {
-		padding-left: 0 !important;
 	}
 
 }
