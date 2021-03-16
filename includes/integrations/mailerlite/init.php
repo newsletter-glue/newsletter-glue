@@ -447,4 +447,18 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 		}
 	}
 
+	/**
+	 * Has email verify.
+	 */
+	public function has_email_verify() {
+		return false;
+	}
+
+	/**
+	 * Get email verify help.
+	 */
+	public function get_email_verify_help() {
+		return 'https://help.activecampaign.com/hc/en-us/articles/360015584680-Verify-your-email-domain';
+	}
+
 }

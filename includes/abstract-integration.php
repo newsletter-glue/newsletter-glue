@@ -226,6 +226,13 @@ abstract class NGL_Abstract_Integration {
 	}
 
 	/**
+	 * Has email verify.
+	 */
+	public function has_email_verify() {
+		return true;
+	}
+
+	/**
 	 * Check email address.
 	 */
 	public function is_invalid_email( $email = '' ) {
