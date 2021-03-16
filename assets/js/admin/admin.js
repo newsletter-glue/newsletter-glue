@@ -832,7 +832,11 @@
 					}
 				} else if ( response.success ) {
 					el.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
-					el.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
+					if ( id == 'ngl_from_email' && $( '#ngl_from_email' ).hasClass( 'no-support-verify' ) ) {
+						
+					} else {
+						el.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
+					}
 					el.removeClass( 'is-error' );
 				} else {
 					el.removeClass( 'is-error' );

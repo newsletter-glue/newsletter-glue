@@ -115,6 +115,7 @@ abstract class NGL_Abstract_Integration {
 	 * Show email verification info.
 	 */
 	public function email_verification_info() {
+		if ( $this->has_email_verify() ) :
 		?>
 		<div class="ngl-label-verification">
 			<span class="ngl-process ngl-ajax is-hidden is-waiting">
@@ -136,6 +137,29 @@ abstract class NGL_Abstract_Integration {
 
 		</div>
 		<?php
+		else :
+		?>
+		<div class="ngl-label-verification">
+			<span class="ngl-process ngl-ajax is-hidden is-waiting">
+				<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
+				<span class="ngl-process-text"><strong><?php _e( 'Saving...', 'newsletter-glue' ); ?></strong></span>
+			</span>
+
+			<span class="ngl-process ngl-ajax is-hidden is-valid">
+				<span class="ngl-process-icon"><i class="check circle icon"></i></span>
+				<span class="ngl-process-text"><?php _e( 'Saved', 'newsletter-glue' ); ?></span>
+			</span>
+
+			<span class="ngl-process ngl-ajax is-hidden is-invalid">
+				<span class="ngl-process-icon"><i class="exclamation circle icon"></i></span>
+				<span class="ngl-process-text"></span>
+			</span>
+		</div>
+		<div class="ngl-label-more">
+
+		</div>
+		<?php
+		endif;
 	}
 
 	/**

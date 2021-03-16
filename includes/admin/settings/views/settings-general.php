@@ -34,13 +34,19 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 		<div class="ngl-field">
 			<?php
+				$verify = ! $api->has_email_verify() ? 'no-support-verify' : '';
 				newsletterglue_text_field( array(
 					'id' 			=> 'ngl_from_email',
 					'helper'		=> __( 'Subscribers will see and reply to this email address.', 'newsletter-glue' ),
 					'value'			=> newsletterglue_get_option( 'from_email', $app ),
-					'class'			=> 'ngl-ajax',
+					'class'			=> 'ngl-ajax ' . $verify,
 				) );
 			?>
+			<?php if ( ! $api->has_email_verify() ) { ?>
+			<div class="ngl-helper">
+				<?php echo sprintf( __( 'Only use verified email addresses. %s', 'newsletter-glue' ), '<a href="' . $api->get_email_verify_help() . '" target="_blank">' . __( 'Learn more', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>' ); ?>
+			</div>
+			<?php } ?>
 		</div>
 	</div>
 
