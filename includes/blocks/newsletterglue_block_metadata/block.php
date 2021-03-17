@@ -195,9 +195,10 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		?>
 		.ngl-metadata {
 			font-size: 12px;
-			padding: 20px 0;
+			padding: 0;
 			min-height: 30px;
 			overflow-x: auto;
+			margin: 0 0 30px;
 		}
 		
 		.ngl-metadata img {
@@ -339,7 +340,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 				}
 			}
 
-			$output->find( $replace, $key )->innertext = $output->find( $replace, $key )->innertext = '<table class="ngl-table-tiny" align="' . $align . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0"><tr><td class="ngl-td-tiny" valign="center">' . $element->innertext . '</td></tr></table>';
+			$output->find( $replace, $key )->innertext = $output->find( $replace, $key )->innertext = '<table class="ngl-table-tiny" align="' . $align . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; width:100%;"><tr><td class="ngl-td-tiny" valign="middle">' . $element->innertext . '</td></tr></table>';
 		}
 
 		$output->save();

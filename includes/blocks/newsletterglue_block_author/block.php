@@ -171,7 +171,8 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		?>
 		.ngl-author {
 			display: flex;
-			padding: 20px 0;
+			padding: 0;
+			margin: 0 0 30px;
 			line-height: 1;
 		}
 
@@ -275,9 +276,16 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		}
 
 		if ( $no_button ) {
-			$valign = 'center';
+			$valign = 'middle';
 		} else {
 			$valign = 'top';
+		}
+
+		// Force image width/height attributes.
+		$replace = 'div.ngl-author-cta img';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$element->width 	= '16';
+			$element->height 	= '16';
 		}
 
 		// Force image width/height attributes.

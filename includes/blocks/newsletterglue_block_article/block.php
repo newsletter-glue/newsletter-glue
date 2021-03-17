@@ -418,12 +418,12 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	width: 100%;
 }
 
-#template_body td table.ngl-articles-table {
+#template_inner td table.ngl-articles-table {
 	border: none;
 }
 
-#template_body td table.ngl-articles-table th,
-#template_body td table.ngl-articles-table td {
+#template_inner td table.ngl-articles-table th,
+#template_inner td table.ngl-articles-table td {
 	border: none;
 	padding: 0;
 }
