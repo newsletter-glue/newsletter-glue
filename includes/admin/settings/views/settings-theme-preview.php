@@ -28,11 +28,16 @@ $email_bg		= newsletterglue_get_theme_option( 'email_bg' );
 $container_bg	= newsletterglue_get_theme_option( 'container_bg' );
 $border_color 	= newsletterglue_get_theme_option( 'btn_border' );
 
+if ( $email_bg != $container_bg ) {
+	$pad = 10;
+} else {
+	$pad = 0;
+}
 ?>
 
 <div class="ngl-email ngl-desktop" style="background-color: <?php echo $email_bg ?>; <?php if ( $font_family ) : ?>font-family: <?php echo $font_family; ?>;<?php endif; ?>">
 
-	<div class="ngl-email-container" style="margin-top: <?php echo (int) newsletterglue_get_theme_option( 'container_margin' ); ?>px;margin-bottom: <?php echo (int) newsletterglue_get_theme_option( 'container_margin' ); ?>px;padding: <?php echo (int) newsletterglue_get_theme_option( 'container_padding1' ); ?>px <?php echo (int) newsletterglue_get_theme_option( 'container_padding2' ); ?>px;background-color: <?php echo $container_bg; ?>">
+	<div class="ngl-email-container" style="margin-top: <?php echo (int) newsletterglue_get_theme_option( 'container_margin' ); ?>px;margin-bottom: <?php echo (int) newsletterglue_get_theme_option( 'container_margin' ); ?>px;padding-top: <?php echo (int) newsletterglue_get_theme_option( 'container_padding1' ); ?>px;padding-bottom: <?php echo (int) newsletterglue_get_theme_option( 'container_padding1' ); ?>px;background-color: <?php echo $container_bg; ?>;padding-left: <?php echo $pad; ?>px;padding-right: <?php echo $pad; ?>px;">
 	
 		<div class="ngl-email-logo ngl-desktop ngl-logo-<?php echo esc_attr( $logo_position ); ?> <?php if ( ! $logo ) echo 'is-hidden'; ?>">
 			<?php if ( $logo_url ) { ?><a href="<?php echo $logo_url; ?>" target="_blank"><?php } ?>
@@ -76,7 +81,7 @@ $border_color 	= newsletterglue_get_theme_option( 'btn_border' );
 
 <div class="ngl-email ngl-mobile" style="background-color: <?php echo $email_bg; ?>; <?php if ( $font_family ) : ?>font-family: <?php echo $font_family; ?>;<?php endif; ?>">
 
-	<div class="ngl-email-container" style="margin-top: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;margin-bottom: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;padding: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_padding1' ); ?>px <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_padding2' ); ?>px;background-color: <?php echo $container_bg; ?>">
+	<div class="ngl-email-container" style="margin-top: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;margin-bottom: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_margin' ); ?>px;padding-top: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_padding1' ); ?>px; padding-bottom: <?php echo (int) newsletterglue_get_theme_option( 'mobile_container_padding1' ); ?>px;background-color: <?php echo $container_bg; ?>;padding-left: <?php echo $pad; ?>px;padding-right: <?php echo $pad; ?>px;">
 
 		<div class="ngl-email-logo ngl-mobile ngl-logo-<?php echo esc_attr( $logo_position ); ?> <?php if ( ! $logo ) echo 'is-hidden'; ?>">
 			<?php if ( $logo_url ) { ?><a href="<?php echo $logo_url; ?>" target="_blank"><?php } ?>

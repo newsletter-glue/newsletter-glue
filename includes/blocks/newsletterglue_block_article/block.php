@@ -453,7 +453,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	display: none !important;
 }
 
-@media only screen and (max-width:596px) {
+@media only screen and (max-width:642px) {
 
 	.ngl-article-left-mobile {
 		display: block !important;

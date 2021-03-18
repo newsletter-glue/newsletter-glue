@@ -197,7 +197,6 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			font-size: 12px;
 			padding: 0;
 			min-height: 30px;
-			overflow-x: auto;
 			margin: 0 0 30px;
 		}
 		

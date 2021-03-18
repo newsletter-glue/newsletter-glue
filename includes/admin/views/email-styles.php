@@ -40,17 +40,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div id="wrapper" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
 
-		<table width="100%" border="0" cellspacing="10" cellpadding="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0" id="template_wrapper">
-			<tr>
-				<td align="center" valign="top" style="text-align:center;">
-					<table border="0" cellspacing="0" cellpadding="10" class="main" style="text-align: left; margin-left: auto; margin-right: auto;" width="600" id="template_container">
-						<tr>
-							<td width="100%" id="template_inner" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">{content}</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
+		<center>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0" id="template_wrapper">
+				<tr>
+					<td align="center" valign="top" style="text-align:center;">
+						<table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" class="main" style="text-align: left; margin-left: auto; margin-right: auto;table-layout: fixed;" id="template_container">
+							<tr>
+								<td class="ngl-td-spacer">&nbsp;</td>
+								<td width="600" id="template_inner" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;"><center>{content}</center></td>
+								<td class="ngl-td-spacer">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</center>
 
 	</div>
 
