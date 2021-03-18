@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" class="main" style="text-align: left; margin-left: auto; margin-right: auto;table-layout: fixed;" id="template_container">
 							<tr>
 								<td class="ngl-td-spacer">&nbsp;</td>
-								<td width="600" id="template_inner" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;"><center>{content}</center></td>
+								<td width="600" id="template_inner" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">{content}</td>
 								<td class="ngl-td-spacer">&nbsp;</td>
 							</tr>
 						</table>
