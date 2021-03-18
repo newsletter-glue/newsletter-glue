@@ -458,7 +458,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	 * Get email verify help.
 	 */
 	public function get_email_verify_help() {
-		return 'https://help.activecampaign.com/hc/en-us/articles/360015584680-Verify-your-email-domain';
+		return 'https://help.mailerlite.com/article/show/29280-how-to-verify-and-authenticate-your-domain#chapter2';
 	}
 
 }

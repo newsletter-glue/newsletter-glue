@@ -648,13 +648,13 @@ function newsletterglue_get_theme_option( $id = '', $theme = null ) {
 function newsletterglue_get_theme_default( $key ) {
 
 	$keys = array(
-		'h1_colour'					=> '#222222',
-		'h2_colour'					=> '#222222',
-		'h3_colour'					=> '#222222',
-		'h4_colour'					=> '#222222',
-		'h5_colour'					=> '#222222',
-		'h6_colour'					=> '#222222',
-		'p_colour'					=> '#222222',
+		'h1_colour'					=> '#333333',
+		'h2_colour'					=> '#333333',
+		'h3_colour'					=> '#333333',
+		'h4_colour'					=> '#333333',
+		'h5_colour'					=> '#333333',
+		'h6_colour'					=> '#333333',
+		'p_colour'					=> '#333333',
 		'h1_size'					=> 32,
 		'h2_size'					=> 28,
 		'h3_size'					=> 24,
@@ -1134,7 +1134,7 @@ p.ngl-unsubscribe {
 	h5 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h5_size' ); ?>px !important; }
 	h6 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h6_size' ); ?>px !important; }
 
-	p, ul, ol {
+	p, ul, ol, li {
 		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
 	}
 
