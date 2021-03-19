@@ -346,7 +346,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	public function email_css() {
 		?>
 .ngl-articles {
-	padding: 20px 0;
+	padding: 0;
+	margin: 0 0 30px;
 }
 
 .ngl-article img {

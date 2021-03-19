@@ -543,8 +543,11 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) $output;
+	$result = ( string ) $output;
 
+	$result = preg_replace(  '/\>\s+\</m', '><', $result );
+
+	return $result;
 }
 
 /**
