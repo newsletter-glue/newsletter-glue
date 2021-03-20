@@ -362,7 +362,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 .ngl-article-title {
 	margin: 0 0 8px;
-	line-height: 1.4;
+	line-height: 150%;
 }
 
 .ngl-article-title a {
@@ -371,7 +371,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 }
 
 .ngl-article-excerpt {
-	line-height: 1.4;
+	line-height: 150%;
 }
 
 .ngl-article-featured {
@@ -452,18 +452,39 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 .ngl-article-left-mobile {
 	display: none !important;
+	overflow: hidden;
+	mso-hide: all;
+	margin: 0;
+	font-size: 0;
+	max-height: 0;
+}
+
+.ngl-article-left-mobile * {
+	display: none !important;
+	overflow: hidden;
+	mso-hide: all;
+	max-height: 0;
+	font-size: 0;
 }
 
 @media only screen and (max-width:642px) {
 
-	.ngl-article-left-mobile {
+	.ngl-article-left-mobile,
+	.ngl-article-left-mobile * {
 		display: block !important;
+		max-height: 100% !important;
+		font-size: inherit !important;
 	}
 
 	.ngl-table-article,
 	.ngl-article-left,
 	.ngl-article-right {
 		display: none !important;
+		overflow: hidden;
+		mso-hide: all;
+		margin: 0;
+		font-size: 0;
+		max-height: 0;
 	}
 
 }
@@ -1214,17 +1235,31 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		$width = 'auto';
 
+		$img = '.ngl-article-featured img';
+		foreach( $output->find( $img ) as $a => $b ) {
+			$b->width = 600;
+			$b->style = $b->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;';
+		}
+
 		// Left side.
 		$replace = 'div.ngl-article.ngl-article-img-left > .ngl-article-left, div.ngl-article.ngl-article-img-right > .ngl-article-left';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			if ( $table_ratio == '30_70' ) {
 				$width = '30%';
+				$img_size = 150;
 			}
 			if ( $table_ratio == '70_30' ) {
 				$width = '70%';
+				$img_size = 400;
 			}
 			if ( $table_ratio == '50_50' ) {
 				$width = '50%';
+				$img_size = 300;
+			}
+			$img = '.ngl-article-featured img';
+			foreach( $output->find( $img ) as $a => $b ) {
+				$b->width = $img_size;
+				$b->style = $b->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;';
 			}
 			$output->find( $replace, $key )->outertext = '<td style="width: ' . $width . '; vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
 		}
@@ -1234,14 +1269,22 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		foreach( $output->find( $replace ) as $key => $element ) {
 			if ( $table_ratio == '30_70' ) {
 				$width = '70%';
+				$img_size = 400;
 			}
 			if ( $table_ratio == '70_30' ) {
 				$width = '30%';
+				$img_size = 150;
 			}
 			if ( $table_ratio == '50_50' ) {
 				$width = '50%';
+				$img_size = 300;
 			}
-			$output->find( $replace, $key )->outertext = '<td style="width:20px;vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean"></td><td style="width: ' . $width . ';vertical-align: top;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
+			$img = '.ngl-article-featured img';
+			foreach( $output->find( $img ) as $a => $b ) {
+				$b->width = $img_size;
+				$b->style = $b->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;';
+			}
+			$output->find( $replace, $key )->outertext = '<td style="width:20px;vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean">&nbsp;</td><td style="width: ' . $width . ';vertical-align: top;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
 		}
 
 		// Left and Right article wrappers.

@@ -401,7 +401,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	// Add preview text to email.
 	if ( ! empty( $preview_text ) ) {
-		$the_content .= '<div class="ngl-preview-text -emogrifier-keep">' . $preview_text . '</div>';
+		$the_content .= '<div class="ngl-preview-text">' . $preview_text . '</div>';
 	}
 
 	// Add logo.
@@ -806,7 +806,7 @@ function newsletterglue_add_theme_designer_css() {
 }
 
 body {
-	line-height: 1.5;
+	line-height: 150%;
 	-webkit-text-size-adjust: none;
 	-ms-text-size-adjust: none;
 	margin: 0;
@@ -879,8 +879,9 @@ a, a:link {
 
 h1, h2, h3, h4, h5, h6 {
 	margin: 0 0 15px;
-	padding-top: 20px;
-	line-height: 1.5;
+	margin-top: 20px;
+	line-height: 150%;
+	mso-line-height-rule: exactly;
 }
 
 h1 { font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h1_align' ); ?>; }
@@ -891,9 +892,11 @@ h5 { font-size: <?php echo newsletterglue_get_theme_option( 'h5_size' ); ?>px; c
 h6 { font-size: <?php echo newsletterglue_get_theme_option( 'h6_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h6_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h6_align' ); ?>; }
 
 p, ul, ol {
+	padding: 0;
 	margin: 0 0 25px;
 	font-size: 18px;
-	line-height: 1.5;
+	line-height: 150%;
+	mso-line-height-rule: exactly;
 }
 
 p {
@@ -906,6 +909,10 @@ ul, ol, li {
 	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px;
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 	text-align: <?php echo newsletterglue_get_theme_option( 'p_align' ); ?>;
+}
+
+ul, ol {
+	margin-left: 40px !important;
 }
 
 a {

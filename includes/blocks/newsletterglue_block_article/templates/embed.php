@@ -194,7 +194,7 @@ $show_edit_controls = false;
 						echo $display_excerpt;
 						echo $display_date;
 					else :
-						echo '<div class="ngl-article-left-mobile -emogrifier-keep">' . $display_image . $display_labels . $display_title . $display_excerpt . $display_date . '</div>';
+						echo '<div class="ngl-article-left-mobile">' . $display_image . $display_labels . $display_title . $display_excerpt . $display_date . '</div>';
 						if ( $image_position == 'left' ) :
 							echo '<div class="ngl-article-left">' . $display_image . '</div>';
 							echo '<div class="ngl-article-right">';

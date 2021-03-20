@@ -194,14 +194,14 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 			min-width: 20px;
 			padding: 0 0 4px;
 			font-size: 14px;
-			line-height: 14px;
+			line-height: 100%;
 		}
 
 		.ngl-author-bio {
 			margin: 0;
 			padding: 0 0 4px;
 			font-size: 14px;
-			line-height: 18px;
+			line-height: 150%;
 		}
 
 		.ngl-author-btn {

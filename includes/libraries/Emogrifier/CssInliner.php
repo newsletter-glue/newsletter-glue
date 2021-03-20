@@ -144,7 +144,7 @@ class CssInliner
      *
      * @var bool
      */
-    private $shouldRemoveInvisibleNodes = true;
+    private $shouldRemoveInvisibleNodes = false;
 
     /**
      * For calculating selector precedence order.

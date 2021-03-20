@@ -161,6 +161,10 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			}
 		}
 
+		if ( defined( 'NGL_IN_EMAIL' ) && $content ) {
+			$content = $this->tableize( $content );
+		}
+
 		return $content;
 
 	}
@@ -401,6 +405,32 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 				'message' 	=> __( 'We could not subscribe you at this time. Try again later.', 'newsletter-glue' )
 			) );
 		}
+
+	}
+
+	/**
+	 * Tableize.
+	 */
+	public function tableize( $content ) {
+
+		$output = new simple_html_dom();
+		$output->load( $content );
+
+		// remove unwanted elements.
+		$replace = 'div.ngl-message-overlay';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$output->find( $replace, $key )->outertext = '';
+		}
+
+		// remove unwanted elements.
+		$replace = '.wp-block-newsletterglue-form';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$output->find( $replace, $key )->outertext = '<div style="margin-bottom:25px!important;">' . $element->innertext . '</div>';
+		}
+
+		$output->save();
+
+		return ( string ) $output;
 
 	}
 
