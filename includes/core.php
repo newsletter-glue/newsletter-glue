@@ -503,6 +503,8 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	$replace = '.wp-block-columns .wp-block-column';
 	foreach( $output->find( $replace ) as $key => $element ) {
 
+		$col_count = count( $output->find( $replace, $key )->parent()->find( 'div.wp-block-column' ) );
+
 		$width = '';
 
 		// Has style.
@@ -520,7 +522,13 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 			if ( isset( $results[ 'flex-basis' ] ) ) {
 				$width = 'width: ' . $results[ 'flex-basis' ] . ';';
 			} else {
-				$width = 'width: 50%;';
+				if ( $col_count == 2 ) {
+					$width = 'width: 50%;';
+				} else if ( $col_count == 3 ) {
+					$width = 'width: 33.33%;';
+				} else {
+					$width = 'width: 100%;';
+				}
 			}
 		}
 
@@ -532,6 +540,14 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		if ( strstr( $output->find( $replace, $key )->outertext, 'is-vertically-aligned-bottom' ) ) {
 			$valign = 'bottom';
 		}
+
+		$clean_width 	= str_replace( 'width: ', '', $width );
+		$clean_width 	= str_replace( ';', '', $clean_width );
+		$clean_width 	= trim( $clean_width );
+		$dec 			= str_replace( '%', '', $clean_width ) / 100.00;
+		$image_width 	= $dec * 600;
+
+		$element->innertext = str_replace( 'width="100%"', 'width="' . absint( $image_width - 20 ) . '"', $element->innertext );
 
 		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';padding-right: 20px;" valign="' . $valign . '">' . $element->innertext . '</td>';
 	}
@@ -889,6 +905,15 @@ h1, h2, h3, h4, h5, h6 {
 	margin-top: 20px;
 	line-height: 150%;
 	mso-line-height-rule: exactly;
+}
+
+.wp-block-columns h1,
+.wp-block-columns h2,
+.wp-block-columns h3,
+.wp-block-columns h4,
+.wp-block-columns h5,
+.wp-block-columns h6 {
+	margin-top: 0 !important;
 }
 
 h1 { font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h1_align' ); ?>; }
