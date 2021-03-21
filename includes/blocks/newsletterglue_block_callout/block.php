@@ -123,6 +123,10 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 			$content = str_replace( '<section', '<div', $content );
 			$content = str_replace( '/section>', '/div>', $content );
 		}
+		
+		if ( defined( 'NGL_IN_EMAIL' ) && $content ) {
+			$content = $this->tableize( $content );
+		}
 
 		return $content;
 
@@ -165,31 +169,39 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 	public function email_css() {
 		?>
 		.wp-block-newsletterglue-callout {
-			padding-top: 26px !important;
-			padding-bottom: 1px !important;
-		}
-
-		.wp-block-newsletterglue-callout h1,
-		.wp-block-newsletterglue-callout h2,
-		.wp-block-newsletterglue-callout h3,
-		.wp-block-newsletterglue-callout h4,
-		.wp-block-newsletterglue-callout h5,
-		.wp-block-newsletterglue-callout h6 {
-			margin: 0 0 14px !important;
-			padding: 0 !important;
-			color: inherit !important;
-		}
-
-		.wp-block-newsletterglue-callout p {
-			margin: 0 0 25px !important;
-			color: inherit !important;
 			padding: 0 !important;
 		}
 
 		.wp-block-newsletterglue-callout * {
 			text-align: inherit;
 		}
+
+		.wp-block-newsletterglue-callout td > * {
+			margin: 25px 0 !important;
+			padding: 0 !important;
+			color: inherit !important;
+		}
 		<?php
+	}
+
+	/**
+	 * Tableize.
+	 */
+	public function tableize( $content ) {
+
+		$output = new simple_html_dom();
+		$output->load( $content );
+
+		$replace = 'div.wp-block-newsletterglue-callout';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$output->find( $replace, $key )->outertext = '<div style="' . $element->style . ';padding: 0 !important;width: auto !important;display: block !important;"><table class="' . $element->class . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="' . $element->style . ';border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;table-layout: auto;border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;margin: 0 !important;border: 0 !important;width: 100% !important;"><tr>
+			<td width="25" style="width:25px;vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean">&nbsp;</td><td style="border:none; vertical-align: top; font-size: inherit !important;" valign="top">' . $element->innertext . '</td><td width="25" style="width:25px;vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean">&nbsp;</td></tr></table></div>';
+		}
+
+		$output->save();
+
+		return ( string ) $output;
+
 	}
 
 }

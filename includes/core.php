@@ -479,6 +479,13 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	$output = new simple_html_dom();
 	$output->load( $html );
 
+	// Force image width.
+	$replace = 'figure.wp-block-image img';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->width 	= '600';
+		$element->style = $element->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;margin-bottom:0 !important;';
+	}
+
 	// Force image width/height attributes.
 	$replace = '.wp-block-column img';
 	foreach( $output->find( $replace ) as $key => $element ) {
@@ -489,7 +496,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	// Add columns wrapper as a table.
 	$replace = 'figure.wp-block-image';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->outertext = $element->innertext;
+		$output->find( $replace, $key )->outertext = '<div style="margin-bottom:25px;">' . $element->innertext . '</div>';
 	}
 
 	// Output column.
