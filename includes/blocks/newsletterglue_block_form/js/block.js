@@ -369,6 +369,16 @@
 						options: newsletterglue_meta.extra_lists,
 					} )
 				);
+			} else {
+				if ( app && app === 'sendy' && props.attributes.add_checkbox ) {
+					ExtraList = el( BaseControl, {},
+							el( TextControl, {
+							label: 'Enter extra list ID for checkbox (optional)',
+							value: props.attributes.extra_list_id,
+							onChange: ( value ) => { props.setAttributes( { extra_list_id: value } ); },
+						} )
+					);
+				}
 			}
 
 			if ( ! app ) {

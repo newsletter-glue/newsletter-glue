@@ -376,4 +376,44 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 		return 'https://sendy.co/forum/discussion/13226/how-to-verify-email-addresses-in-ses/p1';
 	}
 
+	/**
+	 * Add user to this ESP.
+	 */
+	public function add_user( $data ) {
+		extract( $data );
+
+		if ( empty( $email ) ) {
+			return -1;
+		}
+
+		$name = ! empty( $name ) ? $name : '';
+
+		$this->api = new NGL_Sendy_API( untrailingslashit( $this->api_url ), $this->api_key );
+
+		if ( ! empty( $list_id ) ) {
+			$args = array(
+				'api_key'	=> $this->api_key,
+				'name'		=> $name,
+				'email'		=> $email,
+				'list'		=> $list_id
+			);
+
+			$subscribe = $this->api->post( '/subscribe', $args );
+		}
+
+		if ( isset( $extra_list ) && ! empty( $extra_list_id ) ) {
+			$args = array(
+				'api_key'	=> $this->api_key,
+				'name'		=> $name,
+				'email'		=> $email,
+				'list'		=> $extra_list_id
+			);
+
+			$subscribe = $this->api->post( '/subscribe', $args );
+		}
+
+		return true;
+
+	}
+
 }
