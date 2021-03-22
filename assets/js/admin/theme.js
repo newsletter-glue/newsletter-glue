@@ -182,9 +182,6 @@
 		if ( id == 'container_padding1' || id == 'mobile_container_padding1' ) {
 			email.find( '.ngl-email-container' ).css( { 'padding-top' : value + 'px', 'padding-bottom' : value + 'px' } );
 		}
-		if ( id == 'container_padding2' || id == 'mobile_container_padding2'  ) {
-			email.find( '.ngl-email-container' ).css( { 'padding-left' : value + 'px', 'padding-right' : value + 'px' } );
-		}
 		if ( id == 'container_margin' || id == 'mobile_container_margin' ) {
 			email.find( '.ngl-email-container' ).css( { 'margin-top' : value + 'px', 'margin-bottom' : value + 'px' } );
 		}

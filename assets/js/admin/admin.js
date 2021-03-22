@@ -202,20 +202,24 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			beforeSend: function() {
-				elem.find( '.ngl-process' ).addClass( 'is-hidden' );
-				elem.find( '.ngl-process.is-waiting' ).removeClass( 'is-hidden' );
-				elem.find( '.ngl-label-more' ).empty();
+				if ( ! $( '#ngl_from_email' ).hasClass( 'no-support-verify' ) ) {
+					elem.find( '.ngl-process' ).addClass( 'is-hidden' );
+					elem.find( '.ngl-process.is-waiting' ).removeClass( 'is-hidden' );
+					elem.find( '.ngl-label-more' ).empty();
+				}
 			},
 			success: function( response ) {
 				console.log( response );
 				elem.find( '.ngl-process' ).addClass( 'is-hidden' );
 				if ( response.success || response === true ) {
 					if ( response.success ) {
-						elem.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
-						elem.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
-						setTimeout( function() {
-							elem.find( '.ngl-process' ).addClass( 'is-hidden' );
-						}, 1500 );
+						if ( ! $( '#ngl_from_email' ).hasClass( 'no-support-verify' ) ) {
+							elem.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
+							elem.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
+							setTimeout( function() {
+								elem.find( '.ngl-process' ).addClass( 'is-hidden' );
+							}, 1500 );
+						}
 					}
 					email_.parent().parent().parent().removeClass( 'is-error' );
 					email_.attr( 'data-force-unready', '0' );
@@ -828,7 +832,11 @@
 					}
 				} else if ( response.success ) {
 					el.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
-					el.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
+					if ( id == 'ngl_from_email' && $( '#ngl_from_email' ).hasClass( 'no-support-verify' ) ) {
+						
+					} else {
+						el.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
+					}
 					el.removeClass( 'is-error' );
 				} else {
 					el.removeClass( 'is-error' );
