@@ -373,7 +373,7 @@ class NGL_Pro {
 		$html .= '<span class="ngl-sound-p1">';
 		$html .= '<span class="ngl-sound-title">' . esc_html( $data->title ) . '</span>';
 		$html .= '</span>';
-		$html .= '<span class="ngl-sound-icon"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/spotify.png" /></span>';
+		$html .= '<span class="ngl-sound-icon"><img width="30" height="30" src="' . NGL_PLUGIN_URL . '/assets/images/social/spotify.png" /></span>';
 		$html .= '</span>';
 
 		$html .= '</a>';
@@ -418,7 +418,7 @@ class NGL_Pro {
 						<a href="https://reddit.com/user/' . esc_attr( $data->author_name ) . '" target="_blank">' . esc_html( $data->author_name ) . '</a>
 					</div>
 					<div class="ngl-embed-icon">
-						<a href="' . esc_url( urldecode( trim( $url ) ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/reddit.png" /></a>
+						<a href="' . esc_url( urldecode( trim( $url ) ) ) . '" target="_blank"><img width="30" height="30" src="' . NGL_PLUGIN_URL . '/assets/images/social/reddit.png" /></a>
 					</div>
 				</div>';
 
@@ -450,7 +450,7 @@ class NGL_Pro {
 		$html .= '<span class="ngl-sound-title">' . esc_html( $data->title ) . '</span>';
 		$html .= '<span class="ngl-sound-author">' . esc_html( $data->author_name ) . '</span>';
 		$html .= '</span>';
-		$html .= '<span class="ngl-sound-icon"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/soundcloud.png" /></span>';
+		$html .= '<span class="ngl-sound-icon"><img width="30" height="30" src="' . NGL_PLUGIN_URL . '/assets/images/social/soundcloud.png" /></span>';
 		$html .= '</span>';
 
 		$html .= '</a>';
@@ -479,7 +479,7 @@ class NGL_Pro {
 
 		$url = esc_url( urldecode( trim( $url ) ) );
 
-		$html = '<a href="' . $url . '" target="_blank"><img src="' . $image_url . '" class="ngl-embed-youtube-thumb" /></a>';
+		$html = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;margin:0 !important;padding: 0 !mportant;"><tr><td align="left" valign="top" style="vertical-align: top;margin:0 !important;padding: 0 !important;"><a href="' . $url . '" target="_blank" style="margin:0!important;"><img src="' . $image_url . '" class="ngl-embed-youtube-thumb" width="598" style="margin:0 !important;" /></a></td></tr></table>';
 
 		$html .= '<div class="ngl-embed-meta">
 					<div class="ngl-embed-metadata">
@@ -487,7 +487,7 @@ class NGL_Pro {
 						<span class="ngl-embed-light"><a href="' . $data->author_url . '" target="_blank" class="ngl-embed-light-link">' . $data->author_name . '</a></span>
 					</div>
 					<div class="ngl-embed-icon">
-						<a href="' . $url . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/youtube.png" /></a>
+						<a href="' . $url . '" target="_blank"><img width="30" height="30" src="' . NGL_PLUGIN_URL . '/assets/images/social/youtube.png" /></a>
 					</div>
 				</div>';
 
@@ -535,7 +535,7 @@ class NGL_Pro {
 						' . $username . '
 					</div>
 					<div class="ngl-embed-icon">
-						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img src="' . NGL_PLUGIN_URL . '/assets/images/social/twitter.png" /></a>
+						<a href="' . urldecode( trim( $url ) ) . '" target="_blank"><img width="30" height="30" src="' . NGL_PLUGIN_URL . '/assets/images/social/twitter.png" /></a>
 					</div>
 				</div>';
 
@@ -552,14 +552,18 @@ class NGL_Pro {
 			background: #fff !important;
 			box-shadow: 0 1px 2px #aaa;
 			border-radius: 5px;
-			padding: 20px;
+			padding: 20px 0 0;
 			font-size: 13px;
 			line-height: 1.4;
 			margin: 0 0 25px;
 		}
 
+		.ngl-embed-social img {
+			margin: 0 !important;
+		}
+
 		.ngl-embed-social p {
-			line-height: 1.4;
+			line-height: 140%;
 			font-size: 14px;
 			color: #111 !important;
 		}
@@ -572,12 +576,12 @@ class NGL_Pro {
 			display: flex;
 			border-top: 1px solid rgb(204, 214, 221);
 			line-height: 1.4;
-			padding: 12px 0 0;
+			padding: 0;
 			margin: 12px 0 0;
 		}
 
 		.ngl-embed-metadata {
-			display: inline-block;
+			display: block;
 			text-align: left;
 		}
 
@@ -587,16 +591,18 @@ class NGL_Pro {
 		}
 
 		.ngl-embed-icon {
-			display: inline-block;
-			text-align: right;
-			margin-left: auto;
-			min-width: 30px;
+			display: block;
 		}
 
 		.ngl-embed-icon img {
 			width: 30px !important;
 			height: 30px !important;
 			margin: 0 !important;
+		}
+
+		.ngl-embed-date {
+			margin-left: 20px;
+			margin-right: 20px;
 		}
 
 		.ngl-embed-date,
@@ -621,7 +627,7 @@ class NGL_Pro {
 		}
 
 		.ngl-embed-twitter p {
-			margin: 0 0 8px !important;
+			margin: 0 20px 8px 20px !important;
 		}
 
 		.ngl-embed-twitter .ngl-embed-metadata a {
@@ -649,11 +655,11 @@ class NGL_Pro {
 		.ngl-embed-youtube .ngl-embed-meta {
 			margin: 0 !important;
 			border: none;
-			padding: 20px;
+			padding: 0;
 		}
 
 		.ngl-embed-youtube .ngl-embed-metadata {
-			margin-right: 50px;
+
 		}
 
 		.ngl-embed-youtube .ngl-embed-metadata a {
