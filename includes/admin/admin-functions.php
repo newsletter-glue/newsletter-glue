@@ -303,20 +303,6 @@ function newsletterglue_setting_size( $id = '', $title = '', $max = 999 ) {
 
 			</div>
 
-			<?php if ( strstr( $id, 'container_padding' ) ) { $id = 'container_padding2'; ?>
-			<div class="ngl-theme-px">
-				<input class="components-font-size-picker__number ngl-theme-input ngl-desktop" id="ngl_theme_<?php echo esc_attr( $id ); ?>" type="number" min="0" max="<?php echo $max; ?>" value="<?php echo (int) newsletterglue_get_theme_option( $id ); ?>" data-option="<?php echo esc_attr( $id ); ?>" >
-				<input class="components-font-size-picker__number ngl-theme-input ngl-mobile" id="ngl_theme_<?php echo esc_attr( $id ); ?>_mobile" type="number" min="0" max="<?php echo $max; ?>" value="<?php echo (int) newsletterglue_get_theme_option( 'mobile_' . $id ); ?>" data-option="mobile_<?php echo esc_attr( $id ); ?>" >
-				<span class="ngl-px">px</span>
-				
-				<?php if ( strstr( $id, 'container_padding' ) ) { ?>
-				<span class="ngl-px-helper">
-					<?php _e( 'Left-right', 'newsletter-glue' ); ?>
-				</span>
-				<?php } ?>
-			</div>
-			<?php } ?>
-
 			<div>
 				<?php newsletterglue_show_save_text(); ?>
 			</div>

@@ -401,7 +401,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	// Add preview text to email.
 	if ( ! empty( $preview_text ) ) {
-		$the_content .= '<div class="ngl-preview-text -emogrifier-keep">' . $preview_text . '</div>';
+		$the_content .= '<div class="ngl-preview-text">' . $preview_text . '</div>';
 	}
 
 	// Add logo.
@@ -462,7 +462,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	// Fixes emogrifier encoding bugs.
 	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D' ), array( '{', '}', '$', '[', ']' ), $html );
-	$html = str_replace( '@media only screen and (max-width:596px) {', '@media only screen and (max-width:596px) {' . "\r\n", $html );
+	$html = str_replace( '@media only screen and (max-width:642px) {', '@media only screen and (max-width:642px) {' . "\r\n", $html );
 
 	$html = wp_encode_emoji( $html );
 
@@ -479,9 +479,31 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	$output = new simple_html_dom();
 	$output->load( $html );
 
+	// Force image width.
+	$replace = 'figure.wp-block-image img';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->width 	= '600';
+		$element->style = $element->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;margin-bottom:0 !important;';
+	}
+
+	// Force image width/height attributes.
+	$replace = '.wp-block-column img';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->width 	= '100%';
+		$element->height 	= 'auto';
+	}
+
+	// Add columns wrapper as a table.
+	$replace = 'figure.wp-block-image';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$output->find( $replace, $key )->outertext = '<div style="margin-bottom:25px;">' . $element->innertext . '</div>';
+	}
+
 	// Output column.
 	$replace = '.wp-block-columns .wp-block-column';
 	foreach( $output->find( $replace ) as $key => $element ) {
+
+		$col_count = count( $output->find( $replace, $key )->parent()->find( 'div.wp-block-column' ) );
 
 		$width = '';
 
@@ -499,25 +521,47 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 			}
 			if ( isset( $results[ 'flex-basis' ] ) ) {
 				$width = 'width: ' . $results[ 'flex-basis' ] . ';';
+			} else {
+				if ( $col_count == 2 ) {
+					$width = 'width: 50%;';
+				} else if ( $col_count == 3 ) {
+					$width = 'width: 33.33%;';
+				} else {
+					$width = 'width: 100%;';
+				}
 			}
 		}
 
 		$valign = 'top';
 
 		if ( strstr( $output->find( $replace, $key )->outertext, 'is-vertically-aligned-center' ) ) {
-			$valign = 'center';
+			$valign = 'middle';
 		}
 		if ( strstr( $output->find( $replace, $key )->outertext, 'is-vertically-aligned-bottom' ) ) {
 			$valign = 'bottom';
 		}
 
-		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';padding-right: 20px;" valign="' . $valign . '">' . $element->innertext . '</td>';
+		$clean_width 	= str_replace( 'width: ', '', $width );
+		$clean_width 	= str_replace( ';', '', $clean_width );
+		$clean_width 	= trim( $clean_width );
+		$dec 			= str_replace( '%', '', $clean_width ) / 100.00;
+		$image_width 	= $dec * 600;
+
+		$element->innertext = str_replace( 'width="100%"', 'width="' . absint( $image_width - 20 ) . '"', $element->innertext );
+
+		if ( $width == 'width: 100%;' ) {
+			$padding = 0;
+		} else {
+			$padding = '20px;';
+		}
+
+		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';padding-right: ' . $padding . ';" valign="' . $valign . '">' . $element->innertext . '</td>';
 	}
 
 	// Add columns wrapper as a table.
 	$replace = '.wp-block-columns';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->innertext = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: auto;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 25px;"><tr>' . $element->innertext . '</tr></table>';
+		$output->find( $replace, $key )->innertext = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr>' . $element->innertext . '</tr></table>';
 	}
 
 	// Change all figures.
@@ -528,8 +572,11 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) $output;
+	$result = ( string ) $output;
 
+	$result = preg_replace(  '/\>\s+\</m', '><', $result );
+
+	return $result;
 }
 
 /**
@@ -633,13 +680,13 @@ function newsletterglue_get_theme_option( $id = '', $theme = null ) {
 function newsletterglue_get_theme_default( $key ) {
 
 	$keys = array(
-		'h1_colour'					=> '#222222',
-		'h2_colour'					=> '#222222',
-		'h3_colour'					=> '#222222',
-		'h4_colour'					=> '#222222',
-		'h5_colour'					=> '#222222',
-		'h6_colour'					=> '#222222',
-		'p_colour'					=> '#222222',
+		'h1_colour'					=> '#333333',
+		'h2_colour'					=> '#333333',
+		'h3_colour'					=> '#333333',
+		'h4_colour'					=> '#333333',
+		'h5_colour'					=> '#333333',
+		'h6_colour'					=> '#333333',
+		'p_colour'					=> '#333333',
 		'h1_size'					=> 32,
 		'h2_size'					=> 28,
 		'h3_size'					=> 24,
@@ -663,7 +710,6 @@ function newsletterglue_get_theme_default( $key ) {
 		'btn_border'				=> '#0088A0',
 		'btn_width'					=> 200,
 		'container_padding1'		=> 20,
-		'container_padding2'		=> 40,
 		'container_margin'			=> 0,
 		// Mobile.
 		'mobile_h1_size'			=> 28,
@@ -675,7 +721,6 @@ function newsletterglue_get_theme_default( $key ) {
 		'mobile_p_size'				=> 16,
 		'mobile_container_margin' 	=> 0,
 		'mobile_container_padding1' => 0,
-		'mobile_container_padding2' => 0,
 		'mobile_btn_width'			=> 200,
 	);
 
@@ -778,6 +823,9 @@ function newsletterglue_add_theme_designer_css() {
 	if ( get_option( 'newsletterglue_disable_plugin_css' ) == 1 ) {
 		return;
 	}
+
+	$email_font = newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . ", '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', Arial, 'Helvetica', 'sans-serif'";
+
 ?>
 
 .ExternalClass {width:100%;}
@@ -787,7 +835,7 @@ function newsletterglue_add_theme_designer_css() {
 }
 
 body {
-	line-height: 1.5;
+	line-height: 150%;
 	-webkit-text-size-adjust: none;
 	-ms-text-size-adjust: none;
 	margin: 0;
@@ -823,27 +871,34 @@ a, a:link {
 
 #wrapper {
 	background: <?php echo newsletterglue_get_theme_option( 'email_bg' ); ?>;
-	padding: 0 10px;
+	padding: 0;
 	padding-top: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
 	padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
-	font-family: <?php echo newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ); ?>;
+	font-family: <?php echo $email_font; ?>;
 	<?php endif; ?>
 	<?php if ( ! newsletterglue_get_theme_option( 'font' ) && ( isset( $_GET[ 'preview_email' ] ) || isset( $_GET[ 'view_newsletter' ] ) ) ) : ?>
-	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', 'sans-serif';
+	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', Arial, 'Helvetica', 'sans-serif';
 	<?php endif; ?>
 }
 
 #template_inner {
+	<?php
+		if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) {
+		?>
+	padding-left: 10px;
+	padding-right: 10px;
+		<?php } ?>
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 	background: <?php echo newsletterglue_get_theme_option( 'container_bg' ); ?>;
 	box-sizing: border-box;
-	padding: <?php echo absint( newsletterglue_get_theme_option( 'container_padding1' ) ); ?>px <?php echo absint( newsletterglue_get_theme_option( 'container_padding2' ) ); ?>px;
+	padding-top: <?php echo absint( newsletterglue_get_theme_option( 'container_padding1' ) ); ?>px;
+	padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'container_padding1' ) ); ?>px;
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
-	font-family: <?php echo newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ); ?>;
+	font-family: <?php echo $email_font; ?>;
 	<?php endif; ?>
 	<?php if ( ! newsletterglue_get_theme_option( 'font' ) && ( isset( $_GET[ 'preview_email' ] ) || isset( $_GET[ 'view_newsletter' ] ) ) ) : ?>
-	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', 'sans-serif';
+	font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen-Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', Arial, 'Helvetica', 'sans-serif';
 	<?php endif; ?>
 }
 
@@ -853,8 +908,18 @@ a, a:link {
 
 h1, h2, h3, h4, h5, h6 {
 	margin: 0 0 15px;
-	padding-top: 20px;
-	line-height: 1.5;
+	margin-top: 20px;
+	line-height: 150%;
+	mso-line-height-rule: exactly;
+}
+
+.wp-block-columns h1,
+.wp-block-columns h2,
+.wp-block-columns h3,
+.wp-block-columns h4,
+.wp-block-columns h5,
+.wp-block-columns h6 {
+	margin-top: 0 !important;
 }
 
 h1 { font-size: <?php echo newsletterglue_get_theme_option( 'h1_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h1_align' ); ?>; }
@@ -865,9 +930,11 @@ h5 { font-size: <?php echo newsletterglue_get_theme_option( 'h5_size' ); ?>px; c
 h6 { font-size: <?php echo newsletterglue_get_theme_option( 'h6_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h6_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h6_align' ); ?>; }
 
 p, ul, ol {
+	padding: 0;
 	margin: 0 0 25px;
 	font-size: 18px;
-	line-height: 1.5;
+	line-height: 150%;
+	mso-line-height-rule: exactly;
 }
 
 p {
@@ -880,6 +947,10 @@ ul, ol, li {
 	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px;
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 	text-align: <?php echo newsletterglue_get_theme_option( 'p_align' ); ?>;
+}
+
+ul, ol {
+	margin-left: 40px !important;
 }
 
 a {
@@ -916,49 +987,48 @@ ul.blocks-gallery-grid {
 	list-style-type: none;
 }
 
-#template_body td table {
+#template_inner td table {
 	table-layout: auto;
 	width: 100%;
 	border-collapse: collapse;
 	border: 0;
 }
 
-#template_body table.has-fixed-layout {
+#template_inner table.has-fixed-layout {
 	table-layout: fixed !important;
 }
 
-#template_body td table td {
+#template_inner td table td {
 	padding: 10px;
 	font-size: 16px;
 	border: 1px solid #eee;
 }
 
-#template_body td table img {
+#template_inner td table img {
 	margin: 0;
 }
 
-#template_body td.ngl-td-clean {
+#template_inner td.ngl-td-clean {
 	border: 0;
 	padding: 0;
 	width: 100%;
 	font-size: inherit !important;
 }
 
-#template_body table.ngl-table-tiny {
+#template_inner table.ngl-table-tiny {
 	border: 0 !important;
 	table-layout: auto;
 	width: auto;
 }
 
-#template_body td.ngl-td-tiny {
+#template_inner td.ngl-td-tiny {
 	border: 0;
 	padding: 0;
 	width: auto !important;
 	font-size: inherit;
-	white-space: nowrap;
 }
 
-#template_body table.ngl-table-clean {
+#template_inner table.ngl-table-clean {
 	border: 0;
 }
 
@@ -980,6 +1050,7 @@ p.ngl-unsubscribe a {
 p.ngl-unsubscribe {
 	margin-top: 50px !important;
 	padding-top: 20px !important;
+	padding-bottom: 20px !important;
 	border-top: 1px solid #eee !important;
 }
 
@@ -991,14 +1062,27 @@ p.ngl-unsubscribe {
 	padding-top: 25px;
 }
 
+.wp-block-buttons.is-content-justification-center {
+	text-align: center;
+}
+
+.wp-block-buttons.is-content-justification-right {
+	text-align: right;
+}
+
+.wp-block-buttons {
+	margin: 0 0 25px;
+}
+
+.wp-block-buttons .wp-block-button {
+	display: inline-block !important;
+	padding: 0 !important;
+}
+
 .wp-block-button.aligncenter,
 .wp-block-buttons.aligncenter,
 .wp-block-calendar {
 	text-align: center;
-}
-
-.wp-block-button {
-	padding: 0 0 25px;
 }
 
 .wp-block-button__link {
@@ -1012,7 +1096,30 @@ p.ngl-unsubscribe {
 	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;
 	min-width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px !important;
 	border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?> !important;
-	border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px !important;
+	border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px;
+}
+
+.wp-block-button.wp-block-button__width-100 {
+	width: 100% !important;
+	padding: 0 !important;
+}
+
+.wp-block-button.wp-block-button__width-100 .wp-block-button__link {
+	width: 100% !important;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link {
+	background-color: transparent !important;
+	border-width: 2px !important;
+	padding: 10px 24px;
+	color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?> !important;
+}
+
+.wp-block-column img {
+	width: 100% !important;
+	max-width: 100% !important;
+	max-height: 100% !important;
+	height: auto !important;
 }
 
 .ngl-hide-in-email {
@@ -1051,15 +1158,21 @@ p.ngl-unsubscribe {
 .has-text-align-left { text-align: left !important; }
 .has-text-align-right { text-align: right !important; }
 
-@media only screen and (max-width:596px) {
+@media only screen and (max-width:642px) {
+
+	#template_inner {
+		width: auto;
+		padding-top: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_padding1' ) ); ?>px !important;
+		padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_padding1' ) ); ?>px !important;
+	}
+
+	td.ngl-td-spacer {
+		width: 14px;
+	}
 
 	#wrapper {
 		padding-top: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
 		padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
-	}
-
-	#template_inner {
-		padding: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_padding1' ) ); ?>px <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_padding2' ) ); ?>px !important;
 	}
 
 	h1 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px !important; }
@@ -1069,7 +1182,7 @@ p.ngl-unsubscribe {
 	h5 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h5_size' ); ?>px !important; }
 	h6 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h6_size' ); ?>px !important; }
 
-	p, ul, ol {
+	p, ul, ol, li {
 		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
 	}
 

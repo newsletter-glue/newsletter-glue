@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" style="margin:0;padding:0">
 <head>
 
@@ -36,33 +36,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</style>
 
 </head>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="margin:0;padding:0;" yahoo="fix">
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" yahoo="fix">
 
-<div id="wrapper" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
+	<div id="wrapper" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
 
-	<table border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0" id="template_wrapper" >
-		<tr>
-			<td align="center" valign="top">
-				<table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_container">
-					<tr>
-						<td align="center" valign="top">
-							<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0" id="template_body">
-								<tr>
-									<td></td>
-									<td width="600" id="template_inner" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">
-									{content}
-									</td>
-									<td></td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
+		<center>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0" id="template_wrapper">
+				<tr>
+					<td align="center" valign="top" style="text-align:center;">
+						<table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" class="main" style="text-align: left; margin-left: auto; margin-right: auto;table-layout: fixed;" id="template_container">
+							<tr>
+								<td class="ngl-td-spacer">&nbsp;</td>
+								<td width="600" id="template_inner" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">{content}</td>
+								<td class="ngl-td-spacer">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</center>
 
-</div>
+	</div>
 
 </body>
 </html>

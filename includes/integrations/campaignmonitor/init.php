@@ -466,4 +466,18 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 
 	}
 
+	/**
+	 * Has email verify.
+	 */
+	public function has_email_verify() {
+		return false;
+	}
+
+	/**
+	 * Get email verify help.
+	 */
+	public function get_email_verify_help() {
+		return 'https://help.campaignmonitor.com/permission-settings';
+	}
+
 }
