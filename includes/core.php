@@ -549,13 +549,19 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 		$element->innertext = str_replace( 'width="100%"', 'width="' . absint( $image_width - 20 ) . '"', $element->innertext );
 
-		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';padding-right: 20px;" valign="' . $valign . '">' . $element->innertext . '</td>';
+		if ( $width == 'width: 100%;' ) {
+			$padding = 0;
+		} else {
+			$padding = '20px;';
+		}
+
+		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';padding-right: ' . $padding . ';" valign="' . $valign . '">' . $element->innertext . '</td>';
 	}
 
 	// Add columns wrapper as a table.
 	$replace = '.wp-block-columns';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->innertext = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 25px;"><tr>' . $element->innertext . '</tr></table>';
+		$output->find( $replace, $key )->innertext = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr>' . $element->innertext . '</tr></table>';
 	}
 
 	// Change all figures.
