@@ -323,6 +323,14 @@
 					options: newsletterglue_meta.the_lists,
 				} );
 			}
+			if ( app == 'sendy' ) {
+				SelectList = el( TextControl, {
+					label: 'Enter list ID',
+					value: props.attributes.list_id,
+					onChange: ( value ) => { props.setAttributes( { list_id: value } ); },
+					help: 'The list id you want to subscribe a user to. This encrypted & hashed id can be found under View all lists section named ID.',
+				} );
+			}
 			if ( app == 'mailchimp' ) {
 				SelectList = el( SelectControl, {
 					label: 'Select an audience',
