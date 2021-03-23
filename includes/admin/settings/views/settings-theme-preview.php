@@ -29,7 +29,7 @@ $container_bg	= newsletterglue_get_theme_option( 'container_bg' );
 $border_color 	= newsletterglue_get_theme_option( 'btn_border' );
 
 if ( $email_bg != $container_bg ) {
-	$pad = 10;
+	$pad = 20;
 } else {
 	$pad = 0;
 }

@@ -570,6 +570,38 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		$output->find( $replace, $key )->outertext = '<div style="margin-bottom: 25px;">' . $element->innertext . '</div>';
 	}
 
+	// Convert metadata to table.
+	$replace = '.ngl-embed-metadata';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$output->find( $replace, $key )->outertext = '<table border="0" width="100%" cellpadding="20" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;margin:0 !important;"><tr><td width="50%" align="left" valign="top" style="vertical-align: top;margin:0 !important;">' . $element->outertext . '</td>';
+	}
+
+	$replace = '.ngl-embed-icon';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$output->find( $replace, $key )->outertext = '<td width="50%" align="right" valign="top" style="vertical-align: top;margin:0 !important;">' . $element->outertext . '</td></tr></table>';
+	}
+
+	// Quotes.
+	$replace = 'cite';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->style = $element->style . ';font-weight: bold;font-size: 14px;font-style:normal;';
+	}
+
+	// Quotes.
+	$replace = 'blockquote';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$style = $element->style;
+		$align = 'left';
+		if ( strstr( $style, 'left' ) ) {
+			$align = 'left';
+		} else if ( strstr( $style, 'right' ) ) {
+			$align = 'right';
+		} else if ( strstr( $style, 'center' ) ) {
+			$align = 'center';
+		}
+		$output->find( $replace, $key )->outertext = '<div style="margin-bottom: 25px;margin-left: 0;border-' . $align . ': 5px solid #eee;padding-' . $align . ': 25px;' . $style . '">' . $element->innertext . '</div>';
+	}
+
 	$output->save();
 
 	$result = ( string ) $output;
@@ -840,6 +872,7 @@ body {
 	-ms-text-size-adjust: none;
 	margin: 0;
 	padding: 0;
+	background: <?php echo newsletterglue_get_theme_option( 'email_bg' ); ?>;
 }
 
 body, #wrapper {
@@ -869,11 +902,15 @@ a, a:link {
 	text-decoration: underline;
 }
 
+blockquote p {
+	text-align: inherit !important;
+}
+
 #wrapper {
 	background: <?php echo newsletterglue_get_theme_option( 'email_bg' ); ?>;
 	padding: 0;
-	padding-top: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
-	padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
+	margin-top: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
+	margin-bottom: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
 	font-family: <?php echo $email_font; ?>;
 	<?php endif; ?>
@@ -886,8 +923,8 @@ a, a:link {
 	<?php
 		if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) {
 		?>
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
 		<?php } ?>
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 	background: <?php echo newsletterglue_get_theme_option( 'container_bg' ); ?>;
@@ -1050,7 +1087,7 @@ p.ngl-unsubscribe a {
 p.ngl-unsubscribe {
 	margin-top: 50px !important;
 	padding-top: 20px !important;
-	padding-bottom: 20px !important;
+	margin-bottom: 20px !important;
 	border-top: 1px solid #eee !important;
 }
 
@@ -1171,8 +1208,8 @@ p.ngl-unsubscribe {
 	}
 
 	#wrapper {
-		padding-top: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
-		padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
+		margin-top: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
+		margin-bottom: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
 	}
 
 	h1 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px !important; }
