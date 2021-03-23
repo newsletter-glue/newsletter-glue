@@ -342,7 +342,7 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 					</div>
 					<div class="ngl-metabox-flex">
 						<div class="ngl-metabox-header">
-							<?php esc_html_e( 'Tracking', 'newsletter-glue' ); ?>
+							<?php esc_html_e( 'Sendy tracking', 'newsletter-glue' ); ?>
 							<?php $this->input_verification_info(); ?>
 						</div>
 						<div class="ngl-field">
