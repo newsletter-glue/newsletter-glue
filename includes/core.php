@@ -922,8 +922,8 @@ blockquote p {
 	<?php
 		if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) {
 		?>
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
 		<?php } ?>
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 	background: <?php echo newsletterglue_get_theme_option( 'container_bg' ); ?>;
