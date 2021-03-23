@@ -909,8 +909,8 @@ blockquote p {
 #wrapper {
 	background: <?php echo newsletterglue_get_theme_option( 'email_bg' ); ?>;
 	padding: 0;
-	padding-top: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
-	padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
+	margin-top: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
+	margin-bottom: <?php echo absint( newsletterglue_get_theme_option( 'container_margin' ) ); ?>px;
 	<?php if ( newsletterglue_get_theme_option( 'font' ) ) : ?>
 	font-family: <?php echo $email_font; ?>;
 	<?php endif; ?>
@@ -1087,7 +1087,7 @@ p.ngl-unsubscribe a {
 p.ngl-unsubscribe {
 	margin-top: 50px !important;
 	padding-top: 20px !important;
-	padding-bottom: 20px !important;
+	margin-bottom: 20px !important;
 	border-top: 1px solid #eee !important;
 }
 
@@ -1208,8 +1208,8 @@ p.ngl-unsubscribe {
 	}
 
 	#wrapper {
-		padding-top: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
-		padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
+		margin-top: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
+		margin-bottom: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_margin' ) ); ?>px !important;
 	}
 
 	h1 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h1_size' ); ?>px !important; }
