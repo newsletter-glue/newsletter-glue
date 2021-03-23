@@ -872,6 +872,7 @@ body {
 	-ms-text-size-adjust: none;
 	margin: 0;
 	padding: 0;
+	background: <?php echo newsletterglue_get_theme_option( 'email_bg' ); ?>;
 }
 
 body, #wrapper {
