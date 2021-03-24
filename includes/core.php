@@ -471,7 +471,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 }
 
 /**
- * Customize output - fix output issues.
+ * Fix most email client issues here.
  */
 add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output', 50, 3 );
 function newsletterglue_generated_html_output( $html, $post_id, $app ) {
@@ -555,13 +555,13 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 			$padding = '20px;';
 		}
 
-		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';padding-right: ' . $padding . ';" valign="' . $valign . '">' . $element->innertext . '</td>';
+		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';" valign="' . $valign . '">' . $element->innertext . '</td><td width="14" style="border:0;padding:0;margin:0;width:14px;">&nbsp;</td>';
 	}
 
 	// Add columns wrapper as a table.
 	$replace = '.wp-block-columns';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->innertext = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr>' . $element->innertext . '</tr></table>';
+		$output->find( $replace, $key )->innertext = '<table class="ngl-table-index" border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr>' . $element->innertext . '</tr></table>';
 	}
 
 	// Change all figures.
@@ -604,11 +604,53 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 	$output->save();
 
-	$result = ( string ) $output;
+	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+}
 
-	$result = preg_replace(  '/\>\s+\</m', '><', $result );
+/**
+ * This removes empty TD cells at end of content.
+ */
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_empty_td_cells', 60, 3 );
+function newsletterglue_fix_empty_td_cells( $html, $post_id, $app ) {
 
-	return $result;
+	$output = new simple_html_dom();
+	$output->load( $html );
+
+	$replace = '.wp-block-columns table';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( strstr( $element->find( 'td', -1 )->innertext, '&nbsp;' ) ) {
+			$element->find( 'td', -1 )->outertext = '';
+		}
+	}
+
+	$output->save();
+
+	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+}
+
+/**
+ * Correct td cell widths.
+ */
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_td_widths', 70, 3 );
+function newsletterglue_fix_td_widths( $html, $post_id, $app ) {
+
+	$output = new simple_html_dom();
+	$output->load( $html );
+
+	$replace = '#template_inner table';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$td_count = count( $element->find( 'td' ) );
+		if ( $td_count == 1 ) {
+			$element->find( 'td', 0 )->style = str_replace( 'width: 50%', 'width: 100%', $element->find( 'td', 0 )->style );
+			foreach( $element->find( 'img' ) as $key => $element ) {
+				$element->width = 600;
+			}
+		}
+	}
+
+	$output->save();
+
+	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
 }
 
 /**
@@ -950,6 +992,10 @@ h1, h2, h3, h4, h5, h6 {
 	mso-line-height-rule: exactly;
 }
 
+.wp-block-columns {
+	margin-bottom: 25px !important;
+}
+
 .wp-block-columns h1,
 .wp-block-columns h2,
 .wp-block-columns h3,
@@ -1074,8 +1120,7 @@ p.ngl-unsubscribe {
 	font-size: 13px;
 	text-align: center;
 	color: #999 !important;
-	padding-top: 50px;
-	margin: 0 !important;
+	margin: 20px 0 20px 0 !important;
 }
 
 p.ngl-credits a,
@@ -1087,7 +1132,6 @@ p.ngl-unsubscribe a {
 p.ngl-unsubscribe {
 	margin-top: 50px !important;
 	padding-top: 20px !important;
-	margin-bottom: 20px !important;
 	border-top: 1px solid #eee !important;
 }
 
@@ -1225,11 +1269,7 @@ p.ngl-unsubscribe {
 
 	p.ngl-credits,
 	p.ngl-unsubscribe {
-		font-size: 13px !important;
-	}
-
-	p.ngl-unsubscribe {
-		padding-bottom: 20px !important;
+		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
 	}
 
 	#template_inner img {

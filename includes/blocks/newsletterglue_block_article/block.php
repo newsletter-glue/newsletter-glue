@@ -473,7 +473,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	.ngl-article-left-mobile * {
 		display: block !important;
 		max-height: 100% !important;
-		font-size: inherit !important;
+		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
 	}
 
 	.ngl-table-article,
