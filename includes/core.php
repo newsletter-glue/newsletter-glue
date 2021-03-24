@@ -991,8 +991,8 @@ blockquote p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	margin: 0 0 15px;
-	margin-top: 20px;
+	padding: 0 !important;
+	margin: 20px 0 15px 0;
 	line-height: 150%;
 	mso-line-height-rule: exactly;
 }
