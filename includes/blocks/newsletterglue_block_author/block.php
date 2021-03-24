@@ -170,7 +170,7 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 	public function email_css() {
 		?>
 		.ngl-author {
-			display: flex;
+			display: block;
 			padding: 0;
 			margin: 0 0 30px;
 			line-height: 1;
@@ -208,11 +208,11 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 			color: #fff !important;
 			text-decoration: none !important;
 			padding: 4px 8px;
-			display: inline-flex;
+			display: inline-block;
 			align-items: center;
 			border: 2px solid transparent;
 			font-size: 12px;
-			line-height: 16px;
+			line-height: 18px;
 		}
 
 		.ngl-author-btn:hover {
@@ -224,10 +224,13 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		}
 
 		.ngl-author-cta img {
-			display: inline-block;
+			display: inline-block !important;
 			width: 16px !important;
 			height: 16px !important;
 			margin: 0 4px 0 0 !important;
+			vertical-align: middle;
+			position: relative;
+			top: -1px;
 		}
 
 		.ngl-author-cta .ngl-author-btn-outlined {
@@ -284,15 +287,15 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		// Force image width/height attributes.
 		$replace = 'div.ngl-author-cta img';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$element->width 	= '16';
-			$element->height 	= '16';
+			$element->width 	= 16;
+			$element->height 	= 16;
 		}
 
 		// Force image width/height attributes.
 		$replace = 'div.ngl-author-pic img';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$element->width 	= '50';
-			$element->height 	= '50';
+			$element->width 	= 50;
+			$element->height 	= 50;
 		}
 
 		// Picture cell.

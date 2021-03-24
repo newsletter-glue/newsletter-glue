@@ -659,6 +659,52 @@ function newsletterglue_fix_td_widths( $html, $post_id, $app ) {
 }
 
 /**
+ * Make sure image widths and height are accurate.
+ */
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_images_dom', 80, 3 );
+function newsletterglue_fix_images_dom( $html, $post_id, $app ) {
+
+	$output = new simple_html_dom();
+	$output->load( $html );
+
+	$replace = '#template_inner td';
+	$width = '100%';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$s = $element->style;
+		$results = [];
+		$styles = explode(';', $s);
+
+		foreach ($styles as $style) {
+			$properties = explode(':', $style);
+			if (2 === count($properties)) {
+				$results[trim($properties[0])] = trim($properties[1]);
+			}
+		}
+		if ( isset( $results[ 'width' ] ) ) {
+			$width = $results[ 'width' ];
+		}
+		foreach( $element->find( 'img' ) as $a => $b ) {
+			if ( strstr( $b->class, 'wp-image-' ) ) {
+				$width 		= trim( $width );
+				$width 		= str_replace( '%', '', $width ) / 100.00;
+				$width 		= $width * 600;
+				if ( $width == '100%' ) {
+					$b->width = 600;
+				} else {
+					$b->width	= absint( $width ) - 20;
+				}
+				$b->height  = '';
+			}
+		}
+	}
+
+	$output->save();
+
+	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+
+}
+
+/**
  * Add logo image.
  */
 function newsletterglue_add_logo() {
