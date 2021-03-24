@@ -170,13 +170,13 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 	public function email_css() {
 		?>
 		.wp-block-newsletterglue-author {
-			margin: 0 0 30px 0 !important;
+			margin: 0 0 25px 0 !important;
 		}
 
 		.ngl-author {
 			display: block;
 			padding: 0;
-			margin: 0 0 30px 0 !important;
+			margin: 0 0 25px 0 !important;
 		}
 
 		.ngl-author-pic {
@@ -304,7 +304,7 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		// Picture cell.
 		$replace = 'div.ngl-author-pic';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<td width="66" style="width: 66px; max-width: 66px !important;vertical-align: ' . $valign . ';" valign="' . $valign . '" class="ngl-td-auto">' . $element->outertext . '</td>';
+			$output->find( $replace, $key )->outertext = '<td width="50" style="width: 50px; max-width: 50px !important;vertical-align: ' . $valign . ';" valign="' . $valign . '" class="ngl-td-auto">' . $element->outertext . '</td>';
 		}
 
 		// Meta cell.
@@ -316,7 +316,7 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		// Put every author bio in a table.
 		$replace = 'div.wp-block-newsletterglue-author';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0;margin-bottom:0 !important;table-layout: auto !important;"><tr>' . $element->innertext . '</tr></table>';
+			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0;margin-bottom:0 !important;table-layout: auto !important;"><tr>' . $element->innertext . '</tr></table>';
 		}
 
 		$output->save();

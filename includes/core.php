@@ -500,7 +500,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	// Add columns wrapper as a table.
 	$replace = 'figure.wp-block-image';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->outertext = '<div style="margin-bottom:25px;">' . $element->innertext . '</div>';
+		$output->find( $replace, $key )->outertext = '<div style="margin-bottom:25px;" class="ngl-block-image">' . $element->innertext . '</div>';
 	}
 
 	// Output column.
@@ -551,22 +551,16 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		$dec 			= str_replace( '%', '', $clean_width ) / 100.00;
 		$image_width 	= $dec * 600;
 
-		$element->innertext = str_replace( 'width="100%"', 'width="' . absint( $image_width - 20 ) . '"', $element->innertext );
-		$element->innertext = str_replace( 'width="600"', 'width="' . absint( $image_width - 20 ) . '"', $element->innertext );
+		$element->innertext = str_replace( 'width="100%"', 'width="' . ceil( $image_width - 20 ) . '"', $element->innertext );
+		$element->innertext = str_replace( 'width="600"', 'width="' . ceil( $image_width - 20 ) . '"', $element->innertext );
 
-		if ( $width == 'width: 100%;' ) {
-			$padding = 0;
-		} else {
-			$padding = '20px;';
-		}
-
-		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';" valign="' . $valign . '">' . $element->innertext . '</td><td width="14" style="border:0;padding:0;margin:0;width:14px;">&nbsp;</td>';
+		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';" valign="' . $valign . '">' . $element->innertext . '</td>';
 	}
 
 	// Add columns wrapper as a table.
 	$replace = '.wp-block-columns';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->innertext = '<table class="ngl-table-index" border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr>' . $element->innertext . '</tr></table>';
+		$output->find( $replace, $key )->innertext = '<table class="ngl-table-index" border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr>' . $element->innertext . '</tr></table>';
 	}
 
 	// Change all figures.
@@ -607,25 +601,33 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		$output->find( $replace, $key )->outertext = '<div style="margin-bottom: 25px;margin-left: 0;border-' . $align . ': 5px solid #eee;padding-' . $align . ': 25px;' . $style . '">' . $element->innertext . '</div>';
 	}
 
-	$output->save();
-
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
-}
-
-/**
- * This removes empty TD cells at end of content.
- */
-add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_empty_td_cells', 60, 3 );
-function newsletterglue_fix_empty_td_cells( $html, $post_id, $app ) {
-
-	$output = new simple_html_dom();
-	$output->load( $html );
-
-	$replace = '.wp-block-columns table';
+	// Gallery block.
+	$replace = '.blocks-gallery-grid';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		if ( strstr( $element->find( 'td', -1 )->innertext, '&nbsp;' ) ) {
-			$element->find( 'td', -1 )->outertext = '';
+		$class = $element->parent()->class;
+		$cols = 1;
+		if ( strstr( $class, 'columns-4' ) ) {
+			$cols = 4;
 		}
+		if ( strstr( $class, 'columns-3' ) ) {
+			$cols = 3;
+		}
+		if ( strstr( $class, 'columns-2' ) ) {
+			$cols = 2;
+		}
+		$html = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr>';
+		$i = 0;
+		foreach( $element->find( 'li' ) as $item => $list ) {
+			$i++;
+			$width = ( 600 / $cols ) - 20;
+			$image = '<img src="' . $list->find( 'img', 0 )->src. '" alt="" width="' . $width . '" style="margin: 0;display: block; max-width: 100%; min-width: 100px; width: 100%;" />';
+			$html .= '<td valign="top" style="vertical-align: top;margin:0;">' . $image . '</td>';
+			if ( $i % $cols == 0 ) {
+				$html .= '</tr>';
+			}
+		}
+		$html .= '</table>';
+		$output->find( $replace, $key )->outertext = $html;
 	}
 
 	$output->save();
@@ -636,7 +638,7 @@ function newsletterglue_fix_empty_td_cells( $html, $post_id, $app ) {
 /**
  * Correct td cell widths.
  */
-add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_td_widths', 70, 3 );
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_td_widths', 60, 3 );
 function newsletterglue_fix_td_widths( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
@@ -653,6 +655,41 @@ function newsletterglue_fix_td_widths( $html, $post_id, $app ) {
 		}
 	}
 
+	$replace = '#template_inner div.ngl-block-image img';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->width = 600;
+		$element->height = '';
+	}
+
+	$output->save();
+
+	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+}
+
+/**
+ * Add table to full width image.
+ */
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_full_width_images', 70, 3 );
+function newsletterglue_fix_full_width_images( $html, $post_id, $app ) {
+
+	if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) {
+		$gap = true;
+	} else {
+		$gap = false;
+	}
+
+	$output = new simple_html_dom();
+	$output->load( $html );
+
+	$replace = '#template_inner > div > img';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( $element->width == 600 ) {
+			$element->width = $gap ? 560 : 580;;
+			$element->style = 'display: block; max-width: 100%; min-width: 100px; width: 100%;margin-bottom:0 !important;';
+			$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+		}
+	}
+
 	$output->save();
 
 	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
@@ -664,12 +701,19 @@ function newsletterglue_fix_td_widths( $html, $post_id, $app ) {
 add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_images_dom', 80, 3 );
 function newsletterglue_fix_images_dom( $html, $post_id, $app ) {
 
+	if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) {
+		$gap = true;
+	} else {
+		$gap = false;
+	}
+
 	$output = new simple_html_dom();
 	$output->load( $html );
 
 	$replace = '#template_inner td';
 	$width = '100%';
 	foreach( $output->find( $replace ) as $key => $element ) {
+		$width = '100%';
 		$s = $element->style;
 		$results = [];
 		$styles = explode(';', $s);
@@ -685,13 +729,14 @@ function newsletterglue_fix_images_dom( $html, $post_id, $app ) {
 		}
 		foreach( $element->find( 'img' ) as $a => $b ) {
 			if ( strstr( $b->class, 'wp-image-' ) ) {
-				$width 		= trim( $width );
-				$width 		= str_replace( '%', '', $width ) / 100.00;
-				$width 		= $width * 600;
+				$clean_width 		= trim( $width );
+				$clean_width        = str_replace( 'px', '', $clean_width );
+				$clean_width 		= str_replace( '%', '', $clean_width ) / 100;
+				$clean_width 		= $clean_width * 600;
 				if ( $width == '100%' ) {
-					$b->width = 600;
+					$b->width = $gap ? 560 : 580;
 				} else {
-					$b->width	= absint( $width ) - 20;
+					$b->width = $gap ? ceil( $clean_width - 20 ) - 10 : ceil( $clean_width - 20 );
 				}
 				$b->height  = '';
 			}
@@ -969,7 +1014,7 @@ body {
 }
 
 body, #wrapper {
-	color: #fff;
+	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px;
 }
@@ -1016,8 +1061,8 @@ blockquote p {
 	<?php
 		if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) {
 		?>
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
 		<?php } ?>
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 	background: <?php echo newsletterglue_get_theme_option( 'container_bg' ); ?>;
@@ -1100,12 +1145,15 @@ figure {
 }
 
 figcaption {
-	text-align: center;
+	font-size: 14px;
+	opacity: 0.7;
+	line-height: 130%;
+	margin-top: 10px;
 }
 
 #template_inner img {
 	max-width: 100%;
-	margin: 0 auto 25px auto;
+	margin: 0 auto;
 	display: block;
 	height: auto;
 }
@@ -1148,14 +1196,12 @@ ul.blocks-gallery-grid {
 
 #template_inner td.ngl-td-clean {
 	border: 0;
-	padding: 0;
 	width: 100%;
 	font-size: inherit !important;
 }
 
 #template_inner td.ngl-td-auto {
 	border: 0;
-	padding: 0;
 	font-size: inherit !important;
 }
 
@@ -1167,7 +1213,6 @@ ul.blocks-gallery-grid {
 
 #template_inner td.ngl-td-tiny {
 	border: 0;
-	padding: 0;
 	width: auto !important;
 	font-size: inherit;
 }

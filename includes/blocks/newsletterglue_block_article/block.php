@@ -1284,13 +1284,13 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 				$b->width = $img_size;
 				$b->style = $b->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;';
 			}
-			$output->find( $replace, $key )->outertext = '<td style="width:20px;vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean">&nbsp;</td><td style="width: ' . $width . ';vertical-align: top;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
+			$output->find( $replace, $key )->outertext = '<td style="width: ' . $width . ';vertical-align: top;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
 		}
 
 		// Left and Right article wrappers.
 		$replace = 'div.ngl-article.ngl-article-img-left, div.ngl-article.ngl-article-img-right';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean ngl-table-article" border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;table-layout: fixed;"><tr>' . $element->innertext . '</tr></table>';
+			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean ngl-table-article" border="0" width="100%" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;table-layout: fixed;"><tr>' . $element->innertext . '</tr></table>';
 		}
 
 		$output->save();
