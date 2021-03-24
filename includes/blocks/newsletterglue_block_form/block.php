@@ -425,7 +425,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		// remove unwanted elements.
 		$replace = '.wp-block-newsletterglue-form';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<div style="margin-bottom:25px!important;">' . $element->innertext . '</div>';
+			$output->find( $replace, $key )->outertext = '<div style="margin-bottom:30px!important;">' . $element->innertext . '</div>';
 		}
 
 		$output->save();

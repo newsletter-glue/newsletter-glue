@@ -642,11 +642,14 @@ function newsletterglue_fix_td_widths( $html, $post_id, $app ) {
 	$output = new simple_html_dom();
 	$output->load( $html );
 
-	$replace = '#template_inner table';
+	$replace = '.ngl-table-index > tr > td';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$td_count = count( $element->find( 'td' ) );
+		$td_count = count( $element->parent()->children() );
 		if ( $td_count == 1 ) {
-			$element->find( 'td', 0 )->style = str_replace( 'width: 50%', 'width: 100%', $element->find( 'td', 0 )->style );
+			$element->style = str_replace( 'width: 50%', 'width: 100%', $element->style );
+			foreach( $element->find( '.wp-block-column img' ) as $a => $b ) {
+				$b->width = 600;
+			}
 		}
 	}
 
