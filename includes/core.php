@@ -1153,6 +1153,12 @@ ul.blocks-gallery-grid {
 	font-size: inherit !important;
 }
 
+#template_inner td.ngl-td-auto {
+	border: 0;
+	padding: 0;
+	font-size: inherit !important;
+}
+
 #template_inner table.ngl-table-tiny {
 	border: 0 !important;
 	table-layout: auto;
