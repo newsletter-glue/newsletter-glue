@@ -206,6 +206,8 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		}
 
 		.ngl-metadata img.ngl-metadata-permalink-arrow {
+			width: 10px !important;
+			height: 10px !important;
 			margin: 0 0 0 4px !important;
 		}
 
@@ -214,6 +216,13 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			width: 30px !important;
 			height: 30px !important;
 			border-radius: 999px;
+			margin: 0 !important;
+		}
+
+		img.ngl-metadata-map-pin {
+			width: 12px !important;
+			height: 14px !important;
+			margin: 0 !important;
 		}
 
 		.ngl-metadata > div {
@@ -226,14 +235,6 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			text-align: center;
 			width: 2px;
 			color: #aaa;
-		}
-
-		.ngl-metadata-map-pin {
-			width: 12px !important;
-			max-width: 12px !important;
-			min-width: 12px !important;
-			display: block !important;
-			margin: 0 !important;
 		}
 
 		.ngl-metadata-permalink-arrow {

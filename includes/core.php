@@ -482,15 +482,19 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	// Force image width.
 	$replace = 'figure.wp-block-image img';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->width 	= '600';
-		$element->style = $element->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;margin-bottom:0 !important;';
+		if ( ! $element->width ) {
+			$element->width 	= 600;
+			$element->style = $element->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;margin-bottom:0 !important;';
+		}
 	}
 
 	// Force image width/height attributes.
 	$replace = '.wp-block-column img';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->width 	= '100%';
-		$element->height 	= 'auto';
+		if ( ! $element->width ) {
+			$element->width 	= '100%';
+			$element->height 	= 'auto';
+		}
 	}
 
 	// Add columns wrapper as a table.
@@ -548,6 +552,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		$image_width 	= $dec * 600;
 
 		$element->innertext = str_replace( 'width="100%"', 'width="' . absint( $image_width - 20 ) . '"', $element->innertext );
+		$element->innertext = str_replace( 'width="600"', 'width="' . absint( $image_width - 20 ) . '"', $element->innertext );
 
 		if ( $width == 'width: 100%;' ) {
 			$padding = 0;
@@ -642,9 +647,6 @@ function newsletterglue_fix_td_widths( $html, $post_id, $app ) {
 		$td_count = count( $element->find( 'td' ) );
 		if ( $td_count == 1 ) {
 			$element->find( 'td', 0 )->style = str_replace( 'width: 50%', 'width: 100%', $element->find( 'td', 0 )->style );
-			foreach( $element->find( 'img' ) as $key => $element ) {
-				$element->width = 600;
-			}
 		}
 	}
 
@@ -990,6 +992,10 @@ h1, h2, h3, h4, h5, h6 {
 	margin-top: 20px;
 	line-height: 150%;
 	mso-line-height-rule: exactly;
+}
+
+h1 {
+	margin-bottom: 30px !important;
 }
 
 .wp-block-columns {
