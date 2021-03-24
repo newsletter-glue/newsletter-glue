@@ -925,7 +925,7 @@ body {
 body, #wrapper {
 	color: #fff;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px;
 }
 
 span.yshortcuts { color: #000; background-color:none; border:none;}
@@ -1092,7 +1092,7 @@ ul.blocks-gallery-grid {
 
 #template_inner td table td {
 	padding: 10px;
-	font-size: 16px;
+	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px;
 	border: 1px solid #eee;
 }
 
@@ -1180,7 +1180,7 @@ p.ngl-unsubscribe {
 	text-align: center;
 	box-sizing: border-box;
 	padding: 12px 24px;
-	font-size: 16px;
+	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ); ?>px;
 	text-decoration: none;
 	background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?> !important;
 	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;
@@ -1249,6 +1249,10 @@ p.ngl-unsubscribe {
 .has-text-align-right { text-align: right !important; }
 
 @media only screen and (max-width:642px) {
+
+	body, #wrapper {
+		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px;
+	}
 
 	#template_inner {
 		width: auto;
