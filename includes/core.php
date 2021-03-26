@@ -660,6 +660,7 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 		'#template_inner > ul',
 		'#template_inner > .ngl-quote',
 		'#template_inner > .wp-block-buttons',
+		'#template_inner > .ngl-embed-social',
 		'.wp-block-newsletterglue-group > *',
 		'.ngl-article-img-full',
 		'.ngl-callout-content > *',
@@ -692,6 +693,7 @@ function newsletterglue_fix_image_widths( $html, $post_id, $app ) {
 		if ( $element->parent()->parent()->tag && $element->parent()->parent()->tag == 'td' ) {
 			$td = $element->parent()->parent();
 			$threshold = strstr( $element->class, 'callout-img' ) ? 528 : 600;
+			$threshold = strstr( $element->class, 'embed-thumb-' ) ? $threshold - 2 : $threshold;
 			$image_width = newsletterglue_get_image_width_by_td( $td, $threshold );
 			if ( ! strstr( $td->class, 'ngl-td-' ) && ! strstr( $element->class, 'ngl-' ) && $image_width ) {
 				$element->width = floor( $image_width );
@@ -702,6 +704,7 @@ function newsletterglue_fix_image_widths( $html, $post_id, $app ) {
 		if ( $element->parent()->tag && $element->parent()->tag == 'td' ) {
 			$td = $element->parent();
 			$threshold = strstr( $element->class, 'callout-img' ) ? 528 : 600;
+			$threshold = strstr( $element->class, 'embed-thumb-' ) ? $threshold - 2 : $threshold;
 			$image_width = newsletterglue_get_image_width_by_td( $td, $threshold );
 			if ( ! strstr( $td->class, 'ngl-td-' ) && ! strstr( $element->class, 'ngl-' ) && $image_width ) {
 				$element->width = floor( $image_width );

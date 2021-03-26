@@ -367,7 +367,7 @@ class NGL_Pro {
 		}
 
 		$html = '<a href="' . urldecode( trim( $url ) ) . '" target="_blank" class="ngl-sound">';
-		$html .= '<img src="' . $data->thumbnail_url . '" class="ngl-embed-sound-thumb" />';
+		$html .= '<img src="' . $data->thumbnail_url . '" class="embed-thumb-spotify" />';
 
 		$html .= '<span class="ngl-sound-meta">';
 		$html .= '<span class="ngl-sound-p1">';
@@ -443,7 +443,7 @@ class NGL_Pro {
 		}
 
 		$html = '<a href="' . urldecode( trim( $url ) ) . '" target="_blank" class="ngl-sound">';
-		$html .= '<img src="' . $data->thumbnail_url . '" class="ngl-embed-sound-thumb" />';
+		$html .= '<img src="' . $data->thumbnail_url . '" class="embed-thumb-soundcloud" />';
 
 		$html .= '<span class="ngl-sound-meta">';
 		$html .= '<span class="ngl-sound-p1">';
@@ -479,7 +479,7 @@ class NGL_Pro {
 
 		$url = esc_url( urldecode( trim( $url ) ) );
 
-		$html = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;margin:0 !important;padding: 0 !mportant;"><tr><td align="left" valign="top" style="vertical-align: top;margin:0 !important;padding: 0 !important;"><a href="' . $url . '" target="_blank" style="margin:0!important;"><img src="' . $image_url . '" class="ngl-embed-youtube-thumb" width="598" style="margin:0 !important;" /></a></td></tr></table>';
+		$html = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;margin:0 !important;padding: 0 !mportant;"><tr><td align="left" valign="top" style="vertical-align: top;margin:0 !important;padding: 0 !important;"><a href="' . $url . '" target="_blank" style="margin:0!important;"><img src="' . $image_url . '" class="embed-thumb-youtube" style="margin:0 !important;" /></a></td></tr></table>';
 
 		$html .= '<div class="ngl-embed-meta">
 					<div class="ngl-embed-metadata">
@@ -647,7 +647,7 @@ class NGL_Pro {
 			text-decoration: none !important;
 		}
 
-		.ngl-embed-youtube-thumb {
+		.embed-thumb-youtube {
 			margin: 0 !important;
 			border-radius: 5px 5px 0 0 !important;
 		}
