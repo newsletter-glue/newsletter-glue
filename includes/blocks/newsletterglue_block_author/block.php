@@ -170,13 +170,13 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 	public function email_css() {
 		?>
 		.wp-block-newsletterglue-author {
-			margin: 0 0 25px 0 !important;
+			margin: 0 0 10px 0 !important;
 		}
 
 		.ngl-author {
 			display: block;
 			padding: 0;
-			margin: 0 0 25px 0 !important;
+			margin: 0 0 10px 0 !important;
 		}
 
 		.ngl-author-pic {

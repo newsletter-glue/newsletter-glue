@@ -347,7 +347,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		?>
 .ngl-articles {
 	padding: 0;
-	margin: 0 0 30px;
+	margin: 0 0 10px 0;
 }
 
 .ngl-article img {
@@ -356,7 +356,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 }
 
 .ngl-article {
-	margin: 0 0 30px;
+	margin: 0 0 10px 0;
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 }
 
@@ -1227,6 +1227,11 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	 */
 	public function tableize( $content, $attributes = array() ) {
 
+		$gap = false;
+		if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) {
+			$gap = true;
+		}
+
 		$output = new simple_html_dom();
 		$output->load( $content );
 
@@ -1237,8 +1242,8 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		$img = '.ngl-article-featured img';
 		foreach( $output->find( $img ) as $a => $b ) {
-			$b->width = 600;
-			$b->style = $b->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;';
+			$b->width = $gap ? 560 : 580;
+			$b->style = $b->style . 'display: block; max-width: 100%; min-width: 50px; width: 100%;';
 		}
 
 		// Left side.
@@ -1246,20 +1251,20 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		foreach( $output->find( $replace ) as $key => $element ) {
 			if ( $table_ratio == '30_70' ) {
 				$width = '30%';
-				$img_size = 150;
+				$img_size = $gap ? 154 : 160;
 			}
 			if ( $table_ratio == '70_30' ) {
 				$width = '70%';
-				$img_size = 400;
+				$img_size = $gap ? 386 : 400;
 			}
 			if ( $table_ratio == '50_50' ) {
 				$width = '50%';
-				$img_size = 300;
+				$img_size = $gap ? 270 : 280;
 			}
 			$img = '.ngl-article-featured img';
 			foreach( $output->find( $img ) as $a => $b ) {
 				$b->width = $img_size;
-				$b->style = $b->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;';
+				$b->style = $b->style . 'display: block; max-width: 100%; min-width: 50px; width: 100%;';
 			}
 			$output->find( $replace, $key )->outertext = '<td style="width: ' . $width . '; vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
 		}
@@ -1269,20 +1274,20 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		foreach( $output->find( $replace ) as $key => $element ) {
 			if ( $table_ratio == '30_70' ) {
 				$width = '70%';
-				$img_size = 400;
+				$img_size = $gap ? 386 : 400;
 			}
 			if ( $table_ratio == '70_30' ) {
 				$width = '30%';
-				$img_size = 150;
+				$img_size = $gap ? 154 : 160;
 			}
 			if ( $table_ratio == '50_50' ) {
 				$width = '50%';
-				$img_size = 300;
+				$img_size = $gap ? 270 : 280;
 			}
 			$img = '.ngl-article-featured img';
 			foreach( $output->find( $img ) as $a => $b ) {
 				$b->width = $img_size;
-				$b->style = $b->style . 'display: block; max-width: 100%; min-width: 100px; width: 100%;';
+				$b->style = $b->style . 'display: block; max-width: 100%; min-width: 50px; width: 100%;';
 			}
 			$output->find( $replace, $key )->outertext = '<td style="width: ' . $width . ';vertical-align: top;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
 		}

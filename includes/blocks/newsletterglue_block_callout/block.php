@@ -177,8 +177,6 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 		}
 
 		.wp-block-newsletterglue-callout td > * {
-			margin: 25px 0 !important;
-			padding: 0 !important;
 			color: inherit !important;
 		}
 		<?php
@@ -192,10 +190,28 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 		$output = new simple_html_dom();
 		$output->load( $content );
 
+		$replace = '.wp-block-newsletterglue-callout img';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			if ( $element->class ) {
+				$element->class = $element->class . ' callout-img';
+			} else {
+				$element->class = 'callout-img';
+			}
+		}
+
 		$replace = 'div.wp-block-newsletterglue-callout';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<div style="' . $element->style . ';padding: 0 !important;width: auto !important;display: block !important;"><table class="' . $element->class . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="' . $element->style . ';border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;table-layout: auto;border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;margin: 0 !important;border: 0 !important;width: 100% !important;"><tr>
-			<td width="25" style="width:25px;vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean">&nbsp;</td><td style="border:none; vertical-align: top; font-size: inherit !important;" valign="top">' . $element->innertext . '</td><td width="25" style="width:25px;vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean">&nbsp;</td></tr></table></div>';
+			$output->find( $replace, $key )->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr><td valign="top" style="vertical-align: top;margin:0;">
+		<div style="' . $element->style . ';padding: 0 !important;width: auto !important;display: block !important;">
+		<table class="' . $element->class . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="' . $element->style . ';border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;table-layout: auto;border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;margin: 0 !important;border: 0 !important;width: 100% !important;padding: 0 !important;">
+			<tr>
+				<td width="25" style="width:25px;vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top" class="ngl-td-clean">&nbsp;</td>
+				<td class="ngl-callout-content" style="border:none; vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top"><div></div>' . $element->innertext . '<div></div></td>
+				<td width="25" style="width:25px;vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top" class="ngl-td-clean">&nbsp;</td>
+			</tr>
+		</table>
+		</div>
+		</td></tr></table>';
 		}
 
 		$output->save();

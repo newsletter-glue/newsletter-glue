@@ -196,7 +196,8 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		.ngl-metadata {
 			font-size: 12px;
 			padding: 0;
-			margin: 0 0 25px 0;
+			margin: 0 0 10px 0;
+			min-height: 50px;
 		}
 		
 		.ngl-metadata img {
@@ -294,20 +295,20 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 		// Force image width/height attributes.
 		$replace = 'div.wp-block-newsletterglue-metadata .ngl-metadata-pic img';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$element->width 	= '30';
-			$element->height 	= '30';
+			$element->width 	= 30;
+			$element->height 	= 30;
 		}
 
 		$replace = 'div.wp-block-newsletterglue-metadata .ngl-metadata-permalink-arrow, .ngl-metadata-permalink-arrow';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$element->width 	= '10';
-			$element->height 	= '10';
+			$element->width 	= 10;
+			$element->height 	= 10;
 		}
 
 		$replace = '.wp-block-newsletterglue-metadata > .ngl-metadata-map-pin';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$element->width 	= '12';
-			$element->height 	= '14';
+			$element->width 	= 12;
+			$element->height 	= 14;
 		}
 
 		// Inner divs.

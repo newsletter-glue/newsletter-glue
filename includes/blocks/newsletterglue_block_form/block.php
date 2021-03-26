@@ -291,6 +291,10 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			flex-basis: 100%;
 		}
 
+		.ngl-form-header {
+			margin-bottom: 10px;
+		}
+
 		.ngl-message-overlay {
 			text-align: center;
 			width: 100%;
@@ -417,7 +421,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		$output->load( $content );
 
 		// remove unwanted elements.
-		$replace = 'div.ngl-message-overlay';
+		$replace = 'div.ngl-message-overlay, .ngl-form-field';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			$output->find( $replace, $key )->outertext = '';
 		}
@@ -425,7 +429,9 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		// remove unwanted elements.
 		$replace = '.wp-block-newsletterglue-form';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<div style="margin-bottom:30px!important;">' . $element->innertext . '</div>';
+			$output->find( $replace, $key )->outertext = '<div style="margin-bottom: 10px;">
+			<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr>
+				<td valign="top" style="vertical-align: top;margin:0;">' . $element->innertext . '</td></tr></table></div>';
 		}
 
 		$output->save();

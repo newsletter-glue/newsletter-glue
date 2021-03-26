@@ -154,7 +154,18 @@ $show_edit_controls = false;
 				if ( $table_ratio === 'full' ) {
 					$image_position = 'full';
 				}
+
 		?>
+
+			<div class="ngl-article-left-mobile">
+				<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;">
+					<tr>
+						<td valign="top" style="vertical-align: top;margin:0;">
+							<?php echo $display_image . $display_labels . $display_title . $display_excerpt . $display_date; ?>
+						</td>
+					</tr>
+				</table>
+			</div>
 
 			<div class="ngl-article ngl-article-img-<?php echo $image_position; ?>" data-key="<?php echo $key; ?>" data-post-id="<?php echo $thearticle->ID; ?>" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>; font-size: <?php echo $font_size_text; ?>px;">
 
@@ -194,7 +205,6 @@ $show_edit_controls = false;
 						echo $display_excerpt;
 						echo $display_date;
 					else :
-						echo '<div class="ngl-article-left-mobile">' . $display_image . $display_labels . $display_title . $display_excerpt . $display_date . '</div>';
 						if ( $image_position == 'left' ) :
 							echo '<div class="ngl-article-left">' . $display_image . '</div>';
 							echo '<div class="ngl-article-right">';
