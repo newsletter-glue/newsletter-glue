@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 </nav>
 
-<div class="ngl ngl-wrap ngl-settings <?php if ( $app ) echo 'ngl-settings-' . esc_attr( $app ); ?>">
+<div class="ngl ngl-wrap ngl-settings ngl-settings-version-<?php echo absint( newsletterglue_is_free_version() ); ?> ngl-settings-<?php echo esc_attr( $tab ); ?> <?php if ( $app ) echo 'ngl-settings-' . esc_attr( $app ); ?>">
 
 	<?php
 		$file = 'settings-' . $tab . '.php';
