@@ -1121,6 +1121,11 @@ h4 { font-size: <?php echo newsletterglue_get_theme_option( 'h4_size' ); ?>px; c
 h5 { font-size: <?php echo newsletterglue_get_theme_option( 'h5_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h5_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h5_align' ); ?>; }
 h6 { font-size: <?php echo newsletterglue_get_theme_option( 'h6_size' ); ?>px; color: <?php echo newsletterglue_get_theme_option( 'h6_colour' ); ?>; text-align: <?php echo newsletterglue_get_theme_option( 'h6_align' ); ?>; }
 
+h1 a.ngl-title-to-post {
+	text-decoration: none;
+	color: <?php echo newsletterglue_get_theme_option( 'h1_colour' ); ?> !important;
+}
+
 p, ul, ol {
 	padding: 0;
 	margin: 0 0 10px;
