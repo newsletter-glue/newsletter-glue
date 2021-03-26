@@ -577,7 +577,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		} else if ( strstr( $style, 'center' ) ) {
 			$align = 'center';
 		}
-		$output->find( $replace, $key )->outertext = '<div style="margin-bottom: 10px;margin-left: 0;border-' . $align . ': 5px solid #eee;padding-' . $align . ': 25px;' . $style . '">' . $element->innertext . '</div>';
+		$output->find( $replace, $key )->outertext = '<div class="ngl-quote" style="margin-bottom: 10px;margin-left: 0;border-' . $align . ': 3px solid #eee;padding-' . $align . ': 20px;' . $style . '">' . $element->innertext . '</div>';
 	}
 
 	// Gallery block.
@@ -658,10 +658,11 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 		'#template_inner > p',
 		'#template_inner > ol',
 		'#template_inner > ul',
+		'#template_inner > .ngl-quote',
+		'#template_inner > .wp-block-buttons',
 		'.wp-block-newsletterglue-group > *',
 		'.ngl-article-img-full',
 		'.ngl-callout-content > *',
-		'#template_inner > .wp-block-buttons'
 	);
 	foreach( $elements as $el ) {
 		$replaces[] = $el;
