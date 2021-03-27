@@ -373,6 +373,8 @@ function newsletterglue_setting_upload( $id, $title ) {
 function newsletterglue_get_review_button_html( $version = '' ) {
 	$class = '';
 
+	return;
+
 	if ( ! newsletterglue_is_free_version() ) {
 		return;
 	}
