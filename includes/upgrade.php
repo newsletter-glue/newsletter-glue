@@ -59,13 +59,15 @@ class NGL_Upgrade {
 	<div class="ngl-upgrade">
 		<div class="ngl-upgrade-left">
 
-			<div class="ngl-logo"><img src="<?php echo NGL_PLUGIN_URL . '/assets/images/top-bar-logo.svg'; ?>" /></div>
-			<h2>Big changes are coming on<br />April 30 2021</h2>
-			<p>We’re moving some features to Newsletter Glue Pro.</p>
+			<h2>
+				Big changes are coming:<br />
+				We’re moving some features<br />
+				to our paid plugin on April 30 2021
+			</h2>
 			<p><a href="https://newsletterglue.com/pricing/?discount=UPGRADE70" target="_blank"><strong>Upgrade now</strong></a> to get 70% off your first year. Applies to all plans. Expires April 30 2021.</p>
 
 			<div class="ngl-upgrade-box">
-				<h3>Revised Free plugin features<span class="ngl-upgrade-tag1">Live on April 30 2021</span></h3>
+				<h3>Free plugin features<span class="ngl-upgrade-tag1">Live on April 30 2021</span></h3>
 				<div class="ngl-upgrade-list">
 					<div class="ngl-upgrade-item"><span style="background:#FFE01B;"><img src="<?php echo $url; ?>mailchimp.png" alt="" style="width: 21px;height: 22px;" /></span>Mailchimp</div>
 					<div class="ngl-upgrade-item"><span style="background: transparent;"><img src="<?php echo $url; ?>accent.png" alt="" /></span>Newsletter Accent Color</div>
@@ -100,7 +102,7 @@ class NGL_Upgrade {
 				<div class="ngl-upgrade-cta">
 					<a href="https://newsletterglue.com/pricing/?discount=UPGRADE70" target="_blank">Upgrade to Pro <i class="arrow right icon"></i></a>
 				</div>
-				<p class="ngl-upgrade-small">Get 70% off. Expires April 30 2021</p>
+				<p class="ngl-upgrade-small">Expires April 30 2021</p>
 
 			</div>
 
@@ -111,16 +113,16 @@ class NGL_Upgrade {
 			<p>Newsletter Glue is a small and young company. This change helps us build a sustainable business, improve the plugin, fix bugs, and support our users in the long run.</p>
 			<div style="height:40px;"></div>
 			<h3>What will this mean for me?</h3>
-			<p><strong>If you use Mailchimp:</strong> Your connection will continue to work. You’ll just have fewer design customisation options in the future.</p>
-			<p><strong>If you use any of our other email connections:</strong> You’ll need to upgrade to Newsletter Glue Pro to maintain your connection.</p>
-			<p><strong>70% discount:</strong> As a thank you for being an early user, we’re giving you a massive 70% off your first year on all our pro plans.</p>
+			<p><strong>For Mailchimp:</strong> Your connection will continue to work. You’ll just have fewer design customisation options in the future.</p>
+			<p><strong>For other email connections:</strong> You’ll need to upgrade to Newsletter Glue Pro to maintain your connection.</p>
+			<p><strong>Get 70% off:</strong> As a thank you for being an early user, we’re giving you a massive 70% off your first year on all our pro plans.</p>
 			<div style="height:40px;"></div>
 			<h3>What if I don’t want to upgrade?</h3>
 			<p>As long as you don’t update the plugin, no changes will take place.</p>
 			<p>Note: this means you won’t get any bug fixes or new features.</p>
 			<div style="height:40px;"></div>
 			<h3 class="ngl-upgrade-heading">Ready to upgrade? <a href="https://newsletterglue.com/pricing/?discount=UPGRADE70" target="_blank">See Pro plans<i class="arrow right icon"></i></a></h3>
-			<p>If you have more questions, please reach out at support@newsletterglue.com</p>
+			<p>If you have more questions, please reach out at <a href="mailto:support@newsletterglue.com" style="color: #003C4E !important;">support@newsletterglue.com</a></p>
 		</div>
 	</div>
 	<?php
