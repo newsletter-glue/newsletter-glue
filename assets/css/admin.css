@@ -3581,7 +3581,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	background: #FCF4D0;
 	border-radius: 14px;
 	display: inline-flex;
-	padding: 2px 16px;
+	padding: 0 16px;
 	font-weight: 600;
 	text-transform: uppercase;
 	margin: 0 0 0 16px;
@@ -3594,7 +3594,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	background: #D6F7EA;
 	border-radius: 14px;
 	display: inline-flex;
-	padding: 2px 16px;
+	padding: 0 16px;
 	font-weight: 600;
 	text-transform: uppercase;
 	margin: 0 0 0 16px;

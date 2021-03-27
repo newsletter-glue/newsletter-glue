@@ -23,6 +23,7 @@ class NGL_Upgrade {
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 20 );
 
+		add_action( 'admin_notices', array( $this, 'admin_notices' ), 100 );
 	}
 
 	/**
@@ -126,6 +127,20 @@ class NGL_Upgrade {
 		</div>
 	</div>
 	<?php
+	}
+
+	/**
+	 * Admin notice.
+	 */
+	public function admin_notices() {
+		?>
+		<div class="notice ngl-upgrade-notice">
+			<h4>Big changes are coming on April 30 2021</h4>
+			<p><strong>ActiveCampaign</strong>, <strong>Campaign Monitor</strong>, <strong>GetResponse</strong>, <strong>MailerLite</strong>, and <strong>Sendinblue</strong> will become <strong>pro connections</strong>.</p>
+			<p>To continue using these features, you must upgrade to Newsletter Glue Pro. Get 70% off your first year when you upgrade now. Expires 30 April 2021.</p>
+			<p><a href="#"><strong>Learn more</strong></a></p>
+		</div>
+		<?php
 	}
 
 }
