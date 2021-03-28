@@ -133,12 +133,22 @@ class NGL_Upgrade {
 	 * Admin notice.
 	 */
 	public function admin_notices() {
+		if ( isset( $_GET[ 'tab' ] ) && $_GET[ 'tab' ] === 'license' ) {
+			return;
+		}
+		if ( get_option( 'newsletterglue_pro_upgrade_dismiss' ) ) {
+			return;
+		}
 		?>
 		<div class="notice ngl-upgrade-notice">
-			<h4>Big changes are coming on April 30 2021</h4>
-			<p><strong>ActiveCampaign</strong>, <strong>Campaign Monitor</strong>, <strong>GetResponse</strong>, <strong>MailerLite</strong>, and <strong>Sendinblue</strong> will become <strong>pro connections</strong>.</p>
-			<p>To continue using these features, you must upgrade to Newsletter Glue Pro. Get 70% off your first year when you upgrade now. Expires 30 April 2021.</p>
-			<p><a href="#"><strong>Learn more</strong></a></p>
+			<h4>Newsletter Glue Pro is here!</h4>
+			<p>IMPORTANT: ActiveCampaign, Campaign Monitor, GetResponse, MailerLite, and Sendinblue will no longer be available in the free plugin on 30 April 2021.</p>
+			<p>Upgrade to keep using these connections and get lots of new pro features.</p>
+			<p>Existing free plugin users <strong>get 70% off your first year.</strong></p>
+			<p>
+				<a href="<?php echo admin_url( 'admin.php?page=ngl-settings&tab=license' ); ?>"><strong>Learn more</strong></a>
+				<a href="#" class="ngl-upgrade-dismiss">I understand my email connection might stop working. Dismiss notice.</a>
+			</p>
 		</div>
 		<?php
 	}

@@ -384,6 +384,23 @@ add_action( 'wp_ajax_newsletterglue_ajax_remove_notice', 'newsletterglue_ajax_re
 add_action( 'wp_ajax_nopriv_newsletterglue_ajax_remove_notice', 'newsletterglue_ajax_remove_notice' );
 
 /**
+ * Removes an upgrade notice.
+ */
+function newsletterglue_ajax_remove_upgrade_notice() {
+
+	if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+		wp_die( -1 );
+	}
+
+	update_option( 'newsletterglue_pro_upgrade_dismiss', 'yes' );
+
+	die();
+
+}
+add_action( 'wp_ajax_newsletterglue_ajax_remove_upgrade_notice', 'newsletterglue_ajax_remove_upgrade_notice' );
+add_action( 'wp_ajax_nopriv_newsletterglue_ajax_remove_upgrade_notice', 'newsletterglue_ajax_remove_upgrade_notice' );
+
+/**
  * Test a newsletter.
  */
 function newsletterglue_ajax_test_email() {

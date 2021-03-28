@@ -212,7 +212,7 @@ p.ngl-notice-logo {
 	border: none;
 	background: #fff url( ../images/menu.png ) no-repeat 20px 20px;
 	background-size: 32px 32px;
-	padding: 0 20px 20px 70px;
+	padding: 0 70px 20px 70px;
 	max-width: 750px;
 	border-radius: 4px;
 	box-shadow: 0 2px 6px #ddd;
@@ -234,11 +234,21 @@ p.ngl-notice-logo {
 }
 
 .ngl-upgrade-notice p a {
-	font-size: 15px;
 	color: #C91101 !important;
 	box-shadow: none !important;
 }
 
 .ngl-upgrade-notice p a:hover {
 	color: #f55447 !important;
+}
+
+.ngl-upgrade-notice p a.ngl-upgrade-dismiss {
+	margin-left: 60px;
+	color: #555 !important;
+	font-weight: bold;
+	text-decoration: none !important;
+}
+
+.ngl-upgrade-notice p a.ngl-upgrade-dismiss:hover {
+	text-decoration: underline !important;
 }
