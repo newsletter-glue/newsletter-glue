@@ -461,7 +461,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	// Fixes emogrifier encoding bugs.
-	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D' ), array( '{', '}', '$', '[', ']' ), $html );
+	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D', '*%7C', '%7C*' ), array( '{', '}', '$', '[', ']', '*|', '|*' ), $html );
 	$html = str_replace( '@media only screen and (max-width:642px) {', '@media only screen and (max-width:642px) {' . "\r\n", $html );
 
 	$html = wp_encode_emoji( $html );
