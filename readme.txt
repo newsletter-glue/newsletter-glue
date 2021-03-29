@@ -188,6 +188,17 @@ Yes! Check it out [here](https://newsletterglue.com).
 
 == Changelog ==
 
+= 1.3.0, March 29, 2021 =
+
+**Improvements**
+
+* We've refactored our email html to use tables. This improves the way email newsletters are displayed on older email clients such as Outlook.
+
+**Bug fixes**
+
+* List CSS for font size did not follow paragraph CSS. This is now fixed.
+* Onboarding screen automatically injected "The from" in the From name screen. We've now removed this.
+
 = 1.2.4, March 5, 2021 =
 
 **Improvements**
