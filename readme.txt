@@ -3,7 +3,7 @@
 Plugin name: Newsletter Glue - Create and send email newsletters inside WordPress
 Contributors: newsletterglue, ahmedfouade, lesleysim
 Donate link: https://paypal.me/newsletterglue
-Tags: newsletter, email, mailchimp, mailerlite, blog post
+Tags: newsletter, email, mailchimp, blog post
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
@@ -18,10 +18,12 @@ WordPress newsletter plugin to build and send professional email newsletters in 
 
 Unlock a new publishing workflow that saves you **hours**, and brings you **more readers**.
 
-Connects to Mailchimp, MailerLite, Sendinblue, Campaign Monitor, ActiveCampaign, and GetResponse.
+Connects to Mailchimp.
+
+Pro plugin also connects to: ActiveCampaign, Campaign Monitor, GetResponse, MailerLite, Sendinblue, and Sendy.
 
 
-https://www.youtube.com/watch?v=0LiLb3KKarE
+https://www.youtube.com/watch?v=bI2roR8Q50M
 
 
 ## The best newsletter plugin for bloggers and newsletter writers
@@ -52,7 +54,7 @@ Newsletter Glue makes it easy to:
 
 ## HOW IT WORKS
 
-* **Step 1**: Connect with our onboarding wizard to Mailchimp, MailerLite, Sendinblue, Campaign Monitor, ActiveCampaign, or GetResponse.
+* **Step 1**: Connect with our onboarding wizard to Mailchimp.
 
 * **Step 2**: Create and email newsletters directly inside the Gutenberg editor.
 
@@ -89,9 +91,11 @@ Newsletter Glue makes it easy to:
 * **Save hours every week:** Simply email posts when you hit publish. No need to tediously recreate posts in your email service every time.
 
 
-## UPGRADE TO PRO FOR MORE POWERFUL NEWSLETTER DESIGNS
+## UPGRADE TO PRO FOR MORE POWERFUL INTEGRATIONS AND NEWSLETTER DESIGNS
 
 Newsletter Glue Pro gives you advanced features to style your newsletter, get more subscribers and save time.
+
+* Connect to: ActiveCampaign, Campaign Monitor, GetResponse, MailerLite, Mailchimp, Sendinblue, and Sendy.
 
 * [Embed social media](https://newsletterglue.com/features/#socialembed): Just paste the link. We handle the rest. Works for Twitter and Youtube.
 
@@ -122,9 +126,9 @@ Newsletter Glue Pro gives you advanced features to style your newsletter, get mo
 
  == Frequently Asked Questions == 
 ## FAQ
-= What if I don't use Mailchimp, MailerLite, Sendinblue or Campaign Monitor, ActiveCampaign or GetResponse? =
+= What if I don't use Mailchimp =
 
-We're in the process of integrating other email service providers (ESP). Check back for more updates soon!
+Our pro plugin connects to: ActiveCampaign, Campaign Monitor, GetResponse, MailerLite, Sendinblue, and Sendy. And we're always adding more integrations. Feel free to [DM us on Twitter](https://twitter.com/NewsletterGlue) with your requests.
 
 = Does this work with Gutenberg blocks or classic editor?
 
