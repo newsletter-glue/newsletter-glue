@@ -577,7 +577,11 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		} else if ( strstr( $style, 'center' ) ) {
 			$align = 'center';
 		}
-		$output->find( $replace, $key )->outertext = '<div class="ngl-quote" style="margin-bottom: 10px;margin-left: 0;border-' . $align . ': 3px solid #eee;padding-' . $align . ': 20px;' . $style . '">' . $element->innertext . '</div>';
+		$accent = '#eee';
+		if ( newsletterglue_get_theme_option( 'a_colour' ) ) {
+			$accent = newsletterglue_get_theme_option( 'a_colour' );
+		}
+		$output->find( $replace, $key )->outertext = '<div class="ngl-quote" style="margin-bottom: 10px;margin-left: 0;border-' . $align . ': 3px solid ' . $accent . ';padding-' . $align . ': 20px;' . $style . '">' . $element->innertext . '</div>';
 	}
 
 	// Gallery block.
@@ -884,6 +888,7 @@ function newsletterglue_get_theme_default( $key ) {
 		'p_align'					=> 'left',
 		'email_bg'					=> '#ffffff',
 		'container_bg'				=> '#ffffff',
+		'accent'					=> '#0088A0',
 		'a_colour'					=> '#0088A0',
 		'btn_bg'					=> '#0088A0',
 		'btn_colour'				=> '#ffffff',

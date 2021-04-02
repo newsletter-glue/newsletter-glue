@@ -53,6 +53,9 @@ class NGL_Pro {
 		add_action( 'newsletterglue_before_admin_connect', array( $this, 'add_license_activation_form' ) );
 		add_action( 'newsletterglue_before_admin_blocks', array( $this, 'add_license_activation_form' ) );
 		add_action( 'newsletterglue_onboarding_welcome', array( $this, 'add_license_activation_form' ) );
+
+		// Featured image.
+		add_action( 'newsletterglue_featured_image_custom_option', array( $this, 'featured_image_metabox' ), 10, 2 );
 	}
 
 	/**
@@ -813,6 +816,31 @@ class NGL_Pro {
 		</div>
 		<?php
 		}
+	}
+
+	/**
+	 * Show featured image option?
+	 */
+	public function featured_image_metabox( $settings, $defaults ) {
+		?>
+		<div class="ngl-metabox-flex">
+			<div class="ngl-metabox-header">
+				<?php esc_html_e( 'Featured image', 'newsletter-glue' ); ?>
+			</div>
+			<div class="ngl-field">
+
+				<?php
+					$add_featured = isset( $settings->add_featured ) ? $settings->add_featured : $defaults->add_featured;
+				?>
+
+				<label class="ngl-metabox-cb">
+					<input type="checkbox" name="ngl_add_featured" id="ngl_add_featured" value="1" <?php checked( 1, $add_featured ); ?> />
+					<span><?php echo __( 'Add featured image to the top of this newsletter.<br />Ideal image width: 1200px' ); ?></span>
+				</label>
+
+			</div>
+		</div>
+		<?php
 	}
 
 }

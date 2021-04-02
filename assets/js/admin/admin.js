@@ -795,7 +795,7 @@
 
 		var data = 'action=newsletterglue_ajax_save_field&security=' + newsletterglue_params.ajaxnonce + '&id=' + id + '&value=' + value;
 
-		console.log( data );
+		console.log( 'save_field' );
 
 		$.ajax( {
 			type : 'post',
@@ -878,6 +878,21 @@
 			}
 		} );
 
+	} );
+
+	// Toggle the customizer.
+	$( document ).on( 'click', '.ngl-customize-toggle', function( event ) {
+		event.preventDefault();
+		
+		if ( $( this ).find( 'i' ).hasClass( 'down' ) ) {
+			$( this ).find( 'i' ).removeClass( 'down' ).addClass( 'up' );
+			$( '.ngl-customize-preview' ).show();
+		} else {
+			$( this ).find( 'i' ).removeClass( 'down' ).addClass( 'down' );
+			$( '.ngl-customize-preview' ).hide();
+		}
+
+		return false;
 	} );
 
 	// Use all blocks.

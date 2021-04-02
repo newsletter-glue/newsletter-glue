@@ -33,23 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 	</div>
 
-	<div class="ngl-metabox-flex">
-		<div class="ngl-metabox-header">
-			<?php esc_html_e( 'Featured image', 'newsletter-glue' ); ?>
-		</div>
-		<div class="ngl-field">
-
-			<?php
-				$add_featured = isset( $settings->add_featured ) ? $settings->add_featured : $defaults->add_featured;
-			?>
-
-			<label class="ngl-metabox-cb">
-				<input type="checkbox" name="ngl_add_featured" id="ngl_add_featured" value="1" <?php checked( 1, $add_featured ); ?> />
-				<span><?php echo __( 'Add featured image to the top of this newsletter.<br />Ideal image width: 1200px' ); ?></span>
-			</label>
-
-		</div>
-	</div>
+	<?php do_action( 'newsletterglue_featured_image_custom_option', $settings, $defaults ); ?>
 
 	<?php do_action( 'newsletterglue_edit_more_settings', $this->app, $settings, false ); ?>
 

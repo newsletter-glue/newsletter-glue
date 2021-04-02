@@ -181,7 +181,8 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 		$track_opens 	= ! empty( $data[ 'track_opens' ] ) ? 1 : 0;
 		$track_clicks 	= ! empty( $data[ 'track_clicks' ] ) ? 1 : 0;
 
-		$post = get_post( $post_id );
+		$post 		= get_post( $post_id );
+		$html_text 	= newsletterglue_generate_content( $post, $subject, $this->app );
 
 		// Empty content.
 		if ( $test && isset( $post->post_status ) && $post->post_status === 'auto-draft' ) {
@@ -203,7 +204,7 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 
 			add_filter( 'wp_mail_content_type', array( $this, 'wp_mail_content_type' ) );
 
-			$body = newsletterglue_generate_content( $post, $subject, $this->app );
+			$body = $html_text;
 
 			wp_mail( $test_email, sprintf( __( '[Test] %s', 'newsletter-glue' ), $subject ), $body );
 
@@ -223,15 +224,26 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 			'boolean'		=> true,
 			'title'			=> $subject,
 			'subject'		=> $subject,
-			'html_text'		=> newsletterglue_generate_content( $post, $subject, $this->app ),
-			'list_ids'		=> $lists,
-			'brand_id'		=> ( $brand ) ? $brand : 1,
+			'html_text'		=> $html_text,
+			'plain_text'	=> wp_strip_all_tags( $html_text ), 
 			'send_campaign'	=> ( $schedule === 'immediately' ) ? 1 : 0,
 			'track_opens'	=> $track_opens,
 			'track_clicks'	=> $track_clicks,
 		);
 
+		if ( $schedule != 'immediately' ) {
+			$args[ 'brand_id' ] = ( $brand ) ? $brand : 1;
+		} else {
+			$args[ 'list_ids' ] = $lists;
+		}
+
 		$campaign = $this->api->post( '/api/campaigns/create.php', $args );
+
+		if ( ! $campaign || ( is_string( $campaign ) && strstr( $campaign, 'Forbidden' ) ) )  {
+			$args[ 'html_text' ] = str_replace( 'xmlns="http://www.w3.org/1999/xhtml"', '', $html_text );
+			$args[ 'html_text' ] = str_replace( '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">', '', $args[ 'html_text' ] );
+			$campaign = $this->api->post( '/api/campaigns/create.php', $args );
+		}
 
 		if ( $schedule === 'draft' ) {
 			$result = array( 'status' => 'draft' );

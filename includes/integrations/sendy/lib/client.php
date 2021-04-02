@@ -54,13 +54,18 @@ class NGL_Sendy_API {
 
 		$body[ 'api_key' ] = $this->apiKey;
 
-		$postdata 	= http_build_query( $body );
+		$args = array(
+			'timeout' 		=> 30,
+			'sslverify'		=> false,
+			'method' 		=> $method,
+			'body' 			=> $body,
+		);
 
-		$opts 		= array( 'http' => array( 'method'  => $method, 'header'  => 'Content-type: application/x-www-form-urlencoded', 'content' => $postdata ) );
-		$context  	= stream_context_create( $opts );
-		$result 	= file_get_contents( $this->apiUrl . $endpoint, false, $context );
+		$request = wp_remote_request( $this->apiUrl . $endpoint, $args );
 
-		return $result;
+		$response = wp_remote_retrieve_body( $request );
+
+		return $response;
     }
 
 }
