@@ -23,7 +23,11 @@ class NGL_Upgrade {
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 20 );
 
-		add_action( 'admin_notices', array( $this, 'admin_notices' ), 100 );
+		// Featured image.
+		add_action( 'newsletterglue_featured_image_custom_option', array( $this, 'featured_image_metabox' ), 10, 2 );
+
+		// Add accent color.
+		add_action( 'newsletterglue_email_defaults_settings', array( $this, 'add_theme_settings' ), 10 );
 	}
 
 	/**
@@ -59,24 +63,32 @@ class NGL_Upgrade {
 	?>
 	<div class="ngl-upgrade">
 		<div class="ngl-upgrade-left">
-
 			<h2>
-				Big changes are coming:<br />
-				We’re moving some features<br />
-				to our paid plugin on April 30 2021
+				Want more email integrations<br />and design features?
 			</h2>
-			<p><a href="https://newsletterglue.com/pricing/?discount=UPGRADE70" target="_blank"><strong>Upgrade now</strong></a> to get 70% off your first year. Applies to all plans. Expires April 30 2021.</p>
+			<p style="font-size: 20px;"><a href="https://newsletterglue.com/pricing/?discount=REPO25" target="_blank"><strong>Upgrade now</strong></a> to get 25% off your first<br /> year. Get started for just $57.</p>
+		</div>
+		<div class="ngl-upgrade-right">
+		
+		</div>
+	</div>
+	<div class="ngl-upgrade">
+		<div class="ngl-upgrade-left">
 
 			<div class="ngl-upgrade-box">
-				<h3>Free plugin features<span class="ngl-upgrade-tag1">Live on April 30 2021</span></h3>
+				<h3>Free plugin features</h3>
+				<div class="ngl-upgrade-lists" style="padding-bottom: 0;">
 				<div class="ngl-upgrade-list">
 					<div class="ngl-upgrade-item"><span style="background:#FFE01B;"><img src="<?php echo $url; ?>mailchimp.png" alt="" style="width: 21px;height: 22px;" /></span>Mailchimp</div>
+				</div>
+				<div class="ngl-upgrade-list">
 					<div class="ngl-upgrade-item"><span style="background: transparent;"><img src="<?php echo $url; ?>accent.png" alt="" /></span>Newsletter Accent Color</div>
+				</div>
 				</div>
 			</div>
 
 			<div class="ngl-upgrade-box">
-				<h3>Pro plugin features<span class="ngl-upgrade-tag2">Available now</span></h3>
+				<h3>Pro plugin features</h3>
 
 				<div class="ngl-upgrade-lists">
 				<div class="ngl-upgrade-list">
@@ -99,56 +111,97 @@ class NGL_Upgrade {
 				</div>
 				</div>
 
-				<h3>Get Newsletter Glue Pro now<br />for 70% off.</h3>
+				<h3>Get Newsletter Glue Pro now<br />for 25% off your first year.</h3>
 				<div class="ngl-upgrade-cta">
-					<a href="https://newsletterglue.com/pricing/?discount=UPGRADE70" target="_blank">Upgrade to Pro <i class="arrow right icon"></i></a>
+					<a href="https://newsletterglue.com/pricing/?discount=REPO25" target="_blank">Upgrade to Pro <i class="arrow right icon"></i></a>
 				</div>
-				<p class="ngl-upgrade-small">Expires April 30 2021</p>
+				<p class="ngl-upgrade-small">Starts at just $57 on our lowest tier.</p>
 
 			</div>
 
 		</div>
 		<div class="ngl-upgrade-right">
 			<h3>FAQ</h3>
-			<h3>Why are you doing this?</h3>
-			<p>Newsletter Glue is a small and young company. This change helps us build a sustainable business, improve the plugin, fix bugs, and support our users in the long run.</p>
-			<div style="height:40px;"></div>
-			<h3>What will this mean for me?</h3>
-			<p><strong>For Mailchimp:</strong> Your connection will continue to work. You’ll just have fewer design customisation options in the future.</p>
-			<p><strong>For other email connections:</strong> You’ll need to upgrade to Newsletter Glue Pro to maintain your connection.</p>
-			<p><strong>Get 70% off:</strong> As a thank you for being an early user, we’re giving you a massive 70% off your first year on all our pro plans.</p>
-			<div style="height:40px;"></div>
-			<h3>What if I don’t want to upgrade?</h3>
-			<p>As long as you don’t update the plugin, no changes will take place.</p>
-			<p>Note: this means you won’t get any bug fixes or new features.</p>
-			<div style="height:40px;"></div>
-			<h3 class="ngl-upgrade-heading">Ready to upgrade? <a href="https://newsletterglue.com/pricing/?discount=UPGRADE70" target="_blank">See Pro plans<i class="arrow right icon"></i></a></h3>
-			<p>If you have more questions, please reach out at <a href="mailto:support@newsletterglue.com" style="color: #003C4E !important;">support@newsletterglue.com</a></p>
+			<h3>Can Newsletter Glue be used with the classic WordPress editor?</h3>
+			<p>Newsletter Glue will work with the classic editor, but it’s not optimised for it.</p>
+			<p>You also won’t be able to use our pro blocks which are built for the Gutenberg block editor.</p>
+			<div style="height:30px;"></div>
+			<h3>Do you offer support for the plugin? What’s it like?</h3>
+			<p>Yes! You can read our <a href="https://docs.newsletterglue.com/" target="_blank" style="color: #003C4E !important;"><strong>knowledge base</strong></a> or <a href="mailto:support@newsletterglue.com" style="color: #003C4E !important;"><strong>email us</strong></a>.</p>
+			<p>We are very responsive and strive to do our best to help you.</p>
+			<div style="height:30px;"></div>
+			<h3>What payment methods do you accept?</h3>
+			<p>You can pay with your credit card using Stripe checkout. Or your PayPal account.</p>
+			<div style="height:30px;"></div>
+			<h3>What’s your refund policy?</h3>
+			<p>We have a 14 day money-back guarantee.</p>
+			<div style="height:30px;"></div>
+			<h3>I have more questions…</h3>
+			<p>No problem, we’re happy to help! Please reach out at <a href="mailto:support@newsletterglue.com" style="color: #003C4E !important;">support@newsletterglue.com</a></p>
 		</div>
 	</div>
 	<?php
 	}
 
 	/**
-	 * Admin notice.
+	 * Show featured image option?
 	 */
-	public function admin_notices() {
-		if ( isset( $_GET[ 'tab' ] ) && $_GET[ 'tab' ] === 'license' ) {
-			return;
-		}
-		if ( get_option( 'newsletterglue_pro_upgrade_dismiss' ) ) {
-			return;
-		}
+	public function featured_image_metabox( $settings, $defaults ) {
 		?>
-		<div class="notice ngl-upgrade-notice">
-			<h4>Newsletter Glue Pro is here!</h4>
-			<p>IMPORTANT: ActiveCampaign, Campaign Monitor, GetResponse, MailerLite, and Sendinblue will no longer be available in the free plugin on 30 April 2021.</p>
-			<p>Upgrade to keep using these connections and get lots of new pro features.</p>
-			<p>Existing free plugin users <strong>get 70% off your first year.</strong></p>
-			<p>
-				<a href="<?php echo admin_url( 'admin.php?page=ngl-settings&tab=license' ); ?>"><strong>Learn more</strong></a>
-				<a href="#" class="ngl-upgrade-dismiss">I understand my email connection might stop working. Dismiss notice.</a>
-			</p>
+		<div class="ngl-metabox-flex" style="opacity: 0;pointer-events: none;visibility: hidden;">
+			<div class="ngl-metabox-header">
+				<?php esc_html_e( 'Featured image', 'newsletter-glue' ); ?>
+			</div>
+			<div class="ngl-field">
+
+				<?php
+					$add_featured = isset( $settings->add_featured ) ? $settings->add_featured : $defaults->add_featured;
+				?>
+
+				<label class="ngl-metabox-cb">
+					<input type="checkbox" name="ngl_add_featured" id="ngl_add_featured" value="1" <?php checked( 1, $add_featured ); ?> />
+					<span><?php echo __( 'Add featured image to the top of this newsletter.<br />Ideal image width: 1200px' ); ?></span>
+				</label>
+
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Add theme settings.
+	 */
+	public function add_theme_settings( $api ) {
+		?>
+		<div class="ngl-metabox-flex">
+			<div class="ngl-metabox-flex">
+				<div class="ngl-metabox-header">
+					<label><?php esc_html_e( 'Select accent color', 'newsletter-glue' ); ?></label>
+					<div class="ngl-theme-color ngl-settings-accent">
+						<input type="text" class="ngl-theme-input ngl-color-field" value="<?php echo newsletterglue_get_theme_option( 'accent' ); ?>" id="accent" />
+					</div>
+					<?php $api->input_verification_info(); ?>
+				</div>
+				<div class="ngl-field">
+					<div class="ngl-helper">
+						<?php echo sprintf( __( 'This colour affects links, buttons and quotes. %s' ), '<a href="#" class="ngl-customize-toggle">' . __( 'See live demo', 'newsletter-glue' ) . ' <i class="chevron down icon"></i></a>' ); ?>
+					</div>
+				</div>
+			</div>
+			<div class="ngl-metabox-flex">
+			</div>
+		</div>
+
+		<div class="ngl-customize-preview">
+			<h2>Here is a simple header</h2>
+			<p>This is some text. <a href="#" style="color: <?php echo newsletterglue_get_theme_option( 'accent' ); ?>;">Here is a link</a> that is affected by accent colour.
+			<blockquote style="border-left: 2px solid <?php echo newsletterglue_get_theme_option( 'accent' ); ?>">
+				This is a quote by a famous person.<br />
+				It has multiple lines...<br />
+				To demonstrate the colour.<br />
+				<strong>- Albert Einstein</strong>
+			</blockquote>
+			<p class="ngl-customize-button"><a href="#" style="background-color: <?php echo newsletterglue_get_theme_option( 'accent' ); ?>;">Read more</a></p>
 		</div>
 		<?php
 	}

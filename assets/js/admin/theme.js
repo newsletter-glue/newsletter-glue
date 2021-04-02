@@ -87,6 +87,10 @@
 
 	// Update input.
 	function newsletterglue_update_input( t ) {
+		if ( t.parents( '.ngl-settings-accent' ) ) {
+			return false;
+		}
+
 		var el 		= t.parents( '.components-base-control' );
 		var id 		= t.attr( 'data-option' );
 		var value 	= t.val();
@@ -233,7 +237,7 @@
 			$( '.ngl-email-logo' ).removeClass( 'ngl-logo-left ngl-logo-center ngl-logo-right ngl-logo-full' ).addClass( 'ngl-logo-' + value );
 		}
 
-		console.log( data );
+		console.log( 'save_theme' );
 
 		$.ajax( {
 			type : 'post',
@@ -275,6 +279,11 @@
 					}
 					var id = el.parents( '.ngl-theme-color' ).find( 'input.ngl-theme-input' ).attr( 'data-option' );
 					newsletterglue_update_input( $( 'input[data-option=' + id + ']' ) );
+					if ( $( '.ngl-customize-preview' ).length ) {
+						$( '.ngl-customize-preview' ).find( 'blockquote' ).css( { 'border-color' : thecolor } );
+						$( '.ngl-customize-preview' ).find( 'p a' ).css( { 'color' : thecolor } );
+						$( '.ngl-customize-preview' ).find( 'p.ngl-customize-button a' ).css( { 'background-color' : thecolor } );
+					}
 				}
 			} );
 		} );

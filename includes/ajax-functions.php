@@ -621,6 +621,13 @@ function newsletterglue_ajax_save_field() {
 			$options[ $app ][ $id ] = $value;
 		}
 
+	} else if ( $id == 'accent' ) {
+		$theme = get_option( 'newsletterglue_theme' );
+		$theme[ 'accent' ] 	    = $value;
+		$theme[ 'a_colour' ] 	= $value;
+		$theme[ 'btn_bg' ] 		= $value;
+		$theme[ 'btn_border' ] 	= $value;
+		update_option( 'newsletterglue_theme', $theme );
 	} else {
 
 		if ( ! in_array( $id, array( 'from_name' ) ) && empty( $value ) ) {

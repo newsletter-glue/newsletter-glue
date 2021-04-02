@@ -26,6 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php else : ?>
 
+	<?php do_action( 'newsletterglue_email_defaults_settings', $api ); ?>
+
 	<?php include_once newsletterglue_get_path( $app ) . '/settings.php'; ?>
 
 	<?php include NGL_PLUGIN_DIR . 'includes/admin/settings/views/settings-general.php'; ?>

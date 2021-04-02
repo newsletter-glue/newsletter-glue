@@ -50,7 +50,6 @@ function newsletterglue_settings_tabs() {
 
 	$tabs = array(
 		'defaults'		=> __( 'Email Defaults', 'newsletter-glue' ),
-		'theme'			=> __( 'Newsletter theme designer', 'newsletter-glue' ),
 		'css' 			=> __( 'Custom CSS', 'newsletter-glue' ),
 		'additional'	=> __( 'Additional', 'newsletter-glue' ),
 	);

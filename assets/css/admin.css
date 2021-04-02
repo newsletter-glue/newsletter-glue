@@ -3480,6 +3480,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	display: flex;
 	max-width: 1200px;
 	flex-wrap: wrap;
+	margin-bottom: 30px;
 }
 
 .ngl-upgrade-left {
@@ -3487,7 +3488,6 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	flex-grow: 0;
 	padding-right: 0;
 	width: 100%;
-	margin: 0 0 30px;
 }
 
 .ngl-upgrade-right {
@@ -3495,7 +3495,6 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	flex-grow: 0;
 	padding-right: 0;
 	width: 100%;
-	margin: 0 0 30px;
 }
 
 .ngl-upgrade h2,
@@ -3560,7 +3559,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 .ngl-upgrade p.ngl-upgrade-small {
 	font-size: 14px;
-	color: #515D5F;
+	color: #16292B;
 }
 
 .ngl-upgrade-box {
@@ -3569,7 +3568,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	box-shadow: 0px 3px 6px #00000029;
 	border-radius: 10px;
 	width: 100%;
-	margin-top: 40px;
+	margin-bottom: 40px;
 	box-sizing: border-box;
 	padding: 25px;
 }
@@ -3613,7 +3612,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	color: #fff !important;
 	height: 48px;
 	border-radius: 10px;
-	padding: 14px 17px;
+	padding: 14px 21px;
 	justify-content: center;
 	box-shadow: none !important;
 	text-decoration: none !important;
@@ -3680,4 +3679,63 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 		flex-grow: 0;
 	}
 
+}
+
+.ngl-settings-accent {
+	text-align: center;
+	min-width: 60px;
+}
+
+.ngl-settings-accent .sp-replacer {
+	margin: 0;
+}
+
+/* Live preview */
+.ngl-customize-preview {
+	font-size: 16px;
+	padding: 30px 0 30px 90px;
+	line-height: 150%;
+	color: #444;
+	cursor: default !important;
+	max-width: 460px;
+	display: none;
+}
+
+.ngl-customize-preview * {
+	pointer-events: none !important;
+	cursor: default !important;
+}
+
+.ngl-customize-preview p {
+	font-size: 16px;
+	line-height: 150%;
+}
+
+.ngl-customize-preview h2 {
+	font-size: 24px;
+	color: #444;
+	font-weight: bold;
+}
+
+.ngl-customize-preview blockquote {
+	line-height: 200%;
+	margin: 0 0 25px;
+	padding-left: 20px;
+}
+
+.ngl-customize-button {
+	text-align: center;
+}
+
+.ngl-customize-button a {
+	font-size: 16px;
+	display: inline-block;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 12px 20px;
+	text-decoration: none;
+	color: #fff !important;
+	min-width: 160px !important;
+	border-radius: 0px;
+	font-weight: bold;
 }
