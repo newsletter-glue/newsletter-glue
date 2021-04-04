@@ -184,7 +184,7 @@ class NGL_Upgrade {
 				</div>
 				<div class="ngl-field">
 					<div class="ngl-helper">
-						<?php echo sprintf( __( 'This colour affects links, buttons and quotes. %s' ), '<a href="#" class="ngl-customize-toggle">' . __( 'See live demo', 'newsletter-glue' ) . ' <i class="chevron down icon"></i></a>' ); ?>
+						<?php echo sprintf( __( 'This colour affects links, buttons and quotes. %s' ), '<a href="#" class="ngl-customize-toggle">' . __( 'Expand to see live demo', 'newsletter-glue' ) . ' <i class="chevron down icon"></i></a>' ); ?>
 					</div>
 				</div>
 			</div>

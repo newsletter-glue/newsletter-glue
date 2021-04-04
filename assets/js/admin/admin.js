@@ -888,7 +888,7 @@
 			$( this ).find( 'i' ).removeClass( 'down' ).addClass( 'up' );
 			$( '.ngl-customize-preview' ).show();
 		} else {
-			$( this ).find( 'i' ).removeClass( 'down' ).addClass( 'down' );
+			$( this ).find( 'i' ).removeClass( 'up' ).addClass( 'down' );
 			$( '.ngl-customize-preview' ).hide();
 		}
 

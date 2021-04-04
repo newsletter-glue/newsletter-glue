@@ -428,7 +428,8 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	// Post content.
-	$the_content .= apply_filters( 'the_content', $post->post_content );
+	$the_content .= $post->post_content;
+	//$the_content .= apply_filters( 'the_content', $post->post_content );
 
 	// Credits.
 	if ( get_option( 'newsletterglue_credits' ) ) {
