@@ -81,6 +81,12 @@
                 )
             );
         },
+
+		// Example.
+		example: function() {
+
+		},
+
     } );
 
 } ) (

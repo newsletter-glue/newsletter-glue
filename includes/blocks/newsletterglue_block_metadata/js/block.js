@@ -553,7 +553,12 @@
 
 			);
 
-		}
+		},
+
+		// Example.
+		example: function() {
+
+		},
 
 	} );
 

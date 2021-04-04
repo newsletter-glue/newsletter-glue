@@ -757,6 +757,11 @@
 
 		},
 
+		// Example.
+		example: function() {
+
+		},
+
 	} );
 
 } ) (

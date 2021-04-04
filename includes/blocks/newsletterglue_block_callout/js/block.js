@@ -272,6 +272,11 @@
             );
         },
 
+		// Example.
+		example: function() {
+
+		},
+
 	} );
 
 } ) (

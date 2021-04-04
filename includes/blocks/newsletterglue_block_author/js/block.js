@@ -412,6 +412,11 @@
 
 		},
 
+		// Example.
+		example: function() {
+
+		},
+
 	} );
 
 } ) (

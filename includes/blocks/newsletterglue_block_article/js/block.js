@@ -411,6 +411,11 @@
 			return null
 		},
 
+		// Example.
+		example: function() {
+
+		},
+
 	} );
 
 } ) (
