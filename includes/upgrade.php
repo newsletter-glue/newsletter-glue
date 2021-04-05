@@ -28,6 +28,8 @@ class NGL_Upgrade {
 
 		// Add accent color.
 		add_action( 'newsletterglue_email_defaults_settings', array( $this, 'add_theme_settings' ), 10 );
+
+		add_filter( 'newsletterglue_allow_connection_edit', array( $this, 'allow_connection_edit' ), 50, 2 );
 	}
 
 	/**
@@ -204,6 +206,16 @@ class NGL_Upgrade {
 			<p class="ngl-customize-button"><a href="#" style="background-color: <?php echo newsletterglue_get_theme_option( 'accent' ); ?>;">Read more</a></p>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Allow connection edit.
+	 */
+	public function allow_connection_edit( $allowed, $app ) {
+		if ( $app != 'mailchimp' ) {
+			$allowed = false;
+		}
+		return $allowed;
 	}
 
 }
