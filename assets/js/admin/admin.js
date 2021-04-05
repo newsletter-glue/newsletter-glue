@@ -19,8 +19,15 @@
 	function ngl_show_first_screen() {
 		$( '.ngl-card-add' ).removeClass( 'ngl-hidden' );
 		$( '.ngl-card-state, .ngl-card-add2, .ngl-card-view' ).addClass( 'ngl-hidden' );
+		if ( $( '.ngl-cards' ).hasClass( 'ngl-cards-free' ) ) {
+			$( '.ngl-card-add2.ngl-card-mailchimp' ).removeClass( 'ngl-hidden' );
+			$( '.ngl-cards input[type=text]' ).val( '' );
+		}
 		if ( $( '.ngl-card-license-form' ).length ) {
 			$( '.ngl-card-license-form' ).removeClass( 'ngl-hidden' );
+		}
+		if ( $( '.ngl-is-free' ).length ) {
+			$( '.ngl-is-free' ).show();
 		}
 	}
 
@@ -381,6 +388,8 @@
 		var app 	= $( this ).parents( '.ngl-card-add2' ).attr( 'data-app' );
 		var data 	= theform.serialize() + '&action=newsletterglue_ajax_connect_api&security=' + newsletterglue_params.ajaxnonce + '&app=' + app;
 
+		ngl_app = app;
+
 		var stop_form = false;
 		if ( ! $( '.ngl-card-' + app ).hasClass( 'ngl-hidden' ) ) {
 			theform.find( 'input[type=text]:visible' ).each( function() {
@@ -472,6 +481,7 @@
 		}
 		if ( ngl_app ) {
 			$( '.ngl-card-add2.ngl-card-' + ngl_app ).removeClass( 'ngl-hidden' );
+			$( '.ngl-card-add2.ngl-card-' + ngl_app ).find( '.ngl-card-link-start' ).show();
 		} else {
 			$( '.ngl-card-add2.ngl-hidden' ).removeClass( 'ngl-hidden' );
 		}
