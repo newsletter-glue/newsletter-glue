@@ -558,7 +558,7 @@ class NGL_Pro {
 			padding: 20px 0 0;
 			font-size: 13px;
 			line-height: 1.4;
-			margin: 0 0 25px;
+			margin: 0 0 10px 0;
 		}
 
 		.ngl-embed-social img {
