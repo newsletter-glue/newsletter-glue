@@ -36,7 +36,7 @@ $url = NGL_PLUGIN_URL . 'assets/images/iconset/';
 		<?php foreach( newsletterglue_get_supported_apps() as $app => $value ) : ?>
 
 			<?php if ( apply_filters( 'newsletterglue_allow_connection_edit', true, $app ) ) { ?>
-			<div class="ngl-card-add2 ngl-card-<?php echo esc_attr( $app ); ?> <?php if ( $app != 'mailchimp' || newsletterglue_default_connection() ) echo 'ngl-hidden'; ?>" data-app="<?php echo esc_attr( $app ); ?>">
+			<div class="ngl-card-add2 ngl-card-<?php echo esc_attr( $app ); ?> <?php if ( ( $app != 'mailchimp' && newsletterglue_is_free_version() ) || ( ! newsletterglue_is_free_version() ) ) echo 'ngl-hidden'; ?>" data-app="<?php echo esc_attr( $app ); ?>">
 
 				<?php if ( ! apply_filters( 'newsletterglue_allow_connection_edit', true, $app ) ) { ?>
 				<div class="ngl-card-link-start">
