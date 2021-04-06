@@ -87,7 +87,7 @@
 
 	// Update input.
 	function newsletterglue_update_input( t ) {
-		if ( t.parents( '.ngl-settings-accent' ) ) {
+		if ( t.parents( '.ngl-settings-accent' ).length ) {
 			return false;
 		}
 
