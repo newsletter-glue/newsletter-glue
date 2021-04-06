@@ -68,7 +68,7 @@ class NGL_Upgrade {
 			<h2>
 				Want more email integrations<br />and design features?
 			</h2>
-			<p style="font-size: 20px;"><a href="https://newsletterglue.com/pricing/?discount=REPO25" target="_blank"><strong>Upgrade now</strong></a> to get 25% off your first<br /> year. Get started for just $57.</p>
+			<p style="font-size: 20px;"><a href="https://newsletterglue.com/upgrade53jyt4/" target="_blank"><strong>Upgrade now</strong></a> to get 15% off your first<br /> year. Get started for just $65.</p>
 		</div>
 		<div class="ngl-upgrade-right">
 		
@@ -113,11 +113,11 @@ class NGL_Upgrade {
 				</div>
 				</div>
 
-				<h3>Get Newsletter Glue Pro now<br />for 25% off your first year.</h3>
+				<h3>Get Newsletter Glue Pro now<br />for 15% off your first year.</h3>
 				<div class="ngl-upgrade-cta">
-					<a href="https://newsletterglue.com/pricing/?discount=REPO25" target="_blank">Upgrade to Pro <i class="arrow right icon"></i></a>
+					<a href="https://newsletterglue.com/upgrade53jyt4/" target="_blank">Upgrade to Pro <i class="arrow right icon"></i></a>
 				</div>
-				<p class="ngl-upgrade-small">Starts at just $57 on our lowest tier.</p>
+				<p class="ngl-upgrade-small">Starts at just $65 on our lowest tier.</p>
 
 			</div>
 

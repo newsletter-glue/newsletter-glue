@@ -36,7 +36,7 @@ $url = NGL_PLUGIN_URL . 'assets/images/iconset/';
 		<?php foreach( newsletterglue_get_supported_apps() as $app => $value ) : ?>
 
 			<?php if ( apply_filters( 'newsletterglue_allow_connection_edit', true, $app ) ) { ?>
-			<div class="ngl-card-add2 ngl-card-<?php echo esc_attr( $app ); ?> <?php if ( ( $app != 'mailchimp' && newsletterglue_is_free_version() ) || ( ! newsletterglue_is_free_version() ) ) echo 'ngl-hidden'; ?>" data-app="<?php echo esc_attr( $app ); ?>">
+			<div class="ngl-card-add2 ngl-card-<?php echo esc_attr( $app ); ?> <?php if ( ( $app != 'mailchimp' && newsletterglue_is_free_version() ) || ( ! newsletterglue_is_free_version() ) || ( $app == 'mailchimp' && newsletterglue_default_connection() != 'mailchimp' && newsletterglue_default_connection() ) || ( newsletterglue_default_connection() == 'mailchimp' && newsletterglue_is_free_version() ) ) echo 'ngl-hidden'; ?>" data-app="<?php echo esc_attr( $app ); ?>">
 
 				<?php if ( ! apply_filters( 'newsletterglue_allow_connection_edit', true, $app ) ) { ?>
 				<div class="ngl-card-link-start">
@@ -64,7 +64,7 @@ $url = NGL_PLUGIN_URL . 'assets/images/iconset/';
 					<?php if ( apply_filters( 'newsletterglue_allow_connection_edit', true, $app ) ) { ?>
 					<button class="ui primary button ngl-ajax-test-connection"><i class="sync alternate icon"></i><?php esc_html_e( 'test', 'newsletter-glue' ); ?></button>
 					<?php } else { ?>
-					<a href="https://newsletterglue.com/pricing/?discount=REPO25" target="_blank" class="ui primary button"><svg xmlns="http://www.w3.org/2000/svg" width="14.676" height="16.14" viewBox="0 0 14.676 16.14"><g transform="translate(-3.75 -2.25)"><path d="M5.964,16.5H16.212a1.464,1.464,0,0,1,1.464,1.464v5.124a1.464,1.464,0,0,1-1.464,1.464H5.964A1.464,1.464,0,0,1,4.5,23.088V17.964A1.464,1.464,0,0,1,5.964,16.5Z" transform="translate(0 -6.912)"></path><path d="M10.5,9.588V6.66a3.66,3.66,0,1,1,7.32,0V9.588" transform="translate(-3.072 0)"></path></g></svg><?php esc_html_e( 'Upgrade to edit &rarr;', 'newsletter-glue' ); ?></a>
+					<a href="https://newsletterglue.com/upgrade53jyt4/" target="_blank" class="ui primary button"><svg xmlns="http://www.w3.org/2000/svg" width="14.676" height="16.14" viewBox="0 0 14.676 16.14"><g transform="translate(-3.75 -2.25)"><path d="M5.964,16.5H16.212a1.464,1.464,0,0,1,1.464,1.464v5.124a1.464,1.464,0,0,1-1.464,1.464H5.964A1.464,1.464,0,0,1,4.5,23.088V17.964A1.464,1.464,0,0,1,5.964,16.5Z" transform="translate(0 -6.912)"></path><path d="M10.5,9.588V6.66a3.66,3.66,0,1,1,7.32,0V9.588" transform="translate(-3.072 0)"></path></g></svg><?php esc_html_e( 'Upgrade to edit &rarr;', 'newsletter-glue' ); ?></a>
 					<?php } ?>
 				</div>
 
@@ -140,7 +140,7 @@ $url = NGL_PLUGIN_URL . 'assets/images/iconset/';
 	</div>
 
 	<?php if ( ! newsletterglue_is_onboarding_page() ) : ?>
-	<div class="ngl-card-upgrade <?php if ( newsletterglue_is_free_version() ) echo 'ngl-is-free'; ?>" style="display: <?php if ( newsletterglue_is_free_version() && ( newsletterglue_default_connection() == 'mailchimp' || ! newsletterglue_default_connection() ) ) { echo 'block'; } else { echo 'none'; } ?>">
+	<div class="ngl-card-upgrade <?php if ( newsletterglue_is_free_version() ) echo 'ngl-is-free'; ?>" style="display: <?php if ( newsletterglue_is_free_version() ) { echo 'block'; } else { echo 'none'; } ?>">
 		<h3>Want more integrations?</h3>
 		<div class="ngl-upgrade-lists">
 			<div class="ngl-upgrade-list">
@@ -155,7 +155,7 @@ $url = NGL_PLUGIN_URL . 'assets/images/iconset/';
 			</div>
 		</div>
 		<p>Upgrade to Newsletter Glue Pro and use these integrations today.</p>
-		<div class="ngl-upgrade-cta"><a href="#">Learn more <i class="arrow right icon"></i></a></div>
+		<div class="ngl-upgrade-cta"><a href="https://newsletterglue.com/upgrade53jyt4/" target="_blank">Learn more <i class="arrow right icon"></i></a></div>
 	</div>
 	<?php endif; ?>
 
