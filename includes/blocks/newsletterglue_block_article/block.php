@@ -476,9 +476,15 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
 	}
 
-	.ngl-table-article,
-	.ngl-article-left,
-	.ngl-article-right {
+	.ngl-articles-full .ngl-article-left-mobile,
+	.ngl-articles-full .ngl-article-left-mobile * {
+		display: none !important;
+		max-height: 0;
+		font-size: 0;
+	}
+
+	.ngl-article-img-left,
+	.ngl-article-img-right {
 		display: none !important;
 		overflow: hidden;
 		mso-hide: all;
