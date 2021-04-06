@@ -316,6 +316,7 @@
 		$( this ).parents( '.ngl-card-base' ).addClass( 'ngl-hidden' );
 		$( '.ngl-card-' + val ).removeClass( 'ngl-hidden' );
 		ngl_app = val;
+		$( '.ngl-card-add2.ngl-card-' + ngl_app ).find( '.ngl-card-link-start' ).show();
 	} );
 
 	// Back one screen.
