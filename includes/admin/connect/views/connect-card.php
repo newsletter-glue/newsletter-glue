@@ -154,7 +154,7 @@ $url = NGL_PLUGIN_URL . 'assets/images/iconset/';
 				<div class="ngl-upgrade-item"><span style="background: transparent;"><img src="<?php echo $url; ?>sendy.png" alt="" /></span>Sendy</div>
 			</div>
 		</div>
-		<p>Upgrade to Newsletter Glue Pro and use these integrations today.</p>
+		<p>Upgrade to Newsletter Glue Pro today. Free plugin users get 15% off your first year.</p>
 		<div class="ngl-upgrade-cta"><a href="https://newsletterglue.com/upgrade53jyt4/" target="_blank">Learn more <i class="arrow right icon"></i></a></div>
 	</div>
 	<?php endif; ?>

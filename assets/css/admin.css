@@ -68,7 +68,11 @@
 }
 
 .ngl-card-upgrade .ngl-upgrade-lists {
-	padding: 10px 0;
+	padding: 12px 0;
+}
+
+.ngl-card-upgrade .ngl-upgrade-cta {
+	margin: 0;
 }
 
 .ngl-card-upgrade .ngl-upgrade-cta a {
@@ -87,7 +91,7 @@
 .ngl-card-upgrade h3 {
 	font-size: 18px;
 	color: #003C4E;
-	margin-top: 0;
+	margin: 0 0 6px;
 	font-weight: 400;
 }
 

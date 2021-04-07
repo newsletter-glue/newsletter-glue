@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			<?php if ( $block->is_pro && newsletterglue_is_free_version() ) : ?>
 			<div class="ngl-block-upgrade">
-				<a href="https://newsletterglue.com/upgrade53jyt4/" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="14.676" height="16.14" viewBox="0 0 14.676 16.14"><g transform="translate(-3.75 -2.25)"><path  d="M5.964,16.5H16.212a1.464,1.464,0,0,1,1.464,1.464v5.124a1.464,1.464,0,0,1-1.464,1.464H5.964A1.464,1.464,0,0,1,4.5,23.088V17.964A1.464,1.464,0,0,1,5.964,16.5Z" transform="translate(0 -6.912)"/><path d="M10.5,9.588V6.66a3.66,3.66,0,1,1,7.32,0V9.588" transform="translate(-3.072 0)"/></g></svg><?php _e( 'Upgrade to unlock pro features &rarr;', 'newsletter-glue' ); ?></a>
+				<a href="https://newsletterglue.com/upgrade53jyt4/" target="_blank" title="Free plugin users get 15% off!"><svg xmlns="http://www.w3.org/2000/svg" width="14.676" height="16.14" viewBox="0 0 14.676 16.14"><g transform="translate(-3.75 -2.25)"><path  d="M5.964,16.5H16.212a1.464,1.464,0,0,1,1.464,1.464v5.124a1.464,1.464,0,0,1-1.464,1.464H5.964A1.464,1.464,0,0,1,4.5,23.088V17.964A1.464,1.464,0,0,1,5.964,16.5Z" transform="translate(0 -6.912)"/><path d="M10.5,9.588V6.66a3.66,3.66,0,1,1,7.32,0V9.588" transform="translate(-3.072 0)"/></g></svg><?php _e( 'Upgrade to unlock pro features &rarr;', 'newsletter-glue' ); ?></a>
 			</div>
 			<?php else : ?>
 			<div class="ngl-block-defaults"><a href="#"><?php _e( 'Set defaults', 'newsletter-glue' ); ?></a></div>
