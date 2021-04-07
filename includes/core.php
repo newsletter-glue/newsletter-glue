@@ -633,7 +633,7 @@ function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
 	$output = new simple_html_dom();
 	$output->load( $html );
 
-	$replace = '#template_inner > div > img';
+	$replace = '#template_inner > div > img, #template_inner > div.wp-block-image img';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
 	}
@@ -652,6 +652,8 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 	$output = new simple_html_dom();
 	$output->load( $html );
 
+	$base = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul', 'ol', 'img' );
+
 	$replaces = array();
 	$elements = array(
 		'#template_inner > h1',
@@ -666,13 +668,23 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 		'#template_inner > .ngl-quote',
 		'#template_inner > .wp-block-buttons',
 		'#template_inner > .ngl-embed-social',
-		'.wp-block-newsletterglue-group > *',
 		'.ngl-article-img-full',
-		'.ngl-callout-content > *',
 	);
+
+	// Group block.
+	foreach( $base as $inner ) {
+		$elements[] = '.wp-block-newsletterglue-group > ' . $inner;
+	}
+
+	// Callout block.
+	foreach( $base as $inner ) {
+		$elements[] = '.ngl-callout-content > ' . $inner;
+	}
+
 	foreach( $elements as $el ) {
 		$replaces[] = $el;
 	}
+
 	$replace = implode( ', ', $replaces );
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
@@ -1369,6 +1381,11 @@ p.ngl-unsubscribe {
 
 @media only screen and (max-width:642px) {
 
+	#template_table {
+		width: 95% !important;
+		max-width: 95% !important;
+	}
+
 	body, #wrapper {
 		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px;
 	}
@@ -1377,10 +1394,6 @@ p.ngl-unsubscribe {
 		width: auto;
 		padding-top: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_padding1' ) ); ?>px !important;
 		padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'mobile_container_padding1' ) ); ?>px !important;
-	}
-
-	td.ngl-td-spacer {
-		width: 14px;
 	}
 
 	#wrapper {
