@@ -1127,15 +1127,6 @@ hr {
 	<?php endif; ?>
 }
 
-#template_inner * {
-	font-family: <?php echo $email_font; ?>;
-}
-
-p, ul, ol {
-	font-size: 18px;
-	color: #666;
-}
-
 #template_inner {
 	<?php if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) { ?>
 	padding-left: 10px;
