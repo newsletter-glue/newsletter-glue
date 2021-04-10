@@ -43,7 +43,7 @@ function newsletterglue_preview_emails() {
 		echo $message;
 
 		// Debug
-		echo round( strlen( $message ) / 1024 ) . 'kb';
+		// echo round( strlen( $message ) / 1024 ) . 'kb';
 
 		exit;
 
