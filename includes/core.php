@@ -43,7 +43,7 @@ function newsletterglue_preview_emails() {
 		echo $message;
 
 		// Debug
-		// echo round( strlen( $message ) / 1024 ) . 'kb';
+		echo round( strlen( $message ) / 1024 ) . 'kb';
 
 		exit;
 
@@ -752,7 +752,11 @@ function newsletterglue_fix_image_widths( $html, $post_id, $app ) {
 add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_set_font_family', 1000, 3 );
 function newsletterglue_set_font_family( $html, $post_id, $app ) {
 
-	$email_font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+	if ( newsletterglue_get_theme_option( 'font' ) ) {
+		$email_font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+	} else {
+		$email_font = "Arial, Helvetica, sans-serif";
+	}
 
 	$output = new simple_html_dom();
 	$output->load( $html );
@@ -1059,7 +1063,11 @@ function newsletterglue_add_theme_designer_css() {
 		return;
 	}
 
-	$email_font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+	if ( newsletterglue_get_theme_option( 'font' ) ) {
+		$email_font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+	} else {
+		$email_font = "Arial, Helvetica, sans-serif";
+	}
 
 	$align = newsletterglue_get_theme_option( 'p_align' );
 
