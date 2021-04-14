@@ -16,6 +16,10 @@ class NGL_CPT {
 	 */
 	public static function init() {
 		add_action( 'init', array( __CLASS__, 'register_post_types' ), 5 );
+
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
+
+		add_filter( 'allowed_block_types', array( __CLASS__, 'allowed_block_types' ), 99, 2 );
 	}
 
 	/**
@@ -73,6 +77,36 @@ class NGL_CPT {
 
 		do_action( 'newsletterglue_after_register_post_type' );
 
+	}
+
+	/**
+	 * Add scripts.
+	 */
+	public static function admin_enqueue_scripts() {
+		global $post_type;
+		if ( is_admin() && ! empty( $post_type ) && $post_type == 'newsletterglue' ) {
+			wp_add_inline_script(
+				'wp-edit-post',
+				'
+				wp.data.select( "core/edit-post" ).isFeatureActive( "welcomeGuide" ) && wp.data.dispatch( "core/edit-post" ).toggleFeature( "welcomeGuide" );
+				'
+			);
+		}
+	}
+
+	/**
+	 * Allowed block types.
+	 */
+	public static function allowed_block_types( $blocks, $post ) {
+		if ( ! empty( $post->post_type ) ) {
+			if ( $post->post_type == 'newsletterglue' ) {
+				$blocks = array(
+					'core/paragraph',
+				);
+				return $blocks;
+			}
+		}
+		return $blocks;
 	}
 
 }
