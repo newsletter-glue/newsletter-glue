@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<h3><?php _e( 'Let&rsquo;s begin by connecting your email software...', 'newsletter-glue' ); ?></h3>
 
 	<div class="ngl">
-		<?php include_once NGL_PLUGIN_DIR . 'includes/admin/connect/views/connect-card.php'; ?>
+		<?php include_once NGL_PLUGIN_DIR . 'includes/admin/settings/views/settings-connect-card.php'; ?>
 	</div>
 
 	<div class="ngl-boarding-next disabled"><span class="material-icons">arrow_forward</span><span class="ngl-boarding-next-text"><?php _e( 'next', 'newsletter-glue' ); ?></span></div>

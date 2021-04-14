@@ -104,7 +104,6 @@ $show_edit_controls = false;
 	<?php endif; ?>
 	<?php endif; ?>
 
-	<!-- Begin articles display -->
 	<div class="ngl-articles-wrap">
 	<?php
 	if ( ! empty( $articles ) ) :
@@ -157,6 +156,7 @@ $show_edit_controls = false;
 
 		?>
 
+			<!--[if !mso]><\!-->
 			<div class="ngl-article-left-mobile">
 				<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;">
 					<tr>
@@ -168,6 +168,7 @@ $show_edit_controls = false;
 					</tr>
 				</table>
 			</div>
+			<!-- <![endif]-->
 
 			<div class="ngl-article ngl-article-img-<?php echo $image_position; ?>" data-key="<?php echo $key; ?>" data-post-id="<?php echo $thearticle->ID; ?>" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>; font-size: <?php echo $font_size_text; ?>px;">
 

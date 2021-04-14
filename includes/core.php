@@ -7,6 +7,12 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Global hooks.
+ */
+add_filter( 'newsletterglue_settings_tab_blocks_save_button', '__return_false' );
+add_filter( 'newsletterglue_settings_tab_connect_save_button', '__return_false' );
+
+/**
  * Creates a preview for emails.
  */
 function newsletterglue_preview_emails() {
@@ -43,7 +49,7 @@ function newsletterglue_preview_emails() {
 		echo $message;
 
 		// Debug
-		echo round( strlen( $message ) / 1024 ) . 'kb';
+		// echo round( strlen( $message ) / 1024 ) . 'kb';
 
 		exit;
 
@@ -448,7 +454,6 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$html = str_replace( '{content}', $the_content, $html );
 	$html = str_replace( '{post_permalink}', get_permalink( $post->ID ), $html );
 	$html = str_replace( '{post_permalink_preview}', add_query_arg( 'preview_email', $post->ID, get_permalink( $post->ID ) ), $html );
-	$html = preg_replace( '/<!--(.*)-->/Uis', '', $html );
 
 	$html = apply_filters( 'newsletterglue_generate_content', $html, $post );
 
@@ -481,7 +486,7 @@ add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_ht
 function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
-	$output->load( $html );
+	$output->load( $html, true, false );
 
 	// Force image width.
 	$replace = 'figure.wp-block-image img';
@@ -629,7 +634,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+	return ( string ) $output;
 }
 
 /**
@@ -639,7 +644,7 @@ add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_wrap_full_wi
 function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
-	$output->load( $html );
+	$output->load( $html, true, false );
 
 	$replace = '#template_inner > div > img, #template_inner > div.wp-block-image img';
 	foreach( $output->find( $replace ) as $key => $element ) {
@@ -648,7 +653,7 @@ function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+	return ( string ) $output;
 }
 
 /**
@@ -658,7 +663,7 @@ add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_auto_adjust_
 function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
-	$output->load( $html );
+	$output->load( $html, true, false );
 
 	$base = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul', 'ol', 'img' );
 
@@ -702,7 +707,7 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+	return ( string ) $output;
 }
 
 /**
@@ -712,7 +717,7 @@ add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_image_wi
 function newsletterglue_fix_image_widths( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
-	$output->load( $html );
+	$output->load( $html, true, false );
 
 	$replace = '#template_inner img';
 	foreach( $output->find( $replace ) as $key => $element ) {
@@ -743,7 +748,7 @@ function newsletterglue_fix_image_widths( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+	return ( string ) $output;
 }
 
 /**
@@ -759,7 +764,7 @@ function newsletterglue_set_font_family( $html, $post_id, $app ) {
 	}
 
 	$output = new simple_html_dom();
-	$output->load( $html );
+	$output->load( $html, true, false );
 
 	$replace = '#template_inner, #template_inner td';
 	foreach( $output->find( $replace ) as $key => $element ) {
@@ -772,7 +777,7 @@ function newsletterglue_set_font_family( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+	return ( string ) $output;
 
 }
 

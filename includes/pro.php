@@ -79,8 +79,8 @@ class NGL_Pro {
 
 		foreach( $tabs as $key => $value ) {
 			$new_tabs[ $key ] = $value;
-			if ( $key == 'css' ) {
-				$new_tabs[ 'license' ] = __( 'Pro License', 'newsletter-glue' );
+			if ( $key == 'additional' ) {
+				$new_tabs[ 'license' ] = __( 'Pro license', 'newsletter-glue' );
 			}
 		}
 

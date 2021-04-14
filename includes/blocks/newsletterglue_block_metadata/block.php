@@ -290,7 +290,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 	public function tableize( $content ) {
 
 		$output = new simple_html_dom();
-		$output->load( $content );
+		$output->load( $content, true, false );
 
 		// Force image width/height attributes.
 		$replace = 'div.wp-block-newsletterglue-metadata .ngl-metadata-pic img';

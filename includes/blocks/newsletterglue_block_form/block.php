@@ -86,7 +86,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		$defaults[ 'btn_bg' ] 		= newsletterglue_get_theme_option( 'btn_bg' );
 		$defaults[ 'btn_border' ] 	= newsletterglue_get_theme_option( 'btn_border' ) ? newsletterglue_get_theme_option( 'btn_border' ) : 'transparent';
 		$defaults[ 'btn_colour' ] 	= newsletterglue_get_theme_option( 'btn_colour' );
-		$defaults[ 'connect_url' ]  = esc_url( admin_url( 'admin.php?page=ngl-connect' ) );
+		$defaults[ 'connect_url' ]  = esc_url( admin_url( 'admin.php?page=ngl-settings&tab=connect' ) );
 		$defaults[ 'connect_esp' ]  = __( 'Start by connecting your email software &#x21C4;', 'newsletter-glue' );
 
 		wp_register_script( $this->asset_id, $js_dir . 'block' . $suffix . '.js', array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ), time() );
@@ -418,7 +418,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 	public function tableize( $content ) {
 
 		$output = new simple_html_dom();
-		$output->load( $content );
+		$output->load( $content, true, false );
 
 		// remove unwanted elements.
 		$replace = 'div.ngl-message-overlay, .ngl-form-field';

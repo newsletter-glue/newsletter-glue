@@ -110,6 +110,7 @@ final class Newsletter_Glue {
 		require_once NGL_PLUGIN_DIR . 'includes/core.php';
 		require_once NGL_PLUGIN_DIR . 'includes/compatibility.php';
 		require_once NGL_PLUGIN_DIR . 'includes/gutenberg.php';
+		require_once NGL_PLUGIN_DIR . 'includes/cpt/cpt.php';
 		require_once NGL_PLUGIN_DIR . 'includes/pro.php';
 		require_once NGL_PLUGIN_DIR . 'includes/upgrade.php';
 

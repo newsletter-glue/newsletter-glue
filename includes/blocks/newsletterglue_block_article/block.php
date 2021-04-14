@@ -1239,7 +1239,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		}
 
 		$output = new simple_html_dom();
-		$output->load( $content );
+		$output->load( $content, true, false );
 
 		$table_ratio 	= isset( $attributes[ 'table_ratio' ] ) ? $attributes[ 'table_ratio' ] : 'full';
 		$image_position = isset( $attributes[ 'image_position' ] ) ? $attributes[ 'image_position' ] : 'left';

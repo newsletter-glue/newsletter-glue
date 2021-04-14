@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<?php if ( ! $app ) : ?>
 
 	<div class="ngl-metabox-flex">
-		<div class="ngl-metabox-msg is-notice"><a href="<?php echo esc_url( admin_url( 'admin.php?page=ngl-connect' ) ); ?>"><?php _e( 'Start by connecting your email software &#x21C4;', 'newsletter-glue' ); ?></a></div>
+		<div class="ngl-metabox-msg is-notice"><a href="<?php echo esc_url( admin_url( 'admin.php?page=ngl-settings&tab=connect' ) ); ?>"><?php _e( 'Start by connecting your email software &#x21C4;', 'newsletter-glue' ); ?></a></div>
 	</div>
 
 	<?php else : ?>

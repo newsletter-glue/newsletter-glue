@@ -474,7 +474,7 @@
 
 .ngl-helper a {
 	display: inline-block;
-	color: rgba(34, 36, 38, 0.55);
+	color: rgba(34, 36, 38, 0.55) !important;
 	text-decoration: none;
 	position: relative;
 	box-shadow: none !important;
@@ -483,7 +483,7 @@
 }
 
 .ngl-helper a:hover {
-	color:rgba(34, 36, 38, 0.75);
+	color: rgba(34, 36, 38, 0.75) !important;
 }
 
 .ngl-card .ngl-helper i.icon {
@@ -491,19 +491,19 @@
 }
 
 .ngl-helper a.ngl-helper-alert {
-	color: #ce2114;
+	color: #ce2114 !important;
 }
 
 .ngl-helper a.ngl-helper-alert:after {
-	border-bottom: 1px solid #ce2114;
+	border-bottom: 1px solid #ce2114 !important;
 }
 
 .ngl-helper a.ngl-helper-alert:hover {
-	color: #b91408;
+	color: #b91408 !important;
 }
 
 .ngl-helper a.ngl-helper-alert:hover:after {
-	border-color: #b91408;
+	border-color: #b91408 !important;
 }
 
 .ngl-metabox-flex-link {
@@ -675,6 +675,7 @@
 	min-height: auto;
 	height: 39px;
 	transition: all 0.2s ease-in-out;
+	box-sizing: border-box;
 }
 
 .ngl-metabox input[type=text]#ngl_test_email {
@@ -1830,7 +1831,7 @@ div.ngl-settings .ui.selection.dropdown .menu {
 }
 
 .ngl-block-defaults a {
-    color: #222;
+    color: #222 !important;
     text-decoration: none;
     box-shadow: none !important;
     font-size: 12px;
@@ -3207,7 +3208,11 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	display: block;
 	border-radius: 999px;
 	z-index: 100;
-	color: #444;
+	color: #444 !important;
+}
+
+.ngl-popup-close:hover {
+	color: #135e96 !important;
 }
 
 .ngl-popup-close span.dashicons {

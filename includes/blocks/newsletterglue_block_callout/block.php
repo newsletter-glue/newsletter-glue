@@ -188,7 +188,7 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 	public function tableize( $content ) {
 
 		$output = new simple_html_dom();
-		$output->load( $content );
+		$output->load( $content, true, false );
 
 		$replace = '.wp-block-newsletterglue-callout img';
 		foreach( $output->find( $replace ) as $key => $element ) {

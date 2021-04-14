@@ -273,7 +273,7 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 	public function tableize( $content ) {
 
 		$output = new simple_html_dom();
-		$output->load( $content );
+		$output->load( $content, true, false );
 
 		if ( ! strstr( $content, 'ngl-author-cta' ) ) {
 			$no_button = true;
