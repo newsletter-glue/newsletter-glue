@@ -136,7 +136,7 @@ $show_edit_controls = false;
 						$display_image  	= ( $show_image ) ? '<div class="ngl-article-featured"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '"><img src="' . $this->get_image_url( $thearticle ) . '" data-original-src="' . $this->get_image_default( $thearticle ). '" style="border-radius: ' . absint( $image_radius ) . 'px;" /></a>' . $show_edit_controls . '</div>' : '';
 					}
 
-					$thecontent 		= apply_filters( 'newsletterglue_article_embed_content', $thearticle->post_content, $thearticle->ID );
+					$thecontent 		= apply_filters( 'newsletterglue_article_embed_content', strip_shortcodes( $thearticle->post_content ), $thearticle->ID );
 					$display_title 		= '<div class="ngl-article-title"><a href="' . $this->get_permalink( $thearticle ) . '" target="' . $new_window . '" rel="' . $nofollow . '" style="font-size: ' . $font_size_title . 'px;' . $link_color . '">';
 					$display_title     .= '<span ' . $editable . '>' . $this->display_title( $thearticle->ID, $thearticle ) . '</span></a></div>';
 					$display_excerpt 	= '<div class="ngl-article-excerpt" ' . $editable . '>' . $this->display_excerpt( $thearticle->ID, $thecontent ) . '</div>';

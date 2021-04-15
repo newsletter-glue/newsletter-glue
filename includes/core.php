@@ -437,8 +437,10 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	// Post content.
-	$the_content .= do_blocks( $post->post_content );
-	//$the_content .= apply_filters( 'the_content', $post->post_content );
+	$the_post_content = do_shortcode( $post->post_content );
+	$the_post_content = do_blocks( $the_post_content );
+	$the_post_content = wpautop( $the_post_content );
+	$the_content .= $the_post_content;
 
 	// Credits.
 	if ( get_option( 'newsletterglue_credits' ) ) {
@@ -678,6 +680,7 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 		'#template_inner > p',
 		'#template_inner > ol',
 		'#template_inner > ul',
+		'#template_inner > figure',
 		'#template_inner > .ngl-quote',
 		'#template_inner > .wp-block-buttons',
 		'#template_inner > .ngl-embed-social',
@@ -1212,6 +1215,7 @@ a {
 
 figure {
 	margin: 0;
+	width: auto !important;
 }
 
 figcaption {

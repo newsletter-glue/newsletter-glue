@@ -20,6 +20,8 @@ class NGL_CPT {
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
 
 		add_filter( 'allowed_block_types', array( __CLASS__, 'allowed_block_types' ), 99, 2 );
+
+		add_action( 'admin_head', array( __CLASS__, 'admin_head' ), 992 );
 	}
 
 	/**
@@ -41,9 +43,9 @@ class NGL_CPT {
 					'labels'             => array(
 						'name'                  => __( 'Newsletters', 'newsletter-glue' ),
 						'singular_name'         => __( 'Newsletter', 'newsletter-glue' ),
-						'menu_name'             => esc_html_x( 'Newsletters', 'Admin menu name', 'newsletter-glue' ),
+						'menu_name'             => esc_html_x( 'All Newsletters', 'Admin menu name', 'newsletter-glue' ),
 						'add_new'               => __( 'Add Newsletter', 'newsletter-glue' ),
-						'add_new_item'          => __( 'Add new Newsletter', 'newsletter-glue' ),
+						'add_new_item'          => __( 'Add New Newsletter', 'newsletter-glue' ),
 						'edit'                  => __( 'Edit', 'newsletter-glue' ),
 						'edit_item'             => __( 'Edit Newsletter', 'newsletter-glue' ),
 						'new_item'              => __( 'New Newsletter', 'newsletter-glue' ),
@@ -84,14 +86,21 @@ class NGL_CPT {
 	 */
 	public static function admin_enqueue_scripts() {
 		global $post_type;
+
+		// Only in our CPT.
 		if ( is_admin() && ! empty( $post_type ) && $post_type == 'newsletterglue' ) {
 			wp_add_inline_script(
 				'wp-edit-post',
 				'
 				wp.data.select( "core/edit-post" ).isFeatureActive( "welcomeGuide" ) && wp.data.dispatch( "core/edit-post" ).toggleFeature( "welcomeGuide" );
+				var isFullScreenMode = wp.data.select( "core/edit-post" ).isFeatureActive( "fullscreenMode" );
+				if ( !isFullScreenMode ) {
+					wp.data.dispatch( "core/edit-post" ).toggleFeature( "fullscreenMode" );
+				}
 				'
 			);
 		}
+
 	}
 
 	/**
@@ -101,12 +110,49 @@ class NGL_CPT {
 		if ( ! empty( $post->post_type ) ) {
 			if ( $post->post_type == 'newsletterglue' ) {
 				$blocks = array(
+					'newsletterglue/group',
+					'newsletterglue/form',
+					'newsletterglue/article',
+					'newsletterglue/author',
+					'newsletterglue/callout',
+					'newsletterglue/metadata',
 					'core/paragraph',
+					'core/image',
+					'core/heading',
+					'core/list',
+					'core/quote',
+					'core/buttons',
+					'core/separator',
+					'core/spacer',
+					'core/table',
+					'core/columns',
 				);
 				return $blocks;
 			}
 		}
 		return $blocks;
+	}
+
+	/**
+	 * Register core post types.
+	 */
+	public static function admin_head() {
+		global $post_type;
+
+		if ( ! empty( $post_type ) && $post_type == 'newsletterglue' ) {
+
+			echo '<style>';
+			echo '.edit-post-visual-editor { background: ' . newsletterglue_get_theme_option( 'email_bg' ) . '; }';
+			echo '.editor-styles-wrapper { background: ' . newsletterglue_get_theme_option( 'container_bg' ) . '; }';
+
+			if ( newsletterglue_get_theme_option( 'font' ) ) {
+				echo '.editor-styles-wrapper > *, textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt {
+						font-family: ' . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . '!important; }';
+			}
+
+			echo '</style>';
+
+		}
 	}
 
 }
