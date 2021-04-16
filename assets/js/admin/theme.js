@@ -396,7 +396,7 @@
 		var el 		= $( this ).parents( '.ngl-theme-reset' );
 		var data 	= 'action=newsletterglue_ajax_reset_theme&security=' + newsletterglue_params.ajaxnonce;
 
-		var mobile = false;
+		var mobile  = false;
 
 		$.ajax( {
 			type : 'post',
@@ -412,21 +412,36 @@
 				}
 			},
 			success: function( response ) {
-				$( '.ngl-theme' ).replaceWith( response );
-				$( '.ngl-theme' ).find( '.ui.dropdown, .ui.dropdown' ).dropdown();
-				$( '.ngl-theme' ).find( '.ngl-theme-reset .ngl-process' ).addClass( 'is-hidden' );
-				$( '.ngl-theme' ).find( '.ngl-theme-reset .ngl-process.is-valid' ).removeClass( 'is-hidden' );
-				if ( mobile ) {
-					$( '.ngl-theme' ).addClass( 'ngl-mobile' );
-					$( '.ngl-theme .ngl-desktop' ).hide();
+				if ( $( '.ngl-theme' ).length == 0 ) {
+					var thecolor = '#0088A0';
+					el.find( '.ngl-process.is-waiting' ).addClass( 'is-hidden' );
+					el.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
+					el.parents( '.ngl-metabox-flex' ).find( '.ngl-color-field' ).spectrum( 'set', thecolor );
+					if ( $( '.ngl-customize-preview' ).length ) {
+						$( '.ngl-customize-preview' ).find( 'blockquote' ).css( { 'border-color' : thecolor } );
+						$( '.ngl-customize-preview' ).find( 'p a' ).css( { 'color' : thecolor } );
+						$( '.ngl-customize-preview' ).find( 'p.ngl-customize-button a' ).css( { 'background-color' : thecolor } );
+					}
+					setTimeout( function() {
+						el.find( '.ngl-process' ).addClass( 'is-hidden' );
+					}, 1500 );
 				} else {
-					$( '.ngl-theme' ).removeClass( 'ngl-mobile' );
-					$( '.ngl-theme .ngl-desktop' ).show();
+					$( '.ngl-theme' ).replaceWith( response );
+					$( '.ngl-theme' ).find( '.ui.dropdown, .ui.dropdown' ).dropdown();
+					$( '.ngl-theme' ).find( '.ngl-theme-reset .ngl-process' ).addClass( 'is-hidden' );
+					$( '.ngl-theme' ).find( '.ngl-theme-reset .ngl-process.is-valid' ).removeClass( 'is-hidden' );
+					if ( mobile ) {
+						$( '.ngl-theme' ).addClass( 'ngl-mobile' );
+						$( '.ngl-theme .ngl-desktop' ).hide();
+					} else {
+						$( '.ngl-theme' ).removeClass( 'ngl-mobile' );
+						$( '.ngl-theme .ngl-desktop' ).show();
+					}
+					newsletterglue_init_color();
+					setTimeout( function() {
+						$( '.ngl-theme' ).find( '.ngl-process' ).addClass( 'is-hidden' );
+					}, 1500 );
 				}
-				newsletterglue_init_color();
-				setTimeout( function() {
-					$( '.ngl-theme' ).find( '.ngl-process' ).addClass( 'is-hidden' );
-				}, 1500 );
 			}
 		} );
 

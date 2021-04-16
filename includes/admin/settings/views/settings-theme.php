@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				<span class="ngl-process-text"><strong><?php _e( 'Saving...', 'newsletter-glue' ); ?></strong></span>
 			</span>
 			<span class="ngl-process is-hidden is-valid">
-				<span class="ngl-process-icon"><i class="check circle outline icon"></i></span>
+				<span class="ngl-process-icon"><i class="check circle icon"></i></span>
 				<span class="ngl-process-text"><strong><?php _e( 'Saved', 'newsletter-glue' ); ?></strong></span>
 			</span>
 		</div>

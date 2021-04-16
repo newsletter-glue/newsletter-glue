@@ -813,8 +813,8 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			beforeSend: function() {
-				el.find( '.ngl-process' ).addClass( 'is-hidden' );
-				el.find( '.ngl-process.is-waiting' ).removeClass( 'is-hidden' );
+				el.find( '.ngl-label-verification .ngl-process' ).addClass( 'is-hidden' );
+				el.find( '.ngl-label-verification .ngl-process.is-waiting' ).removeClass( 'is-hidden' );
 				if ( ! isTextarea ) {
 					el.find( '.ngl-label-more' ).empty();
 				}
@@ -834,28 +834,28 @@
 					savebtn.removeClass( 'saved' ).html( newsletterglue_params.save );
 				}, 2000 );
 
-				el.find( '.ngl-process' ).addClass( 'is-hidden' );
+				el.find( '.ngl-label-verification .ngl-process' ).addClass( 'is-hidden' );
 
 				if ( response.failed ) {
-					el.find( '.ngl-process.is-invalid' ).removeClass( 'is-hidden' );
-					el.find( '.ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
+					el.find( '.ngl-label-verification .ngl-process.is-invalid' ).removeClass( 'is-hidden' );
+					el.find( '.ngl-label-verification .ngl-process.is-invalid .ngl-process-text' ).html( response.failed );
 					el.addClass( 'is-error' );
 					if ( response.failed_details && ! isTextarea ) {
 						el.find( '.ngl-label-more' ).html( response.failed_details );
 					}
 				} else if ( response.success ) {
-					el.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
+					el.find( '.ngl-label-verification .ngl-process.is-valid' ).removeClass( 'is-hidden' );
 					if ( id == 'ngl_from_email' && $( '#ngl_from_email' ).hasClass( 'no-support-verify' ) ) {
 						
 					} else {
-						el.find( '.ngl-process.is-valid .ngl-process-text' ).html( response.success );
+						el.find( '.ngl-label-verification .ngl-process.is-valid .ngl-process-text' ).html( response.success );
 					}
 					el.removeClass( 'is-error' );
 				} else {
 					el.removeClass( 'is-error' );
-					el.find( '.ngl-process.is-valid' ).removeClass( 'is-hidden' );
+					el.find( '.ngl-label-verification .ngl-process.is-valid' ).removeClass( 'is-hidden' );
 					setTimeout( function() {
-						el.find( '.ngl-process' ).addClass( 'is-hidden' );
+						el.find( '.ngl-label-verification .ngl-process' ).addClass( 'is-hidden' );
 					}, 1500 );
 
 				}
@@ -869,7 +869,7 @@
 						}
 					}
 					setTimeout( function() {
-						el.find( '.ngl-process' ).addClass( 'is-hidden' );
+						el.find( '.ngl-label-verification .ngl-process' ).addClass( 'is-hidden' );
 					}, 1500 );
 				}
 
