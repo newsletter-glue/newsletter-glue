@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function newsletterglue_get_screen_ids() {
 
 	$screen_ids = array();
-	$screen_id  = sanitize_title( __( 'Newsletter Glue', 'newsletter-glue' ) );
+	$screen_id  = sanitize_title( __( 'Newsletters', 'newsletter-glue' ) );
 
 	$post_types  = get_post_types();
 	$unsupported = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block' );
@@ -26,9 +26,8 @@ function newsletterglue_get_screen_ids() {
 		}
 	}
 
-	$screen_ids[] = $screen_id . '_page_ngl-connect';
+	$screen_ids[] = 'newsletter-glue';
 	$screen_ids[] = $screen_id . '_page_ngl-settings';
-	$screen_ids[] = $screen_id . '_page_ngl-blocks';
 
 	return apply_filters( 'newsletterglue_screen_ids', $screen_ids );
 }
@@ -71,7 +70,7 @@ function newsletterglue_feedback_modal() {
 		return;
 	}
 
-	if ( ! isset( $_GET[ 'page' ] ) || $_GET[ 'page' ] != 'ngl-connect' ) {
+	if ( ! isset( $_GET[ 'page' ] ) || $_GET[ 'page' ] != 'ngl-settings' ) {
 		return;
 	}
 
@@ -95,7 +94,7 @@ function newsletterglue_support_bar_modals() {
 		return;
 	}
 
-	if ( $_GET['page'] === 'ngl-connect' || $_GET['page'] === 'ngl-settings' || $_GET['page'] === 'ngl-blocks' ) {
+	if ( $_GET['page'] === 'ngl-settings' ) {
 		require_once NGL_PLUGIN_DIR . 'includes/admin/bug-report.php';
 		require_once NGL_PLUGIN_DIR . 'includes/admin/request-feature.php';
 	}

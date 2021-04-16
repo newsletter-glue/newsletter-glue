@@ -23,11 +23,10 @@ function newsletterglue_add_admin_menu() {
 		</svg>'
 	);
 
-	$admin_page			= add_menu_page( __( 'Newsletter Glue', 'newsletter-glue' ), __( 'Newsletter Glue', 'newsletter-glue' ), 'manage_newsletterglue', 'newsletter-glue', null, 'data:image/svg+xml;base64,' . $ngicon, '25.5471' );
+	$admin_page			= add_menu_page( __( 'Newsletters', 'newsletter-glue' ), __( 'Newsletters', 'newsletter-glue' ), 'manage_newsletterglue', 'newsletter-glue', null, 'data:image/svg+xml;base64,' . $ngicon, '25.5471' );
 
-	$connect_page 		= add_submenu_page( 'newsletter-glue', __( 'Connect', 'newsletter-glue' ), __( 'Connect', 'newsletter-glue' ), 'manage_newsletterglue', 'ngl-connect', 'newsletterglue_connect_page' );
+	$new_issue_page 	= add_submenu_page( 'newsletter-glue', __( 'Add New Newsletter', 'newsletter-glue' ), __( 'Add New Newsletter', 'newsletter-glue' ), 'manage_newsletterglue', 'post-new.php?post_type=newsletterglue' );
 	$settings_page 		= add_submenu_page( 'newsletter-glue', __( 'Settings', 'newsletter-glue' ), __( 'Settings', 'newsletter-glue' ), 'manage_newsletterglue', 'ngl-settings', 'newsletterglue_settings_page' );
-	$blocks_page 		= add_submenu_page( 'newsletter-glue', __( 'Newsletter blocks', 'newsletter-glue' ), __( 'Newsletter blocks', 'newsletter-glue' ), 'manage_newsletterglue', 'ngl-blocks', 'newsletterglue_blocks_page' );
 
 }
 add_action( 'admin_menu', 'newsletterglue_add_admin_menu', 10 );

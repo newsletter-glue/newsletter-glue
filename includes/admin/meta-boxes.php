@@ -20,6 +20,8 @@ function newsletterglue_add_meta_box() {
 		$post_types  = get_post_types();
 	}
 
+	$post_types = array_merge( $post_types, array( 'newsletterglue' ) );
+
 	if ( is_array( $post_types ) ) {
 		foreach( $post_types as $post_type ) {
 			if ( ! in_array( $post_type, apply_filters( 'newsletterglue_unsupported_post_types', $unsupported ) ) ) {

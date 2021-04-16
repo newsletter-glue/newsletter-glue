@@ -25,6 +25,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 	wp_register_script( 'newsletterglue_semantic', $js_dir . 'semantic/semantic' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
 	wp_register_script( 'newsletterglue_flatpickr', $js_dir . 'flatpickr/flatpickr' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
 	wp_register_script( 'newsletterglue_admin', $js_dir . 'admin/admin' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
+	wp_register_script( 'newsletterglue_cpt', $js_dir . 'admin/cpt' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
 	wp_register_script( 'newsletterglue_global', $js_dir . 'admin/global' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
 	wp_register_script( 'newsletterglue_onboarding', $js_dir . 'admin/onboarding' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
 	wp_register_script( 'jquery-spectrum', $js_dir . 'spectrum/spectrum' . $suffix . '.js', array( 'jquery' ), NGL_VERSION, true );
@@ -40,6 +41,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 	wp_register_style( 'newsletterglue_semantic', $css_dir . 'semantic' . $suffix . '.css', array(), NGL_VERSION );
 	wp_register_style( 'newsletterglue_admin_styles', $css_dir . 'admin' . $suffix . '.css', array(), NGL_VERSION );
 	wp_register_style( 'newsletterglue_onboarding_styles', $css_dir . 'onboarding' . $suffix . '.css', array(), NGL_VERSION );
+	wp_register_style( 'newsletterglue_cpt', $css_dir . 'cpt' . $suffix . '.css', array(), NGL_VERSION );
 
 	// Sitewide menu CSS.
 	wp_enqueue_style( 'newsletterglue_admin_menu_styles' );
@@ -87,6 +89,12 @@ function newsletterglue_load_admin_scripts( $hook ) {
 		wp_enqueue_media();
 		wp_enqueue_script( 'newsletterglue_theme' );
 		wp_enqueue_style( 'wp-edit-blocks' );
+	}
+
+	// Add CPT stuff.
+	if ( $screen_id === 'newsletterglue' ) {
+		wp_enqueue_script( 'newsletterglue_cpt' );
+		wp_enqueue_style( 'newsletterglue_cpt' );
 	}
 
 }
