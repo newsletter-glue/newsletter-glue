@@ -7,6 +7,12 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Global hooks.
+ */
+add_filter( 'newsletterglue_settings_tab_blocks_save_button', '__return_false' );
+add_filter( 'newsletterglue_settings_tab_connect_save_button', '__return_false' );
+
+/**
  * Creates a preview for emails.
  */
 function newsletterglue_preview_emails() {
@@ -431,8 +437,10 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	// Post content.
-	$the_content .= do_blocks( $post->post_content );
-	//$the_content .= apply_filters( 'the_content', $post->post_content );
+	$the_post_content = do_shortcode( $post->post_content );
+	$the_post_content = do_blocks( $the_post_content );
+	$the_post_content = wpautop( $the_post_content );
+	$the_content .= $the_post_content;
 
 	// Credits.
 	if ( get_option( 'newsletterglue_credits' ) ) {
@@ -448,7 +456,6 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$html = str_replace( '{content}', $the_content, $html );
 	$html = str_replace( '{post_permalink}', get_permalink( $post->ID ), $html );
 	$html = str_replace( '{post_permalink_preview}', add_query_arg( 'preview_email', $post->ID, get_permalink( $post->ID ) ), $html );
-	$html = preg_replace( '/<!--(.*)-->/Uis', '', $html );
 
 	$html = apply_filters( 'newsletterglue_generate_content', $html, $post );
 
@@ -481,7 +488,7 @@ add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_ht
 function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
-	$output->load( $html );
+	$output->load( $html, true, false );
 
 	// Force image width.
 	$replace = 'figure.wp-block-image img';
@@ -629,7 +636,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+	return ( string ) $output;
 }
 
 /**
@@ -639,7 +646,7 @@ add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_wrap_full_wi
 function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
-	$output->load( $html );
+	$output->load( $html, true, false );
 
 	$replace = '#template_inner > div > img, #template_inner > div.wp-block-image img';
 	foreach( $output->find( $replace ) as $key => $element ) {
@@ -648,7 +655,7 @@ function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+	return ( string ) $output;
 }
 
 /**
@@ -658,7 +665,7 @@ add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_auto_adjust_
 function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
-	$output->load( $html );
+	$output->load( $html, true, false );
 
 	$base = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul', 'ol', 'img' );
 
@@ -673,6 +680,7 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 		'#template_inner > p',
 		'#template_inner > ol',
 		'#template_inner > ul',
+		'#template_inner > figure',
 		'#template_inner > .ngl-quote',
 		'#template_inner > .wp-block-buttons',
 		'#template_inner > .ngl-embed-social',
@@ -702,7 +710,7 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+	return ( string ) $output;
 }
 
 /**
@@ -712,7 +720,7 @@ add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_image_wi
 function newsletterglue_fix_image_widths( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
-	$output->load( $html );
+	$output->load( $html, true, false );
 
 	$replace = '#template_inner img';
 	foreach( $output->find( $replace ) as $key => $element ) {
@@ -743,7 +751,7 @@ function newsletterglue_fix_image_widths( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+	return ( string ) $output;
 }
 
 /**
@@ -752,10 +760,14 @@ function newsletterglue_fix_image_widths( $html, $post_id, $app ) {
 add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_set_font_family', 1000, 3 );
 function newsletterglue_set_font_family( $html, $post_id, $app ) {
 
-	$email_font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+	if ( newsletterglue_get_theme_option( 'font' ) ) {
+		$email_font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+	} else {
+		$email_font = "Arial, Helvetica, sans-serif";
+	}
 
 	$output = new simple_html_dom();
-	$output->load( $html );
+	$output->load( $html, true, false );
 
 	$replace = '#template_inner, #template_inner td';
 	foreach( $output->find( $replace ) as $key => $element ) {
@@ -768,7 +780,7 @@ function newsletterglue_set_font_family( $html, $post_id, $app ) {
 
 	$output->save();
 
-	return ( string ) preg_replace( '/\>\s+\</m', '><', $output );
+	return ( string ) $output;
 
 }
 
@@ -943,7 +955,7 @@ function newsletterglue_get_theme_default( $key ) {
 		'btn_colour'				=> '#ffffff',
 		'btn_radius'				=> 0,
 		'btn_border'				=> '#0088A0',
-		'btn_width'					=> 200,
+		'btn_width'					=> 150,
 		'container_padding1'		=> 20,
 		'container_margin'			=> 0,
 		// Mobile.
@@ -956,7 +968,7 @@ function newsletterglue_get_theme_default( $key ) {
 		'mobile_p_size'				=> 16,
 		'mobile_container_margin' 	=> 0,
 		'mobile_container_padding1' => 0,
-		'mobile_btn_width'			=> 200,
+		'mobile_btn_width'			=> 150,
 	);
 
 	return isset( $keys[ $key ] ) ? $keys[ $key ] : '';
@@ -1059,7 +1071,11 @@ function newsletterglue_add_theme_designer_css() {
 		return;
 	}
 
-	$email_font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+	if ( newsletterglue_get_theme_option( 'font' ) ) {
+		$email_font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+	} else {
+		$email_font = "Arial, Helvetica, sans-serif";
+	}
 
 	$align = newsletterglue_get_theme_option( 'p_align' );
 
@@ -1199,6 +1215,7 @@ a {
 
 figure {
 	margin: 0;
+	width: auto !important;
 }
 
 figcaption {
