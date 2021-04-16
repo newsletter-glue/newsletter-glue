@@ -955,7 +955,7 @@ function newsletterglue_get_theme_default( $key ) {
 		'btn_colour'				=> '#ffffff',
 		'btn_radius'				=> 0,
 		'btn_border'				=> '#0088A0',
-		'btn_width'					=> 200,
+		'btn_width'					=> 150,
 		'container_padding1'		=> 20,
 		'container_margin'			=> 0,
 		// Mobile.
@@ -968,7 +968,7 @@ function newsletterglue_get_theme_default( $key ) {
 		'mobile_p_size'				=> 16,
 		'mobile_container_margin' 	=> 0,
 		'mobile_container_padding1' => 0,
-		'mobile_btn_width'			=> 200,
+		'mobile_btn_width'			=> 150,
 	);
 
 	return isset( $keys[ $key ] ) ? $keys[ $key ] : '';

@@ -25,10 +25,6 @@
 	margin: 0;
 }
 
-textarea.editor-post-title__input {
-	font-size: 40px !important;
-}
-
 .editor-styles-wrapper .editor-post-title__block .editor-post-title__input {
 	text-align: left;
 }

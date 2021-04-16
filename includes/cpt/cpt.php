@@ -146,9 +146,22 @@ class NGL_CPT {
 			echo '.editor-styles-wrapper { background: ' . newsletterglue_get_theme_option( 'container_bg' ) . '; }';
 
 			if ( newsletterglue_get_theme_option( 'font' ) ) {
-				echo '.editor-styles-wrapper > *, textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt {
+				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt {
 						font-family: ' . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . '!important; }';
+			} else {
+				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt {
+						font-family: Arial, Helvetica, sans-serif; !important; }';
 			}
+
+			echo 'div.editor-styles-wrapper, div.editor-styles-wrapper p { color: ' . newsletterglue_get_theme_option( 'p_colour' ) . '; }';
+			echo 'div.editor-styles-wrapper p { font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; }';
+			echo 'div.editor-styles-wrapper textarea.editor-post-title__input, div.editor-styles-wrapper h1 { font-weight: bold !important; font-size: ' . newsletterglue_get_theme_option( 'h1_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h1_colour' ) . '; }';
+			echo 'div.editor-styles-wrapper h2 { font-size: ' . newsletterglue_get_theme_option( 'h2_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h2_colour' ) . '; }';
+			echo 'div.editor-styles-wrapper h3 { font-size: ' . newsletterglue_get_theme_option( 'h3_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h3_colour' ) . '; }';
+			echo 'div.editor-styles-wrapper h4 { font-size: ' . newsletterglue_get_theme_option( 'h4_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h4_colour' ) . '; }';
+			echo 'div.editor-styles-wrapper h5 { font-size: ' . newsletterglue_get_theme_option( 'h5_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h5_colour' ) . '; }';
+			echo 'div.editor-styles-wrapper h6 { font-size: ' . newsletterglue_get_theme_option( 'h6_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h6_colour' ) . '; }';
+			echo 'div.editor-styles-wrapper .wp-block-button__link { font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; text-transform: none; padding: 14px 20px; font-weight: inherit; min-width: ' . newsletterglue_get_theme_option( 'btn_width' ) . 'px; background-color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '; color: ' . newsletterglue_get_theme_option( 'btn_colour' ) . '; }';
 
 			echo '</style>';
 
