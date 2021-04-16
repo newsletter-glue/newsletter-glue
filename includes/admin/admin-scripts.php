@@ -85,7 +85,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 	}
 
 	// Add media scripts to settings page.
-	if ( 'newsletter-glue_page_ngl-settings' === $screen_id ) {
+	if ( 'newsletters_page_ngl-settings' === $screen_id ) {
 		wp_enqueue_media();
 		wp_enqueue_script( 'newsletterglue_theme' );
 		wp_enqueue_style( 'wp-edit-blocks' );
