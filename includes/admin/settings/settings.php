@@ -48,14 +48,7 @@ function newsletterglue_settings_page() {
  */
 function newsletterglue_settings_tabs() {
 
-	$tabs = array(
-		'defaults'		=> __( 'Email Defaults', 'newsletter-glue' ),
-		'connect'		=> __( 'Connect', 'newsletter-glue' ),
-		'theme'			=> __( 'Newsletter theme designer', 'newsletter-glue' ),
-		'blocks'		=> __( 'Newsletter blocks', 'newsletter-glue' ),
-		'css' 			=> __( 'Custom CSS', 'newsletter-glue' ),
-		'additional'	=> __( 'Additional', 'newsletter-glue' ),
-	);
+	$tabs = array();
 
 	return apply_filters( 'newsletterglue_settings_tabs', $tabs );
 }

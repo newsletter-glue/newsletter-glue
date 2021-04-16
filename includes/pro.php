@@ -27,7 +27,6 @@ class NGL_Pro {
 		}
 
 		// Add setting tab.
-		add_filter( 'newsletterglue_settings_tabs', array( $this, 'add_tab' ), 20 );
 		add_filter( 'newsletterglue_settings_tab_license_save_button', '__return_false' );
 		add_action( 'newsletterglue_settings_tab_license', array( $this, 'show_settings' ), 20 );
 
@@ -56,6 +55,9 @@ class NGL_Pro {
 
 		// Featured image.
 		add_action( 'newsletterglue_featured_image_custom_option', array( $this, 'featured_image_metabox' ), 10, 2 );
+
+		// Add setting tabs.
+		add_filter( 'newsletterglue_settings_tabs', array( $this, 'newsletterglue_settings_tabs' ), 1, 1 );
 	}
 
 	/**
@@ -70,22 +72,6 @@ class NGL_Pro {
 	 */
 	public function includes() {
 		require_once NGL_PLUGIN_DIR . 'includes/libraries/license-handler.php';
-	}
-
-	/**
-	 * Add tab.
-	 */
-	public function add_tab( $tabs ) {
-
-		foreach( $tabs as $key => $value ) {
-			$new_tabs[ $key ] = $value;
-			if ( $key == 'additional' ) {
-				$new_tabs[ 'license' ] = __( 'Pro license', 'newsletter-glue' );
-			}
-		}
-
-		return $new_tabs;
-
 	}
 
 	/**
@@ -841,6 +827,24 @@ class NGL_Pro {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Add tabs.
+	 */
+	public function newsletterglue_settings_tabs( $tabs ) {
+
+		$tabs = array(
+			'defaults'		=> __( 'Email Defaults', 'newsletter-glue' ),
+			'connect'		=> __( 'Connect', 'newsletter-glue' ),
+			'theme'			=> __( 'Newsletter theme designer', 'newsletter-glue' ),
+			'blocks'		=> __( 'Newsletter blocks', 'newsletter-glue' ),
+			'css' 			=> __( 'Custom CSS', 'newsletter-glue' ),
+			'additional'	=> __( 'Additional', 'newsletter-glue' ),
+			'license'		=> __( 'Pro license', 'newsletterg-lue' ),
+		);
+
+		return $tabs;
 	}
 
 }
