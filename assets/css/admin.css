@@ -2518,6 +2518,14 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	font-size: 13px;
 }
 
+.ngl-theme-reset.ngl-theme-reset-alt {
+    padding: 0;
+	width: 240px;
+    left: auto;
+	right: 0;
+    top: -20px;
+}
+
 .ngl-theme-reset-status {
 	min-height: 23px;
 }
@@ -2530,6 +2538,10 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	color: rgba( 0, 0, 0, 0.6 );
 	text-decoration: underline;
 	cursor: pointer;
+}
+
+.ngl-theme-reset.ngl-theme-reset-alt .ngl-theme-reset-link {
+	display: inline-block;
 }
 
 .ngl-theme-reset-btns a {

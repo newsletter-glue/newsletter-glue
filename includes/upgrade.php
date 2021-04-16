@@ -163,12 +163,29 @@ class NGL_Upgrade {
 		?>
 		<div class="ngl-metabox-flex">
 			<div class="ngl-metabox-flex">
-				<div class="ngl-metabox-header">
+				<div class="ngl-metabox-header" style="position: relative; padding-bottom: 30px;">
 					<label><?php esc_html_e( 'Select accent color', 'newsletter-glue' ); ?></label>
 					<div class="ngl-theme-color ngl-settings-accent">
 						<input type="text" class="ngl-theme-input ngl-color-field" value="<?php echo newsletterglue_get_theme_option( 'accent' ); ?>" id="accent" />
 					</div>
 					<?php $api->input_verification_info(); ?>
+
+					<div class="ngl-theme-reset ngl-theme-reset-alt">
+						<div class="ngl-theme-reset-status">
+							<span class="ngl-process is-hidden is-waiting">
+								<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
+								<span class="ngl-process-text"><strong><?php _e( 'Saving...', 'newsletter-glue' ); ?></strong></span>
+							</span>
+							<span class="ngl-process is-hidden is-valid">
+								<span class="ngl-process-icon"><i class="check circle icon"></i></span>
+								<span class="ngl-process-text"><strong><?php _e( 'Saved', 'newsletter-glue' ); ?></strong></span>
+							</span>
+						</div>
+						<div class="ngl-theme-reset-link"><?php _e( 'Reset to default style', 'newsletter-glue' ); ?></div>
+						<div class="ngl-theme-reset-confirm is-hidden"><?php _e( 'Confirm reset (you can&rsquo;t undo after this)', 'newsletter-glue' ); ?></div>
+						<div class="ngl-theme-reset-btns is-hidden"><a href="#" class="ngl-theme-reset-do"><?php _e( 'Reset', 'newsletter-glue' ); ?></a><span>|</span><a href="#" class="ngl-theme-reset-back"><?php _e( 'Go back', 'newsletter-glue' ); ?></a></div>
+					</div>
+
 				</div>
 				<div class="ngl-field">
 					<div class="ngl-helper">

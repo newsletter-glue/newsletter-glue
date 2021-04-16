@@ -534,6 +534,7 @@ function newsletterglue_ajax_reset_theme() {
 	delete_option( 'newsletterglue_link_title' );
 	update_option( 'newsletterglue_add_featured', 1 );
 
+	if ( ! newsletterglue_is_free_version() ) {
 	?>
 	<div class="ngl-theme">
 
@@ -567,6 +568,7 @@ function newsletterglue_ajax_reset_theme() {
 
 	</div>
 	<?php
+	}
 
 	die();
 }
