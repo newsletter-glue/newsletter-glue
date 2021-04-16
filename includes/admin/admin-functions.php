@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function newsletterglue_get_screen_ids() {
 
 	$screen_ids = array();
-	$screen_id  = sanitize_title( __( 'Newsletter Glue', 'newsletter-glue' ) );
+	$screen_id  = sanitize_title( __( 'Newsletters', 'newsletter-glue' ) );
 
 	$post_types  = get_post_types();
 	$unsupported = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block' );
@@ -26,6 +26,7 @@ function newsletterglue_get_screen_ids() {
 		}
 	}
 
+	$screen_ids[] = 'newsletter-glue';
 	$screen_ids[] = $screen_id . '_page_ngl-settings';
 
 	return apply_filters( 'newsletterglue_screen_ids', $screen_ids );
