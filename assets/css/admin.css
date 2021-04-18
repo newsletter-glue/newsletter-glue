@@ -2520,10 +2520,19 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 .ngl-theme-reset.ngl-theme-reset-alt {
     padding: 0;
-	width: 240px;
     left: auto;
-	right: 0;
-    top: -20px;
+	right: auto;
+    top: auto;
+	position: static;
+	display: inline-block;
+	text-align: left;
+	padding: 0 10px;
+	width: 280px;
+	min-height: 77px;
+}
+
+.ngl-theme-reset.ngl-theme-reset-alt .ngl-theme-reset-status span.ngl-process {
+	justify-content: flex-start;
 }
 
 .ngl-theme-reset-status {
@@ -2542,6 +2551,8 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 .ngl-theme-reset.ngl-theme-reset-alt .ngl-theme-reset-link {
 	display: inline-block;
+	font-weight: 600;
+	color: #333;
 }
 
 .ngl-theme-reset-btns a {
@@ -3764,9 +3775,18 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 }
 
 /* Live preview */
+.ngl-customize-toggle {
+	color: #0D566C !important;
+	text-decoration: none !important;
+}
+
+.ngl-customize-toggle:hover {
+	color: #0088A0 !important;
+}
+
 .ngl-customize-preview {
 	font-size: 16px;
-	padding: 30px 0 30px 90px;
+	padding: 0 0 0 90px;
 	line-height: 150%;
 	color: #444;
 	cursor: default !important;
