@@ -430,7 +430,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		$replace = '.wp-block-newsletterglue-form';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			$output->find( $replace, $key )->outertext = '<div style="margin-bottom: 10px;">
-			<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin-bottom: 0 !important;"><tr>
+			<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr>
 				<td valign="top" style="vertical-align: top;margin:0;">' . $element->innertext . '</td></tr></table></div>';
 		}
 

@@ -347,7 +347,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		?>
 .ngl-articles {
 	padding: 0;
-	margin: 0 0 10px 0;
+	margin: 0;
 }
 
 .ngl-article img {
@@ -1301,7 +1301,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		// Left and Right article wrappers.
 		$replace = 'div.ngl-article.ngl-article-img-left, div.ngl-article.ngl-article-img-right';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean ngl-table-article" border="0" width="100%" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;table-layout: fixed;"><tr>' . $element->innertext . '</tr></table>';
+			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean ngl-table-article" border="0" width="100%" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;table-layout: fixed;"><tr>' . $element->innertext . '</tr></table>';
 		}
 
 		$output->save();

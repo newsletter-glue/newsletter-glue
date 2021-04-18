@@ -170,13 +170,13 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 	public function email_css() {
 		?>
 		.wp-block-newsletterglue-author {
-			margin: 0 0 10px 0 !important;
+			margin: 0 !important;
 		}
 
 		.ngl-author {
 			display: block;
 			padding: 0;
-			margin: 0 0 10px 0 !important;
+			margin: 0 !important;
 		}
 
 		.ngl-author-pic {
@@ -316,7 +316,7 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		// Put every author bio in a table.
 		$replace = 'div.wp-block-newsletterglue-author';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0;margin-bottom:0 !important;table-layout: auto !important;"><tr>' . $element->innertext . '</tr></table>';
+			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;table-layout: auto !important;"><tr>' . $element->innertext . '</tr></table>';
 		}
 
 		$output->save();

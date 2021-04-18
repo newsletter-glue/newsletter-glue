@@ -216,7 +216,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			width: 30px !important;
 			height: 30px !important;
 			border-radius: 999px;
-			margin: 0 !important;
+			margin: 0 4px 0 0 !important;
 		}
 
 		img.ngl-metadata-map-pin {
@@ -346,7 +346,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 				}
 			}
 
-			$output->find( $replace, $key )->innertext = $output->find( $replace, $key )->innertext = '<table class="ngl-table-tiny" align="' . $align . '" border="0" width="100%" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; width:100%;"><tr><td class="ngl-td-tiny" valign="middle">' . $element->innertext . '</td></tr></table>';
+			$output->find( $replace, $key )->innertext = $output->find( $replace, $key )->innertext = '<table class="ngl-table-tiny" align="' . $align . '" border="0" width="100%" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0; width:100%;"><tr><td class="ngl-td-tiny" valign="middle">' . $element->innertext . '</td></tr></table>';
 		}
 
 		$output->save();
