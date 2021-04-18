@@ -2553,6 +2553,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	display: inline-block;
 	font-weight: 600;
 	color: #333;
+	text-decoration: none !important;
 }
 
 .ngl-theme-reset-btns a {
@@ -3791,7 +3792,6 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	color: #444;
 	cursor: default !important;
 	max-width: 460px;
-	display: none;
 }
 
 .ngl-customize-preview * {
