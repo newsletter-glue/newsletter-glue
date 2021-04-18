@@ -162,51 +162,49 @@ class NGL_Upgrade {
 	public function add_theme_settings( $api ) {
 		?>
 		<div class="ngl-metabox-flex">
-			<div class="ngl-metabox-flex">
-				<div class="ngl-metabox-header" style="position: relative; padding-bottom: 30px;">
+			<div class="ngl-metabox-flex" style="flex-basis: 100%;">
+				<div class="ngl-metabox-header" style="position: relative; padding-bottom: 0;">
 					<label><?php esc_html_e( 'Select accent color', 'newsletter-glue' ); ?></label>
 					<div class="ngl-theme-color ngl-settings-accent">
 						<input type="text" class="ngl-theme-input ngl-color-field" value="<?php echo newsletterglue_get_theme_option( 'accent' ); ?>" id="accent" />
 					</div>
-					<?php $api->input_verification_info(); ?>
-
-					<div class="ngl-theme-reset ngl-theme-reset-alt">
-						<div class="ngl-theme-reset-status">
-							<span class="ngl-process is-hidden is-waiting">
-								<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
-								<span class="ngl-process-text"><strong><?php _e( 'Saving...', 'newsletter-glue' ); ?></strong></span>
-							</span>
-							<span class="ngl-process is-hidden is-valid">
-								<span class="ngl-process-icon"><i class="check circle icon"></i></span>
-								<span class="ngl-process-text"><strong><?php _e( 'Saved', 'newsletter-glue' ); ?></strong></span>
-							</span>
-						</div>
-						<div class="ngl-theme-reset-link"><?php _e( 'Reset to default style', 'newsletter-glue' ); ?></div>
-						<div class="ngl-theme-reset-confirm is-hidden"><?php _e( 'Confirm reset (you can&rsquo;t undo after this)', 'newsletter-glue' ); ?></div>
-						<div class="ngl-theme-reset-btns is-hidden"><a href="#" class="ngl-theme-reset-do"><?php _e( 'Reset', 'newsletter-glue' ); ?></a><span>|</span><a href="#" class="ngl-theme-reset-back"><?php _e( 'Go back', 'newsletter-glue' ); ?></a></div>
+					<div>
+						<a href="#" class="ngl-customize-toggle"><?php echo __( 'Preview', 'newsletter-glue' ); ?> <i class="chevron down icon"></i></a>
 					</div>
-
+					<?php $api->input_verification_info(); ?>
 				</div>
 				<div class="ngl-field">
-					<div class="ngl-helper">
-						<?php echo sprintf( __( 'This colour affects links, buttons and quotes. %s' ), '<a href="#" class="ngl-customize-toggle">' . __( 'Expand to see live demo', 'newsletter-glue' ) . ' <i class="chevron down icon"></i></a>' ); ?>
+					<div class="" style="display: flex; color: #707070; font-size: 13px; margin: 8px 0 0;">
+						<?php echo __( 'This colour affects links, buttons and quotes.', 'newsletter-glue' ); ?>
+						<div class="ngl-theme-reset ngl-theme-reset-alt">
+							<div class="ngl-theme-reset-link"><?php _e( 'Reset to default style', 'newsletter-glue' ); ?></div>
+							<div class="ngl-theme-reset-confirm is-hidden"><?php _e( 'Confirm reset (you can&rsquo;t undo after this)', 'newsletter-glue' ); ?></div>
+							<div class="ngl-theme-reset-btns is-hidden"><a href="#" class="ngl-theme-reset-do"><?php _e( 'Reset', 'newsletter-glue' ); ?></a><span>|</span><a href="#" class="ngl-theme-reset-back"><?php _e( 'Go back', 'newsletter-glue' ); ?></a></div>
+							<div class="ngl-theme-reset-status">
+								<span class="ngl-process is-hidden is-waiting">
+									<span class="ngl-process-icon"><i class="sync alternate icon"></i></span>
+									<span class="ngl-process-text"><strong><?php _e( 'Saving...', 'newsletter-glue' ); ?></strong></span>
+								</span>
+								<span class="ngl-process is-hidden is-valid">
+									<span class="ngl-process-icon"><i class="check circle icon"></i></span>
+									<span class="ngl-process-text"><strong><?php _e( 'Saved', 'newsletter-glue' ); ?></strong></span>
+								</span>
+							</div>
+						</div>
 					</div>
 				</div>
+				<div class="ngl-customize-preview">
+					<h2>Here is a simple header</h2>
+					<p>This is some text. <a href="#" style="color: <?php echo newsletterglue_get_theme_option( 'accent' ); ?>;">Here is a link</a> that is affected by accent colour.
+					<blockquote style="border-left: 2px solid <?php echo newsletterglue_get_theme_option( 'accent' ); ?>">
+						This is a quote by a famous person.<br />
+						It has multiple lines...<br />
+						To demonstrate the colour.<br />
+						<strong>- Albert Einstein</strong>
+					</blockquote>
+					<p class="ngl-customize-button"><a href="#" style="background-color: <?php echo newsletterglue_get_theme_option( 'accent' ); ?>;">Read more</a></p>
+				</div>
 			</div>
-			<div class="ngl-metabox-flex">
-			</div>
-		</div>
-
-		<div class="ngl-customize-preview">
-			<h2>Here is a simple header</h2>
-			<p>This is some text. <a href="#" style="color: <?php echo newsletterglue_get_theme_option( 'accent' ); ?>;">Here is a link</a> that is affected by accent colour.
-			<blockquote style="border-left: 2px solid <?php echo newsletterglue_get_theme_option( 'accent' ); ?>">
-				This is a quote by a famous person.<br />
-				It has multiple lines...<br />
-				To demonstrate the colour.<br />
-				<strong>- Albert Einstein</strong>
-			</blockquote>
-			<p class="ngl-customize-button"><a href="#" style="background-color: <?php echo newsletterglue_get_theme_option( 'accent' ); ?>;">Read more</a></p>
 		</div>
 		<?php
 	}

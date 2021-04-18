@@ -550,7 +550,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	// Add columns wrapper as a table.
 	$replace = '.wp-block-columns';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->innertext = '<table class="ngl-table-index" border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin: 0 !important;"><tr>' . $element->innertext . '</tr></table>';
+		$output->find( $replace, $key )->innertext = '<table class="ngl-table-index" border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed; mso-table-lspace: 0; mso-table-rspace: 0;"><tr>' . $element->innertext . '</tr></table>';
 	}
 
 	// Change all figures.
@@ -562,7 +562,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	// Convert metadata to table.
 	$replace = '.ngl-embed-metadata';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->outertext = '<table border="0" width="100%" cellpadding="20" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin:0 !important;"><tr><td width="50%" align="left" valign="top" style="vertical-align: top;margin:0 !important;">' . $element->outertext . '</td>';
+		$output->find( $replace, $key )->outertext = '<table border="0" width="100%" cellpadding="20" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr><td width="50%" align="left" valign="top" style="vertical-align: top;margin:0 !important;">' . $element->outertext . '</td>';
 	}
 
 	$replace = '.ngl-embed-icon';
@@ -614,7 +614,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		if ( strstr( $class, 'columns-2' ) ) {
 			$cols = 2;
 		}
-		$html = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin: 0 !important;"><tr>';
+		$html = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr>';
 		$i = 0;
 		foreach( $element->find( 'li' ) as $item => $list ) {
 			$i++;
@@ -631,7 +631,25 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 
 	$replace = '#template_inner > div > img';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin: 0 !important;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+	}
+
+	// Spacers.
+	$replace = '.wp-block-spacer';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$s = $element->style;
+		$results = [];
+		$styles = explode(';', $s);
+
+		foreach ($styles as $style) {
+			$properties = explode(':', $style);
+			if (2 === count($properties)) {
+				$results[trim($properties[0])] = trim($properties[1]);
+			}
+		}
+		if ( ! empty( $results[ 'height' ] ) ) {
+			$element->outertext = '<div class="ngl-spacer" style="height: 1px; Margin-bottom: ' . $results[ 'height' ] . ';">&nbsp;</div>';
+		}
 	}
 
 	$output->save();
@@ -645,12 +663,49 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_wrap_full_width_images', 60, 3 );
 function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
 
+	if ( newsletterglue_get_theme_option( 'font' ) ) {
+		$font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+		} else {
+		$font = "Arial, Helvetica, sans-serif";
+	}
+
 	$output = new simple_html_dom();
 	$output->load( $html, true, false );
 
 	$replace = '#template_inner > div > img, #template_inner > div.wp-block-image img';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin: 0 !important;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+	}
+
+	$replace = 'a.wp-block-button__link';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$s = $element->style;
+		$results = [];
+		$styles = explode(';', $s);
+
+		foreach ($styles as $style) {
+			$properties = explode(':', $style);
+			if (2 === count($properties)) {
+				$results[trim($properties[0])] = trim($properties[1]);
+			}
+		}
+
+		$color 		= ! empty( $results[ 'color' ] ) ? $results[ 'color' ] : '#ffffff';
+		$background = ! empty( $results[ 'background-color' ] ) ? $results[ 'background-color' ] : '#0088A0';
+		$font_size  = newsletterglue_get_theme_option( 'p_size' ) . 'px';
+		$innertext  = wp_strip_all_tags( $element->innertext );
+		$href		= $element->href;
+		$length     = ( mb_strlen( $innertext ) * 10 ) + 25;
+		$radius		= ! empty( $results[ 'border-radius' ] ) ? $results[ 'border-radius' ] : '0px';
+		$radius		= str_replace( 'px', '', $radius );
+		$radius		= $radius * 2 . '%';
+
+		$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . ';">' . $element->innertext . '</span>';
+		$element->outertext = '<!--[if mso]>
+								<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:49px; " arcsize="' . $radius . '" strokecolor="' . $background . '" strokeweight="0pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
+								<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
+								</v:roundrect>
+								<![endif]-->' . $element->outertext;
 	}
 
 	$output->save();
@@ -705,7 +760,7 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 
 	$replace = implode( ', ', $replaces );
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;border-collapse:collapse;border-spacing:0;mso-table-lspace:0;mso-table-rspace:0; margin: 0 !important;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
 	}
 
 	$output->save();
@@ -1340,6 +1395,7 @@ p.ngl-unsubscribe {
 }
 
 .wp-block-button__link {
+	mso-hide: all;
 	display: inline-block;
 	text-align: center;
 	box-sizing: border-box;
