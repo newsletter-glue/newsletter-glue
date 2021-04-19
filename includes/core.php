@@ -1455,7 +1455,7 @@ p.ngl-unsubscribe {
 	display: inline-block;
 	text-align: center;
 	box-sizing: border-box;
-	padding: 10px 20px;
+	padding: 11px 20px;
 	text-decoration: none;
 	background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?> !important;
 	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;
