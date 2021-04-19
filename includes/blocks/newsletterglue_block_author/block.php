@@ -208,18 +208,18 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		}
 
 		.ngl-author-btn {
-			color: #fff !important;
 			text-decoration: none !important;
-			padding: 4px 8px;
+			padding: 6px 10px;
 			display: inline-block;
 			align-items: center;
-			border: 2px solid transparent;
+			border: 0;
 			font-size: 12px;
 			line-height: 18px;
+			mso-hide: all;
 		}
 
 		.ngl-author-btn:hover {
-			color: #fff !important;
+			color: #fff;
 		}
 
 		.ngl-author-btn-text {
@@ -238,23 +238,25 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 
 		.ngl-author-cta .ngl-author-btn-outlined {
 			background-color: transparent !important;
-			border: 2px solid transparent;
-			color: #444 !important;
+			border-width: 2px;
+			border-style: solid;
+			border-color: transparent;
+			padding: 4px 8px;
 		}
 
-		.ngl-author-twitter { background-color: #1DA1F2; }
-		.ngl-author-instagram { background-color: #ed4956; }
-		.ngl-author-facebook { background-color: #1877F2; }
-		.ngl-author-twitch { background-color: #9047FF; }
-		.ngl-author-tiktok { background-color: #fe2c55; }
-		.ngl-author-youtube { background-color: #FF0000; }
+		.ngl-author-twitter { background-color: #1DA1F2; color: #fff !important; }
+		.ngl-author-instagram { background-color: #ed4956; color: #fff !important; }
+		.ngl-author-facebook { background-color: #1877F2; color: #fff !important; }
+		.ngl-author-twitch { background-color: #9047FF; color: #fff !important; }
+		.ngl-author-tiktok { background-color: #fe2c55; color: #fff !important; }
+		.ngl-author-youtube { background-color: #FF0000; color: #fff !important; }
 
-		.ngl-author-btn-outlined.ngl-author-twitter { border-color: #1DA1F2 !important; }
-		.ngl-author-btn-outlined.ngl-author-instagram { border-color: #ed4956 !important; }
-		.ngl-author-btn-outlined.ngl-author-facebook { border-color: #1877F2 !important; }
-		.ngl-author-btn-outlined.ngl-author-twitch { border-color: #9047FF !important; }
-		.ngl-author-btn-outlined.ngl-author-tiktok { border-color: #fe2c55 !important; }
-		.ngl-author-btn-outlined.ngl-author-youtube { border-color: #FF0000 !important; }
+		.ngl-author-btn-outlined.ngl-author-twitter { border-color: #1DA1F2 !important; color: #1DA1F2 !important; }
+		.ngl-author-btn-outlined.ngl-author-instagram { border-color: #ed4956 !important; color: #ed4956 !important; }
+		.ngl-author-btn-outlined.ngl-author-facebook { border-color: #1877F2 !important; color: #1877F2 !important; }
+		.ngl-author-btn-outlined.ngl-author-twitch { border-color: #9047FF !important; color: #9047FF !important; }
+		.ngl-author-btn-outlined.ngl-author-tiktok { border-color: #fe2c55 !important; color: #fe2c55 !important; }
+		.ngl-author-btn-outlined.ngl-author-youtube { border-color: #FF0000 !important; color: #FF0000 !important; }
 		<?php
 	}
 
@@ -271,6 +273,12 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 	 * Tableize.
 	 */
 	public function tableize( $content ) {
+
+		if ( newsletterglue_get_theme_option( 'font' ) ) {
+			$font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+			} else {
+			$font = "Arial, Helvetica, sans-serif";
+		}
 
 		$output = new simple_html_dom();
 		$output->load( $content, true, false );

@@ -236,31 +236,6 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			user-select: none;
 		}
 
-		.ngl-form-button {
-			background: #0088A0;
-			color: #fff;
-			border-radius: 0;
-			cursor: pointer;
-			box-shadow: none;
-			border: none;
-			padding: 12px 25px;
-			font-size: 16px;
-			text-decoration: none !important;
-			text-transform: none;
-			width: auto !important;
-			min-width: 120px !important;
-			display: inline-block !important;
-			height: auto !important;
-			line-height: 1 !important;
-			text-align: center !important;
-			box-sizing: border-box !important;
-			outline: none !important;
-		}
-
-		.ngl-form.ngl-portrait {
-
-		}
-
 		.ngl-form.ngl-portrait .ngl-form-button {
 			width: 100%;
 			display: block;
@@ -341,6 +316,10 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		.ngl-form-checkbox, .ngl-form-text {
 			display: none !important;
 			visibility: hidden !important;
+		}
+
+		p.ngl-form-description {
+			Margin-bottom: 15px;
 		}
 		<?php
 	}
@@ -424,6 +403,12 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		$replace = 'div.ngl-message-overlay, .ngl-form-field';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			$output->find( $replace, $key )->outertext = '';
+		}
+
+		// remove unwanted elements.
+		$replace = '.ngl-form-container > a';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$element->class = 'wp-block-button__link';
 		}
 
 		// remove unwanted elements.
