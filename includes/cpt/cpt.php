@@ -146,7 +146,7 @@ class NGL_CPT {
 			echo '.editor-styles-wrapper { background: ' . newsletterglue_get_theme_option( 'container_bg' ) . '; }';
 
 			if ( newsletterglue_get_theme_option( 'font' ) ) {
-				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt {
+				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt, div.editor-styles-wrapper .wp-block h2 {
 						font-family: ' . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . '!important; }';
 			} else {
 				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt {

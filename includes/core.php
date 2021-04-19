@@ -677,6 +677,7 @@ function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
 		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
 	}
 
+	// Outlook button fix.
 	$replace = 'a.wp-block-button__link';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$s = $element->style;
@@ -718,6 +719,49 @@ function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
 									<![endif]-->' . $element->outertext;
 		}
 
+	}
+
+	// Author bio button.
+	$replace = 'div.ngl-author-cta a';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$s = $element->style;
+		$results = [];
+		$styles = explode(';', $s);
+
+		foreach ($styles as $style) {
+			$properties = explode(':', $style);
+			if (2 === count($properties)) {
+				$results[trim($properties[0])] = trim($properties[1]);
+			}
+		}
+
+		$color 		= ! empty( $results[ 'color' ] ) ? $results[ 'color' ] : '#ffffff';
+		$background = ! empty( $results[ 'background-color' ] ) ? $results[ 'background-color' ] : '#0088A0';
+		$font_size  = '12px';
+		$innertext  = wp_strip_all_tags( $element->innertext );
+		$href		= $element->href;
+		$length     = ( mb_strlen( $innertext ) * 10 ) + 25;
+		$radius		= ! empty( $results[ 'border-radius' ] ) ? $results[ 'border-radius' ] : '0px';
+		$radius		= str_replace( 'px', '', $radius );
+		$radius		= $radius * 2 . '%';
+
+		if ( ! empty( $results[ 'border-width' ] ) && $results[ 'border-width' ] == '2px' ) {
+
+			$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . ';">' . $element->innertext . '</span>';
+			$element->outertext = '<!--[if mso]>
+										<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:30px; " arcsize="' . $radius . '" strokecolor="' . $color . '" strokeweight="1pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
+										<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
+										</v:roundrect>
+										<![endif]-->' . $element->outertext;
+		} else {
+
+			$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . ';">' . $element->innertext . '</span>';
+			$element->outertext = '<!--[if mso]>
+										<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:30px; " arcsize="' . $radius . '" strokecolor="' . $background . '" strokeweight="0pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
+										<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
+										</v:roundrect>
+										<![endif]-->' . $element->outertext;
+		}
 	}
 
 	$output->save();
