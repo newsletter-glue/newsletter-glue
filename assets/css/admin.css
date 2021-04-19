@@ -2523,16 +2523,41 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
     left: auto;
 	right: auto;
     top: auto;
-	position: static;
+	position: relative;
 	display: inline-block;
 	text-align: left;
 	padding: 0 10px;
-	width: 280px;
-	min-height: 77px;
+}
+
+.ngl-theme-reset-alt .ngl-theme-reset-wrap {
+	position: absolute;
+    left: 110%;
+    top: 0;
+    min-width: 240px;
+}
+
+.ngl-theme-reset-alt .ngl-theme-reset-back {
+	font-weight: 600;
+}
+
+.ngl-theme-reset.ngl-theme-reset-alt .ngl-theme-reset-link {
+	display: inline-block;
+	font-weight: 600;
+	color: #333;
+	text-decoration: none !important;
+}
+
+.ngl-theme-reset.ngl-theme-reset-alt .ngl-theme-reset-do {
+	text-decoration: none !important;
 }
 
 .ngl-theme-reset.ngl-theme-reset-alt .ngl-theme-reset-status span.ngl-process {
 	justify-content: flex-start;
+}
+
+.ngl-theme-reset-alt .ngl-theme-reset-status {
+	position: relative;
+	top: -4px;
 }
 
 .ngl-theme-reset-status {
@@ -2547,13 +2572,6 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	color: rgba( 0, 0, 0, 0.6 );
 	text-decoration: underline;
 	cursor: pointer;
-}
-
-.ngl-theme-reset.ngl-theme-reset-alt .ngl-theme-reset-link {
-	display: inline-block;
-	font-weight: 600;
-	color: #333;
-	text-decoration: none !important;
 }
 
 .ngl-theme-reset-btns a {
@@ -3779,6 +3797,7 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 .ngl-customize-toggle {
 	color: #0D566C !important;
 	text-decoration: none !important;
+	font-weight: 600;
 }
 
 .ngl-customize-toggle:hover {
@@ -3787,11 +3806,12 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 
 .ngl-customize-preview {
 	font-size: 16px;
-	padding: 0 0 0 90px;
+	padding: 30px;
 	line-height: 150%;
 	color: #444;
 	cursor: default !important;
-	max-width: 460px;
+	max-width: 400px;
+	box-shadow: 0 1px 5px #ddd;
 }
 
 .ngl-customize-preview * {
@@ -3808,16 +3828,17 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	font-size: 24px;
 	color: #444;
 	font-weight: bold;
+	margin-top: 0;
 }
 
 .ngl-customize-preview blockquote {
-	line-height: 200%;
+	line-height: 160%;
 	margin: 0 0 25px;
 	padding-left: 20px;
 }
 
-.ngl-customize-button {
-	text-align: center;
+p.ngl-customize-button {
+	margin-bottom: 0;
 }
 
 .ngl-customize-button a {
@@ -3825,10 +3846,10 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	display: inline-block;
 	text-align: center;
 	box-sizing: border-box;
-	padding: 12px 20px;
+	padding: 10px 20px;
 	text-decoration: none;
 	color: #fff !important;
 	min-width: 160px !important;
 	border-radius: 0px;
-	font-weight: bold;
+	font-weight: 400;
 }
