@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <div class="ngl-metabox ngl-no-connection">
 
 	<div class="ngl-metabox-flex alt4">
-		<div class="ngl-metabox-msg is-notice"><a href="<?php echo esc_url( admin_url( 'admin.php?page=ngl-connect' ) ); ?>" target="_blank"><?php _e( 'Start by connecting your email software &#x21C4;', 'newsletter-glue' ); ?></a></div>
+		<div class="ngl-metabox-msg is-notice"><a href="<?php echo esc_url( admin_url( 'admin.php?page=ngl-settings&tab=connect' ) ); ?>" target="_blank"><?php _e( 'Start by connecting your email software &#x21C4;', 'newsletter-glue' ); ?></a></div>
 	</div>
 
 	<div class="ngl-metabox-if-checked ngl-metabox-placeholder">
