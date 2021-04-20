@@ -324,7 +324,7 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		// Put every author bio in a table.
 		$replace = 'div.wp-block-newsletterglue-author';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean" border="0" width="100%" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;table-layout: auto !important;"><tr>' . $element->innertext . '</tr></table>';
+			$output->find( $replace, $key )->innertext = '<table width="100%" border="0" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr>' . $element->innertext . '</tr></table>';
 		}
 
 		$output->save();

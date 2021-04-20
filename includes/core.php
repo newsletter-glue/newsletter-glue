@@ -493,13 +493,17 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	// Force image width.
 	$replace = 'figure.wp-block-image img';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->style = $element->style . 'display: block; max-width: 100%; min-width: 50px; width: 100%;margin-bottom:0 !important;';
+		$element->class = ! empty( $element->class ) ? $element->class . ' wp-image' : 'wp-image';
+		$element->style = $element->style . 'min-width: 10px; margin-bottom:0 !important;';
 	}
 
 	// Add columns wrapper as a table.
 	$replace = 'figure.wp-block-image';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->outertext = '<div class="ngl-block-image">' . $element->innertext . '</div>';
+		if ( strstr( $element->class, 'is-style-rounded' ) ) {
+			$element->find( 'img', 0 )->style = 'border-radius: 999px;' . $element->find( 'img', 0 )->style;
+		}
+		$output->find( $replace, $key )->outertext = $element->innertext;
 	}
 
 	// Output column.
@@ -562,7 +566,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 	// Convert metadata to table.
 	$replace = '.ngl-embed-metadata';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->outertext = '<table border="0" width="100%" cellpadding="20" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr><td width="50%" align="left" valign="top" style="vertical-align: top;margin:0 !important;">' . $element->outertext . '</td>';
+		$output->find( $replace, $key )->outertext = '<table width="100%" border="0" cellpadding="20" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td width="50%" align="left" valign="top" style="vertical-align: top;margin:0 !important;">' . $element->outertext . '</td>';
 	}
 
 	$replace = '.ngl-embed-icon';
@@ -614,7 +618,7 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		if ( strstr( $class, 'columns-2' ) ) {
 			$cols = 2;
 		}
-		$html = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr>';
+		$html = '<table width="100%" border="0" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr>';
 		$i = 0;
 		foreach( $element->find( 'li' ) as $item => $list ) {
 			$i++;
@@ -629,9 +633,9 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 		$output->find( $replace, $key )->outertext = $html;
 	}
 
-	$replace = '#template_inner > div > img';
+	$replace = '#template_inner > div > img, #template_inner > div > a';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+		$element->outertext = '<table width="100%" border="0" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
 	}
 
 	// Spacers.
@@ -648,7 +652,8 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 			}
 		}
 		if ( ! empty( $results[ 'height' ] ) ) {
-			$element->outertext = '<div class="ngl-spacer" style="height: 1px; Margin-bottom: ' . $results[ 'height' ] . ';">&nbsp;</div>';
+			$clean_height = absint( $results[ 'height' ] ) - 21;
+			$element->outertext = '<div class="ngl-spacer" style="height: 1px; Margin-bottom: ' . $clean_height . 'px;">&nbsp;</div>';
 		}
 	}
 
@@ -674,7 +679,7 @@ function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
 
 	$replace = '#template_inner > div > img, #template_inner > div.wp-block-image img';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+		$element->outertext = '<table width="100%" border="0" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
 	}
 
 	// Outlook button fix.
@@ -797,6 +802,8 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 		'#template_inner > .ngl-embed-social',
 		'#template_inner > .wp-block-table > table',
 		'#template_inner > hr',
+		'#template_inner > img.wp-image',
+		'#template_inner > .ngl-spacer',
 		'.ngl-article-img-full',
 	);
 
@@ -816,7 +823,7 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 
 	$replace = implode( ', ', $replaces );
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->outertext = '<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+		$element->outertext = '<table width="100%" border="0" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
 	}
 
 	$output->save();
@@ -880,6 +887,7 @@ function newsletterglue_set_font_family( $html, $post_id, $app ) {
 	$output = new simple_html_dom();
 	$output->load( $html, true, false );
 
+	// Add font-family to all TDs.
 	$replace = '#template_inner, #template_inner td';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		if ( $element->style ) {
@@ -887,6 +895,55 @@ function newsletterglue_set_font_family( $html, $post_id, $app ) {
 		} else {
 			$element->style = "font-family: $email_font;";
 		}
+	}
+
+	// Image width/height.
+	if ( function_exists( 'getimagesize' ) ) {
+	$replace = '#template_inner img.wp-image';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			if ( ! empty( $element->src ) ) {
+				$image = getimagesize( $element->src );
+				if ( ! empty( $image[0] ) ) {
+					if ( $image[0] < $element->width ) {
+						$element->width = $image[0];
+						$element->height = $image[1];
+					}
+				}
+			}
+		}
+	}
+
+	// Logo wrapper.
+	$replace = 'div.ngl-logo';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( strstr( $element->class, 'right' ) ) {
+			$element->find( 'td', 0 )->align = 'right';
+		} else if ( strstr( $element->class, 'left' ) ) {
+			$element->find( 'td', 0 )->align = 'left';
+		} else {
+			$element->find( 'td', 0 )->align = 'center';
+		}
+		$element->outertext = $element->innertext;
+	}
+
+	// Featured wrapper.
+	$replace = 'div.ngl-masthead';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->outertext = $element->innertext;
+	}
+
+	// Meta data.
+	$replace = 'div.ngl-metadata';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$s = $element->style;
+		$element->find( 'td', 0 )->style = $element->find( 'td', 0 )->style . $s;
+		$element->outertext = $element->innertext;
+	}
+
+	// Author.
+	$replace = 'div.ngl-author';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->outertext = $element->innertext;
 	}
 
 	$output->save();
@@ -951,7 +1008,7 @@ function newsletterglue_add_logo() {
 
 	if ( $logo ) {
 		if ( esc_url( $logo_url ) ) {
-			return '<div class="ngl-logo ngl-logo-' . $logo_position . '"><a href="' . esc_url( $logo_url ) . '" target="_blank"><img class="ngl-logo-image" src="' . esc_url( $logo ) . '" /></a></div>';
+			return '<div class="ngl-logo ngl-logo-' . $logo_position . '"><a href="' . esc_url( $logo_url ) . '" target="_blank" style="display: inline-block;"><img class="ngl-logo-image" src="' . esc_url( $logo ) . '" /></a></div>';
 		} else {
 			return '<div class="ngl-logo ngl-logo-' . $logo_position . '"><img class="ngl-logo-image" src="' . esc_url( $logo ) . '" /></div>';
 		}
@@ -1219,7 +1276,7 @@ span.yshortcuts:active,
 span.yshortcuts:focus {color: #000; background-color:none; border:none;}
 
 table td {
-	border-collapse: collapse;
+
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -1338,7 +1395,6 @@ figcaption {
 
 #template_inner img {
 	max-width: 100%;
-	margin: 0 auto;
 	display: block;
 	height: auto;
 }
@@ -1393,18 +1449,6 @@ ul.blocks-gallery-grid {
 #template_inner td.ngl-td-auto {
 	border: 0;
 	font-size: inherit !important;
-}
-
-#template_inner table.ngl-table-tiny {
-	border: 0 !important;
-	table-layout: auto;
-	width: auto;
-}
-
-#template_inner td.ngl-td-tiny {
-	border: 0;
-	width: auto !important;
-	font-size: inherit;
 }
 
 #template_inner table.ngl-table-clean {
@@ -1492,26 +1536,10 @@ p.ngl-unsubscribe {
 	visibility: hidden !important;
 }
 
-.ngl-logo-center {
-	text-align: center;
-}
-
-.ngl-logo-left {
-	text-align: left;
-}
-
-.ngl-logo-right {
-	text-align: right;
-}
-
-.ngl-logo-full {
-	text-align: center;
-}
-
 #template_inner .ngl-logo img {
 	margin: 0 !important;
-	display: inline-block !important;
-	max-height: 100px;
+	display: block !important;
+	max-height: 75px;
 	width: auto;
 }
 
