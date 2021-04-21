@@ -450,7 +450,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 .ngl-article-right .ngl-article-featured { margin: 0; }
 .ngl-article-left .ngl-article-featured { margin: 0; }
 
-.ngl-article-left-mobile {
+.ngl-article-mobile {
 	display: none !important;
 	overflow: hidden;
 	mso-hide: all;
@@ -459,7 +459,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	max-height: 0;
 }
 
-.ngl-article-left-mobile * {
+.ngl-article-mobile * {
 	display: none !important;
 	overflow: hidden;
 	mso-hide: all;
@@ -469,15 +469,15 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 @media only screen and (max-width:642px) {
 
-	.ngl-article-left-mobile,
-	.ngl-article-left-mobile * {
+	.ngl-article-mobile,
+	.ngl-article-mobile * {
 		display: block !important;
 		max-height: 100% !important;
 		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
 	}
 
-	.ngl-articles-full .ngl-article-left-mobile,
-	.ngl-articles-full .ngl-article-left-mobile * {
+	.ngl-articles-full .ngl-article-mobile,
+	.ngl-articles-full .ngl-article-mobile * {
 		display: none !important;
 		max-height: 0;
 		font-size: 0;
@@ -1301,7 +1301,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		// Left and Right article wrappers.
 		$replace = 'div.ngl-article.ngl-article-img-left, div.ngl-article.ngl-article-img-right';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean ngl-table-article" border="0" width="100%" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;table-layout: fixed;"><tr>' . $element->innertext . '</tr></table>';
+			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean ngl-table-article" border="0" width="100%" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;table-layout: fixed;"><tr>' . $element->innertext . '</tr></table>';
 		}
 
 		$output->save();

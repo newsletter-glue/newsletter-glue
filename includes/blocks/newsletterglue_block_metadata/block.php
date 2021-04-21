@@ -347,7 +347,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 				}
 			}
 
-			$output->find( $replace, $key )->innertext = $output->find( $replace, $key )->innertext = '<table width="100%" border="0" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="middle" align="' . $align . '">' . $element->innertext . '</td></tr></table>';
+			$output->find( $replace, $key )->innertext = $output->find( $replace, $key )->innertext = '<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="middle" align="' . $align . '">' . $element->innertext . '</td></tr></table>';
 		}
 
 		$output->save();

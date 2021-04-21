@@ -414,7 +414,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		// remove unwanted elements.
 		$replace = '.wp-block-newsletterglue-form';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<table width="100%" border="0" cellpadding="10" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->innertext . '</td></tr></table>';
+			$output->find( $replace, $key )->outertext = '<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->innertext . '</td></tr></table>';
 		}
 
 		$output->save();

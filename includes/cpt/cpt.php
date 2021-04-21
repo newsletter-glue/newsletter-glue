@@ -164,7 +164,7 @@ class NGL_CPT {
 			echo 'div.editor-styles-wrapper .wp-block-button__link { font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; text-transform: none; padding: 14px 20px; font-weight: inherit; min-width: ' . newsletterglue_get_theme_option( 'btn_width' ) . 'px; background-color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '; color: ' . newsletterglue_get_theme_option( 'btn_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link { padding: 12px 20px; color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '; border-color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '; }';
 
-			echo 'div.editor-styles-wrapper .wp-block .wp-block-newsletterglue-callout * { color: inherit; }';
+			echo 'div.editor-styles-wrapper .wp-block .wp-block-newsletterglue-callout .block-editor-block-list__layout > * { color: inherit; }';
 
 			echo '</style>';
 

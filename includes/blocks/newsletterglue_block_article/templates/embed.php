@@ -157,8 +157,8 @@ $show_edit_controls = false;
 		?>
 
 			<!--[if !mso]><\!-->
-			<div class="ngl-article-left-mobile">
-				<table border="0" width="100%" cellpadding="10" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;">
+			<div class="ngl-article-mobile">
+				<table border="0" width="100%" cellpadding="<?php echo newsletterglue_padding_factor(); ?>" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;">
 					<tr>
 						<td valign="top" style="vertical-align: top;margin:0;">
 							<div class="ngl-article-mob-wrap" style="<?php echo $text_color; ?>background-color: <?php echo $background_color; ?>; padding: <?php echo $padding; ?>; border-radius: <?php echo absint( $border_radius ); ?>px; border: <?php echo absint( $border_size ); ?>px <?php echo $border_style; ?> <?php echo $border_color; ?>; font-size: <?php echo $font_size_text; ?>px;">

@@ -146,7 +146,7 @@
 .ngl-article-right .ngl-article-featured { margin: 0; }
 .ngl-article-left .ngl-article-featured { margin: 0; }
 
-.ngl-article-left-mobile {
+.ngl-article-mobile {
 	display: none !important;
 	overflow: hidden;
 	mso-hide: all;
@@ -155,7 +155,7 @@
 	max-height: 0;
 }
 
-.ngl-article-left-mobile * {
+.ngl-article-mobile * {
 	display: none !important;
 	overflow: hidden;
 	mso-hide: all;
@@ -165,15 +165,15 @@
 
 @media only screen and (max-width:642px) {
 
-	.ngl-article-left-mobile,
-	.ngl-article-left-mobile * {
+	.ngl-article-mobile,
+	.ngl-article-mobile * {
 		display: block !important;
 		max-height: 100% !important;
 		font-size: inherit !important;
 	}
 
-	.ngl-articles-full .ngl-article-left-mobile,
-	.ngl-articles-full .ngl-article-left-mobile * {
+	.ngl-articles-full .ngl-article-mobile,
+	.ngl-articles-full .ngl-article-mobile * {
 		display: none !important;
 		max-height: 0;
 		font-size: 0;
