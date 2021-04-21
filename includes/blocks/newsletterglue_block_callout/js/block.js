@@ -66,10 +66,6 @@
 				'type' : 'number',
 				'default' : 20,
 			},
-			cta_margin: {
-				'type' : 'number',
-				'default' : 25,
-			},
 			show_in_blog: {
 				'type' : 'boolean',
 				'default' : block.show_in_blog ? true : false
@@ -91,8 +87,6 @@
 				borderWidth : props.attributes.border_size,
 				paddingLeft : props.attributes.cta_padding,
 				paddingRight : props.attributes.cta_padding,
-				marginTop : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
-				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
 				textAlign: props.attributes.alignment ? props.attributes.alignment : 'left',
 			};
 
@@ -122,19 +116,6 @@
 									allowReset: true,
 									resetFallbackValue: 20,
 									onChange: ( value ) => { props.setAttributes( { cta_padding: value } ); },
-								} ),
-							),
-
-							el( BaseControl, {},
-								el( RangeControl, {
-									label: 'Margin (pixels)',
-									value: props.attributes.cta_margin,
-									initialPosition: 25,
-									min: 0,
-									max: 100,
-									allowReset: true,
-									resetFallbackValue: 25,
-									onChange: ( value ) => { props.setAttributes( { cta_margin: value } ); },
 								} ),
 							),
 
@@ -256,8 +237,6 @@
 				borderWidth : props.attributes.border_size,
 				paddingLeft : props.attributes.cta_padding,
 				paddingRight : props.attributes.cta_padding,
-				marginTop : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
-				marginBottom : props.attributes.cta_margin ? props.attributes.cta_margin : 0,
 				textAlign: props.attributes.alignment ? props.attributes.alignment : 'left',
 			};
 
