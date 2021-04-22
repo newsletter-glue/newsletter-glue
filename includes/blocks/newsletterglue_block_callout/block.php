@@ -176,10 +176,6 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 			text-align: inherit;
 		}
 
-		.wp-block-newsletterglue-callout td > * {
-			color: inherit !important;
-		}
-
 		.wp-block-newsletterglue-callout img {
 			width: auto;
 		}
@@ -236,17 +232,37 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 				$gap = 5;
 			}
 
-			$element->outertext = '<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">
-		<div style="' . $styles . ';padding: 0 !important;width: auto !important;display: block !important;">
-		<table class="' . $element->class . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="font-size: inherit !important;table-layout: auto;border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;border: 0 !important;width: 100% !important;padding: 0 !important;">
-			<tr>
-				<td width="' . $gap . '" style="width:' . $gap . 'px;vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top" class="ngl-td-clean">&nbsp;</td>
-				<td class="ngl-callout-content" style="border:none; vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top"><div style="Padding-top: ' . $gap . 'px;"></div>' . $element->innertext . '<div style="Padding-top: ' . $gap . 'px;"></div></td>
-				<td width="' . $gap . '" style="width:' . $gap . 'px;vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top" class="ngl-td-clean">&nbsp;</td>
-			</tr>
-		</table>
-		</div>
-		</td></tr></table>';
+			$color = ! empty( $results[ 'color' ] ) ? $results[ 'color' ] : '';
+
+			if ( ! empty( $color ) ) {
+				foreach( $element->find( '*' ) as $child => $el ) {
+					if ( ! strstr( $el->style, 'color:' ) ) {
+						$el->style = $el->style . 'color: ' . $color;
+					}
+				}
+			}
+
+			$bg = ! empty( $results[ 'background-color' ] ) ? $results[ 'background-color' ] : 'transaprent';
+
+			$element->outertext = '
+			<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;">
+				<tr>
+					<td valign="top" style="vertical-align: top;margin:0;">
+						<div style="' . $styles . '">
+						<table bgcolor="' . $bg . '" class="' . $element->class . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="font-size: inherit !important;mso-table-lspace: 0pt; mso-table-rspace: 0pt;border: 0 !important;width: 100% !important;' . $styles . '">
+							<tr>
+								<td width="' . $gap . '" style="width:' . $gap . 'px;vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top" class="ngl-td-clean">&nbsp;</td>
+								<td class="ngl-callout-content" style="border:none; vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top">
+									<table width="100%" border="0" cellpadding="' . absint( $gap / 2 ) .'" cellspacing="0"><tr><td></td></tr></table>' . $element->innertext . '
+									<table width="100%" border="0" cellpadding="' . absint( $gap / 2 ) .'" cellspacing="0"><tr><td></td></tr></table></td>
+								<td width="' . $gap . '" style="width:' . $gap . 'px;vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top" class="ngl-td-clean">&nbsp;</td>
+							</tr>
+						</table>
+						</div>
+					</td>
+				</tr>
+			</table>';
+
 		}
 
 		$output->save();

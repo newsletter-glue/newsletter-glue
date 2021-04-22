@@ -356,7 +356,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 }
 
 .ngl-article {
-	margin: 0 0 10px 0;
+	margin: 0;
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 }
 

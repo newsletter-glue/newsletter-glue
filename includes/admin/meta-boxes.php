@@ -78,13 +78,13 @@ function newsletterglue_save_meta_box( $post_id, $post ) {
 	// We need this save event to run once to avoid potential endless loops. This would have been perfect:
 	$saved_meta_boxes = true;
 
+	// Save newsletter data.
+	newsletterglue_save_data( $post_id, newsletterglue_sanitize( $_POST ) );
+
 	// The "Send" checkbox is not checked.
 	if ( ! isset( $_POST[ 'ngl_double_confirm' ] ) || $_POST[ 'ngl_double_confirm' ] !== 'yes' ) {
 		return;
 	}
-
-	// Save newsletter data.
-	newsletterglue_save_data( $post_id, newsletterglue_sanitize( $_POST ) );
 
 	// Send it.
 	if ( $post->post_status == 'future' ) {
