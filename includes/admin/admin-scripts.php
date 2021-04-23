@@ -92,7 +92,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 	}
 
 	// Add CPT stuff.
-	if ( $screen_id === 'newsletterglue' ) {
+	if ( in_array( $screen_id, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
 		wp_enqueue_script( 'newsletterglue_cpt' );
 		wp_enqueue_style( 'newsletterglue_cpt' );
 	}
