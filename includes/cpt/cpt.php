@@ -32,6 +32,7 @@ class NGL_CPT {
 
 		// CSS for Gutenberg.
 		add_action( 'admin_head', array( __CLASS__, 'admin_head' ), 999 );
+
 	}
 
 	/**
@@ -74,7 +75,7 @@ class NGL_CPT {
 					'show_ui'             => true,
 					'capability_type'     => 'post',
 					'map_meta_cap'        => true,
-					'publicly_queryable'  => true,
+					'publicly_queryable'  => false,
 					'exclude_from_search' => true,
 					'show_in_menu'        => current_user_can( 'manage_newsletterglue' ) ? 'newsletter-glue' : true,
 					'hierarchical'        => false,
