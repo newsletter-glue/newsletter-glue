@@ -15,13 +15,24 @@ class NGL_CPT {
 	 * Constructor.
 	 */
 	public static function init() {
+		// Register post types.
 		add_action( 'init', array( __CLASS__, 'register_post_types' ), 5 );
 
+		// Load block patterns.
+		add_action( 'init', array( __CLASS__, 'load_block_patterns' ), 7 );
+
+		// Register block category.
+		add_action( 'init', array( __CLASS__, 'register_block_category' ), 999999999 );
+
+		// Enqueue scripts in admin.
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
 
-		add_filter( 'allowed_block_types', array( __CLASS__, 'allowed_block_types' ), 99, 2 );
+		// Allowed block types in CPT.
+		add_filter( 'allowed_block_types', array( __CLASS__, 'allowed_block_types' ), 999, 2 );
 
-		add_action( 'admin_head', array( __CLASS__, 'admin_head' ), 992 );
+		// CSS for Gutenberg.
+		add_action( 'admin_head', array( __CLASS__, 'admin_head' ), 999 );
+
 	}
 
 	/**
@@ -35,6 +46,7 @@ class NGL_CPT {
 
 		do_action( 'newsletterglue_register_post_types' );
 
+		// Create newsletter post type.
 		register_post_type(
 			'newsletterglue',
 			apply_filters(
@@ -63,7 +75,7 @@ class NGL_CPT {
 					'show_ui'             => true,
 					'capability_type'     => 'post',
 					'map_meta_cap'        => true,
-					'publicly_queryable'  => true,
+					'publicly_queryable'  => false,
 					'exclude_from_search' => true,
 					'show_in_menu'        => current_user_can( 'manage_newsletterglue' ) ? 'newsletter-glue' : true,
 					'hierarchical'        => false,
@@ -77,6 +89,64 @@ class NGL_CPT {
 			)
 		);
 
+		// Create pattern post type.
+		$args = array(
+			'labels'             => array(
+				'name'                  => __( 'Patterns', 'newsletter-glue' ),
+				'singular_name'         => __( 'Pattern', 'newsletter-glue' ),
+				'menu_name'             => esc_html_x( 'All Patterns', 'Admin menu name', 'newsletter-glue' ),
+				'add_new'               => __( 'Add Pattern', 'newsletter-glue' ),
+				'add_new_item'          => __( 'Add New Newsletter', 'newsletter-glue' ),
+				'edit'                  => __( 'Edit', 'newsletter-glue' ),
+				'edit_item'             => __( 'Edit Pattern', 'newsletter-glue' ),
+				'new_item'              => __( 'New Pattern', 'newsletter-glue' ),
+				'view_item'             => __( 'View Pattern', 'newsletter-glue' ),
+				'search_items'          => __( 'Search Patterns', 'newsletter-glue' ),
+				'not_found'             => __( 'No Patterns found', 'newsletter-glue' ),
+				'not_found_in_trash'    => __( 'No Patterns found in trash', 'newsletter-glue' ),
+				'parent'                => __( 'Parent Pattern', 'newsletter-glue' ),
+				'filter_items_list'     => __( 'Filter Patterns', 'newsletter-glue' ),
+				'items_list_navigation' => __( 'Patterns navigation', 'newsletter-glue' ),
+				'items_list'            => __( 'Patterns list', 'newsletter-glue' ),
+			),
+			'description'       => __( 'Description', 'newsletter-glue' ),
+			'supports'          => array( 'title', 'editor', 'excerpt' ),
+			'taxonomies'        => array( 'ngl_pattern_category' ),
+			'show_ui'           => true,
+			'rewrite'           => false,
+			'show_in_rest'      => true,
+			'show_in_menu'      => false,
+			'show_in_admin_bar' => false,
+		);
+
+		register_post_type( 'ngl_pattern', $args );
+
+		// Create pattern category taxonomy.
+		$args = array(
+			'label'        			=> __( 'Pattern category', 'newsletter-glue' ),
+			'hierarchical' 			=> true,
+			'rewrite'      			=> false,
+			'show_in_rest' 			=> true,
+			'show_admin_column'		=> true,
+		);
+
+		register_taxonomy( 'ngl_pattern_category', array( 'ngl_pattern' ), $args );
+
+		// Add default terms (pattern categories)
+		$default_categories = array(
+			'ngl_headers' 	=> __( 'Headers', 'newsletter-glue' ),
+			'ngl_body' 		=> __( 'Body', 'newsletter-glue' ),
+			'ngl_signoffs' 	=> __( 'Sign-offs', 'newsletter-glue' ),
+			'ngl_footers' 	=> __( 'Footers', 'newsletter-glue' ),
+		);
+
+		foreach( $default_categories as $cat_id => $cat_name ) {
+			$term = term_exists( $cat_id, 'ngl_pattern_category' );
+			if ( ! $term ) {
+				wp_insert_term( $cat_name, 'ngl_pattern_category', array( 'slug' => $cat_id ) );
+			}
+		}
+
 		do_action( 'newsletterglue_after_register_post_type' );
 
 	}
@@ -88,7 +158,7 @@ class NGL_CPT {
 		global $post_type;
 
 		// Only in our CPT.
-		if ( is_admin() && ! empty( $post_type ) && $post_type == 'newsletterglue' ) {
+		if ( is_admin() && ! empty( $post_type ) && in_array( $post_type, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
 			wp_add_inline_script(
 				'wp-edit-post',
 				'
@@ -108,7 +178,7 @@ class NGL_CPT {
 	 */
 	public static function allowed_block_types( $blocks, $post ) {
 		if ( ! empty( $post->post_type ) ) {
-			if ( $post->post_type == 'newsletterglue' ) {
+			if ( in_array( $post->post_type, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
 				$blocks = array(
 					'newsletterglue/group',
 					'newsletterglue/form',
@@ -139,11 +209,18 @@ class NGL_CPT {
 	public static function admin_head() {
 		global $post_type;
 
-		if ( ! empty( $post_type ) && $post_type == 'newsletterglue' ) {
+		if ( empty( $post_type ) ) {
+			return;
+		}
+
+		if ( in_array( $post_type, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
 
 			echo '<style>';
+
 			echo '.edit-post-visual-editor { background: ' . newsletterglue_get_theme_option( 'email_bg' ) . '; }';
-			echo '.editor-styles-wrapper { background: ' . newsletterglue_get_theme_option( 'container_bg' ) . '; }';
+			echo 'div.editor-styles-wrapper { background-color: ' . newsletterglue_get_theme_option( 'container_bg' ) . '; }';
+
+			echo 'div.editor-styles-wrapper .wp-block.editor-post-title__block { padding-bottom: 0; margin: 0; max-width: 100%; border: 0; }';
 
 			if ( newsletterglue_get_theme_option( 'font' ) ) {
 				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt, div.editor-styles-wrapper .wp-block h1, div.editor-styles-wrapper .wp-block h2, div.editor-styles-wrapper .wp-block h3, div.editor-styles-wrapper .wp-block h4, div.editor-styles-wrapper .wp-block h5, div.editor-styles-wrapper .wp-block h6 {
@@ -155,7 +232,7 @@ class NGL_CPT {
 
 			echo 'div.editor-styles-wrapper, div.editor-styles-wrapper p { color: ' . newsletterglue_get_theme_option( 'p_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper p, div.editor-styles-wrapper li { font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; }';
-			echo 'div.editor-styles-wrapper textarea.editor-post-title__input, div.editor-styles-wrapper h1, div.editor-styles-wrapper .wp-block h1 { font-weight: bold !important; font-size: ' . newsletterglue_get_theme_option( 'h1_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h1_colour' ) . '; }';
+			echo 'div.editor-styles-wrapper .wp-block.editor-post-title__block textarea.editor-post-title__input, div.editor-styles-wrapper h1, div.editor-styles-wrapper .wp-block h1 { font-weight: bold !important; font-size: ' . newsletterglue_get_theme_option( 'h1_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h1_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper h2, div.editor-styles-wrapper .wp-block h2 { font-size: ' . newsletterglue_get_theme_option( 'h2_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h2_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper h3, div.editor-styles-wrapper .wp-block h3 { font-size: ' . newsletterglue_get_theme_option( 'h3_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h3_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper h4, div.editor-styles-wrapper .wp-block h4 { font-size: ' . newsletterglue_get_theme_option( 'h4_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h4_colour' ) . '; }';
@@ -169,6 +246,121 @@ class NGL_CPT {
 			echo '</style>';
 
 		}
+
+	}
+
+	/**
+	 * Register custom post type posts (with the 'pattern' type) as block patterns.
+	 */
+	public static function load_block_patterns() {
+
+		$query_args = array(
+			'post_type'              => 'ngl_pattern',
+			'post_status'			 => 'publish',
+			'posts_per_page'         => -1,
+			'no_found_rows'          => true,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+		);
+
+		$block_patterns_query = new \WP_Query( $query_args );
+
+		wp_reset_postdata();
+
+		if ( empty( $block_patterns_query->posts ) ) {
+			return;
+		}
+
+		$pattern_categories = '';
+
+		foreach ( $block_patterns_query->posts as $block_pattern ) {
+
+			$categories = get_the_terms( $block_pattern->ID, 'ngl_pattern_category' );
+
+			if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
+				$pattern_categories = wp_list_pluck( $categories, 'slug' );
+			}
+
+			if ( empty( $pattern_categories ) ) {
+				$pattern_categories = array( 'ngl_body' );
+			}
+
+			register_block_pattern(
+				'ngl_pattern/' . $block_pattern->post_name,
+				array(
+					'title'       => $block_pattern->post_title,
+					'content'     => $block_pattern->post_content,
+					'categories'  => $pattern_categories,
+					'description' => $block_pattern->post_excerpt,
+				)
+			);
+		}
+
+	}
+
+	/**
+	 * Register custom post type posts (with the 'pattern' type) as block patterns.
+	 */
+	public static function register_block_category() {
+
+		$unregister_default_patterns = false;
+
+		$post_id 	= isset( $_GET[ 'post' ] ) ? absint( $_GET[ 'post' ] ) : 0;
+		$edit	 	= isset( $_GET[ 'action' ] ) && $_GET[ 'action' ] == 'edit' ? true : false;
+
+		if ( $post_id && $edit ) {
+			$thepost = get_post( $post_id );
+			if ( in_array( $thepost->post_type, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
+				$unregister_default_patterns = true;
+			}
+		}
+
+		if ( isset( $_GET[ 'post_type' ] ) ) {
+			if ( in_array( $_GET[ 'post_type' ], array( 'newsletterglue', 'ngl_pattern' ) ) ) {
+				$unregister_default_patterns = true;
+			}
+		}
+
+		if ( class_exists( 'WP_Block_Patterns_Registry' ) ) {
+
+			register_block_pattern_category(
+				'ngl_headers',
+				array( 'label' => _x( 'Headers', 'Block pattern category', 'newsletter-glue' ) )
+			);
+
+			register_block_pattern_category(
+				'ngl_body',
+				array( 'label' => _x( 'Body', 'Block pattern category', 'newsletter-glue' ) )
+			);
+
+			register_block_pattern_category(
+				'ngl_signoffs',
+				array( 'label' => _x( 'Sign-offs', 'Block pattern category', 'newsletter-glue' ) )
+			);
+
+			register_block_pattern_category(
+				'ngl_footers',
+				array( 'label' => _x( 'Footers', 'Block pattern category', 'newsletter-glue' ) )
+			);
+
+			// Unregister everything else.
+			if ( $unregister_default_patterns ) {
+				$categories = WP_Block_Pattern_Categories_Registry::get_instance()->get_all_registered();
+				foreach( $categories as $key => $value ) {
+					if ( ! strstr( $value[ 'name' ], 'ngl_' ) ) {
+						unregister_block_pattern_category( $value[ 'name' ] );
+					}
+				}
+				$patterns = WP_Block_Patterns_Registry::get_instance()->get_all_registered();
+				foreach( $patterns as $key => $value ) {
+					if ( ! strstr( $value[ 'name' ], 'ngl_pattern/' ) ) {
+						unregister_block_pattern( $value[ 'name' ] );
+					}
+				}
+			}
+
+		}
+
 	}
 
 }

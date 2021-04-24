@@ -492,8 +492,8 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 /**
  * Fix most email client issues here.
  */
-add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output', 50, 3 );
-function newsletterglue_generated_html_output( $html, $post_id, $app ) {
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_hook1', 1, 3 );
+function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
 	$output->load( $html, true, false );
@@ -673,8 +673,8 @@ function newsletterglue_generated_html_output( $html, $post_id, $app ) {
 /**
  * Add table to full width image.
  */
-add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_wrap_full_width_images', 60, 3 );
-function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_hook2', 2, 3 );
+function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 
 	if ( newsletterglue_get_theme_option( 'font' ) ) {
 		$font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
@@ -785,8 +785,8 @@ function newsletterglue_wrap_full_width_images( $html, $post_id, $app ) {
 /**
  * Adjustments.
  */
-add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_auto_adjust_elements', 70, 3 );
-function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_hook3', 3, 3 );
+function newsletterglue_generated_html_output_hook3( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
 	$output->load( $html, true, false );
@@ -842,8 +842,8 @@ function newsletterglue_auto_adjust_elements( $html, $post_id, $app ) {
 /**
  * Fix image widths.
  */
-add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_fix_image_widths', 80, 3 );
-function newsletterglue_fix_image_widths( $html, $post_id, $app ) {
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_hook4', 4, 3 );
+function newsletterglue_generated_html_output_hook4( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
 	$output->load( $html, true, false );
@@ -883,8 +883,8 @@ function newsletterglue_fix_image_widths( $html, $post_id, $app ) {
 /**
  * Set font-family per td.
  */
-add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_set_font_family', 1000, 3 );
-function newsletterglue_set_font_family( $html, $post_id, $app ) {
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_highest_priority', 1000, 3 );
+function newsletterglue_generated_html_output_highest_priority( $html, $post_id, $app ) {
 
 	if ( newsletterglue_get_theme_option( 'font' ) ) {
 		$email_font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";

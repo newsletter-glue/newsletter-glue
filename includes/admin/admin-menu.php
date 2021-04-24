@@ -26,6 +26,7 @@ function newsletterglue_add_admin_menu() {
 	$admin_page			= add_menu_page( __( 'Newsletters', 'newsletter-glue' ), __( 'Newsletters', 'newsletter-glue' ), 'manage_newsletterglue', 'newsletter-glue', null, 'data:image/svg+xml;base64,' . $ngicon, '25.5471' );
 
 	$new_issue_page 	= add_submenu_page( 'newsletter-glue', __( 'Add New Newsletter', 'newsletter-glue' ), __( 'Add New Newsletter', 'newsletter-glue' ), 'manage_newsletterglue', 'post-new.php?post_type=newsletterglue' );
+	$new_template_page 	= add_submenu_page( 'newsletter-glue', __( 'Templates & Styles', 'newsletter-glue' ), __( 'Templates & Styles', 'newsletter-glue' ), 'manage_newsletterglue', 'edit.php?post_type=ngl_pattern' );
 	$settings_page 		= add_submenu_page( 'newsletter-glue', __( 'Settings', 'newsletter-glue' ), __( 'Settings', 'newsletter-glue' ), 'manage_newsletterglue', 'ngl-settings', 'newsletterglue_settings_page' );
 
 }

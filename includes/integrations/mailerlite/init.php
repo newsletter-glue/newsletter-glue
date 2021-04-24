@@ -399,6 +399,8 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 			$unsub = $this->default_unsub();
 		}
 
+		$unsub = str_replace( '{{ unsubscribe_link }}', '{$unsubscribe}', $unsub );
+
 		$content .= '<p class="ngl-unsubscribe">' . wp_kses_post( $unsub ) . '</p>';
 
 		return $content;
@@ -409,7 +411,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	 * Default unsub.
 	 */
 	public function default_unsub() {
-		return '<a href="{$unsubscribe}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a> to stop receiving these emails.';
+		return '<a href="{{ unsubscribe_link }}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a> to stop receiving these emails.';
 	}
 
 	/**
@@ -428,7 +430,7 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 						<div class="ngl-metabox-header">
 							<label for="ngl_unsub"><?php esc_html_e( 'Edit unsubscribe message', 'newsletter-glue' ); ?></label>
 							<div class="ngl-label-verification">
-								<a href="#" class="ngl-textarea-append" data-selector="ngl_unsub" data-value="<?php echo esc_html(  '<a href="{$unsubscribe}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a>' ); ?>"><?php _e( 'Insert unsubscribe tag', 'newsletter-glue' ); ?></a>
+								<a href="#" class="ngl-textarea-append" data-selector="ngl_unsub" data-value="<?php echo esc_html(  '<a href="{{ unsubscribe_link }}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a>' ); ?>"><?php _e( 'Insert unsubscribe tag', 'newsletter-glue' ); ?></a>
 							</div>
 							<div class="ngl-label-more">
 								<a href="#" class="ngl-textarea-reset" data-selector="ngl_unsub"><?php _e( 'Reset', 'newsletter-glue' ); ?></a>
