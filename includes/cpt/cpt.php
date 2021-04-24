@@ -228,6 +228,13 @@ class NGL_CPT {
 		// Add What are patterns?
 		if ( $post_type == 'ngl_pattern' ) {
 			?>
+			<style type="text/css">
+			.editor-post-taxonomies__hierarchical-terms-input + div {
+				opacity: 0;
+				visibility: hidden !important;
+				height: 0px !important;
+			}
+			</style>
 			<script type="text/javascript">
 				jQuery( document ).ready( function ( $ ) {
 					var text = "<?php echo __( 'What are Patterns?', 'newsletter-glue' ); ?>";
