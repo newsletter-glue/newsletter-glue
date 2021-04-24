@@ -39,6 +39,8 @@ class NGL_CPT {
 		// Add category dropdown.
 		add_action( 'restrict_manage_posts', array( __CLASS__, 'restrict_manage_posts' ), 100 );
 
+		// Filter post views.
+		add_filter( 'views_edit-ngl_pattern', array( __CLASS__, 'views_edit' ) );
 	}
 
 	/**
@@ -140,10 +142,11 @@ class NGL_CPT {
 
 		// Add default terms (pattern categories)
 		$default_categories = array(
-			'ngl_headers' 	=> __( 'Headers', 'newsletter-glue' ),
-			'ngl_body' 		=> __( 'Body', 'newsletter-glue' ),
-			'ngl_signoffs' 	=> __( 'Sign-offs', 'newsletter-glue' ),
-			'ngl_footers' 	=> __( 'Footers', 'newsletter-glue' ),
+			'ngl_headers' 		=> __( 'Headers', 'newsletter-glue' ),
+			'ngl_body' 			=> __( 'Body', 'newsletter-glue' ),
+			'ngl_signoffs' 		=> __( 'Sign-offs', 'newsletter-glue' ),
+			'ngl_footers' 		=> __( 'Footers', 'newsletter-glue' ),
+			'ngl_uncategorized' => __( 'Uncategorized', 'newsletter-glue' ),
 		);
 
 		foreach( $default_categories as $cat_id => $cat_name ) {
@@ -217,6 +220,18 @@ class NGL_CPT {
 
 		if ( empty( $post_type ) ) {
 			return;
+		}
+
+		// Add What are patterns?
+		if ( $post_type == 'ngl_pattern' ) {
+			?>
+			<script type="text/javascript">
+				jQuery( document ).ready( function ( $ ) {
+					var text = "<?php echo __( 'What are Patterns?', 'newsletter-glue' ); ?>";
+					$( '.page-title-action' ).after( '<a href="#" style="font-weight: 600; text-decoration: none !important; font-size: 14px; margin-left: 20px; position: relative; top: -3px;">' + text + '</a>' );
+				} );
+			</script>
+			<?php
 		}
 
 		if ( in_array( $post_type, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
@@ -439,6 +454,34 @@ class NGL_CPT {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Views edit.
+	 */
+	public static function views_edit( $views ) {
+
+		$terms = get_terms( array( 'taxonomy' => 'ngl_pattern_category', 'hide_empty' => false ) );
+
+		unset( $views[ 'publish' ] );
+
+		$current = '';
+
+		foreach( $terms as $term ) {
+			if ( strstr( $term->slug, 'ngl_' ) ) {
+				if ( isset( $_GET[ 'ngl_pattern_category' ] ) ) {
+					if ( $_GET[ 'ngl_pattern_category' ] == $term->slug ) {
+						$current = 'current';
+					} else {
+						$current = '';
+					}
+				}
+				$views[ $term->slug ] = '<a href="' . admin_url( 'edit.php?post_type=ngl_pattern&ngl_pattern_category=' . $term->slug ) . '" class="' . $current . '">' . $term->name . ' <span class="count">(' . $term->count . ')</span></a>';
+			}
+		}
+
+		return $views;
+
 	}
 
 }
