@@ -216,6 +216,7 @@ class NGL_CPT {
 		if ( in_array( $post_type, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
 
 			echo '<style>';
+
 			echo '.edit-post-visual-editor { background: ' . newsletterglue_get_theme_option( 'email_bg' ) . '; }';
 			echo 'div.editor-styles-wrapper { background-color: ' . newsletterglue_get_theme_option( 'container_bg' ) . '; }';
 
