@@ -33,6 +33,12 @@ class NGL_CPT {
 		// CSS for Gutenberg.
 		add_action( 'admin_head', array( __CLASS__, 'admin_head' ), 999 );
 
+		// Removes date filter.
+		add_filter( 'months_dropdown_results', array( __CLASS__, 'months_dropdown_results' ) );
+
+		// Add category dropdown.
+		add_action( 'restrict_manage_posts', array( __CLASS__, 'restrict_manage_posts' ), 100 );
+
 	}
 
 	/**
@@ -95,7 +101,7 @@ class NGL_CPT {
 				'name'                  => __( 'Patterns', 'newsletter-glue' ),
 				'singular_name'         => __( 'Pattern', 'newsletter-glue' ),
 				'menu_name'             => esc_html_x( 'All Patterns', 'Admin menu name', 'newsletter-glue' ),
-				'add_new'               => __( 'Add Pattern', 'newsletter-glue' ),
+				'add_new'               => __( 'Add New', 'newsletter-glue' ),
 				'add_new_item'          => __( 'Add New Newsletter', 'newsletter-glue' ),
 				'edit'                  => __( 'Edit', 'newsletter-glue' ),
 				'edit_item'             => __( 'Edit Pattern', 'newsletter-glue' ),
@@ -274,6 +280,7 @@ class NGL_CPT {
 		$pattern_categories = '';
 
 		foreach ( $block_patterns_query->posts as $block_pattern ) {
+			$pattern_categories = null;
 
 			$categories = get_the_terms( $block_pattern->ID, 'ngl_pattern_category' );
 
@@ -282,7 +289,15 @@ class NGL_CPT {
 			}
 
 			if ( empty( $pattern_categories ) ) {
-				$pattern_categories = array( 'ngl_body' );
+				$pattern_categories = array( 'ngl_uncategorized' );
+			} else {
+
+				foreach( $pattern_categories as $key => $value ) {
+					if ( substr( $value, 0, 4 ) !== 'ngl_' ) {
+						$pattern_categories[] = 'ngl_' . str_replace( '-', '_', $value );
+					}
+				}
+
 			}
 
 			register_block_pattern(
@@ -343,6 +358,28 @@ class NGL_CPT {
 				array( 'label' => _x( 'Footers', 'Block pattern category', 'newsletter-glue' ) )
 			);
 
+			register_block_pattern_category(
+				'ngl_uncategorized',
+				array( 'label' => _x( 'Uncategorized', 'Block pattern category', 'newsletter-glue' ) )
+			);
+
+			// Get all terms.
+			$terms = get_terms( array(
+				'taxonomy'		=> 'ngl_pattern_category',
+				'hide_false' 	=> false,
+			) );
+
+			if ( $terms ) {
+				foreach( $terms as $term ) {
+					if ( substr( $term->slug, 0, 4 ) !== 'ngl_' ) {
+						register_block_pattern_category(
+							'ngl_' . str_replace( '-', '_', $term->slug ),
+							array( 'label' => _x( $term->name, 'Block pattern category', 'newsletter-glue' ) )
+						);
+					}
+				}
+			}
+
 			// Unregister everything else.
 			if ( $unregister_default_patterns ) {
 				$categories = WP_Block_Pattern_Categories_Registry::get_instance()->get_all_registered();
@@ -361,6 +398,47 @@ class NGL_CPT {
 
 		}
 
+	}
+
+	/**
+	 * Remove date filter.
+	 */
+	public static function months_dropdown_results( $months ) {
+		global $typenow;
+
+		if ( $typenow == 'ngl_pattern' ) {
+			return array();
+		}
+
+		return $months;
+	}
+
+	/**
+	 * Add category dropdown filter.
+	 */
+	public static function restrict_manage_posts() {
+		global $typenow, $post, $post_id;
+
+		if ( $typenow == 'ngl_pattern' ) {
+
+			$post_type 	= get_query_var( 'post_type' ); 
+			$taxonomies = get_object_taxonomies( $post_type );
+
+			if ( $taxonomies ) {
+				foreach( $taxonomies as $tax_slug ) {
+					$tax_obj = get_taxonomy( $tax_slug );
+					$tax_name = $tax_obj->labels->name;
+					$terms = get_terms( $tax_slug );
+					echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
+					echo "<option value=''>" . __( 'All Categories', 'newsletter-glue' ) . "</option>";
+					foreach ( $terms as $term ) { 
+						$label = ( isset( $_GET[ $tax_slug ] ) ) ? $_GET[ $tax_slug ] : '';
+						echo '<option value=' . $term->slug, $label == $term->slug ? ' selected="selected"' : '','>' . $term->name . '</option>';
+					}
+					echo "</select>";
+				}
+			}
+		}
 	}
 
 }
