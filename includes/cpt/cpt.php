@@ -41,6 +41,9 @@ class NGL_CPT {
 
 		// Filter post views.
 		add_filter( 'views_edit-ngl_pattern', array( __CLASS__, 'views_edit' ) );
+
+		// When a pattern is saved.
+		add_action( 'save_post', array( __CLASS__, 'save_pattern' ), 10, 2 );
 	}
 
 	/**
@@ -482,6 +485,47 @@ class NGL_CPT {
 
 		return $views;
 
+	}
+
+	/**
+	 * Save a pattern.
+	 */
+	public static function save_pattern( $post_id, $post ) {
+		// $post_id and $post are required
+		$saved_meta_boxes = false;
+
+		// only for patterns.
+		if ( $post->post_type !== 'ngl_pattern' ) {
+			return;
+		}
+
+		// Require post ID and post object.
+		if ( empty( $post_id ) || empty( $post ) || $saved_meta_boxes ) {
+			return;
+		}
+
+		// Dont' save meta boxes for revisions or autosaves
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || is_int( wp_is_post_revision( $post ) ) || is_int( wp_is_post_autosave( $post ) ) ) {
+			return;
+		}
+
+		// Check user has permission to edit
+		if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+			return;
+		}
+
+		// Only allow published and scheduled posts.
+		if ( ! in_array( $post->post_status, array( 'publish' ) ) ) {
+			return;
+		}
+
+		// We need this save event to run once to avoid potential endless loops. This would have been perfect:
+		$saved_meta_boxes = true;
+
+		$terms = wp_get_object_terms( $post_id, 'ngl_pattern_category' );
+		if ( empty( $terms ) ) {
+			wp_set_object_terms( $post_id, array( 'ngl_uncategorized' ), 'ngl_pattern_category' );
+		}
 	}
 
 }
