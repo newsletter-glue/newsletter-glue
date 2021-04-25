@@ -33,6 +33,24 @@ class NGL_CPT {
 		// CSS for Gutenberg.
 		add_action( 'admin_head', array( __CLASS__, 'admin_head' ), 999 );
 
+		// Removes date filter.
+		add_filter( 'months_dropdown_results', array( __CLASS__, 'months_dropdown_results' ) );
+
+		// Add category dropdown.
+		add_action( 'restrict_manage_posts', array( __CLASS__, 'restrict_manage_posts' ), 100 );
+
+		// Filter post views.
+		add_filter( 'views_edit-ngl_pattern', array( __CLASS__, 'views_edit' ) );
+
+		// When a pattern is saved.
+		add_action( 'save_post', array( __CLASS__, 'save_pattern' ), 10, 2 );
+
+		// Row actions.
+		add_action( 'post_row_actions', array( __CLASS__, 'post_row_actions' ), 50, 2 );
+
+		// Duplicate.
+		add_action( 'admin_action_ngl_duplicate_as_pattern', array( __CLASS__, 'duplicate_pattern' ) );
+		add_action( 'admin_action_ngl_duplicate_as_newsletter', array( __CLASS__, 'duplicate_newsletter' ) );
 	}
 
 	/**
@@ -95,7 +113,7 @@ class NGL_CPT {
 				'name'                  => __( 'Patterns', 'newsletter-glue' ),
 				'singular_name'         => __( 'Pattern', 'newsletter-glue' ),
 				'menu_name'             => esc_html_x( 'All Patterns', 'Admin menu name', 'newsletter-glue' ),
-				'add_new'               => __( 'Add Pattern', 'newsletter-glue' ),
+				'add_new'               => __( 'Add New', 'newsletter-glue' ),
 				'add_new_item'          => __( 'Add New Newsletter', 'newsletter-glue' ),
 				'edit'                  => __( 'Edit', 'newsletter-glue' ),
 				'edit_item'             => __( 'Edit Pattern', 'newsletter-glue' ),
@@ -134,10 +152,11 @@ class NGL_CPT {
 
 		// Add default terms (pattern categories)
 		$default_categories = array(
-			'ngl_headers' 	=> __( 'Headers', 'newsletter-glue' ),
-			'ngl_body' 		=> __( 'Body', 'newsletter-glue' ),
-			'ngl_signoffs' 	=> __( 'Sign-offs', 'newsletter-glue' ),
-			'ngl_footers' 	=> __( 'Footers', 'newsletter-glue' ),
+			'ngl_headers' 		=> __( 'Headers', 'newsletter-glue' ),
+			'ngl_body' 			=> __( 'Body', 'newsletter-glue' ),
+			'ngl_signoffs' 		=> __( 'Sign-offs', 'newsletter-glue' ),
+			'ngl_footers' 		=> __( 'Footers', 'newsletter-glue' ),
+			'ngl_uncategorized' => __( 'Uncategorized', 'newsletter-glue' ),
 		);
 
 		foreach( $default_categories as $cat_id => $cat_name ) {
@@ -213,6 +232,25 @@ class NGL_CPT {
 			return;
 		}
 
+		// Add What are patterns?
+		if ( $post_type == 'ngl_pattern' ) {
+			?>
+			<style type="text/css">
+			.editor-post-taxonomies__hierarchical-terms-input + div {
+				opacity: 0;
+				visibility: hidden !important;
+				height: 0px !important;
+			}
+			</style>
+			<script type="text/javascript">
+				jQuery( document ).ready( function ( $ ) {
+					var text = "<?php echo __( 'What are Patterns?', 'newsletter-glue' ); ?>";
+					$( '.page-title-action' ).after( '<a href="#" style="font-weight: 600; text-decoration: none !important; font-size: 14px; margin-left: 20px; position: relative; top: -3px;">' + text + '</a>' );
+				} );
+			</script>
+			<?php
+		}
+
 		if ( in_array( $post_type, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
 
 			echo '<style>';
@@ -274,6 +312,7 @@ class NGL_CPT {
 		$pattern_categories = '';
 
 		foreach ( $block_patterns_query->posts as $block_pattern ) {
+			$pattern_categories = null;
 
 			$categories = get_the_terms( $block_pattern->ID, 'ngl_pattern_category' );
 
@@ -282,7 +321,15 @@ class NGL_CPT {
 			}
 
 			if ( empty( $pattern_categories ) ) {
-				$pattern_categories = array( 'ngl_body' );
+				$pattern_categories = array( 'ngl_uncategorized' );
+			} else {
+
+				foreach( $pattern_categories as $key => $value ) {
+					if ( substr( $value, 0, 4 ) !== 'ngl_' ) {
+						$pattern_categories[] = 'ngl_' . str_replace( '-', '_', $value );
+					}
+				}
+
 			}
 
 			register_block_pattern(
@@ -343,6 +390,28 @@ class NGL_CPT {
 				array( 'label' => _x( 'Footers', 'Block pattern category', 'newsletter-glue' ) )
 			);
 
+			register_block_pattern_category(
+				'ngl_uncategorized',
+				array( 'label' => _x( 'Uncategorized', 'Block pattern category', 'newsletter-glue' ) )
+			);
+
+			// Get all terms.
+			$terms = get_terms( array(
+				'taxonomy'		=> 'ngl_pattern_category',
+				'hide_false' 	=> false,
+			) );
+
+			if ( $terms ) {
+				foreach( $terms as $term ) {
+					if ( substr( $term->slug, 0, 4 ) !== 'ngl_' ) {
+						register_block_pattern_category(
+							'ngl_' . str_replace( '-', '_', $term->slug ),
+							array( 'label' => _x( $term->name, 'Block pattern category', 'newsletter-glue' ) )
+						);
+					}
+				}
+			}
+
 			// Unregister everything else.
 			if ( $unregister_default_patterns ) {
 				$categories = WP_Block_Pattern_Categories_Registry::get_instance()->get_all_registered();
@@ -359,6 +428,200 @@ class NGL_CPT {
 				}
 			}
 
+		}
+
+	}
+
+	/**
+	 * Remove date filter.
+	 */
+	public static function months_dropdown_results( $months ) {
+		global $typenow;
+
+		if ( $typenow == 'ngl_pattern' ) {
+			return array();
+		}
+
+		return $months;
+	}
+
+	/**
+	 * Add category dropdown filter.
+	 */
+	public static function restrict_manage_posts() {
+		global $typenow, $post, $post_id;
+
+		if ( $typenow == 'ngl_pattern' ) {
+
+			$post_type 	= get_query_var( 'post_type' ); 
+			$taxonomies = get_object_taxonomies( $post_type );
+
+			if ( $taxonomies ) {
+				foreach( $taxonomies as $tax_slug ) {
+					$tax_obj = get_taxonomy( $tax_slug );
+					$tax_name = $tax_obj->labels->name;
+					$terms = get_terms( $tax_slug );
+					echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
+					echo "<option value=''>" . __( 'All Categories', 'newsletter-glue' ) . "</option>";
+					foreach ( $terms as $term ) { 
+						$label = ( isset( $_GET[ $tax_slug ] ) ) ? $_GET[ $tax_slug ] : '';
+						echo '<option value=' . $term->slug, $label == $term->slug ? ' selected="selected"' : '','>' . $term->name . '</option>';
+					}
+					echo "</select>";
+				}
+			}
+		}
+	}
+
+	/**
+	 * Views edit.
+	 */
+	public static function views_edit( $views ) {
+
+		$terms = get_terms( array( 'taxonomy' => 'ngl_pattern_category', 'hide_empty' => false ) );
+
+		unset( $views[ 'publish' ] );
+
+		$current = '';
+
+		foreach( $terms as $term ) {
+			if ( strstr( $term->slug, 'ngl_' ) ) {
+				if ( isset( $_GET[ 'ngl_pattern_category' ] ) ) {
+					if ( $_GET[ 'ngl_pattern_category' ] == $term->slug ) {
+						$current = 'current';
+					} else {
+						$current = '';
+					}
+				}
+				$views[ $term->slug ] = '<a href="' . admin_url( 'edit.php?post_type=ngl_pattern&ngl_pattern_category=' . $term->slug ) . '" class="' . $current . '">' . $term->name . ' <span class="count">(' . $term->count . ')</span></a>';
+			}
+		}
+
+		return $views;
+
+	}
+
+	/**
+	 * Save a pattern.
+	 */
+	public static function save_pattern( $post_id, $post ) {
+		// $post_id and $post are required
+		$saved_meta_boxes = false;
+
+		// only for patterns.
+		if ( $post->post_type !== 'ngl_pattern' ) {
+			return;
+		}
+
+		// Require post ID and post object.
+		if ( empty( $post_id ) || empty( $post ) || $saved_meta_boxes ) {
+			return;
+		}
+
+		// Dont' save meta boxes for revisions or autosaves
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || is_int( wp_is_post_revision( $post ) ) || is_int( wp_is_post_autosave( $post ) ) ) {
+			return;
+		}
+
+		// Check user has permission to edit
+		if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+			return;
+		}
+
+		// Only allow published and scheduled posts.
+		if ( ! in_array( $post->post_status, array( 'publish' ) ) ) {
+			return;
+		}
+
+		// We need this save event to run once to avoid potential endless loops. This would have been perfect:
+		$saved_meta_boxes = true;
+
+		$terms = wp_get_object_terms( $post_id, 'ngl_pattern_category' );
+		if ( empty( $terms ) ) {
+			wp_set_object_terms( $post_id, array( 'ngl_uncategorized' ), 'ngl_pattern_category' );
+		}
+	}
+
+	/**
+	 * Row actions.
+	 */
+	public static function post_row_actions( $actions, $post ) {
+
+		if ( $post->post_type == 'ngl_pattern' ) {
+			$actions[ 'ngl_duplicate' ] = '<a href="' . wp_nonce_url( 'admin.php?action=ngl_duplicate_as_pattern&post=' . $post->ID, basename(__FILE__), 'ngl_duplicate_nonce' ) . '" title="' . __( 'Duplicate this pattern', 'newsletter-glue' ) . '" rel="permalink">' . __( 'Duplicate', 'newsletter-glue' ) . '</a>';
+		}
+
+		if ( $post->post_type == 'newsletterglue' ) {
+			$actions[ 'ngl_duplicate' ] = '<a href="' . wp_nonce_url( 'admin.php?action=ngl_duplicate_as_newsletter&post=' . $post->ID, basename(__FILE__), 'ngl_duplicate_nonce' ) . '" title="' . __( 'Duplicate this newsletter', 'newsletter-glue' ) . '" rel="permalink">' . __( 'Duplicate', 'newsletter-glue' ) . '</a>';
+		}
+
+		return $actions;
+	}
+
+	/**
+	 * Duplicate pattern.
+	 */
+	public static function duplicate_pattern() {
+		global $wpdb;
+
+		if ( ! ( isset( $_GET['post']) || isset( $_POST['post'] )  || ( isset( $_REQUEST['action']) && 'ngl_duplicate_as_pattern' == $_REQUEST['action'] ) ) ) {
+			wp_die( __( 'Nothing to duplicate was found.', 'newsletter-glue' ) );
+		}
+
+		if ( !isset( $_GET['ngl_duplicate_nonce'] ) || ! wp_verify_nonce( $_GET[ 'ngl_duplicate_nonce' ], basename( __FILE__ ) ) )
+			return;
+
+		$post_id = (isset($_GET['post']) ? absint( $_GET['post'] ) : absint( $_POST['post'] ) );
+
+		$post = get_post( $post_id );
+	 
+		/*
+		 * if post data exists, create the post duplicate
+		 */
+		if ( isset( $post ) && $post != null ) {
+
+			$new_post = newsletterglue_duplicate_item( $post, $post_id );
+
+			wp_redirect( admin_url( 'edit.php?post_type=ngl_pattern' ) );
+
+			exit;
+
+		} else {
+			wp_die( __( 'Duplicate pattern has failed.', 'newsletter-glue' ) );
+		}
+
+	}
+
+	/**
+	 * Duplicate newsletter.
+	 */
+	public static function duplicate_newsletter() {
+		global $wpdb;
+
+		if ( ! ( isset( $_GET['post']) || isset( $_POST['post'] )  || ( isset( $_REQUEST['action']) && 'ngl_duplicate_as_newsletter' == $_REQUEST['action'] ) ) ) {
+			wp_die( __( 'Nothing to duplicate was found.', 'newsletter-glue' ) );
+		}
+
+		if ( !isset( $_GET['ngl_duplicate_nonce'] ) || ! wp_verify_nonce( $_GET[ 'ngl_duplicate_nonce' ], basename( __FILE__ ) ) )
+			return;
+
+		$post_id = (isset($_GET['post']) ? absint( $_GET['post'] ) : absint( $_POST['post'] ) );
+
+		$post = get_post( $post_id );
+	 
+		/*
+		 * if post data exists, create the post duplicate
+		 */
+		if ( isset( $post ) && $post != null ) {
+
+			$new_post = newsletterglue_duplicate_item( $post, $post_id );
+
+			wp_redirect( admin_url( 'edit.php?post_type=newsletterglue' ) );
+
+			exit;
+
+		} else {
+			wp_die( __( 'Duplicate newsletter has failed.', 'newsletter-glue' ) );
 		}
 
 	}
