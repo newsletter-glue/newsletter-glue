@@ -22,6 +22,7 @@ function newsletterglue_manage_posts_columns( $columns ) {
 
 }
 add_filter( 'manage_post_posts_columns', 'newsletterglue_manage_posts_columns', 99 );
+add_filter( 'manage_newsletterglue_posts_columns', 'newsletterglue_manage_posts_columns', 99 );
 
 /**
  * Display custom post columns.
@@ -74,6 +75,7 @@ function newsletterglue_manage_posts_custom_column( $column, $post_id ) {
 
 }
 add_action( 'manage_post_posts_custom_column', 'newsletterglue_manage_posts_custom_column', 99, 2 );
+add_action( 'manage_newsletterglue_posts_custom_column', 'newsletterglue_manage_posts_custom_column', 99, 2 );
 
 /**
  * Get past campaigns based on post ID.
