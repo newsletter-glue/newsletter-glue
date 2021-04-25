@@ -44,6 +44,13 @@ class NGL_CPT {
 
 		// When a pattern is saved.
 		add_action( 'save_post', array( __CLASS__, 'save_pattern' ), 10, 2 );
+
+		// Row actions.
+		add_action( 'post_row_actions', array( __CLASS__, 'post_row_actions' ), 50, 2 );
+
+		// Duplicate.
+		add_action( 'admin_action_ngl_duplicate_as_pattern', array( __CLASS__, 'duplicate_pattern' ) );
+		add_action( 'admin_action_ngl_duplicate_as_newsletter', array( __CLASS__, 'duplicate_newsletter' ) );
 	}
 
 	/**
@@ -533,6 +540,90 @@ class NGL_CPT {
 		if ( empty( $terms ) ) {
 			wp_set_object_terms( $post_id, array( 'ngl_uncategorized' ), 'ngl_pattern_category' );
 		}
+	}
+
+	/**
+	 * Row actions.
+	 */
+	public static function post_row_actions( $actions, $post ) {
+
+		if ( $post->post_type == 'ngl_pattern' ) {
+			$actions[ 'ngl_duplicate' ] = '<a href="' . wp_nonce_url( 'admin.php?action=ngl_duplicate_as_pattern&post=' . $post->ID, basename(__FILE__), 'ngl_duplicate_nonce' ) . '" title="' . __( 'Duplicate this pattern', 'newsletter-glue' ) . '" rel="permalink">' . __( 'Duplicate', 'newsletter-glue' ) . '</a>';
+		}
+
+		if ( $post->post_type == 'newsletterglue' ) {
+			$actions[ 'ngl_duplicate' ] = '<a href="' . wp_nonce_url( 'admin.php?action=ngl_duplicate_as_newsletter&post=' . $post->ID, basename(__FILE__), 'ngl_duplicate_nonce' ) . '" title="' . __( 'Duplicate this newsletter', 'newsletter-glue' ) . '" rel="permalink">' . __( 'Duplicate', 'newsletter-glue' ) . '</a>';
+		}
+
+		return $actions;
+	}
+
+	/**
+	 * Duplicate pattern.
+	 */
+	public static function duplicate_pattern() {
+		global $wpdb;
+
+		if ( ! ( isset( $_GET['post']) || isset( $_POST['post'] )  || ( isset( $_REQUEST['action']) && 'ngl_duplicate_as_pattern' == $_REQUEST['action'] ) ) ) {
+			wp_die( __( 'Nothing to duplicate was found.', 'newsletter-glue' ) );
+		}
+
+		if ( !isset( $_GET['ngl_duplicate_nonce'] ) || ! wp_verify_nonce( $_GET[ 'ngl_duplicate_nonce' ], basename( __FILE__ ) ) )
+			return;
+
+		$post_id = (isset($_GET['post']) ? absint( $_GET['post'] ) : absint( $_POST['post'] ) );
+
+		$post = get_post( $post_id );
+	 
+		/*
+		 * if post data exists, create the post duplicate
+		 */
+		if ( isset( $post ) && $post != null ) {
+
+			$new_post = newsletterglue_duplicate_item( $post, $post_id );
+
+			wp_redirect( admin_url( 'edit.php?post_type=ngl_pattern' ) );
+
+			exit;
+
+		} else {
+			wp_die( __( 'Duplicate pattern has failed.', 'newsletter-glue' ) );
+		}
+
+	}
+
+	/**
+	 * Duplicate newsletter.
+	 */
+	public static function duplicate_newsletter() {
+		global $wpdb;
+
+		if ( ! ( isset( $_GET['post']) || isset( $_POST['post'] )  || ( isset( $_REQUEST['action']) && 'ngl_duplicate_as_newsletter' == $_REQUEST['action'] ) ) ) {
+			wp_die( __( 'Nothing to duplicate was found.', 'newsletter-glue' ) );
+		}
+
+		if ( !isset( $_GET['ngl_duplicate_nonce'] ) || ! wp_verify_nonce( $_GET[ 'ngl_duplicate_nonce' ], basename( __FILE__ ) ) )
+			return;
+
+		$post_id = (isset($_GET['post']) ? absint( $_GET['post'] ) : absint( $_POST['post'] ) );
+
+		$post = get_post( $post_id );
+	 
+		/*
+		 * if post data exists, create the post duplicate
+		 */
+		if ( isset( $post ) && $post != null ) {
+
+			$new_post = newsletterglue_duplicate_item( $post, $post_id );
+
+			wp_redirect( admin_url( 'edit.php?post_type=newsletterglue' ) );
+
+			exit;
+
+		} else {
+			wp_die( __( 'Duplicate newsletter has failed.', 'newsletter-glue' ) );
+		}
+
 	}
 
 }
