@@ -59,24 +59,24 @@ add_filter( 'mailpoet_conflict_resolver_whitelist_script', 'newsletterglue_mailp
  */
 function newsletterglue_get_current_post_type() {
 	global $post, $typenow, $current_screen;
-	
-	//we have a post so we can just get the post type from that
+
+	// we have a post so we can just get the post type from that
 	if ( $post && $post->post_type )
 		return $post->post_type;
-    
-	//check the global $typenow - set in admin.php
+
+	// lastly check the post_type querystring
+	elseif( isset( $_GET['post_type'] ) )
+		return sanitize_key( $_GET['post_type'] );
+
+	// check the global $typenow - set in admin.php
 	elseif( $typenow )
 		return $typenow;
     
-	//check the global $current_screen object - set in sceen.php
+	// check the global $current_screen object - set in sceen.php
 	elseif( $current_screen && $current_screen->post_type )
 		return $current_screen->post_type;
-  
-	//lastly check the post_type querystring
-	elseif( isset( $_REQUEST['post_type'] ) )
-		return sanitize_key( $_REQUEST['post_type'] );
 
-	//we do not know the post type!
+	// we do not know the post type!
 	return null;
 }
 
@@ -85,9 +85,10 @@ function newsletterglue_get_current_post_type() {
  */
 function newsletterglue_remove_action_hooks() {
 
-	if ( 'ngl_pattern' === newsletterglue_get_current_post_type() ) {
+	if ( in_array( newsletterglue_get_current_post_type(), array( 'newsletterglue', 'ngl_pattern' ) ) ) {
 		remove_action( 'enqueue_block_editor_assets', 'stackable_block_editor_assets', 20 );
 	}
 
 }
 add_action( 'load-post.php', 'newsletterglue_remove_action_hooks', 1 );
+add_action( 'load-post-new.php', 'newsletterglue_remove_action_hooks', 1 );
