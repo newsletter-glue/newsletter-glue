@@ -32,6 +32,8 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 		add_filter( 'newsletterglue_email_content_sendy', array( $this, 'newsletterglue_email_content_sendy' ), 10, 3 );
 
 		add_action( 'newsletterglue_edit_more_settings', array( $this, 'newsletterglue_edit_more_settings' ), 50, 3 );
+
+		add_filter( 'newsltterglue_sendy_html_content', array( $this, 'html_content' ), 10, 2 );
 	}
 
 	/**
@@ -428,6 +430,16 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 
 		return true;
 
+	}
+
+	/**
+	 * Replace universal tags with esp tags.
+	 */
+	public function html_content( $html, $post_id ) {
+
+		$html = str_replace( '{{ unsubscribe_link }}', '[unsubscribe]', $html );
+
+		return $html;
 	}
 
 }

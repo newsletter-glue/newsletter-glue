@@ -483,10 +483,16 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D', '*%7C', '%7C*' ), array( '{', '}', '$', '[', ']', '*|', '|*' ), $html );
 	$html = str_replace( '@media only screen and (max-width:642px) {', '@media only screen and (max-width:642px) {' . "\r\n", $html );
 
+	// Encode emoji.
 	$html = wp_encode_emoji( $html );
 
-	return apply_filters( 'newsletterglue_generated_html_output', $html, $post->ID, $app );
+	// Formatting of html.
+	$html = apply_filters( 'newsletterglue_generated_html_output', $html, $post->ID, $app );
 
+	// ESP html filter.
+	$html = apply_filters( "newsltterglue_{$app}_html_content", $html, $post->ID );
+
+	return $html;
 }
 
 /**

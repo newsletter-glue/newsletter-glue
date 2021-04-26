@@ -128,7 +128,7 @@ class NGL_CPT {
 				'items_list'            => __( 'Patterns list', 'newsletter-glue' ),
 			),
 			'description'       => __( 'Description', 'newsletter-glue' ),
-			'supports'          => array( 'title', 'editor', 'excerpt' ),
+			'supports'          => array( 'title', 'editor' ),
 			'taxonomies'        => array( 'ngl_pattern_category' ),
 			'show_ui'           => true,
 			'rewrite'           => false,
@@ -338,7 +338,6 @@ class NGL_CPT {
 					'title'       => $block_pattern->post_title,
 					'content'     => $block_pattern->post_content,
 					'categories'  => $pattern_categories,
-					'description' => $block_pattern->post_excerpt,
 				)
 			);
 		}

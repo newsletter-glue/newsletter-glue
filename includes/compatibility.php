@@ -52,5 +52,42 @@ function newsletterglue_mailpoet_js_conflict( $scripts ) {
 	return $scripts;
 
 }
-
 add_filter( 'mailpoet_conflict_resolver_whitelist_script', 'newsletterglue_mailpoet_js_conflict' );
+
+/**
+ * Gets the current post type in the WordPress Admin.
+ */
+function newsletterglue_get_current_post_type() {
+	global $post, $typenow, $current_screen;
+	
+	//we have a post so we can just get the post type from that
+	if ( $post && $post->post_type )
+		return $post->post_type;
+    
+	//check the global $typenow - set in admin.php
+	elseif( $typenow )
+		return $typenow;
+    
+	//check the global $current_screen object - set in sceen.php
+	elseif( $current_screen && $current_screen->post_type )
+		return $current_screen->post_type;
+  
+	//lastly check the post_type querystring
+	elseif( isset( $_REQUEST['post_type'] ) )
+		return sanitize_key( $_REQUEST['post_type'] );
+
+	//we do not know the post type!
+	return null;
+}
+
+/**
+ * Remove action hooks.
+ */
+function newsletterglue_remove_action_hooks() {
+
+	if ( 'ngl_pattern' === newsletterglue_get_current_post_type() ) {
+		remove_action( 'enqueue_block_editor_assets', 'stackable_block_editor_assets', 20 );
+	}
+
+}
+add_action( 'load-post.php', 'newsletterglue_remove_action_hooks', 1 );
