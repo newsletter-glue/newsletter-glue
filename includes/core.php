@@ -486,6 +486,10 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	// Encode emoji.
 	$html = wp_encode_emoji( $html );
 
+	// Native merge tags fix.
+	$html = str_replace( 'http://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
+	$html = str_replace( 'https://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
+
 	// Formatting of html.
 	$html = apply_filters( 'newsletterglue_generated_html_output', $html, $post->ID, $app );
 

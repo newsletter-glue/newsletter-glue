@@ -30,6 +30,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 		$this->get_api_key();
 
+		add_filter( 'newsltterglue_mailchimp_html_content', array( $this, 'html_content' ), 10, 2 );
 	}
 
 	/**
@@ -575,6 +576,16 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 			'helper'		=> '<a href="https://admin.mailchimp.com/account/api-key-popup/" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
 		) );
 
+	}
+
+	/**
+	 * Replace universal tags with esp tags.
+	 */
+	public function html_content( $html, $post_id ) {
+
+		$html = str_replace( '{{ unsubscribe_link }}', '*|UNSUB|*', $html );
+
+		return $html;
 	}
 
 }
