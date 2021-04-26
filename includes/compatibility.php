@@ -92,3 +92,53 @@ function newsletterglue_remove_action_hooks() {
 }
 add_action( 'load-post.php', 'newsletterglue_remove_action_hooks', 1 );
 add_action( 'load-post-new.php', 'newsletterglue_remove_action_hooks', 1 );
+
+/**
+ * Remove metaboxes for our custom cpts.
+ */
+function newsletterglue_remove_metaboxes( $post_type, $post ) {
+	global $wp_meta_boxes;
+
+	/** Check the post type (remove if you don't want/need) */
+    if ( ! in_array( $post_type, array( 'newsletterglue', 'ngl_pattern' ))) :
+		return false;
+	endif;
+
+    /** Create an array of meta boxes exceptions, ones that should not be removed (remove if you don't want/need) */
+	$exceptions = array(
+		'newsletter_glue_metabox'
+	);
+
+	/** Loop through each page key of the '$wp_meta_boxes' global... */
+	if( ! empty( $wp_meta_boxes ) ) : foreach( $wp_meta_boxes as $page => $page_boxes ) :
+
+            /** Loop through each contect... */
+            if( ! empty( $page_boxes ) ) : foreach( $page_boxes as $context => $box_context ) :
+
+                    /** Loop through each type of meta box... */
+                    if( !empty( $box_context ) ) : foreach( $box_context as $box_type ) :
+
+                            /** Loop through each individual box... */
+                            if( !empty( $box_type ) ) : foreach( $box_type as $id => $box ) :
+
+                                    /** Check to see if the meta box should be removed... */
+                                    if( !in_array( $id, $exceptions ) ) :
+
+                                        /** Remove the meta box */
+                                        remove_meta_box($id, $page, $context);
+									endif;
+
+								endforeach;
+							endif;
+
+						endforeach;
+					endif;
+
+				endforeach;
+			endif;
+
+		endforeach;
+	endif;
+
+}
+add_action( 'add_meta_boxes', 'newsletterglue_remove_metaboxes', 99, 2 );
