@@ -128,7 +128,7 @@ class NGL_CPT {
 				'items_list'            => __( 'Patterns list', 'newsletter-glue' ),
 			),
 			'description'       => __( 'Description', 'newsletter-glue' ),
-			'supports'          => array( 'title', 'editor', 'excerpt' ),
+			'supports'          => array( 'title', 'editor' ),
 			'taxonomies'        => array( 'ngl_pattern_category' ),
 			'show_ui'           => true,
 			'rewrite'           => false,
@@ -338,7 +338,6 @@ class NGL_CPT {
 					'title'       => $block_pattern->post_title,
 					'content'     => $block_pattern->post_content,
 					'categories'  => $pattern_categories,
-					'description' => $block_pattern->post_excerpt,
 				)
 			);
 		}
@@ -399,6 +398,8 @@ class NGL_CPT {
 			$terms = get_terms( array(
 				'taxonomy'		=> 'ngl_pattern_category',
 				'hide_false' 	=> false,
+				'orderby'		=> 'term_id',
+				'order'			=> 'asc'
 			) );
 
 			if ( $terms ) {
@@ -460,7 +461,7 @@ class NGL_CPT {
 				foreach( $taxonomies as $tax_slug ) {
 					$tax_obj = get_taxonomy( $tax_slug );
 					$tax_name = $tax_obj->labels->name;
-					$terms = get_terms( $tax_slug );
+					$terms = get_terms( array( 'taxonomy' => $tax_slug, 'hide_empty' => false, 'orderby' => 'term_id', 'order' => 'asc' ) );
 					echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
 					echo "<option value=''>" . __( 'All Categories', 'newsletter-glue' ) . "</option>";
 					foreach ( $terms as $term ) { 
@@ -478,7 +479,7 @@ class NGL_CPT {
 	 */
 	public static function views_edit( $views ) {
 
-		$terms = get_terms( array( 'taxonomy' => 'ngl_pattern_category', 'hide_empty' => false ) );
+		$terms = get_terms( array( 'taxonomy' => 'ngl_pattern_category', 'hide_empty' => false, 'orderby' => 'term_id', 'order' => 'asc' ) );
 
 		unset( $views[ 'publish' ] );
 

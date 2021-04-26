@@ -32,6 +32,8 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 		add_filter( 'newsletterglue_email_content_mailerlite', array( $this, 'newsletterglue_email_content_mailerlite' ), 10, 3 );
 
 		add_action( 'newsletterglue_edit_more_settings', array( $this, 'newsletterglue_edit_more_settings' ), 50, 3 );
+
+		add_filter( 'newsltterglue_mailerlite_html_content', array( $this, 'html_content' ), 10, 2 );
 	}
 
 	/**
@@ -461,6 +463,16 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	 */
 	public function get_email_verify_help() {
 		return 'https://help.mailerlite.com/article/show/29280-how-to-verify-and-authenticate-your-domain#chapter2';
+	}
+
+	/**
+	 * Replace universal tags with esp tags.
+	 */
+	public function html_content( $html, $post_id ) {
+
+		$html = str_replace( '{{ unsubscribe_link }}', '{$unsubscribe}', $html );
+
+		return $html;
 	}
 
 }
