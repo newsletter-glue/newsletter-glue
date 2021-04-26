@@ -583,7 +583,12 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	 */
 	public function html_content( $html, $post_id ) {
 
+		if ( ! defined( 'NGL_SEND_IN_PROGRESS' ) ) {
+			return $html;
+		}
+
 		$html = str_replace( '{{ unsubscribe_link }}', '*|UNSUB|*', $html );
+		$html = str_replace( '{{ address }}', '*|LIST_ADDRESS|*', $html );
 
 		return $html;
 	}
