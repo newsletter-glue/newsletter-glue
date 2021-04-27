@@ -1647,6 +1647,11 @@ add_action( 'newsletterglue_add_custom_styles', 'newsletterglue_add_custom_css',
  * Remove a div by class from html.
  */
 function newsletterglue_remove_div( $html, $class ) {
+
+	if ( ! $html ) {
+		return $html;
+	}
+
     $dom = new \DOMDocument();
 
 	libxml_use_internal_errors( true );
