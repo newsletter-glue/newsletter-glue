@@ -455,7 +455,7 @@ jQuery.fn.selectText = function(){
 
 		el.find( '.ngl-article-suggest' ).empty().hide();
 
-		el.trigger( 'submit' );
+		el.find( 'button' ).trigger( 'click' );
 
 		return false;
 	} );
