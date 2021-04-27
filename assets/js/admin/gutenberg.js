@@ -294,7 +294,7 @@ jQuery.fn.selectText = function(){
 	}
 
 	// When article embed form is submitted.
-	$( document ).on( 'submit', '.ngl-article-add', function( event ) {
+	$( document ).on( 'click', '.ngl-article-add button', function( event ) {
 
 		event.preventDefault();
 

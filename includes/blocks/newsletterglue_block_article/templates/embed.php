@@ -26,7 +26,7 @@ $show_edit_controls = false;
 			</div>
 			<div class="components-placeholder__fieldset">
 				<div class="ngl-article-status"></div>
-				<form class="ngl-article-add">
+				<form class="ngl-article-add" action="" method="post" novalidate>
 					<div class="ngl-article-box">
 						<input type="text" class="components-placeholder__input ngl_article_s" data-post="" placeholder="<?php _e( 'Search for a post or enter URL here…', 'newsletter-glue' ); ?>" value="">
 						<ul class="ngl-article-suggest">
