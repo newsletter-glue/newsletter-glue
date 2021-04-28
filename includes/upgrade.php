@@ -54,15 +54,8 @@ class NGL_Upgrade {
 			<h2>
 				Want more email integrations<br />and design features?
 			</h2>
-			<p style="font-size: 20px;"><a href="https://newsletterglue.com/upgrade53jyt4/" target="_blank"><strong>Upgrade now</strong></a> to get 15% off your first<br /> year. Get started for just $65.</p>
-		</div>
-		<div class="ngl-upgrade-right">
-		
-		</div>
-	</div>
-	<div class="ngl-upgrade">
-		<div class="ngl-upgrade-left">
-
+			<p style="font-size: 20px;"><a href="https://newsletterglue.com/upgrade53jyt4/" target="_blank"><strong>Upgrade now</strong></a> to get 15% off your first<br /> year. Get started for just $64.</p>
+			<div style="height:30px;"></div>
 			<div class="ngl-upgrade-box">
 				<h3>Free plugin features</h3>
 				<div class="ngl-upgrade-lists" style="padding-bottom: 0;">
@@ -74,7 +67,6 @@ class NGL_Upgrade {
 				</div>
 				</div>
 			</div>
-
 			<div class="ngl-upgrade-box">
 				<h3>Pro plugin features</h3>
 
@@ -103,17 +95,13 @@ class NGL_Upgrade {
 				<div class="ngl-upgrade-cta">
 					<a href="https://newsletterglue.com/upgrade53jyt4/" target="_blank">Upgrade to Pro <i class="arrow right icon"></i></a>
 				</div>
-				<p class="ngl-upgrade-small">Starts at just $65 on our lowest tier.</p>
+				<p class="ngl-upgrade-small">Starts at just $64 on our lowest tier.</p>
 
 			</div>
 
 		</div>
 		<div class="ngl-upgrade-right">
 			<h3>FAQ</h3>
-			<h3>Can Newsletter Glue be used with the classic WordPress editor?</h3>
-			<p>Newsletter Glue will work with the classic editor, but it’s not optimised for it.</p>
-			<p>You also won’t be able to use our pro blocks which are built for the Gutenberg block editor.</p>
-			<div style="height:30px;"></div>
 			<h3>Do you offer support for the plugin? What’s it like?</h3>
 			<p>Yes! You can read our <a href="https://docs.newsletterglue.com/" target="_blank" style="color: #003C4E !important;"><strong>knowledge base</strong></a> or <a href="mailto:support@newsletterglue.com" style="color: #003C4E !important;"><strong>email us</strong></a>.</p>
 			<p>We are very responsive and strive to do our best to help you.</p>
