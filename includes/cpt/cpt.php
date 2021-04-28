@@ -95,7 +95,7 @@ class NGL_CPT {
 					'map_meta_cap'        => true,
 					'publicly_queryable'  => false,
 					'exclude_from_search' => true,
-					'show_in_menu'        => current_user_can( 'manage_newsletterglue' ) ? 'newsletter-glue' : true,
+					'show_in_menu'        => false,
 					'hierarchical'        => false,
 					'rewrite'             => false,
 					'query_var'           => false,
