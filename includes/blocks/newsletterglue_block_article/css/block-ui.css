@@ -89,6 +89,7 @@
 
 .ngl-articles .components-placeholder.components-placeholder {
 	min-height: 100px;
+	margin: 0 0 2em;
 }
 
 .ngl-articles input[type=text] {
