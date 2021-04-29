@@ -47,7 +47,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 	wp_enqueue_style( 'newsletterglue_admin_menu_styles' );
 
 	// Admin assets for plugin pages only.
-	if ( in_array( $screen_id, newsletterglue_get_screen_ids() ) ) {
+	if ( in_array( $screen_id, newsletterglue_get_screen_ids() ) || strstr( $screen_id, 'ngl-' ) ) {
 		wp_enqueue_script( 'newsletterglue_semantic' );
 		wp_enqueue_script( 'newsletterglue_flatpickr' );
 		wp_enqueue_script( 'newsletterglue_admin' );
@@ -85,7 +85,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 	}
 
 	// Add media scripts to settings page.
-	if ( 'newsletters_page_ngl-settings' === $screen_id ) {
+	if ( strstr( $screen_id, 'ngl-settings' ) ) {
 		wp_enqueue_media();
 		wp_enqueue_script( 'newsletterglue_theme' );
 		wp_enqueue_style( 'wp-edit-blocks' );
