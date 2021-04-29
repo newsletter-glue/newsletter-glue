@@ -266,10 +266,6 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			flex-basis: 100%;
 		}
 
-		.ngl-form-header {
-			margin-bottom: 10px;
-		}
-
 		.ngl-message-overlay {
 			text-align: center;
 			width: 100%;
@@ -317,9 +313,13 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 			display: none !important;
 			visibility: hidden !important;
 		}
+		
+		.ngl-table-form td {
+			padding: 10px 20px;
+		}
 
-		p.ngl-form-description {
-			Margin-bottom: 15px;
+		.ngl-table-form table td {
+			padding: 0 0 10px;
 		}
 		<?php
 	}
@@ -414,7 +414,7 @@ class NGL_Block_Form extends NGL_Abstract_Block {
 		// remove unwanted elements.
 		$replace = '.wp-block-newsletterglue-form';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->innertext . '</td></tr></table>';
+			$output->find( $replace, $key )->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table-form"><tr><td>' . $element->innertext . '</td></tr></table>';
 		}
 
 		$output->save();

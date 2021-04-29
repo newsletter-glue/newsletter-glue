@@ -218,10 +218,6 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 			mso-hide: all;
 		}
 
-		.ngl-author-btn:hover {
-			color: #fff;
-		}
-
 		.ngl-author-btn-text {
 			min-width: 20px;
 		}
@@ -312,19 +308,19 @@ class NGL_Block_Author extends NGL_Abstract_Block {
 		// Picture cell.
 		$replace = 'div.ngl-author-pic';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<td width="50" style="width: 50px; max-width: 50px !important;vertical-align: ' . $valign . ';" valign="' . $valign . '" class="ngl-td-auto">' . $element->outertext . '</td>';
+			$output->find( $replace, $key )->outertext = '<td width="50" style="width: 50px; max-width: 50px !important;vertical-align: ' . $valign . ';padding: 20px;" valign="' . $valign . '" class="ngl-td-auto">' . $element->outertext . '</td>';
 		}
 
 		// Meta cell.
 		$replace = 'div.ngl-author-meta';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->outertext = '<td width="auto" style="vertical-align: ' . $valign . ';" valign="' . $valign . '" class="ngl-td-auto">' . $element->outertext . '</td>';
+			$output->find( $replace, $key )->outertext = '<td width="auto" style="vertical-align: ' . $valign . ';padding: 20px 20px 20px 0;" valign="' . $valign . '" class="ngl-td-auto">' . $element->outertext . '</td>';
 		}
 
 		// Put every author bio in a table.
 		$replace = 'div.wp-block-newsletterglue-author';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->innertext = '<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr>' . $element->innertext . '</tr></table>';
+			$output->find( $replace, $key )->innertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table-author"><tr>' . $element->innertext . '</tr></table>';
 		}
 
 		$output->save();

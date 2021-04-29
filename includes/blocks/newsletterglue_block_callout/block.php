@@ -226,6 +226,8 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 				$styles .= "$key: $value;";
 			}
 
+			$original_gap = absint( $gap );
+
 			$gap = $gap - 10;
 
 			if ( $gap <= 0 ) {
@@ -233,6 +235,8 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 			}
 
 			$color = ! empty( $results[ 'color' ] ) ? $results[ 'color' ] : '';
+
+			$top = $original_gap - 10;
 
 			if ( ! empty( $color ) ) {
 				foreach( $element->find( '*' ) as $child => $el ) {
@@ -244,18 +248,34 @@ class NGL_Block_Callout extends NGL_Abstract_Block {
 
 			$bg = ! empty( $results[ 'background-color' ] ) ? $results[ 'background-color' ] : 'transaprent';
 
+			$is_bordered = ! empty( $results[ 'border-width' ] ) ? absint( $results[ 'border-width' ] ) * 2 : 0;
+			$is_bordered = ! empty( $results[ 'border-style' ] ) && $results[ 'border-style' ] == 'none' ? 0 : $is_bordered;
+
+			$boxed = false;
+
+			$container_padding = '10px 20px';
+
+			if ( $boxed ) {
+				$container_padding = 0;
+			}
+
+			$boxed_gap = $boxed ? 0 : 40;
+
+			$image_width_for_callout = floor( 600 - ( $original_gap * 2 ) ) - $boxed_gap - $is_bordered;
+
+			foreach( $element->find( 'img' ) as $image_id => $image_el ) {
+				$image_el->width = $image_width_for_callout;
+				$image_el->height = '';
+			}
+
 			$element->outertext = '
-			<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table-callout">
 				<tr>
-					<td valign="top" style="vertical-align: top;margin:0;">
+					<td valign="top" style="vertical-align: top;padding: ' . $container_padding . ';">
 						<div style="' . $styles . '">
 						<table bgcolor="' . $bg . '" class="' . $element->class . '" border="0" width="100%" cellpadding="0" cellspacing="0" style="font-size: inherit !important;mso-table-lspace: 0pt; mso-table-rspace: 0pt;border: 0 !important;width: 100% !important;' . $styles . '">
 							<tr>
-								<td width="' . $gap . '" style="width:' . $gap . 'px;vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top" class="ngl-td-clean">&nbsp;</td>
-								<td class="ngl-callout-content" style="border:none; vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top">
-									<table width="100%" border="0" cellpadding="' . absint( $gap / 2 ) .'" cellspacing="0"><tr><td></td></tr></table>' . $element->innertext . '
-									<table width="100%" border="0" cellpadding="' . absint( $gap / 2 ) .'" cellspacing="0"><tr><td></td></tr></table></td>
-								<td width="' . $gap . '" style="width:' . $gap . 'px;vertical-align: top; font-size: inherit !important;padding: 0 !important;" valign="top" class="ngl-td-clean">&nbsp;</td>
+								<td class="ngl-callout-content" style="border:none; vertical-align: top; font-size: inherit !important;padding: ' . $top . 'px ' . $original_gap . 'px;" valign="top">' . $element->innertext . '</td>
 							</tr>
 						</table>
 						</div>

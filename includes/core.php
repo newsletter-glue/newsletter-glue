@@ -13,14 +13,6 @@ add_filter( 'newsletterglue_settings_tab_blocks_save_button', '__return_false' )
 add_filter( 'newsletterglue_settings_tab_connect_save_button', '__return_false' );
 
 /**
- * To make spacing consistent across all tables.
- */
-function newsletterglue_padding_factor() {
-
-	return apply_filters( 'newsletterglue_padding_factor', 10 );
-}
-
-/**
  * Creates a preview for emails.
  */
 function newsletterglue_preview_emails() {
@@ -57,7 +49,7 @@ function newsletterglue_preview_emails() {
 		echo $message;
 
 		// Debug
-		// echo round( strlen( $message ) / 1024 ) . 'kb';
+		echo round( strlen( $message ) / 1024 ) . 'kb';
 
 		exit;
 
@@ -435,11 +427,11 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	if ( $position == 'above' ) {
 		$the_content .= newsletterglue_add_masthead_image( $post, 'above' );
 		if ( $show_title !== 'no' ) {
-			$the_content .= '<h1>' . $title . '</h1>';
+			$the_content .= '<h1 class="title">' . $title . '</h1>';
 		}
 	} else {
 		if ( $show_title !== 'no' ) {
-			$the_content .= '<h1>' . $title . '</h1>';
+			$the_content .= '<h1 class="title">' . $title . '</h1>';
 		}
 		$the_content .= newsletterglue_add_masthead_image( $post, 'below' );
 	}
@@ -465,9 +457,13 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$html = str_replace( '{post_permalink}', get_permalink( $post->ID ), $html );
 	$html = str_replace( '{post_permalink_preview}', add_query_arg( 'preview_email', $post->ID, get_permalink( $post->ID ) ), $html );
 
+	// Filter for original content. before email work.
 	$html = apply_filters( 'newsletterglue_generate_content', $html, $post );
 
-	// Inline CSS.
+	// Email compatible emails.
+	$html = apply_filters( 'newsletterglue_generated_html_output', $html, $post->ID, $app );
+
+	// Emogrify process.
 	$emogrifier_class = '\\Pelago\\Emogrifier';
 	if ( ! class_exists( $emogrifier_class ) ) {
 		include_once NGL_PLUGIN_DIR . 'includes/libraries/class-emogrifier.php';
@@ -479,24 +475,16 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	}
 
-	// Fixes emogrifier encoding bugs.
 	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D', '*%7C', '%7C*' ), array( '{', '}', '$', '[', ']', '*|', '|*' ), $html );
 	$html = str_replace( '@media only screen and (max-width:642px) {', '@media only screen and (max-width:642px) {' . "\r\n", $html );
-
-	// Encode emoji.
 	$html = wp_encode_emoji( $html );
-
-	// Native merge tags fix.
 	$html = str_replace( 'http://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
 	$html = str_replace( 'https://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
-
-	// Formatting of html.
-	$html = apply_filters( 'newsletterglue_generated_html_output', $html, $post->ID, $app );
 
 	// ESP html filter.
 	$html = apply_filters( "newsltterglue_{$app}_html_content", $html, $post->ID );
 
-	return $html;
+	return apply_filters( 'newsletterglue_final_html_content', $html );
 }
 
 /**
@@ -545,16 +533,12 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 				}
 			}
 			if ( isset( $results[ 'flex-basis' ] ) ) {
-				$width = 'width: ' . $results[ 'flex-basis' ] . ';';
+				$width = absint( $results[ 'flex-basis' ] ) / 100 * 600;
 			} else {
-				if ( $col_count == 2 ) {
-					$width = 'width: 50%;';
-				} else if ( $col_count == 3 ) {
-					$width = 'width: 33.33%;';
-				} else {
-					$width = 'width: 100%;';
-				}
+				$width = 600 / $col_count;
 			}
+		} else {
+
 		}
 
 		$valign = 'top';
@@ -566,13 +550,13 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 			$valign = 'bottom';
 		}
 
-		$output->find( $replace, $key )->outertext = '<td style="' . $width . 'vertical-align: ' . $valign . ';" valign="' . $valign . '">' . $element->innertext . '</td>';
+		$output->find( $replace, $key )->outertext = '<td width="' . $width . '" style="vertical-align: ' . $valign . ';" valign="' . $valign . '">' . $element->innertext . '</td>';
 	}
 
 	// Add columns wrapper as a table.
 	$replace = '.wp-block-columns';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->innertext = '<table class="ngl-table-index" border="0" width="100%" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="table-layout: fixed; mso-table-lspace: 0; mso-table-rspace: 0;"><tr>' . $element->innertext . '</tr></table>';
+		$output->find( $replace, $key )->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table-columns"><tr>' . $element->innertext . '</tr></table>';
 	}
 
 	// Change all figures.
@@ -584,42 +568,12 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 	// Convert embed metadata to table.
 	$replace = '.ngl-embed-metadata';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->outertext = '<table width="100%" border="0" cellpadding="20" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td width="50%" align="left" valign="top" style="vertical-align: top;margin:0 !important;">' . $element->outertext . '</td>';
+		$output->find( $replace, $key )->outertext = '<table width="100%" border="0" cellpadding="20" cellspacing="0"><tr><td width="50%" align="left" valign="top" style="vertical-align: top;margin:0 !important;">' . $element->outertext . '</td>';
 	}
 
 	$replace = '.ngl-embed-icon';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$output->find( $replace, $key )->outertext = '<td width="50%" align="right" valign="top" style="vertical-align: top;margin:0 !important;">' . $element->outertext . '</td></tr></table>';
-	}
-
-	// Cite.
-	$replace = 'cite';
-	$cite_style = 'font-weight: bold;font-size: 14px;font-style:normal;margin-top:10px;display:block;';
-	foreach( $output->find( $replace ) as $key => $element ) {
-		if ( $element->style ) {
-			$element->style = $element->style . ';' . $cite_style;
-		} else {
-			$element->style = $cite_style;
-		}
-	}
-
-	// Quotes.
-	$replace = 'blockquote';
-	foreach( $output->find( $replace ) as $key => $element ) {
-		$style = $element->style;
-		$align = 'left';
-		if ( strstr( $style, 'left' ) ) {
-			$align = 'left';
-		} else if ( strstr( $style, 'right' ) ) {
-			$align = 'right';
-		} else if ( strstr( $style, 'center' ) ) {
-			$align = 'center';
-		}
-		$accent = '#eee';
-		if ( newsletterglue_get_theme_option( 'a_colour' ) ) {
-			$accent = newsletterglue_get_theme_option( 'a_colour' );
-		}
-		$output->find( $replace, $key )->outertext = '<div class="ngl-quote" style="margin-left: 0;border-' . $align . ': 2px solid ' . $accent . ';padding-' . $align . ': 20px;' . $style . '">' . $element->innertext . '</div>';
 	}
 
 	// Gallery block.
@@ -636,7 +590,7 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 		if ( strstr( $class, 'columns-2' ) ) {
 			$cols = 2;
 		}
-		$html = '<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr>';
+		$html = '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>';
 		$i = 0;
 		foreach( $element->find( 'li' ) as $item => $list ) {
 			$i++;
@@ -653,7 +607,8 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 
 	$replace = '#template_inner > div > img, #template_inner > div > a';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->outertext = '<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+		$class = ! empty( $element->class ) ? ' ngl-table-' . $element->class : '';
+		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-' . $element->tag . $class . '"><tr><td>' . $element->outertext . '</td></tr></table>';
 	}
 
 	// Spacers.
@@ -697,7 +652,7 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 
 	$replace = '#template_inner > div > img, #template_inner > div.wp-block-image img';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->outertext = '<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
 	}
 
 	// Outlook button fix.
@@ -787,6 +742,55 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 		}
 	}
 
+	// Cite.
+	$replace = 'cite';
+	$cite_style = 'font-weight: bold;font-size: 14px;font-style:normal;margin-top:10px;display:block;';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( $element->style ) {
+			$element->style = $element->style . ';' . $cite_style;
+		} else {
+			$element->style = $cite_style;
+		}
+	}
+
+	// Quotes.
+	$replace = 'blockquote';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$style = $element->style;
+		$align = 'left';
+		if ( strstr( $style, 'left' ) ) {
+			$align = 'left';
+		} else if ( strstr( $style, 'right' ) ) {
+			$align = 'right';
+		} else if ( strstr( $style, 'center' ) ) {
+			$align = 'center';
+		}
+		$accent = '#eee';
+		if ( newsletterglue_get_theme_option( 'a_colour' ) ) {
+			$accent = newsletterglue_get_theme_option( 'a_colour' );
+		}
+		$output->find( $replace, $key )->outertext = '<div class="ngl-quote" style="margin-left: 0;border-' . $align . ': 2px solid ' . $accent . ';padding-' . $align . ': 20px;' . $style . '">' . $element->innertext . '</div>';
+	}
+
+	// Set td widths.
+	$replace = '.ngl-table-columns';
+	$total = 0;
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$col_count = 0;
+		foreach( $element->find( 'td' ) as $a => $td ) {
+			$total = $total + absint( $td->width );
+			$unset = 600 - $total;
+			if ( ! $td->width ) {
+				$col_count = $col_count + 1;
+			}
+		}
+		foreach( $element->find( 'td' ) as $a => $td ) {
+			if ( ! $td->width && $unset != 600 ) {
+				$td->width = $unset / $col_count;
+			}
+		}
+	}
+
 	$output->save();
 
 	return ( string ) $output;
@@ -805,23 +809,23 @@ function newsletterglue_generated_html_output_hook3( $html, $post_id, $app ) {
 
 	$replaces = array();
 	$elements = array(
-		'#template_inner > h1',
-		'#template_inner > h2',
-		'#template_inner > h3',
-		'#template_inner > h4',
-		'#template_inner > h5',
-		'#template_inner > h6',
-		'#template_inner > p',
-		'#template_inner > ol',
-		'#template_inner > ul',
-		'#template_inner > figure',
-		'#template_inner > .ngl-quote',
-		'#template_inner > .wp-block-buttons',
-		'#template_inner > .ngl-embed-social',
-		'#template_inner > .wp-block-table > table',
-		'#template_inner > hr',
-		'#template_inner > img.wp-image',
-		'#template_inner > .ngl-spacer',
+		'#template_inner h1',
+		'#template_inner h2',
+		'#template_inner h3',
+		'#template_inner h4',
+		'#template_inner h5',
+		'#template_inner h6',
+		'#template_inner p',
+		'#template_inner ol',
+		'#template_inner ul',
+		'#template_inner figure',
+		'#template_inner .ngl-quote',
+		'#template_inner .wp-block-buttons',
+		'#template_inner .ngl-embed-social',
+		'#template_inner .wp-block-table > table',
+		'#template_inner hr',
+		'#template_inner img.wp-image',
+		'#template_inner .ngl-spacer',
 		'.ngl-article-img-full',
 	);
 
@@ -841,7 +845,12 @@ function newsletterglue_generated_html_output_hook3( $html, $post_id, $app ) {
 
 	$replace = implode( ', ', $replaces );
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->outertext = '<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
+		if ( strstr( $element->innertext, 'mso]' ) || strstr( $element->innertext, 'endif]' ) ) {
+			$element->outertext = $element->innertext;
+			continue;
+		}
+		$class = ! empty( $element->class ) ? ' ngl-table-' . $element->class : '';
+		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-' . $element->tag . $class . '"><tr><td>' . $element->outertext . '</td></tr></table>';
 	}
 
 	$output->save();
@@ -860,6 +869,10 @@ function newsletterglue_generated_html_output_hook4( $html, $post_id, $app ) {
 
 	$replace = '#template_inner img';
 	foreach( $output->find( $replace ) as $key => $element ) {
+
+		if ( strstr( $element->class, 'callout-img' ) ) {
+			continue;
+		}
 
 		if ( $element->parent()->parent()->tag && $element->parent()->parent()->tag == 'td' ) {
 			$td = $element->parent()->parent();
@@ -953,15 +966,28 @@ function newsletterglue_generated_html_output_highest_priority( $html, $post_id,
 	// Meta data.
 	$replace = 'div.ngl-metadata';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$s = $element->style;
-		$element->find( 'td', 0 )->style = $element->find( 'td', 0 )->style . $s;
-		$element->outertext = $element->innertext;
+		if ( $element->find( 'td', 0 ) ) {
+			$s = $element->style;
+			$element->find( 'td', 0 )->style = $element->find( 'td', 0 )->style . $s;
+			$element->outertext = $element->innertext;
+		}
 	}
 
 	// Author.
 	$replace = 'div.ngl-author';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$element->outertext = $element->innertext;
+	}
+
+	// Images inside block columns.
+	$replace = '.ngl-table-columns td';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( $element->width ) {
+			foreach( $element->find( 'img' ) as $image_id => $image_el ) {
+				$image_el->width = $element->width - 40;
+				$image_el->height = '';
+			}
+		}
 	}
 
 	$output->save();
@@ -974,11 +1000,6 @@ function newsletterglue_generated_html_output_highest_priority( $html, $post_id,
  * Get image widths.
  */
 function newsletterglue_get_image_width_by_td( $td, $threshold = 600 ) {
-
-	$gap = false;
-	if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) {
-		$gap = true;
-	}
 
 	$count = count( $td->parent()->children() );
 	if ( $td->style ) {
@@ -1006,7 +1027,7 @@ function newsletterglue_get_image_width_by_td( $td, $threshold = 600 ) {
 		return false;
 	}
 
-	$image_width = ( $clean_width / 100.00 ) * ( $threshold - ( 20 * $count ) - ( $gap ? 20 : 0 ) );
+	$image_width = ( $clean_width / 100.00 ) * ( $threshold - ( 20 * $count ) - 20 );
 
 	return $image_width;
 }
@@ -1026,9 +1047,9 @@ function newsletterglue_add_logo() {
 
 	if ( $logo ) {
 		if ( esc_url( $logo_url ) ) {
-			return '<div class="ngl-logo ngl-logo-' . $logo_position . '"><a href="' . esc_url( $logo_url ) . '" target="_blank" style="display: inline-block;"><img class="ngl-logo-image" src="' . esc_url( $logo ) . '" /></a></div>';
+			return '<div class="ngl-logo ngl-logo-' . $logo_position . '"><a href="' . esc_url( $logo_url ) . '" target="_blank" style="display: inline-block;" class="logo"><img class="logo-image" src="' . esc_url( $logo ) . '" /></a></div>';
 		} else {
-			return '<div class="ngl-logo ngl-logo-' . $logo_position . '"><img class="ngl-logo-image" src="' . esc_url( $logo ) . '" /></div>';
+			return '<div class="ngl-logo ngl-logo-' . $logo_position . '"><img class="logo-image" src="' . esc_url( $logo ) . '" /></div>';
 		}
 	}
 
@@ -1049,7 +1070,7 @@ function newsletterglue_add_masthead_image( $post, $position = 'below' ) {
 	if ( $use_image ) {
 		$url = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
 		if ( $url ) {
-			return '<div class="ngl-masthead ngl-masthead-' . $position . '"><img src="' . $url . '"></div>';
+			return '<div class="ngl-masthead ngl-masthead-' . $position . '"><img src="' . $url . '" class="masthead" /></div>';
 		}
 	}
 
@@ -1118,14 +1139,14 @@ function newsletterglue_get_theme_default( $key ) {
 		'h4_colour'					=> '#333333',
 		'h5_colour'					=> '#333333',
 		'h6_colour'					=> '#333333',
-		'p_colour'					=> '#333333',
+		'p_colour'					=> '#666666',
 		'h1_size'					=> 32,
 		'h2_size'					=> 28,
 		'h3_size'					=> 24,
 		'h4_size'					=> 22,
 		'h5_size'					=> 20,
 		'h6_size'					=> 18,
-		'p_size'					=> 18,
+		'p_size'					=> 16,
 		'h1_align'					=> 'left',
 		'h2_align'					=> 'left',
 		'h3_align'					=> 'left',
@@ -1142,7 +1163,7 @@ function newsletterglue_get_theme_default( $key ) {
 		'btn_radius'				=> 0,
 		'btn_border'				=> '#0088A0',
 		'btn_width'					=> 150,
-		'container_padding1'		=> 20,
+		'container_padding1'		=> 0,
 		'container_margin'			=> 0,
 		// Mobile.
 		'mobile_h1_size'			=> 28,
@@ -1293,8 +1314,34 @@ span.yshortcuts:hover,
 span.yshortcuts:active,
 span.yshortcuts:focus {color: #000; background-color:none; border:none;}
 
-table td {
+table {
+	mso-table-lspace: 0pt;
+	mso-table-rspace: 0pt;
+}
 
+.ngl-table td {
+	padding: 10px 20px;
+}
+
+.ngl-table-masthead td {
+	padding: 10px 20px;
+}
+
+.ngl-table-ngl-credits td {
+	padding: 20px;
+}
+
+.ngl-table-callout .wp-block-newsletterglue-callout td {
+	padding: 0;
+}
+
+.ngl-table-callout .wp-block-newsletterglue-callout .ngl-callout-content td {
+	padding: 10px 0;
+}
+
+.ngl-table-ngl-unsubscribe td {
+	border-top: 1px solid #eee;
+	padding: 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -1302,7 +1349,7 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: 100%; 
 }
 
-a, a:link {
+a {
 	color:#2A5DB0;
 	text-decoration: underline;
 }
@@ -1330,12 +1377,10 @@ hr {
 }
 
 #template_inner {
-	<?php if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) { ?>
-	padding-left: 10px;
-	padding-right: 10px;
-	<?php } ?>
 	background: <?php echo newsletterglue_get_theme_option( 'container_bg' ); ?>;
 	box-sizing: border-box;
+	padding-left: 0;
+	padding-right: 0;
 	padding-top: <?php echo absint( newsletterglue_get_theme_option( 'container_padding1' ) ); ?>px;
 	padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'container_padding1' ) ); ?>px;
 }
@@ -1391,6 +1436,10 @@ p, ul, ol, li {
 }
 <?php } ?>
 
+blockquote {
+	margin: 0;
+}
+
 blockquote p {
 	text-align: inherit !important;
 }
@@ -1414,6 +1463,7 @@ figcaption {
 #template_inner img {
 	max-width: 100%;
 	display: block;
+	width: auto;
 	height: auto;
 }
 
@@ -1432,13 +1482,6 @@ ul.blocks-gallery-grid {
 	list-style-type: none;
 }
 
-#template_inner td table {
-	table-layout: auto;
-	width: 100%;
-	border-collapse: collapse;
-	border: 0;
-}
-
 #template_inner .wp-block-table table {
 	width: 100%;
 	border: 0;
@@ -1450,18 +1493,8 @@ ul.blocks-gallery-grid {
 	padding: 10px;
 }
 
-#template_inner .wp-block-table table.has-fixed-layout {
-	table-layout: fixed !important;
-}
-
 #template_inner td table img {
 	margin: 0;
-}
-
-#template_inner td.ngl-td-clean {
-	border: 0;
-	width: 100%;
-	font-size: inherit !important;
 }
 
 #template_inner td.ngl-td-auto {
@@ -1469,28 +1502,17 @@ ul.blocks-gallery-grid {
 	font-size: inherit !important;
 }
 
-#template_inner table.ngl-table-clean {
-	border: 0;
-}
-
 p.ngl-credits,
 p.ngl-unsubscribe {
 	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ) - 2 ; ?>px;
 	text-align: center;
 	color: #999 !important;
-	margin: 20px 0 !important;
 }
 
 p.ngl-credits a,
 p.ngl-unsubscribe a {
 	color: #999 !important;
 	text-decoration: underline;
-}
-
-p.ngl-unsubscribe {
-	margin-top: 0 !important;
-	padding-top: 20px !important;
-	border-top: 1px solid #eee !important;
 }
 
 .wp-block-buttons.is-content-justification-center {
@@ -1554,7 +1576,7 @@ p.ngl-unsubscribe {
 	visibility: hidden !important;
 }
 
-#template_inner .ngl-logo img {
+#template_inner .ngl-table-logo img {
 	margin: 0 !important;
 	display: block !important;
 	max-height: 75px;
@@ -1603,7 +1625,7 @@ p.ngl-unsubscribe {
 		min-width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px !important;
 	}
 
-	#template_inner .ngl-logo img {
+	#template_inner .ngl-table-logo img {
 		max-height: 60px !important;
 	}
 

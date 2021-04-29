@@ -468,7 +468,7 @@ class NGL_Pro {
 
 		$url = esc_url( urldecode( trim( $url ) ) );
 
-		$html = '<table border="0" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;mso-table-lspace:0;mso-table-rspace:0;"><tr><td align="left" valign="top" style="vertical-align: top;margin:0 !important;padding: 0 !important;"><a href="' . $url . '" target="_blank" style="margin:0!important;"><img src="' . $image_url . '" class="embed-thumb-youtube" style="margin:0 !important;" /></a></td></tr></table>';
+		$html = '<table width="100%" border="0"cellpadding="0" cellspacing="0"><tr><td align="left" valign="top" style="vertical-align: top;margin:0 !important;padding: 0 !important;"><a href="' . $url . '" target="_blank" style="margin:0!important;"><img src="' . $image_url . '" class="embed-thumb-youtube" style="margin:0 !important;" /></a></td></tr></table>';
 
 		$html .= '<div class="ngl-embed-meta">
 					<div class="ngl-embed-metadata">

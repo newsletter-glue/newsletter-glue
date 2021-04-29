@@ -41,10 +41,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div id="wrapper" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
 
 		<center>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="mso-table-lspace:0;mso-table-rspace:0" id="template_wrapper">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="template_wrapper">
 				<tr>
 					<td align="center" valign="top" style="text-align:center;">
-						<table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" class="main" style="text-align: left; margin-left: auto; margin-right: auto;table-layout: fixed;" id="template_container">
+						<table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" class="main" style="text-align: left; margin-left: auto; margin-right: auto;" id="template_container">
 							<tr>
 								<td>
 									<table width="600" id="template_table" align="center" border="0" cellspacing="0" cellpadding="0">

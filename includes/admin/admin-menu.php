@@ -23,7 +23,7 @@ function newsletterglue_add_admin_menu() {
 		</svg>'
 	);
 
-	$admin_page			= add_menu_page( __( 'Newsletters', 'newsletter-glue' ), __( 'Newsletters', 'newsletter-glue' ), 'manage_newsletterglue', 'newsletter-glue', null, 'data:image/svg+xml;base64,' . $ngicon, '25.5471' );
+	$admin_page			= add_menu_page( __( 'Newsletters (beta)', 'newsletter-glue' ), __( 'Newsletters (beta)', 'newsletter-glue' ), 'manage_newsletterglue', 'newsletter-glue', null, 'data:image/svg+xml;base64,' . $ngicon, '25.5471' );
 
 	$issues 			= add_submenu_page( 'newsletter-glue', __( 'All Newsletters', 'newsletter-glue' ), __( 'All Newsletters', 'newsletter-glue' ), 'manage_newsletterglue', 'edit.php?post_type=newsletterglue' );
 	$new_issue_page 	= add_submenu_page( 'newsletter-glue', __( 'Add New Newsletter', 'newsletter-glue' ), __( 'Add New Newsletter', 'newsletter-glue' ), 'manage_newsletterglue', 'post-new.php?post_type=newsletterglue' );

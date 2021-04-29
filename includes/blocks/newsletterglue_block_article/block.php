@@ -366,7 +366,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 }
 
 .ngl-article-title a {
-	font-weight: bold;
 	text-decoration: none;
 }
 
@@ -376,6 +375,10 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 .ngl-article-featured {
 	margin: 0 0 14px;
+}
+
+.ngl-table-article .ngl-article-featured {
+	margin: 0;
 }
 
 .ngl-article-featured a {
@@ -1233,11 +1236,6 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 	 */
 	public function tableize( $content, $attributes = array() ) {
 
-		$gap = false;
-		if ( newsletterglue_get_theme_option( 'email_bg' ) != newsletterglue_get_theme_option( 'container_bg' ) ) {
-			$gap = true;
-		}
-
 		$output = new simple_html_dom();
 		$output->load( $content, true, false );
 
@@ -1248,7 +1246,7 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 
 		$img = '.ngl-article-featured img';
 		foreach( $output->find( $img ) as $a => $b ) {
-			$b->width = $gap ? 560 : 580;
+			$b->width = 560;
 			$b->style = $b->style . 'display: block; max-width: 100%; min-width: 50px; width: 100%;';
 		}
 
@@ -1257,22 +1255,22 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		foreach( $output->find( $replace ) as $key => $element ) {
 			if ( $table_ratio == '30_70' ) {
 				$width = '30%';
-				$img_size = $gap ? 154 : 160;
+				$img_size = 140;
 			}
 			if ( $table_ratio == '70_30' ) {
 				$width = '70%';
-				$img_size = $gap ? 386 : 400;
+				$img_size = 380;
 			}
 			if ( $table_ratio == '50_50' ) {
 				$width = '50%';
-				$img_size = $gap ? 270 : 280;
+				$img_size = 260;
 			}
 			$img = '.ngl-article-featured img';
 			foreach( $output->find( $img ) as $a => $b ) {
 				$b->width = $img_size;
 				$b->style = $b->style . 'display: block; max-width: 100%; min-width: 50px; width: 100%;';
 			}
-			$output->find( $replace, $key )->outertext = '<td style="width: ' . $width . '; vertical-align: top; font-size: inherit !important;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
+			$output->find( $replace, $key )->outertext = '<td style="padding: 10px 20px;width: ' . $width . '; vertical-align: top; font-size: inherit !important;" valign="top">' . $element->innertext . '</td>';
 		}
 
 		// Right side.
@@ -1280,28 +1278,34 @@ class NGL_Block_Article extends NGL_Abstract_Block {
 		foreach( $output->find( $replace ) as $key => $element ) {
 			if ( $table_ratio == '30_70' ) {
 				$width = '70%';
-				$img_size = $gap ? 386 : 400;
+				$img_size = 380;
 			}
 			if ( $table_ratio == '70_30' ) {
 				$width = '30%';
-				$img_size = $gap ? 154 : 160;
+				$img_size = 140;
 			}
 			if ( $table_ratio == '50_50' ) {
 				$width = '50%';
-				$img_size = $gap ? 270 : 280;
+				$img_size = 260;
 			}
 			$img = '.ngl-article-featured img';
 			foreach( $output->find( $img ) as $a => $b ) {
 				$b->width = $img_size;
 				$b->style = $b->style . 'display: block; max-width: 100%; min-width: 50px; width: 100%;';
 			}
-			$output->find( $replace, $key )->outertext = '<td style="width: ' . $width . ';vertical-align: top;" valign="top" class="ngl-td-clean">' . $element->innertext . '</td>';
+			$output->find( $replace, $key )->outertext = '<td style="padding: 10px 20px;width: ' . $width . ';vertical-align: top;" valign="top">' . $element->innertext . '</td>';
 		}
 
 		// Left and Right article wrappers.
 		$replace = 'div.ngl-article.ngl-article-img-left, div.ngl-article.ngl-article-img-right';
 		foreach( $output->find( $replace ) as $key => $element ) {
-			$output->find( $replace, $key )->innertext = '<table class="ngl-table-clean ngl-table-article" border="0" width="100%" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0; font-size: inherit !important;table-layout: fixed;"><tr>' . $element->innertext . '</tr></table>';
+			$output->find( $replace, $key )->innertext = '<table class="ngl-table-article" border="0" width="100%" cellpadding="0" cellspacing="0" style="border: 0; font-size: inherit !important;"><tr>' . $element->innertext . '</tr></table>';
+		}
+
+		// Remove articles div.
+		$replace = 'div.ngl-articles';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table-posts"><tr><td>' . $element->innertext . '</td></tr></table>';
 		}
 
 		$output->save();

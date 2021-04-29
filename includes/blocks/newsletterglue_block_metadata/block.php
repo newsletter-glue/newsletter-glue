@@ -193,23 +193,20 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 	 */
 	public function email_css() {
 		?>
-		.ngl-metadata {
+		.ngl-table-metadata td {
 			font-size: 12px;
-			min-height: 50px;
-		}
-		
-		.ngl-metadata img {
-			display: inline-block !important;
-			margin: 0 !important;
+			padding: 10px 20px;
 		}
 
-		.ngl-metadata img.ngl-metadata-permalink-arrow {
+		.ngl-table-metadata img.ngl-metadata-permalink-arrow {
+			display: inline-block !important;
 			width: 10px !important;
 			height: 10px !important;
 			margin: 0 0 0 4px !important;
 		}
 
-		.ngl-metadata img.avatar {
+		.ngl-metadata-img.avatar {
+			display: inline-block !important;
 			vertical-align: middle !important;
 			width: 30px !important;
 			height: 30px !important;
@@ -217,56 +214,16 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 			margin: 0 4px 0 0 !important;
 		}
 
-		img.ngl-metadata-map-pin {
+		.ngl-table-metadata img.ngl-metadata-map-pin {
+			display: inline-block !important;
 			width: 12px !important;
 			height: 14px !important;
 			margin: 0 !important;
 		}
 
-		.ngl-metadata > div {
-			padding: 0 2px;
-			display: inline-block;
-			vertical-align: middle;
-		}
-
-		.ngl-metadata .ngl-metadata-sep {
-			text-align: center;
-			width: 2px;
-			color: #aaa;
-		}
-
-		.ngl-metadata-permalink-arrow {
-			width: 10px !important;
-			display: inline-block !important;
-			margin: 0 0 0 4px !important;
-		}
-
 		.ngl-metadata-permalink {
 			text-decoration: underline !important;
 			cursor: pointer;
-		}
-
-		.ngl-metadata-pic {
-			width: 30px;
-			height: 30px;
-		}
-
-		.ngl-metadata-pic img {
-			width: 30px;
-			height: 30px;
-			border-radius: 999px;
-			margin: 0 6px 0 0;
-			position: relative;
-			display: inline-block !important;
-		}
-
-		.ngl-metadata .ngl-metadata-readtime,
-		.ngl-metadata .ngl-metadata-pic {
-			padding-right: 0;
-		}
-		.ngl-metadata .ngl-metadata-readtime-ajax,
-		.ngl-metadata .ngl-metadata-pic {
-			padding-left: 0;
 		}
 		<?php
 	}
@@ -347,7 +304,7 @@ class NGL_Block_Metadata extends NGL_Abstract_Block {
 				}
 			}
 
-			$output->find( $replace, $key )->innertext = $output->find( $replace, $key )->innertext = '<table width="100%" border="0" cellpadding="' . newsletterglue_padding_factor() . '" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;"><tr><td valign="middle" align="' . $align . '">' . $element->innertext . '</td></tr></table>';
+			$output->find( $replace, $key )->innertext = $output->find( $replace, $key )->innertext = '<table class="ngl-table-metadata" width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td valign="middle" align="' . $align . '">' . $element->innertext . '</td></tr></table>';
 		}
 
 		$output->save();
