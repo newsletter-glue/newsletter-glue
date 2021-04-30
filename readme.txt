@@ -192,6 +192,16 @@ Yes! Check it out [here](https://newsletterglue.com).
 
 == Changelog ==
 
+= 1.3.1, May 1, 2021 =
+
+* **Major change:** From this version onwards, ActiveCampaign, Campaign Monitor, GetResponse, MailerLite and Sendinblue will no longer be connected in the free version. Upgrade to the pro plugin to stay connected.
+* **Major change:** From this version onwards, Newsletter Theme Designer will no longer be available in the free version. Your design settings will remain, but you will no longer be able to make changes to them.
+* **New feature:** We've now added newsletter accent colour for simple selection of colour for your links, buttons and block quotes.
+* **Bug fix:** Mailchimp merge tags were not working properly due to an encoding issue with our internal newsletter API. This is now fixed.
+* **Improvement:** When duplicating a post now, the settings will be taken to new post. Only without the status / history.
+* **Improvement:** Further improvements made to Outlook formatting including buttons and spacers formatting.
+* **Improvement:** We've reduced the size of our email template by 50-60%.
+
 = 1.3.0, March 29, 2021 =
 
 **Improvements**
