@@ -49,7 +49,7 @@ function newsletterglue_preview_emails() {
 		echo $message;
 
 		// Debug
-		echo round( strlen( $message ) / 1024 ) . 'kb';
+		// echo round( strlen( $message ) / 1024 ) . 'kb';
 
 		exit;
 
@@ -846,8 +846,10 @@ function newsletterglue_generated_html_output_hook3( $html, $post_id, $app ) {
 	$replace = implode( ', ', $replaces );
 	foreach( $output->find( $replace ) as $key => $element ) {
 		if ( strstr( $element->innertext, 'mso]' ) || strstr( $element->innertext, 'endif]' ) ) {
-			$element->outertext = $element->innertext;
-			continue;
+			if ( ! strstr( $element->class, 'wp-block-button' ) ) {
+				$element->outertext = $element->innertext;
+				continue;
+			}
 		}
 		$class = ! empty( $element->class ) ? ' ngl-table-' . $element->class : '';
 		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-' . $element->tag . $class . '"><tr><td>' . $element->outertext . '</td></tr></table>';
@@ -1557,14 +1559,6 @@ p.ngl-unsubscribe a {
 	text-decoration: underline;
 }
 
-.wp-block-buttons.is-content-justification-center {
-	text-align: center;
-}
-
-.wp-block-buttons.is-content-justification-right {
-	text-align: right;
-}
-
 .wp-block-buttons .wp-block-button {
 	display: inline-block !important;
 	padding: 0 !important;
@@ -1625,8 +1619,16 @@ p.ngl-unsubscribe a {
 	width: auto;
 }
 
-.has-text-align-center { text-align: center !important; }
+.is-content-justification-left td { text-align: left; }
+.is-content-justification-center td { text-align: center; }
+.is-content-justification-right td { text-align: right; }
+
+.ngl-table-has-text-align-left td { text-align: left !important; }
+.ngl-table-has-text-align-center td { text-align: center !important; }
+.ngl-table-has-text-align-right td { text-align: right !important; }
+
 .has-text-align-left { text-align: left !important; }
+.has-text-align-center { text-align: center !important; }
 .has-text-align-right { text-align: right !important; }
 
 @media only screen and (max-width:642px) {
