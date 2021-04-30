@@ -4,7 +4,7 @@ Plugin name: Newsletter Glue - Create and send email newsletters inside WordPres
 Contributors: newsletterglue, ahmedfouade, lesleysim
 Donate link: https://paypal.me/newsletterglue
 Tags: newsletter, email, mailchimp, blog post
-Requires at least: 5.4
+Requires at least: 5.5
 Tested up to: 5.7
 Requires PHP: 7.0
 Stable Tag: 1.3.0
