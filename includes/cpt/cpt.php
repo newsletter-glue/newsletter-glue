@@ -269,7 +269,8 @@ class NGL_CPT {
 			}
 
 			echo 'div.editor-styles-wrapper, div.editor-styles-wrapper p { color: ' . newsletterglue_get_theme_option( 'p_colour' ) . '; }';
-			echo 'div.editor-styles-wrapper p, div.editor-styles-wrapper li { font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; }';
+			echo 'div.editor-styles-wrapper p, div.editor-styles-wrapper li, div.editor-styles-wrapper blockquote.wp-block-quote p, div.editor-styles-wrapper blockquote p { font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; }';
+			echo '.editor-styles-wrapper blockquote.wp-block-quote p { font-weight: normal; }';
 			echo 'div.editor-styles-wrapper .wp-block.editor-post-title__block textarea.editor-post-title__input, div.editor-styles-wrapper h1, div.editor-styles-wrapper .wp-block h1 { font-weight: bold !important; font-size: ' . newsletterglue_get_theme_option( 'h1_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h1_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper h2, div.editor-styles-wrapper .wp-block h2 { font-size: ' . newsletterglue_get_theme_option( 'h2_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h2_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper h3, div.editor-styles-wrapper .wp-block h3 { font-size: ' . newsletterglue_get_theme_option( 'h3_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h3_colour' ) . '; }';

@@ -990,6 +990,32 @@ function newsletterglue_generated_html_output_highest_priority( $html, $post_id,
 		}
 	}
 
+	$replace = 'p.has-background';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( $element->style ) {
+			$s = $element->style;
+			$results = [];
+			$styles = explode(';', $s);
+
+			foreach ($styles as $style) {
+				$properties = explode(':', $style);
+				if (2 === count($properties)) {
+					$results[trim($properties[0])] = trim($properties[1]);
+				}
+			}
+			if ( ! empty( $results[ 'background-color' ] ) ) {
+				$td = $element->parent;
+				if ( $td->tag == 'td' ) {
+					if ( $td->style ) {
+						$td->style = $td->style . 'padding: 20px;background-color:' . $results[ 'background-color' ];
+					} else {
+						$td->style = 'padding: 20px;background-color:' . $results[ 'background-color' ];
+					}
+				};
+			}
+		}
+	}
+
 	$output->save();
 
 	return ( string ) $output;
@@ -1337,6 +1363,22 @@ table {
 
 .ngl-table-callout .wp-block-newsletterglue-callout .ngl-callout-content td {
 	padding: 10px 0;
+}
+
+.ngl-table-has-white-color td {
+	color: #fff !important;
+}
+
+.ngl-table-has-white-color td * {
+	color: inherit !important;
+}
+
+.ngl-table-has-white-color td a {
+	color: inherit !important;
+}
+
+p.has-text-color * {
+	color: inherit !important;
 }
 
 .ngl-table-ngl-unsubscribe td {
