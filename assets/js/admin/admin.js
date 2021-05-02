@@ -248,6 +248,14 @@
 	$( '.ngl .ui.dropdown, .ngl-metabox .ui.dropdown' ).dropdown( { onChange: function() { ngl_validate_form(); } } );
 	$( '.ngl .ui.checkbox' ).checkbox();
 
+	// Save theme colors in Dom.
+	var ngl_colors = false;
+	if ( wp.data ) {
+		wp.data.subscribe( function() {
+			ngl_colors = wp.data.select( 'core/editor' ).getEditorSettings().colors;
+		} );
+	}
+
 	// When a list is changed for Campaign Monitor.
 	$( document ).on( 'change', '.ngl-modal[data-app=campaignmonitor] #ngl_lists', function() {
 		var val = $( this ).val();
@@ -1156,12 +1164,27 @@
 
 	} );
 
-	// Show top toolbar checkbox.
+	// When everything has finished loading.
 	$( window ).on( 'load', function() {
 		if ( $( '#ngl_send_newsletter' ).length && $( '.ngl-no-connection' ).length == 0 && $( '.ngl-msgbox-wrap:visible' ).length == 0 && $( '.ngl-reset:visible' ).length == 0 ) {
 			$( '.edit-post-header__settings' ).prepend( '<div class="ngl-top-checkbox"><label><input type="checkbox" name="ngl_send_newsletter2" id="ngl_send_newsletter2" value="1">' + newsletterglue_params.send_newsletter + '</label></div>' );
 		}
 		ngl_validate_email();
-	} );
 
+		// One second after finished loading.
+		setTimeout( function() {
+			if ( ngl_colors ) {
+				console.log( ngl_colors );
+				var data = 'action=newsletterglue_save_default_colors&colors=' + JSON.stringify( ngl_colors ) + '&security=' + newsletterglue_params.ajaxnonce;
+				$.ajax( {
+					type : 'post',
+					url : newsletterglue_params.ajaxurl,
+					data : data,
+					success: function( response ) { console.log( 'done' ); }
+				} );
+			}
+		}, 1000 );
+
+	} );
+	
 } ) ( jQuery );
