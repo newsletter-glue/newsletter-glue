@@ -23,6 +23,36 @@ function newsletterglue_get_ajax_url() {
 }
 
 /**
+ * Save default theme colors.
+ */
+function newsletterglue_save_default_colors() {
+
+	check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+	if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+		wp_die( -1 );
+	}
+
+	$colors = isset( $_REQUEST[ 'colors' ] ) ? $_REQUEST[ 'colors' ] : '';
+
+	if ( empty( $colors ) ) {
+		wp_die( -1 );
+	}
+
+	$colors = json_decode( stripslashes( $colors ) );
+
+	delete_option( 'newsletterglue_theme_colors' );
+	update_option( 'newsletterglue_theme_colors', $colors );
+
+	print_r( $colors );
+
+	die();
+
+}
+add_action( 'wp_ajax_newsletterglue_save_default_colors', 'newsletterglue_save_default_colors' );
+add_action( 'wp_ajax_nopriv_newsletterglue_save_default_colors', 'newsletterglue_save_default_colors' );
+
+/**
  * Get newsletter log.
  */
 function newsletterglue_ajax_get_log() {

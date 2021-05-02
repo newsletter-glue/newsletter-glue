@@ -114,7 +114,7 @@ class NGL_CPT {
 				'singular_name'         => __( 'Pattern', 'newsletter-glue' ),
 				'menu_name'             => esc_html_x( 'All Patterns', 'Admin menu name', 'newsletter-glue' ),
 				'add_new'               => __( 'Add New', 'newsletter-glue' ),
-				'add_new_item'          => __( 'Add New Newsletter', 'newsletter-glue' ),
+				'add_new_item'          => __( 'Add New Pattern', 'newsletter-glue' ),
 				'edit'                  => __( 'Edit', 'newsletter-glue' ),
 				'edit_item'             => __( 'Edit Pattern', 'newsletter-glue' ),
 				'new_item'              => __( 'New Pattern', 'newsletter-glue' ),
@@ -205,6 +205,7 @@ class NGL_CPT {
 					'newsletterglue/author',
 					'newsletterglue/callout',
 					'newsletterglue/metadata',
+					'core/block',
 					'core/paragraph',
 					'core/image',
 					'core/heading',
@@ -271,14 +272,23 @@ class NGL_CPT {
 			echo 'div.editor-styles-wrapper, div.editor-styles-wrapper p { color: ' . newsletterglue_get_theme_option( 'p_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper p, div.editor-styles-wrapper li, div.editor-styles-wrapper blockquote.wp-block-quote p, div.editor-styles-wrapper blockquote p { font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; }';
 			echo '.editor-styles-wrapper blockquote.wp-block-quote p { font-weight: normal; }';
+
 			echo 'div.editor-styles-wrapper .wp-block.editor-post-title__block textarea.editor-post-title__input, div.editor-styles-wrapper h1, div.editor-styles-wrapper .wp-block h1 { font-weight: bold !important; font-size: ' . newsletterglue_get_theme_option( 'h1_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h1_colour' ) . '; }';
+
 			echo 'div.editor-styles-wrapper h2, div.editor-styles-wrapper .wp-block h2 { font-size: ' . newsletterglue_get_theme_option( 'h2_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h2_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper h3, div.editor-styles-wrapper .wp-block h3 { font-size: ' . newsletterglue_get_theme_option( 'h3_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h3_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper h4, div.editor-styles-wrapper .wp-block h4 { font-size: ' . newsletterglue_get_theme_option( 'h4_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h4_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper h5, div.editor-styles-wrapper .wp-block h5 { font-size: ' . newsletterglue_get_theme_option( 'h5_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h5_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper h6, div.editor-styles-wrapper .wp-block h6 { font-size: ' . newsletterglue_get_theme_option( 'h6_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h6_colour' ) . '; }';
-			echo 'div.editor-styles-wrapper .wp-block-button__link { font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; text-transform: none; padding: 14px 20px; font-weight: inherit; min-width: ' . newsletterglue_get_theme_option( 'btn_width' ) . 'px; background-color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '; color: ' . newsletterglue_get_theme_option( 'btn_colour' ) . '; }';
-			echo 'div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link { padding: 12px 20px; color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '; border-color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '; }';
+
+			echo 'div.editor-styles-wrapper .wp-block-button__link,
+				div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:hover,
+				div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:active
+				{ font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; text-transform: none; padding: 14px 20px; font-weight: inherit; min-width: ' . newsletterglue_get_theme_option( 'btn_width' ) . 'px; background-color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; color: ' . newsletterglue_get_theme_option( 'btn_colour' ) . '!important; border: 0 !important; line-height: 1.3 !important; }';
+			echo 'div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link,
+				div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link:hover,
+				div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link:active
+			{ padding: 12px 20px; color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; background-color: transparent !important; border: 2px solid ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; }';
 
 			echo 'div.editor-styles-wrapper .wp-block .wp-block-newsletterglue-callout .block-editor-block-list__layout > * { color: inherit; }';
 

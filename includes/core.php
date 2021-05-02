@@ -777,6 +777,7 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 	$total = 0;
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$col_count = 0;
+		$total = 0;
 		foreach( $element->find( 'td' ) as $a => $td ) {
 			$total = $total + absint( $td->width );
 			$unset = 600 - $total;
@@ -787,6 +788,9 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 		foreach( $element->find( 'td' ) as $a => $td ) {
 			if ( ! $td->width && $unset != 600 ) {
 				$td->width = $unset / $col_count;
+			}
+			if ( ! $td->width && $unset == 600 && $col_count == 2 ) {
+				$td->width = 300;
 			}
 		}
 	}
@@ -876,6 +880,10 @@ function newsletterglue_generated_html_output_hook4( $html, $post_id, $app ) {
 			continue;
 		}
 
+		if ( strstr( $element->class, 'wp-image' ) ) {
+			continue;
+		}
+
 		if ( $element->parent()->parent()->tag && $element->parent()->parent()->tag == 'td' ) {
 			$td = $element->parent()->parent();
 			$threshold = strstr( $element->class, 'callout-img' ) ? 528 : 600;
@@ -908,8 +916,8 @@ function newsletterglue_generated_html_output_hook4( $html, $post_id, $app ) {
 /**
  * Set font-family per td.
  */
-add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_highest_priority', 1000, 3 );
-function newsletterglue_generated_html_output_highest_priority( $html, $post_id, $app ) {
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_hook5', 5, 3 );
+function newsletterglue_generated_html_output_hook5( $html, $post_id, $app ) {
 
 	if ( newsletterglue_get_theme_option( 'font' ) ) {
 		$email_font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
@@ -932,15 +940,26 @@ function newsletterglue_generated_html_output_highest_priority( $html, $post_id,
 
 	// Image width/height.
 	if ( function_exists( 'getimagesize' ) ) {
-	$replace = '#template_inner img.wp-image';
+		$replace = '#template_inner img.wp-image';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			if ( ! empty( $element->src ) ) {
 				$image = getimagesize( $element->src );
 				if ( ! empty( $image[0] ) ) {
-					if ( $image[0] < $element->width ) {
+					if ( $image[0] && ! $element->width ) {
 						$element->width = $image[0];
 						$element->height = $image[1];
 					}
+				}
+			}
+		}
+
+		$replace = '#template_inner img.logo-image';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			if ( ! empty( $element->src ) ) {
+				$image = getimagesize( $element->src );
+				if ( ! empty( $image[0] ) ) {
+					$element->width = $image[0];
+					$element->height = $image[1];
 				}
 			}
 		}
@@ -986,14 +1005,15 @@ function newsletterglue_generated_html_output_highest_priority( $html, $post_id,
 	foreach( $output->find( $replace ) as $key => $element ) {
 		if ( $element->width ) {
 			foreach( $element->find( 'img' ) as $image_id => $image_el ) {
-				$image_el->width = $element->width - 40;
-				$image_el->height = '';
+				//$image_el->width = $element->width - 40;
+				//$image_el->height = '';
 			}
 		}
 	}
 
 	$replace = 'p.has-background';
 	foreach( $output->find( $replace ) as $key => $element ) {
+		$td = $element->parent;
 		if ( $element->style ) {
 			$s = $element->style;
 			$results = [];
@@ -1006,14 +1026,48 @@ function newsletterglue_generated_html_output_highest_priority( $html, $post_id,
 				}
 			}
 			if ( ! empty( $results[ 'background-color' ] ) ) {
-				$td = $element->parent;
 				if ( $td->tag == 'td' ) {
-					if ( $td->style ) {
-						$td->style = $td->style . 'padding: 20px;background-color:' . $results[ 'background-color' ];
-					} else {
-						$td->style = 'padding: 20px;background-color:' . $results[ 'background-color' ];
-					}
+					$td->style = $td->style . 'background-color:' . $results[ 'background-color' ] . ';';
 				};
+			}
+		}
+		$td->style = $td->style . 'padding: 20px;';
+	}
+
+	$output->save();
+
+	return ( string ) $output;
+
+}
+
+/**
+ * Images.
+ */
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_hook6', 6, 3 );
+function newsletterglue_generated_html_output_hook6( $html, $post_id, $app ) {
+
+	$output = new simple_html_dom();
+	$output->load( $html, true, false );
+
+	// Images.
+	$replace = '#template_inner img';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( $element->width ) {
+			$element->style = $element->style . 'max-width: ' . $element->width . 'px;';
+		}
+	}
+
+	// Images inside columns td.
+	$replace = '#template_inner .ngl-table-columns td';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( $element->width ) {
+			$max_w = $element->width - 40;
+			foreach( $element->find( 'img' ) as $image_id => $el ) {
+				if ( $el->width && $el->width > $max_w ) {
+					$el->style = $el->style . 'max-width: ' . $max_w . 'px;';
+					$el->width = $max_w;
+					$el->height = '';
+				}
 			}
 		}
 	}
@@ -1367,17 +1421,17 @@ table {
 	padding: 10px 0;
 }
 
-.ngl-table-has-white-color td {
-	color: #fff !important;
-}
-
-.ngl-table-has-white-color td * {
-	color: inherit !important;
-}
-
-.ngl-table-has-white-color td a {
-	color: inherit !important;
-}
+<?php
+	$colors = get_option( 'newsletterglue_theme_colors' );
+	if ( ! empty( $colors ) ) {
+		foreach( $colors as $key => $color ) {
+			$slug 	= $color->slug;
+			$color 	= $color->color;
+			echo ".has-$slug-color { color: $color; }";
+			echo ".has-$slug-background-color { background-color: $color; }";
+		}
+	}
+?>
 
 p.has-text-color * {
 	color: inherit !important;
@@ -1386,6 +1440,10 @@ p.has-text-color * {
 .ngl-table-ngl-unsubscribe td {
 	border-top: 1px solid #eee;
 	padding: 20px;
+}
+
+.ngl-table-columns {
+	table-layout: fixed;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -1507,8 +1565,6 @@ figcaption {
 #template_inner img {
 	max-width: 100%;
 	display: block;
-	width: auto;
-	height: auto;
 }
 
 h1 img,
@@ -1637,6 +1693,19 @@ p.ngl-unsubscribe a {
 		width: 95% !important;
 		max-width: 95% !important;
 	}
+	
+	.ngl-table-columns td {
+		display: block !important;
+		float: none !important;
+		width: 100% !important;
+		clear: both !important;
+		box-sizing: border-box !important;
+	}
+
+	#template_inner img {
+		max-width: 100% !important;
+		width: auto;
+	}
 
 	body, #wrapper, #template_inner, p.ngl-credits, p.ngl-unsubscribe {
 		font-size: <?php echo newsletterglue_get_theme_option( 'mobile_p_size' ); ?>px !important;
@@ -1659,11 +1728,6 @@ p.ngl-unsubscribe a {
 	h4 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h4_size' ); ?>px !important; }
 	h5 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h5_size' ); ?>px !important; }
 	h6 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h6_size' ); ?>px !important; }
-
-	#template_inner img {
-		width: auto;
-		height: auto;
-	}
 
 	.wp-block-button__link {
 		min-width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px !important;
