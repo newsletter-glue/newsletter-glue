@@ -1164,6 +1164,16 @@
 
 	} );
 
+	// Change value of tabbed check.
+	$( document ).on( 'click', '.ngl-tabbed-check .ui.button', function( event ) {
+		event.preventDefault();
+		var val = $( this ).attr( 'data-value' );
+		$( this ).parents( '.ngl-tabbed-check' ).find( 'input[type=hidden]' ).val( val );
+		$( this ).parents( '.buttons' ).find( '.button' ).removeClass( 'active' );
+		$( this ).addClass( 'active' );
+		return false;
+	} );
+
 	// When everything has finished loading.
 	$( window ).on( 'load', function() {
 		if ( $( '#ngl_send_newsletter' ).length && $( '.ngl-no-connection' ).length == 0 && $( '.ngl-msgbox-wrap:visible' ).length == 0 && $( '.ngl-reset:visible' ).length == 0 ) {

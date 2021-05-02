@@ -3853,3 +3853,21 @@ p.ngl-customize-button {
 	border-radius: 0px;
 	font-weight: 400;
 }
+
+.ngl-tabbed-check .ngl-label-sub {
+	padding: 8px 0;
+}
+
+.ngl-tabbed-check .ui.buttons .button {
+	padding: 8px 12px;
+	font-size: 14px;
+}
+
+.ngl-tabbed-check .ui.buttons .ui.button.active {
+	background: #0088A0 !important;
+	color: #fff !important;
+}
+
+.ngl-tabbed-check .ui.buttons .ui.button.active i {
+	opacity: 1;
+}

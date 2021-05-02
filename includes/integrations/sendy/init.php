@@ -180,8 +180,8 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 		$lists			= ! empty( $data['lists'] ) ? $data['lists'] : '';
 		$brand			= ! empty( $data['brand'] ) ? $data['brand'] : '';
 		$schedule   	= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
-		$track_opens 	= ! empty( $data[ 'track_opens' ] ) ? 1 : 0;
-		$track_clicks 	= ! empty( $data[ 'track_clicks' ] ) ? 1 : 0;
+		$track_opens 	= ! empty( $data[ 'track_opens' ] ) ? absint( $data[ 'track_opens' ] ) : 0;
+		$track_clicks 	= ! empty( $data[ 'track_clicks' ] ) ? absint( $data[ 'track_clicks' ] ) : 0;
 
 		$post 		= get_post( $post_id );
 		$html_text 	= newsletterglue_generate_content( $post, $subject, $this->app );
@@ -362,13 +362,23 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 							<?php $this->input_verification_info(); ?>
 						</div>
 						<div class="ngl-field">
-							<div class="ngl-field ngl-field-master">
-								<input type="checkbox" name="ngl_track_clicks" id="ngl_track_clicks" value="1" <?php checked( $track_clicks, 1 ); ?> />
-								<label for="ngl_track_clicks"><?php _e( 'Track clicks', 'newsletter-glue' ); ?></label>
+							<div class="ngl-field ngl-tabbed-check">
+								<div class="ngl-label-sub"><?php _e( 'Track clicks:', 'newsletter-glue' ); ?></div>
+								<input type="hidden" name="ngl_track_clicks" id="ngl_track_clicks" value="<?php echo absint( $track_clicks ); ?>" />
+								<div class="ui basic buttons">
+								  <div class="ui button <?php echo $track_clicks == 1 ? 'active' : ''; ?>" data-value="1"><i class="check icon"></i><?php _e( 'Yes', 'newsletter-glue' ); ?></div>
+								  <div class="ui button <?php echo $track_clicks == 0 ? 'active' : ''; ?>" data-value="0"><i class="close icon"></i><?php _e( 'No', 'newsletter-glue' ); ?></div>
+								  <div class="ui button <?php echo $track_clicks == 2 ? 'active' : ''; ?>" data-value="2"><i class="check icon"></i><?php _e( 'Anonymously', 'newsletter-glue' ); ?></div>
+								</div>
 							</div>
-							<div class="ngl-field ngl-field-master">
-								<input type="checkbox" name="ngl_track_opens" id="ngl_track_opens" value="1" <?php checked( $track_opens, 1 ); ?> />
-								<label for="ngl_track_opens"><?php _e( 'Track opens', 'newsletter-glue' ); ?></label>
+							<div class="ngl-field ngl-tabbed-check">
+								<div class="ngl-label-sub"><?php _e( 'Track opens:', 'newsletter-glue' ); ?></div>
+								<input type="hidden" name="ngl_track_opens" id="ngl_track_opens" value="<?php echo absint( $track_opens ); ?>" />
+								<div class="ui basic buttons">
+								  <div class="ui button <?php echo $track_opens == 1 ? 'active' : ''; ?>" data-value="1"><i class="check icon"></i><?php _e( 'Yes', 'newsletter-glue' ); ?></div>
+								  <div class="ui button <?php echo $track_opens == 0 ? 'active' : ''; ?>" data-value="0"><i class="close icon"></i><?php _e( 'No', 'newsletter-glue' ); ?></div>
+								  <div class="ui button <?php echo $track_opens == 2 ? 'active' : ''; ?>" data-value="2"><i class="check icon"></i><?php _e( 'Anonymously', 'newsletter-glue' ); ?></div>
+								</div>
 							</div>
 						</div>
 					</div>
