@@ -204,6 +204,7 @@ p.ngl-notice-logo {
 	max-width: 750px;
 	border-radius: 4px;
 	box-shadow: 0 2px 6px #ddd;
+	position: relative;
 }
 
 .ngl-upgrade-notice * {
@@ -222,12 +223,12 @@ p.ngl-notice-logo {
 }
 
 .ngl-upgrade-notice p a {
-	color: #C91101 !important;
+	color: #17A4C6 !important;
 	box-shadow: none !important;
 }
 
 .ngl-upgrade-notice p a:hover {
-	color: #f55447 !important;
+	color: #0088A0 !important;
 }
 
 .ngl-upgrade-notice p a.ngl-upgrade-dismiss {
@@ -239,4 +240,18 @@ p.ngl-notice-logo {
 
 .ngl-upgrade-notice p a.ngl-upgrade-dismiss:hover {
 	text-decoration: underline !important;
+}
+
+.ngl-notice-dismiss {
+	position: absolute;
+	right: 0;
+	top: 0;
+	text-decoration: none !important;
+	box-shadow: none !important;
+	padding: 15px;
+	color: #666 !important;
+}
+
+.ngl-notice-dismiss i {
+	font-size: 22px !important;
 }
