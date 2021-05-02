@@ -3854,6 +3854,10 @@ p.ngl-customize-button {
 	font-weight: 400;
 }
 
+.ngl-value-hidden {
+	display: none !important;
+}
+
 .ngl-tabbed-check .ngl-label-sub {
 	padding: 8px 0;
 }

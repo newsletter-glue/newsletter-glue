@@ -364,7 +364,7 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 						<div class="ngl-field">
 							<div class="ngl-field ngl-tabbed-check">
 								<div class="ngl-label-sub"><?php _e( 'Track clicks:', 'newsletter-glue' ); ?></div>
-								<input type="hidden" name="ngl_track_clicks" id="ngl_track_clicks" value="<?php echo absint( $track_clicks ); ?>" />
+								<input type="text" class="ngl-value-hidden" name="ngl_track_clicks" id="ngl_track_clicks" value="<?php echo absint( $track_clicks ); ?>" />
 								<div class="ui basic buttons">
 								  <div class="ui button <?php echo $track_clicks == 1 ? 'active' : ''; ?>" data-value="1"><i class="check icon"></i><?php _e( 'Yes', 'newsletter-glue' ); ?></div>
 								  <div class="ui button <?php echo $track_clicks == 0 ? 'active' : ''; ?>" data-value="0"><i class="close icon"></i><?php _e( 'No', 'newsletter-glue' ); ?></div>
@@ -373,7 +373,7 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 							</div>
 							<div class="ngl-field ngl-tabbed-check">
 								<div class="ngl-label-sub"><?php _e( 'Track opens:', 'newsletter-glue' ); ?></div>
-								<input type="hidden" name="ngl_track_opens" id="ngl_track_opens" value="<?php echo absint( $track_opens ); ?>" />
+								<input type="text" class="ngl-value-hidden" name="ngl_track_opens" id="ngl_track_opens" value="<?php echo absint( $track_opens ); ?>" />
 								<div class="ui basic buttons">
 								  <div class="ui button <?php echo $track_opens == 1 ? 'active' : ''; ?>" data-value="1"><i class="check icon"></i><?php _e( 'Yes', 'newsletter-glue' ); ?></div>
 								  <div class="ui button <?php echo $track_opens == 0 ? 'active' : ''; ?>" data-value="0"><i class="close icon"></i><?php _e( 'No', 'newsletter-glue' ); ?></div>

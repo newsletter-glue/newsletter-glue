@@ -1168,7 +1168,7 @@
 	$( document ).on( 'click', '.ngl-tabbed-check .ui.button', function( event ) {
 		event.preventDefault();
 		var val = $( this ).attr( 'data-value' );
-		$( this ).parents( '.ngl-tabbed-check' ).find( 'input[type=hidden]' ).val( val );
+		$( this ).parents( '.ngl-tabbed-check' ).find( 'input.ngl-value-hidden' ).val( val ).trigger( 'change' );
 		$( this ).parents( '.buttons' ).find( '.button' ).removeClass( 'active' );
 		$( this ).addClass( 'active' );
 		return false;
