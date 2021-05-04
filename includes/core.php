@@ -1404,6 +1404,15 @@ body, #wrapper, #template_inner {
 	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
 }
 
+#template_inner p,
+#template_inner div {
+	color: <?php echo newsletterglue_get_theme_option( 'p_colour' ); ?>;
+}
+
+#template_inner .ngl-article div {
+	color: inherit;
+}
+
 span.yshortcuts { color: #000; background-color:none; border:none;}
 span.yshortcuts:hover,
 span.yshortcuts:active,
