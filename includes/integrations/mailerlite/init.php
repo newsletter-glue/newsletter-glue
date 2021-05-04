@@ -475,7 +475,6 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 		}
 
 		$html = str_replace( '{{ unsubscribe_link }}', '{$unsubscribe}', $html );
-		$html = str_replace( '{{ address }}', '', $html );
 
 		return $html;
 	}

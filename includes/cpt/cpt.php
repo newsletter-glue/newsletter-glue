@@ -51,6 +51,8 @@ class NGL_CPT {
 		// Duplicate.
 		add_action( 'admin_action_ngl_duplicate_as_pattern', array( __CLASS__, 'duplicate_pattern' ) );
 		add_action( 'admin_action_ngl_duplicate_as_newsletter', array( __CLASS__, 'duplicate_newsletter' ) );
+
+		add_action( 'enqueue_block_editor_assets', array( __CLASS__, 'enqueue_block_editor_assets' ) );
 	}
 
 	/**
@@ -93,14 +95,14 @@ class NGL_CPT {
 					'show_ui'             => true,
 					'capability_type'     => 'post',
 					'map_meta_cap'        => true,
-					'publicly_queryable'  => false,
+					'publicly_queryable'  => true,
 					'exclude_from_search' => true,
 					'show_in_menu'        => false,
 					'hierarchical'        => false,
-					'rewrite'             => false,
-					'query_var'           => false,
+					'rewrite'             => array( 'slug' => 'newsletter', 'with_front' => false ),
+					'query_var'           => true,
 					'supports'            => array( 'title', 'editor', 'thumbnail' ),
-					'show_in_nav_menus'   => false,
+					'show_in_nav_menus'   => true,
 					'show_in_admin_bar'   => true,
 					'show_in_rest'		  => true,
 				)
@@ -186,6 +188,20 @@ class NGL_CPT {
 				if ( !isFullScreenMode ) {
 					wp.data.dispatch( "core/edit-post" ).toggleFeature( "fullscreenMode" );
 				}
+				wp.domReady(function () {
+				  const allowedEmbedBlocks = [
+					"twitter",
+					"youtube",
+					"spotify",
+					"reddit",
+					"soundcloud"
+				  ];
+				  wp.blocks.getBlockVariations( "core/embed" ).forEach(function (blockVariation) {
+					if (-1 === allowedEmbedBlocks.indexOf(blockVariation.name)) {
+					  wp.blocks.unregisterBlockVariation( "core/embed", blockVariation.name);
+					}
+				  });
+				});
 				'
 			);
 		}
@@ -216,6 +232,7 @@ class NGL_CPT {
 					'core/spacer',
 					'core/table',
 					'core/columns',
+					'core/embed',
 				);
 				return $blocks;
 			}
@@ -262,10 +279,12 @@ class NGL_CPT {
 			echo 'div.editor-styles-wrapper .wp-block.editor-post-title__block { padding-bottom: 0; margin: 0; max-width: 100%; border: 0; }';
 
 			if ( newsletterglue_get_theme_option( 'font' ) ) {
-				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt, div.editor-styles-wrapper .wp-block h1, div.editor-styles-wrapper .wp-block h2, div.editor-styles-wrapper .wp-block h3, div.editor-styles-wrapper .wp-block h4, div.editor-styles-wrapper .wp-block h5, div.editor-styles-wrapper .wp-block h6 {
+				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt,div.editor-styles-wrapper .wp-block h1, div.editor-styles-wrapper .wp-block h2, div.editor-styles-wrapper .wp-block h3, div.editor-styles-wrapper .wp-block h4, div.editor-styles-wrapper .wp-block h5, div.editor-styles-wrapper .wp-block h6, div.editor-styles-wrapper h1, div.editor-styles-wrapper h2, div.editor-styles-wrapper h3, div.editor-styles-wrapper h4,
+				div.editor-styles-wrapper h5, div.editor-styles-wrapper h6 {
 						font-family: ' . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . '!important; }';
 			} else {
-				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt {
+				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt,div.editor-styles-wrapper .wp-block h1, div.editor-styles-wrapper .wp-block h2, div.editor-styles-wrapper .wp-block h3, div.editor-styles-wrapper .wp-block h4, div.editor-styles-wrapper .wp-block h5, div.editor-styles-wrapper .wp-block h6, div.editor-styles-wrapper h1, div.editor-styles-wrapper h2, div.editor-styles-wrapper h3, div.editor-styles-wrapper h4,
+				div.editor-styles-wrapper h5, div.editor-styles-wrapper h6 {
 						font-family: Arial, Helvetica, sans-serif; !important; }';
 			}
 
@@ -636,6 +655,22 @@ class NGL_CPT {
 			wp_die( __( 'Duplicate newsletter has failed.', 'newsletter-glue' ) );
 		}
 
+	}
+
+	/**
+	 * Enqueue block editor js.
+	 */
+	public static function enqueue_block_editor_assets() {
+
+		$js_dir = NGL_PLUGIN_URL . 'assets/js/gutenberg/';
+
+		// Enqueue block editor JS
+		wp_enqueue_script(
+			'ngl-editor-js',
+			$js_dir . 'editor.js',
+			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor' ),
+			time()
+		);
 	}
 
 }

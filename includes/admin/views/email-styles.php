@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="format-detection" content="telephone=no" />
 
-	<title>{title}</title>
+	<title>{{ title }}</title>
 
 	<style type="text/css">
 
@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<td>
 									<table width="600" id="template_table" align="center" border="0" cellspacing="0" cellpadding="0">
 										<tr>
-											<td align="center" id="template_inner" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">{content}</td>
+											<td align="center" id="template_inner" style="overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">{{ content }}</td>
 										</tr>
 									</table>
 								</td>

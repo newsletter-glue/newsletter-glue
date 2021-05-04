@@ -452,10 +452,12 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$the_content = apply_filters( 'newsletterglue_email_content', $the_content, $post, $subject, $app );
 
 	// Process content tags.
-	$html = str_replace( '{title}', $subject, $html );
-	$html = str_replace( '{content}', $the_content, $html );
-	$html = str_replace( '{post_permalink}', get_permalink( $post->ID ), $html );
-	$html = str_replace( '{post_permalink_preview}', add_query_arg( 'preview_email', $post->ID, get_permalink( $post->ID ) ), $html );
+	$html = str_replace( '{{ title }}', $subject, $html );
+	$html = str_replace( '{{ content }}', $the_content, $html );
+	$html = str_replace( 'http://{{', '{{', $html );
+	$html = str_replace( 'https://{{', '{{', $html );
+	$html = str_replace( '{{ blog_post }}', get_permalink( $post->ID ), $html );
+	$html = str_replace( '{{ webversion }}', newsletterglue_generate_web_link( $post->ID ), $html );
 
 	// Filter for original content. before email work.
 	$html = apply_filters( 'newsletterglue_generate_content', $html, $post );
@@ -838,7 +840,7 @@ function newsletterglue_generated_html_output_hook3( $html, $post_id, $app ) {
 		$elements[] = '.wp-block-newsletterglue-group > ' . $inner;
 	}
 
-	// Callout block.
+	// Container block.
 	foreach( $base as $inner ) {
 		$elements[] = '.ngl-callout-content > ' . $inner;
 	}
@@ -1053,7 +1055,13 @@ function newsletterglue_generated_html_output_hook6( $html, $post_id, $app ) {
 	$replace = '#template_inner img';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		if ( $element->width ) {
-			$element->style = $element->style . 'max-width: ' . $element->width . 'px;';
+			$max_width = $element->width . 'px';
+			if ( $element->width > 600 ) {
+				$element->width = 560;
+				$max_width = '100%';
+				$element->height = '';
+			}
+			$element->style = $element->style . 'max-width: ' . $max_width . ';';
 		}
 	}
 
@@ -1070,6 +1078,11 @@ function newsletterglue_generated_html_output_hook6( $html, $post_id, $app ) {
 				}
 			}
 		}
+	}
+
+	$replace = '.ngl-table-wp-block-separator';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-divider-wrap"><tr><td>' . $element->outertext . '</td></tr></table>';
 	}
 
 	$output->save();
@@ -1413,12 +1426,71 @@ table {
 	padding: 20px;
 }
 
+.ngl-table-divider-wrap td {
+	padding: 20px;
+}
+
+.ngl-table-wp-block-separator td {
+	padding: 0 !important;
+	height: 1px;
+}
+
 .ngl-table-callout .wp-block-newsletterglue-callout td {
 	padding: 0;
 }
 
-.ngl-table-callout .wp-block-newsletterglue-callout .ngl-callout-content td {
-	padding: 10px 0;
+.ngl-table-callout .wp-block-newsletterglue-callout .ngl-callout-content table td {
+	padding: 0 0 10px;
+}
+
+.ngl-table-callout .wp-block-newsletterglue-callout .ngl-callout-content table:last-child td {
+	padding: 0;
+}
+
+.ngl-table-posts > tr > td {
+	padding: 10px 20px;
+}
+
+.ngl-article-img-full td {
+	padding: 0 0 20px;
+}
+
+.ngl-table-article td {
+	padding: 20px 10px;
+}
+
+.ngl-table-article td:first-child {
+	padding-left: 20px;
+}
+
+.ngl-table-article td:last-child {
+	padding-right: 20px;
+}
+
+.ngl-table-posts-pure .ngl-table-article td:first-child {
+	padding-left: 0;
+}
+
+.ngl-table-posts-pure .ngl-table-article td:last-child {
+	padding-right: 0;
+}
+
+.ngl-article-featured img {
+	max-width: 100% !important;
+	height: auto;
+}
+
+.ngl-table-posts-colored .ngl-article-mob-wrap {
+	padding: 20px;
+	margin: 0 0 10px;
+}
+
+.ngl-table-posts-colored div.ngl-article-img-full {
+	padding: 20px !important;
+}
+
+.ngl-table-posts-pure .ngl-article-mob-wrap {
+	margin: 0 0 20px;
 }
 
 <?php
@@ -1459,8 +1531,8 @@ a {
 hr {
 	margin: 0;
     height: 1px;
-    color: #999;
-    background: #999;
+	background-color: #333;
+	color: #333;
     font-size: 0;
     border: 0;
 }
@@ -1495,6 +1567,10 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 0 !important;
 	margin: 0;
 	line-height: 150%;
+}
+
+img.wp-image {
+	height: auto;
 }
 
 .wp-block-columns {
@@ -1686,6 +1762,10 @@ p.ngl-unsubscribe a {
 .has-text-align-left { text-align: left !important; }
 .has-text-align-center { text-align: center !important; }
 .has-text-align-right { text-align: right !important; }
+
+.ngl-table-ngl-embed-social > tr > td {
+	padding: 20px;
+}
 
 @media only screen and (max-width:642px) {
 
