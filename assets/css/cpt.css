@@ -2,7 +2,7 @@
 	background: #fff;
 	background-color: #fff;
 	max-width: 600px;
-	padding: 20px !important;
+	padding: 30px 0 !important;
 	margin: auto;
 }
 
@@ -29,4 +29,15 @@
 
 .editor-styles-wrapper .editor-post-title__block .editor-post-title__input {
 	text-align: left;
+}
+
+div.editor-styles-wrapper .wp-block,
+div.editor-styles-wrapper div.wp-block.editor-post-title__block {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+div.editor-styles-wrapper .wp-block[data-type="newsletterglue/callout"] {
+	margin-left: 0;
+	margin-right: 0;
 }

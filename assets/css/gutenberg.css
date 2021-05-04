@@ -137,6 +137,8 @@
 .wp-block-newsletterglue-callout {
 	padding-top: 26px !important;
 	padding-bottom: 1px !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
 }
 
 .wp-block-newsletterglue-callout h1,
