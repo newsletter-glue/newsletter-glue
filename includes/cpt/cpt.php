@@ -279,11 +279,11 @@ class NGL_CPT {
 			echo 'div.editor-styles-wrapper .wp-block.editor-post-title__block { padding-bottom: 0; margin: 0; max-width: 100%; border: 0; }';
 
 			if ( newsletterglue_get_theme_option( 'font' ) ) {
-				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt,div.editor-styles-wrapper .wp-block h1, div.editor-styles-wrapper .wp-block h2, div.editor-styles-wrapper .wp-block h3, div.editor-styles-wrapper .wp-block h4, div.editor-styles-wrapper .wp-block h5, div.editor-styles-wrapper .wp-block h6, div.editor-styles-wrapper h1, div.editor-styles-wrapper h2, div.editor-styles-wrapper h3, div.editor-styles-wrapper h4,
+				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, div.editor-styles-wrapper p, div.editor-styles-wrapper ol, div.editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt,div.editor-styles-wrapper .wp-block h1, div.editor-styles-wrapper .wp-block h2, div.editor-styles-wrapper .wp-block h3, div.editor-styles-wrapper .wp-block h4, div.editor-styles-wrapper .wp-block h5, div.editor-styles-wrapper .wp-block h6, div.editor-styles-wrapper h1, div.editor-styles-wrapper h2, div.editor-styles-wrapper h3, div.editor-styles-wrapper h4,
 				div.editor-styles-wrapper h5, div.editor-styles-wrapper h6 {
 						font-family: ' . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . '!important; }';
 			} else {
-				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, .editor-styles-wrapper p, .editor-styles-wrapper ol, .editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt,div.editor-styles-wrapper .wp-block h1, div.editor-styles-wrapper .wp-block h2, div.editor-styles-wrapper .wp-block h3, div.editor-styles-wrapper .wp-block h4, div.editor-styles-wrapper .wp-block h5, div.editor-styles-wrapper .wp-block h6, div.editor-styles-wrapper h1, div.editor-styles-wrapper h2, div.editor-styles-wrapper h3, div.editor-styles-wrapper h4,
+				echo '.editor-styles-wrapper > *, div.editor-styles-wrapper textarea.editor-post-title__input, div.editor-styles-wrapper p, div.editor-styles-wrapper ol, div.editor-styles-wrapper ul, .editor-styles-wrapper dl, .editor-styles-wrapper dt,div.editor-styles-wrapper .wp-block h1, div.editor-styles-wrapper .wp-block h2, div.editor-styles-wrapper .wp-block h3, div.editor-styles-wrapper .wp-block h4, div.editor-styles-wrapper .wp-block h5, div.editor-styles-wrapper .wp-block h6, div.editor-styles-wrapper h1, div.editor-styles-wrapper h2, div.editor-styles-wrapper h3, div.editor-styles-wrapper h4,
 				div.editor-styles-wrapper h5, div.editor-styles-wrapper h6 {
 						font-family: Arial, Helvetica, sans-serif; !important; }';
 			}
@@ -292,13 +292,13 @@ class NGL_CPT {
 			echo 'div.editor-styles-wrapper p, div.editor-styles-wrapper li, div.editor-styles-wrapper blockquote.wp-block-quote p, div.editor-styles-wrapper blockquote p { font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; }';
 			echo '.editor-styles-wrapper blockquote.wp-block-quote p { font-weight: normal; }';
 
-			echo 'div.editor-styles-wrapper .wp-block.editor-post-title__block textarea.editor-post-title__input, div.editor-styles-wrapper h1, div.editor-styles-wrapper .wp-block h1 { font-weight: bold !important; font-size: ' . newsletterglue_get_theme_option( 'h1_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h1_colour' ) . '; }';
+			echo 'div.editor-styles-wrapper .wp-block.editor-post-title__block textarea.editor-post-title__input, div.editor-styles-wrapper h1, div.editor-styles-wrapper .wp-block h1 { font-weight: bold !important; font-size: ' . newsletterglue_get_theme_option( 'h1_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h1_colour' ) . '; font-weight: bold; }';
 
-			echo 'div.editor-styles-wrapper h2, div.editor-styles-wrapper .wp-block h2 { font-size: ' . newsletterglue_get_theme_option( 'h2_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h2_colour' ) . '; }';
-			echo 'div.editor-styles-wrapper h3, div.editor-styles-wrapper .wp-block h3 { font-size: ' . newsletterglue_get_theme_option( 'h3_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h3_colour' ) . '; }';
-			echo 'div.editor-styles-wrapper h4, div.editor-styles-wrapper .wp-block h4 { font-size: ' . newsletterglue_get_theme_option( 'h4_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h4_colour' ) . '; }';
-			echo 'div.editor-styles-wrapper h5, div.editor-styles-wrapper .wp-block h5 { font-size: ' . newsletterglue_get_theme_option( 'h5_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h5_colour' ) . '; }';
-			echo 'div.editor-styles-wrapper h6, div.editor-styles-wrapper .wp-block h6 { font-size: ' . newsletterglue_get_theme_option( 'h6_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h6_colour' ) . '; }';
+			echo 'div.editor-styles-wrapper h2, div.editor-styles-wrapper .wp-block h2 { font-size: ' . newsletterglue_get_theme_option( 'h2_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h2_colour' ) . '; font-weight: bold; }';
+			echo 'div.editor-styles-wrapper h3, div.editor-styles-wrapper .wp-block h3 { font-size: ' . newsletterglue_get_theme_option( 'h3_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h3_colour' ) . '; font-weight: bold; }';
+			echo 'div.editor-styles-wrapper h4, div.editor-styles-wrapper .wp-block h4 { font-size: ' . newsletterglue_get_theme_option( 'h4_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h4_colour' ) . '; font-weight: bold; }';
+			echo 'div.editor-styles-wrapper h5, div.editor-styles-wrapper .wp-block h5 { font-size: ' . newsletterglue_get_theme_option( 'h5_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h5_colour' ) . '; font-weight: bold; }';
+			echo 'div.editor-styles-wrapper h6, div.editor-styles-wrapper .wp-block h6 { font-size: ' . newsletterglue_get_theme_option( 'h6_size' ) . 'px; color: ' . newsletterglue_get_theme_option( 'h6_colour' ) . '; font-weight: bold; }';
 
 			echo 'div.editor-styles-wrapper .wp-block-button__link,
 				div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:hover,
