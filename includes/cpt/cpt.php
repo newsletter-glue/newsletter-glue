@@ -261,10 +261,10 @@ class NGL_CPT {
 			}
 			</style>
 			<script type="text/javascript">
-				jQuery( document ).ready( function ( $ ) {
-					var text = "<?php echo __( 'What are Patterns?', 'newsletter-glue' ); ?>";
-					$( '.page-title-action' ).after( '<a href="#" style="font-weight: 600; text-decoration: none !important; font-size: 14px; margin-left: 20px; position: relative; top: -3px;">' + text + '</a>' );
-				} );
+				//jQuery( document ).ready( function ( $ ) {
+					//var text = "<?php echo __( 'What are Patterns?', 'newsletter-glue' ); ?>";
+					//$( '.page-title-action' ).after( '<a href="#" style="font-weight: 600; text-decoration: none !important; font-size: 14px; margin-left: 20px; position: relative; top: -3px;">' + text + '</a>' );
+				//} );
 			</script>
 			<?php
 		}
