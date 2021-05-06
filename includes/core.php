@@ -267,6 +267,12 @@ function newsletterglue_save_data( $post_id, $data ) {
 
 	$meta = array();
 
+	$old_meta = get_post_meta( $post_id, '_newsletterglue', true );
+
+	if ( isset( $old_meta ) && ! empty( $old_meta[ 'sent' ] ) ) {
+		$meta[ 'sent' ] = true;
+	}
+
 	foreach( $data as $key => $value ) {
 		if ( strstr( $key, 'ngl_' ) ) {
 			$key = str_replace( 'ngl_', '', $key );
@@ -478,7 +484,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D', '*%7C', '%7C*' ), array( '{', '}', '$', '[', ']', '*|', '|*' ), $html );
-	$html = str_replace( '@media only screen and (max-width:642px) {', '@media only screen and (max-width:642px) {' . "\r\n", $html );
+	$html = str_replace( '@media only screen and (max-width:642px) {', 'a { color: ' . newsletterglue_get_theme_option( 'a_colour' ) . '; } @media only screen and (max-width:642px) {' . "\r\n", $html );
 	$html = wp_encode_emoji( $html );
 	$html = str_replace( 'http://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
 	$html = str_replace( 'https://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
@@ -1753,7 +1759,7 @@ p.ngl-unsubscribe a {
 	visibility: hidden !important;
 }
 
-#template_inner .ngl-table-logo img {
+#template_inner img.logo-image {
 	margin: 0 !important;
 	display: block !important;
 	max-height: 75px;
@@ -1782,7 +1788,7 @@ p.ngl-unsubscribe a {
 		width: 95% !important;
 		max-width: 95% !important;
 	}
-	
+
 	.ngl-table-columns td {
 		display: block !important;
 		float: none !important;
@@ -1818,11 +1824,11 @@ p.ngl-unsubscribe a {
 	h5 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h5_size' ); ?>px !important; }
 	h6 { font-size: <?php echo newsletterglue_get_theme_option( 'mobile_h6_size' ); ?>px !important; }
 
-	.wp-block-button__link {
+	#template_inner .wp-block-button__link {
 		min-width: <?php echo (int) newsletterglue_get_theme_option( 'mobile_btn_width' ); ?>px !important;
 	}
 
-	#template_inner .ngl-table-logo img {
+	#template_inner img.logo-image {
 		max-height: 60px !important;
 	}
 

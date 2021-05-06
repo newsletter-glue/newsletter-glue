@@ -734,6 +734,7 @@
 				$( '.ngl-msgbox-wrap' ).find( 'div' ).css( { opacity: 0, 'pointer-events' : 'none' } );
 				$( '.ngl-msgbox-wrap' ).html( newsletterglue_params.loader );
 				setTimeout( function() {
+					$( '#ngl_double_confirm' ).val( 'no' );
 					var post_id = $( '#post_ID' ).val();
 					var data = 'action=newsletterglue_ajax_get_newsletter_state&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id;
 					$.ajax( {
@@ -1196,5 +1197,5 @@
 		}, 1000 );
 
 	} );
-	
+
 } ) ( jQuery );
