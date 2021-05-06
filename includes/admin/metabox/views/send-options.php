@@ -19,9 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="ngl-field">
 			<?php
 				$schedule = isset( $settings->schedule ) ? $settings->schedule : 'immediately';
-				if ( isset( $settings->sent ) ) {
-					$schedule = 'immediately';
-				}
 				newsletterglue_select_field( array(
 					'id' 			=> 'ngl_schedule',
 					'options'		=> $this->get_schedule_options(),

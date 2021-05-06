@@ -588,7 +588,10 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 		}
 
 		$html = str_replace( '{{ unsubscribe_link }}', '*|UNSUB|*', $html );
-		$html = str_replace( '{{ address }}', '*|LIST_ADDRESS|*', $html );
+		$html = str_replace( '{{ list }}', '*|LIST:NAME|*', $html );
+		$html = str_replace( '{{ address }}', '*|LIST:ADDRESS|*', $html );
+		$html = str_replace( '{{ address_html }}', '*|HTML:LIST_ADDRESS_HTML|*', $html );
+		$html = str_replace( '{{ rewards }}', '*|IF:REWARDS|* *|REWARDS|* *|END:IF|*', $html );
 
 		return $html;
 	}
