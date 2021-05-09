@@ -304,6 +304,10 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 	 */
 	public function newsletterglue_email_content_sendy( $content, $post, $subject ) {
 
+		if ( strstr( $content, '{{ unsubscribe_link }}' ) ) {
+			return $content;
+		}
+
 		$post_id		= $post->ID;
 		$data 			= get_post_meta( $post_id, '_newsletterglue', true );
 		$default_unsub  = $this->default_unsub();
@@ -353,7 +357,7 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 							</div>
 						</div>
 						<div class="ngl-field">
-							<textarea name="ngl_unsub" id="ngl_unsub" data-default="<?php echo esc_html( $default_unsub ); ?>"><?php echo $unsub; ?></textarea>
+							<textarea name="ngl_unsub" id="ngl_unsub" data-default="<?php echo esc_html( $default_unsub ); ?>"><?php echo stripslashes_deep( $unsub ); ?></textarea>
 						</div>
 					</div>
 					<div class="ngl-metabox-flex">

@@ -488,6 +488,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$html = wp_encode_emoji( $html );
 	$html = str_replace( 'http://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
 	$html = str_replace( 'https://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
+	$html = str_replace( '{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
 
 	// ESP html filter.
 	$html = apply_filters( "newsltterglue_{$app}_html_content", $html, $post->ID );
@@ -517,7 +518,11 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 		if ( strstr( $element->class, 'is-style-rounded' ) ) {
 			$element->find( 'img', 0 )->style = 'border-radius: 999px;' . $element->find( 'img', 0 )->style;
 		}
-		$output->find( $replace, $key )->outertext = $element->innertext;
+		if ( $element->find( 'a' ) ) {
+			$element->find( 'img', 0 )->{'data-href'} = $element->find( 'a', 0 )->href;
+			$element->find( 'a', 0 )->outertext = $element->innertext;
+		}
+		$element->outertext = $element->find( 'img', 0 )->outertext;
 	}
 
 	// Output column.
@@ -617,25 +622,6 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$class = ! empty( $element->class ) ? ' ngl-table-' . $element->class : '';
 		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-' . $element->tag . $class . '"><tr><td>' . $element->outertext . '</td></tr></table>';
-	}
-
-	// Spacers.
-	$replace = '.wp-block-spacer';
-	foreach( $output->find( $replace ) as $key => $element ) {
-		$s = $element->style;
-		$results = [];
-		$styles = explode(';', $s);
-
-		foreach ($styles as $style) {
-			$properties = explode(':', $style);
-			if (2 === count($properties)) {
-				$results[trim($properties[0])] = trim($properties[1]);
-			}
-		}
-		if ( ! empty( $results[ 'height' ] ) ) {
-			$clean_height = absint( $results[ 'height' ] ) - 21;
-			$element->outertext = '<div class="ngl-spacer" style="height: 1px; Margin-bottom: ' . $clean_height . 'px;">&nbsp;</div>';
-		}
 	}
 
 	$output->save();
@@ -784,22 +770,49 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 	$replace = '.ngl-table-columns';
 	$total = 0;
 	foreach( $output->find( $replace ) as $key => $element ) {
+
+		$holder = 600;
+
+		if ( strstr( $element->parent->class, 'ngl-callout-content' ) ) {
+			$holder = absint( 600 - ( $element->parent->{'data-gap'} * 2 ) );
+		}
+
 		$col_count = 0;
 		$total = 0;
 		foreach( $element->find( 'td' ) as $a => $td ) {
 			$total = $total + absint( $td->width );
-			$unset = 600 - $total;
+			$unset = $holder - $total;
 			if ( ! $td->width ) {
 				$col_count = $col_count + 1;
 			}
 		}
 		foreach( $element->find( 'td' ) as $a => $td ) {
-			if ( ! $td->width && $unset != 600 ) {
+			if ( ! $td->width && $unset != $holder ) {
 				$td->width = $unset / $col_count;
 			}
-			if ( ! $td->width && $unset == 600 && $col_count == 2 ) {
-				$td->width = 300;
+			if ( ! $td->width && $unset == $holder && $col_count == 2 ) {
+				$td->width = $holder / 2;
 			}
+		}
+	}
+
+	// Spacers.
+	$replace = '.wp-block-spacer';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$s = $element->style;
+		$results = [];
+		$styles = explode(';', $s);
+
+		foreach ($styles as $style) {
+			$properties = explode(':', $style);
+			if (2 === count($properties)) {
+				$results[trim($properties[0])] = trim($properties[1]);
+			}
+		}
+		if ( ! empty( $results[ 'height' ] ) ) {
+			$clean_height = absint( $results[ 'height' ] );
+			$element->outertext = $clean_height;
+			$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-spacer"><tr><td height="' . $clean_height .'" style="height: ' . $clean_height . 'px; padding: 0 !important; font-size: 0px; line-height: 100%;">&nbsp;</td></tr></table>';
 		}
 	}
 
@@ -837,7 +850,6 @@ function newsletterglue_generated_html_output_hook3( $html, $post_id, $app ) {
 		'#template_inner .wp-block-table > table',
 		'#template_inner hr',
 		'#template_inner img.wp-image',
-		'#template_inner .ngl-spacer',
 		'.ngl-article-img-full',
 	);
 
@@ -1008,17 +1020,7 @@ function newsletterglue_generated_html_output_hook5( $html, $post_id, $app ) {
 		$element->outertext = $element->innertext;
 	}
 
-	// Images inside block columns.
-	$replace = '.ngl-table-columns td';
-	foreach( $output->find( $replace ) as $key => $element ) {
-		if ( $element->width ) {
-			foreach( $element->find( 'img' ) as $image_id => $image_el ) {
-				//$image_el->width = $element->width - 40;
-				//$image_el->height = '';
-			}
-		}
-	}
-
+	// Has background.
 	$replace = 'p.has-background';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$td = $element->parent;
@@ -1086,9 +1088,44 @@ function newsletterglue_generated_html_output_hook6( $html, $post_id, $app ) {
 		}
 	}
 
+	// Separators.
 	$replace = '.ngl-table-wp-block-separator';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-divider-wrap"><tr><td>' . $element->outertext . '</td></tr></table>';
+	}
+
+	// Empty divs = brs.
+	$replace = '#template_inner div';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( $element->innertext == '' ) {
+			$element->outertext = '<br /><br />';
+		}
+	}
+
+	// Inline colored links.
+	$replace = 'span.has-inline-color';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( $element->style ) {
+			$s = $element->style;
+			$results = [];
+			$styles = explode(';', $s);
+
+			foreach ($styles as $style) {
+				$properties = explode(':', $style);
+				if (2 === count($properties)) {
+					$results[trim($properties[0])] = trim($properties[1]);
+				}
+			}
+			if ( ! empty( $results[ 'color' ] ) ) {
+				$element->parent->style = $element->parent->style . 'color: ' . $results[ 'color' ] . ' !important';
+			}
+		}
+	}
+
+	// Find all images that could have links.
+	$replace = '#template_inner img[data-href]';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->outertext = '<a href="' . $element->{'data-href'} . '">' . $element->outertext . '</a>';
 	}
 
 	$output->save();
@@ -1339,7 +1376,7 @@ add_action( 'init', 'newsletterglue_review_button_start' );
 function newsletterglue_get_post_types() {
 
 	$post_types  = get_post_types();
-	$unsupported = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'scheduled-action' );
+	$unsupported = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'scheduled-action', 'newsletterglue', 'ngl_pattern' );
 
 	if ( is_array( $post_types ) ) {
 		foreach( $post_types as $post_type ) {
@@ -1442,7 +1479,7 @@ table {
 }
 
 .ngl-table-divider-wrap td {
-	padding: 20px;
+	padding: 10px 0;
 }
 
 .ngl-table-wp-block-separator td {
@@ -1539,7 +1576,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-	color:#2A5DB0;
+	color: #2A5DB0;
 	text-decoration: underline;
 }
 
@@ -1996,4 +2033,42 @@ function newsletterglue_duplicate_item( $post = null, $post_id = 0 ) {
 
 	delete_post_meta( $new_post_id, '_ngl_results' );
 
+}
+
+/**
+ * Get rgb from hex.
+ */
+function newsletterglue_rgb_from_hex( $color ) {
+	$color = str_replace( '#', '', $color );
+	// Convert shorthand colors to full format, e.g. "FFF" -> "FFFFFF".
+	$color = preg_replace( '~^(.)(.)(.)$~', '$1$1$2$2$3$3', $color );
+
+	$rgb      = array();
+	$rgb['R'] = hexdec( $color[0] . $color[1] );
+	$rgb['G'] = hexdec( $color[2] . $color[3] );
+	$rgb['B'] = hexdec( $color[4] . $color[5] );
+
+	return $rgb;
+}
+
+/**
+ * Darker hex color.
+ */
+function newsletterglue_hex_darker( $color, $factor = 30 ) { 
+	$base = newsletterglue_rgb_from_hex( $color ); 
+	$color = '#'; 
+ 
+	foreach ( $base as $k => $v ) { 
+		$amount = $v / 100; 
+		$amount = round( $amount * $factor ); 
+		$new_decimal = $v - $amount; 
+ 
+		$new_hex_component = dechex( $new_decimal ); 
+		if ( strlen( $new_hex_component ) < 2 ) { 
+			$new_hex_component = "0" . $new_hex_component; 
+		} 
+		$color .= $new_hex_component; 
+	}
+
+	return $color; 
 }
