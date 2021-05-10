@@ -192,6 +192,12 @@ Yes! Check it out [here](https://newsletterglue.com).
 
 == Changelog ==
 
+= 1.3.2, May 10, 2021 =
+
+**Bug fixes**
+
+* You could not create links in images. This is now fixed.
+
 = 1.3.1, May 1, 2021 =
 
 * **Major change:** From this version onwards, ActiveCampaign, Campaign Monitor, GetResponse, MailerLite and Sendinblue will no longer be connected in the free version. Upgrade to the pro plugin to stay connected.
