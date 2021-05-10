@@ -56,7 +56,7 @@ class NGL_CPT {
 		add_action( 'enqueue_block_editor_assets', array( __CLASS__, 'enqueue_block_editor_assets' ) );
 
 		// Default titles.
-		add_filter( 'save_post', array( __CLASS__, 'add_newsletter_title' ), 99, 2 );
+		// add_filter( 'save_post', array( __CLASS__, 'add_newsletter_title' ), 99, 2 );
 
 		// Add top bar.
 		add_action( 'all_admin_notices', array( __CLASS__, 'add_topbar' ), 999 );

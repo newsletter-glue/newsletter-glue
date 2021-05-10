@@ -68,9 +68,9 @@ div.editor-styles-wrapper .wp-block[data-type="newsletterglue/callout"] .block-e
 }
 
 body.post-type-newsletterglue div.edit-post-visual-editor__post-title-wrapper {
-	position: absolute;
-	top: -100000px;
-	left: -100000px;
+	/*position: absolute;*/
+	/*top: -100000px;*/
+	/*left: -100000px;*/
 }
 
 div.editor-styles-wrapper [data-block] {
