@@ -484,7 +484,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D', '*%7C', '%7C*' ), array( '{', '}', '$', '[', ']', '*|', '|*' ), $html );
-	$html = str_replace( '@media only screen and (max-width:642px) {', 'a { color: ' . newsletterglue_get_theme_option( 'a_colour' ) . '; } @media only screen and (max-width:642px) {' . "\r\n", $html );
+	$html = str_replace( '@media only screen and (max-width:642px) {', 'p.ngl-unsubscribe a { color: #999 !important; text-decoration: underline; } a { color: ' . newsletterglue_get_theme_option( 'a_colour' ) . '; } @media only screen and (max-width:642px) {' . "\r\n", $html );
 	$html = wp_encode_emoji( $html );
 	$html = str_replace( 'http://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
 	$html = str_replace( 'https://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
@@ -1563,7 +1563,7 @@ p.has-text-color * {
 
 .ngl-table-ngl-unsubscribe td {
 	border-top: 1px solid #eee;
-	padding: 20px;
+	padding: 20px 100px;
 }
 
 .ngl-table-columns {

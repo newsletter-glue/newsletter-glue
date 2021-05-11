@@ -7,6 +7,31 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Adds support to display newsletter status in posts list.
+ */
+add_action( 'init', 'newsletterglue_add_newsletter_status' );
+function newsletterglue_add_newsletter_status() {
+
+	$post_types = get_option( 'newsletterglue_post_types' );
+
+	if ( ! empty( $post_types ) ) {
+		$post_types = explode( ',', $post_types );
+	} else {
+		$post_types = apply_filters( 'newsletterglue_supported_core_types', array( 'post', 'page' ) );
+	}
+
+	$post_types = array_merge( $post_types, array( 'newsletterglue' ) );
+
+	if ( is_array( $post_types ) ) {
+		foreach( $post_types as $post_type ) {
+			add_filter( "manage_{$post_type}_posts_columns", 'newsletterglue_manage_posts_columns', 99 );
+			add_action( "manage_{$post_type}_posts_custom_column", 'newsletterglue_manage_posts_custom_column', 99, 2 );
+		}
+	}
+
+}
+
+/**
  * Add newsletter status column.
  */
 function newsletterglue_manage_posts_columns( $columns ) {
@@ -21,8 +46,6 @@ function newsletterglue_manage_posts_columns( $columns ) {
 	return $ngl_columns;
 
 }
-add_filter( 'manage_post_posts_columns', 'newsletterglue_manage_posts_columns', 99 );
-add_filter( 'manage_newsletterglue_posts_columns', 'newsletterglue_manage_posts_columns', 99 );
 
 /**
  * Display custom post columns.
@@ -74,8 +97,6 @@ function newsletterglue_manage_posts_custom_column( $column, $post_id ) {
 	}
 
 }
-add_action( 'manage_post_posts_custom_column', 'newsletterglue_manage_posts_custom_column', 99, 2 );
-add_action( 'manage_newsletterglue_posts_custom_column', 'newsletterglue_manage_posts_custom_column', 99, 2 );
 
 /**
  * Get past campaigns based on post ID.

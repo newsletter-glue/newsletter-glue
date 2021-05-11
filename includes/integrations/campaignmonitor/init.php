@@ -34,6 +34,11 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 
 		$this->get_api_key();
 
+		add_filter( 'newsletterglue_email_content_campaignmonitor', array( $this, 'newsletterglue_email_content_campaignmonitor' ), 10, 3 );
+
+		add_action( 'newsletterglue_edit_more_settings', array( $this, 'newsletterglue_edit_more_settings' ), 50, 3 );
+
+		add_filter( 'newsltterglue_campaignmonitor_html_content', array( $this, 'html_content' ), 10, 2 );
 	}
 
 	/**
@@ -126,6 +131,7 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 			$globals[ $this->app ] = array(
 				'from_name' 	=> newsletterglue_get_default_from_name(),
 				'from_email'	=> isset( $account[ 'EmailAddress' ] ) ? $account[ 'EmailAddress' ] : '',
+				'unsub'			=> $this->default_unsub(),
 			);
 
 			update_option( 'newsletterglue_options', $globals );
@@ -467,6 +473,72 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	}
 
 	/**
+	 * Customize content.
+	 */
+	public function newsletterglue_email_content_campaignmonitor( $content, $post, $subject ) {
+
+		if ( strstr( $content, '{{ unsubscribe_link }}' ) ) {
+			return $content;
+		}
+
+		$post_id		= $post->ID;
+		$data 			= get_post_meta( $post_id, '_newsletterglue', true );
+		$default_unsub  = $this->default_unsub();
+		$unsub		 	= ! empty( $data[ 'unsub' ] ) ? $data[ 'unsub' ] : $default_unsub;
+
+		if ( empty( $unsub ) ) {
+			$unsub = $this->default_unsub();
+		}
+
+		$content .= '<p class="ngl-unsubscribe">' . wp_kses_post( $unsub ) . '</p>';
+
+		return $content;
+
+	}
+
+	/**
+	 * Default unsub.
+	 */
+	public function default_unsub() {
+		return '<a href="{{ unsubscribe_link }}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a> to stop receiving these emails.';
+	}
+
+	/**
+	 * Add extra settings to metabox.
+	 */
+	public function newsletterglue_edit_more_settings( $app, $settings, $ajax = false ) {
+		if ( $app === $this->app ) {
+
+			$default_unsub = $this->default_unsub();
+			$unsub = ! empty( $settings->unsub ) ? $settings->unsub : newsletterglue_get_option( 'unsub', $app );
+
+			?>
+			<div class="ngl-metabox-flexfull">
+				<div class="ngl-metabox-flex">
+					<div class="ngl-metabox-flex">
+						<div class="ngl-metabox-header">
+							<label for="ngl_unsub"><?php esc_html_e( 'Edit unsubscribe message', 'newsletter-glue' ); ?></label>
+							<div class="ngl-label-verification">
+								<a href="#" class="ngl-textarea-append" data-selector="ngl_unsub" data-value="<?php echo esc_html(  '<a href="{{ unsubscribe_link }}">' . __( 'Unsubscribe', 'newsletter-glue' ) . '</a>' ); ?>"><?php _e( 'Insert unsubscribe tag', 'newsletter-glue' ); ?></a>
+							</div>
+							<div class="ngl-label-more">
+								<a href="#" class="ngl-textarea-reset" data-selector="ngl_unsub"><?php _e( 'Reset', 'newsletter-glue' ); ?></a>
+							</div>
+						</div>
+						<div class="ngl-field">
+							<textarea name="ngl_unsub" id="ngl_unsub" data-default="<?php echo esc_html( $default_unsub ); ?>"><?php echo stripslashes_deep( $unsub ); ?></textarea>
+						</div>
+					</div>
+					<div class="ngl-metabox-flex">
+
+					</div>
+				</div>
+			</div>
+			<?php
+		}
+	}
+
+	/**
 	 * Has email verify.
 	 */
 	public function has_email_verify() {
@@ -478,6 +550,35 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	 */
 	public function get_email_verify_help() {
 		return 'https://help.campaignmonitor.com/permission-settings';
+	}
+
+	/**
+	 * Replace universal tags with esp tags.
+	 */
+	public function html_content( $html, $post_id ) {
+
+		if ( ! defined( 'NGL_SEND_IN_PROGRESS' ) ) {
+			return $html;
+		}
+
+		$output = new simple_html_dom();
+		$output->load( $html, true, false );
+
+		// Author.
+		$replace = '#template_inner a';
+		foreach( $output->find( $replace ) as $key => $element ) {
+			if ( $element->href === '{{ unsubscribe_link }}' ) {
+				$element->outertext = '<unsubscribe>' . wp_strip_all_tags( $element->innertext ) . '</unsubscribe>';
+			}
+		}
+
+		$output->save();
+
+		$thehtml = ( string ) $output;
+
+		$thehtml = str_replace( '{{ unsubscribe_link }}', '<unsubscribe>' . __( 'Unsubscribe', 'newsletter-glue' ) . '</unsubscribe>', $thehtml );
+
+		return $thehtml;
 	}
 
 }
