@@ -7,6 +7,54 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Shortcode: Archive.
+ */
+function newsletterglue_archive( $atts ) {
+	ob_start();
+
+	$terms = get_terms( array(
+		'taxonomy'		=> 'ngl_newsletter_cat',
+		'hide_empty'	=> true,
+		'orderby'		=> 'term_id',
+		'order'			=> 'asc'
+	) );
+
+	if ( $terms ) {
+	?>
+	<div class="newsletterglue-archive">
+		<?php foreach( $terms as $term ) { ?>
+		<div class="newsletterglue-archive--category" style="margin-bottom: 30px;">
+			<h3 class="newsletterglue-archive--category-name"><a href="<?php echo get_term_link( $term ); ?>"><?php echo esc_html( $term->name ); ?></h3>
+			<ul class="newsletterglue-archive--list">
+				<?php
+				$newsletters = get_posts(
+					array(
+						'posts_per_page' 	=> -1,
+						'post_type' 		=> 'newsletterglue',
+						'tax_query' 		=> array(
+							array(
+								'taxonomy' 	=> 'ngl_newsletter_cat',
+								'field' 	=> 'term_id',
+								'terms' 	=> $term->term_id,
+							)
+						)
+					)
+				);
+				foreach( $newsletters as $newsletter ) { ?>
+				<li><a href="<?php echo get_permalink( $newsletter->ID ); ?>"><?php echo get_the_title( $newsletter->ID ); ?></a></li>
+				<?php } ?>
+			</ul>
+		</div>
+		<?php } ?>
+	</div>
+	<?php
+	}
+
+	return ob_get_clean();
+}
+add_shortcode( 'newsletterglue_archive', 'newsletterglue_archive' );
+
+/**
  * Creates the admin menu links.
  */
 function newsletterglue_get_supported_apps() {
