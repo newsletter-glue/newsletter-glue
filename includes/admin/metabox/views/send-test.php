@@ -6,9 +6,11 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+global $post_type;
+
 ?>
 
-<div class="ngl-metabox-flex alt2">
+<div class="ngl-metabox-flex alt2" <?php if ( $post_type === 'ngl_pattern' ) echo 'style="min-height:40px;padding-bottom:30px;"'; ?>>
 
 	<div class="ngl-metabox-flex">
 		<div class="ngl-test-result-wrap">

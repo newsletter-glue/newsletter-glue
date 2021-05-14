@@ -42,6 +42,9 @@ class NGL_CPT {
 		// Filter post views.
 		add_filter( 'views_edit-ngl_pattern', array( __CLASS__, 'views_edit' ) );
 
+		// When a newsletter is saved.
+		add_action( 'save_post', array( __CLASS__, 'save_newsletter' ), 10, 2 );
+
 		// When a pattern is saved.
 		add_action( 'save_post', array( __CLASS__, 'save_pattern' ), 10, 2 );
 
@@ -109,7 +112,7 @@ class NGL_CPT {
 					'exclude_from_search' 	=> false,
 					'show_in_menu'        	=> false,
 					'hierarchical'        	=> false,
-					'rewrite'             	=> array( 'slug' => 'newsletter', 'with_front' => false ),
+					'rewrite'             	=> array( 'slug' => 'newsletter/%newsletter%', 'with_front' => true ),
 					'query_var'           	=> true,
 					'supports'           	=> array( 'title', 'editor', 'thumbnail' ),
 					'taxonomies'        	=> array( 'ngl_newsletter_cat' ),
@@ -124,7 +127,7 @@ class NGL_CPT {
 		$args = array(
 			'label'        			=> __( 'Newsletter category', 'newsletter-glue' ),
 			'hierarchical' 			=> true,
-			'rewrite'      			=> array( 'slug' => 'newsletters' ),
+			'rewrite'      			=> array( 'slug' => 'newsletter' ),
 			'show_in_rest' 			=> true,
 			'show_admin_column'		=> false,
 		);
@@ -133,7 +136,7 @@ class NGL_CPT {
 
 		// Add default terms (pattern categories)
 		$default_categories = array(
-			'newsletters' 		=> __( 'Newsletters', 'newsletter-glue' ),
+			'archive' 		=> __( 'Archive', 'newsletter-glue' ),
 		);
 
 		foreach( $default_categories as $cat_id => $cat_name ) {
@@ -581,6 +584,47 @@ class NGL_CPT {
 
 		return $views;
 
+	}
+
+	/**
+	 * Save a newsletter.
+	 */
+	public static function save_newsletter( $post_id, $post ) {
+		// $post_id and $post are required
+		$saved_meta_boxes = false;
+
+		// only for patterns.
+		if ( $post->post_type !== 'newsletterglue' ) {
+			return;
+		}
+
+		// Require post ID and post object.
+		if ( empty( $post_id ) || empty( $post ) || $saved_meta_boxes ) {
+			return;
+		}
+
+		// Dont' save meta boxes for revisions or autosaves
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || is_int( wp_is_post_revision( $post ) ) || is_int( wp_is_post_autosave( $post ) ) ) {
+			return;
+		}
+
+		// Check user has permission to edit
+		if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+			return;
+		}
+
+		// Only allow published and scheduled posts.
+		if ( ! in_array( $post->post_status, array( 'publish' ) ) ) {
+			return;
+		}
+
+		// We need this save event to run once to avoid potential endless loops. This would have been perfect:
+		$saved_meta_boxes = true;
+
+		$terms = wp_get_object_terms( $post_id, 'ngl_newsletter_cat' );
+		if ( empty( $terms ) ) {
+			wp_set_object_terms( $post_id, array( 'archive' ), 'ngl_newsletter_cat' );
+		}
 	}
 
 	/**

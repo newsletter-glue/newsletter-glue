@@ -35,7 +35,7 @@ function newsletterglue_display_category_column( $column, $post_id ) {
 			if ( ! empty( $terms ) ) {
 				$output = '';
 				foreach( $terms as $term ) {
-					$output .= '<a href="' . admin_url( 'edit.php?post_type=newsletterglue&ngl_newsletter_cat=newsletters' ) . '">' . $term->name . '</a> (<a href="' . admin_url( 'term.php?taxonomy=ngl_newsletter_cat&tag_ID=' . $term->term_id . '&post_type=post' ) . '">' . __( 'Edit', 'newsletter-glue' ) . '</a>)<span style="display:inline-block;width:20px;"></span>';
+					$output .= '<a href="' . admin_url( 'edit.php?post_type=newsletterglue&ngl_newsletter_cat=' . $term->slug ) . '">' . $term->name . '</a> (<a href="' . admin_url( 'term.php?taxonomy=ngl_newsletter_cat&tag_ID=' . $term->term_id . '&post_type=newsletterglue' ) . '">' . __( 'Edit', 'newsletter-glue' ) . '</a>)<span style="display:inline-block;width:20px;"></span>';
 				}
 				echo $output;
 			} else {

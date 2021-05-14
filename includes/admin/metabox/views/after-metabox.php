@@ -6,6 +6,8 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+global $post_type;
+
 ?>
 
 	<?php $api->show_settings( $settings, $defaults, $post ); ?>
@@ -14,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 </div>
 
+<?php if ( $post_type != 'ngl_pattern' ) : ?>
 <div class="ngl-metabox ngl-metabox-flex alt3 ngl-sending-box <?php if ( ! $hide ) echo 'is-hidden'; ?>">
 
 	<div class="ngl-metabox-flex ngl-metabox-flex-toggle">
@@ -33,3 +36,4 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</div>
 
 </div>
+<?php endif; ?>
