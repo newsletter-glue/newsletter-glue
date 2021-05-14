@@ -371,6 +371,17 @@ function newsletterglue_default_connection() {
 }
 
 /**
+ * Add title to newsletter.
+ */
+function newsletterglue_add_title( $title, $post ) {
+	if ( isset( $post->post_type ) && $post->post_type == 'ngl_pattern' ) {
+		return false;
+	}
+
+	return '<h1 class="title">' . $title . '</h1>';
+}
+
+/**
  * Generate email template content from post and subject.
  */
 function newsletterglue_generate_content( $post = '', $subject = '', $app = '' ) {
@@ -393,6 +404,8 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	if ( ! defined( 'NGL_IN_EMAIL' ) ) {
 		define( 'NGL_IN_EMAIL', true );
 	}
+
+	$post_type = isset( $post->post_type ) ? $post->post_type : '';
 
 	$data 			= get_post_meta( $post->ID, '_newsletterglue', true );
 	$preview_text 	= isset( $data[ 'preview_text' ] ) ? esc_attr( $data[ 'preview_text' ] ) : '';
@@ -433,11 +446,11 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	if ( $position == 'above' ) {
 		$the_content .= newsletterglue_add_masthead_image( $post, 'above' );
 		if ( $show_title !== 'no' ) {
-			$the_content .= '<h1 class="title">' . $title . '</h1>';
+			$the_content .= newsletterglue_add_title( $title, $post );
 		}
 	} else {
 		if ( $show_title !== 'no' ) {
-			$the_content .= '<h1 class="title">' . $title . '</h1>';
+			$the_content .= newsletterglue_add_title( $title, $post );
 		}
 		$the_content .= newsletterglue_add_masthead_image( $post, 'below' );
 	}
@@ -449,12 +462,15 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$the_content .= $the_post_content;
 
 	// Credits.
-	if ( get_option( 'newsletterglue_credits' ) ) {
+	if ( get_option( 'newsletterglue_credits' ) && $post_type != 'ngl_pattern' ) {
 		$the_content .= '<p class="ngl-credits">' . sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="https://wordpress.org/plugins/newsletter-glue/">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ) . '</p>';
 	}
 
 	// Allow 3rd party to customize content tag.
-	$the_content = apply_filters( 'newsletterglue_email_content_' . $app, $the_content, $post, $subject );
+	if ( $post_type != 'ngl_pattern' ) {
+		$the_content = apply_filters( 'newsletterglue_email_content_' . $app, $the_content, $post, $subject );
+	}
+
 	$the_content = apply_filters( 'newsletterglue_email_content', $the_content, $post, $subject, $app );
 
 	// Process content tags.

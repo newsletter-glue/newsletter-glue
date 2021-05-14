@@ -724,6 +724,7 @@
 
 		// Add message box.
 		if ( $( '#ngl_send_newsletter2' ).is( ':checked' ) ) {
+			$( '#ngl_double_confirm' ).val( 'yes' );
 			$( '#ngl_send_newsletter, #ngl_send_newsletter2' ).prop( 'checked', false );
 			$( '.ngl-msgbox-wrap' ).removeClass( 'is-hidden' );
 			$( '.ngl-reset' ).addClass( 'is-hidden' );
@@ -734,7 +735,6 @@
 				$( '.ngl-msgbox-wrap' ).find( 'div' ).css( { opacity: 0, 'pointer-events' : 'none' } );
 				$( '.ngl-msgbox-wrap' ).html( newsletterglue_params.loader );
 				setTimeout( function() {
-					$( '#ngl_double_confirm' ).val( 'no' );
 					var post_id = $( '#post_ID' ).val();
 					var data = 'action=newsletterglue_ajax_get_newsletter_state&security=' + newsletterglue_params.ajaxnonce + '&post_id=' + post_id;
 					$.ajax( {
@@ -1197,5 +1197,17 @@
 		}, 1000 );
 
 	} );
+
+	// Do not allow duplicate sending with ctrl+s.
+	$(window).bind('keydown', function(event) {
+		if (event.ctrlKey || event.metaKey) {
+			switch (String.fromCharCode(event.which).toLowerCase()) {
+			case 's':
+				event.preventDefault();
+				$( '#ngl_double_confirm' ).val( 'no' );
+				break;
+			}
+		}
+	});
 
 } ) ( jQuery );

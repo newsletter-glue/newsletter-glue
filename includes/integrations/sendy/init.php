@@ -169,21 +169,22 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 
 		define( 'NGL_SEND_IN_PROGRESS', 'sending' );
 
+		$post = get_post( $post_id );
+
 		// If no data was provided. Get it from the post.
 		if ( empty( $data ) ) {
 			$data = get_post_meta( $post_id, '_newsletterglue', true );
 		}
 
-		$subject 		= isset( $data['subject'] ) ? $data['subject'] : '';
-		$from_name		= isset( $data['from_name'] ) ? $data['from_name'] : '';
-		$from_email		= isset( $data['from_email'] ) ? $data['from_email'] : '';
+		$subject 		= isset( $data['subject'] ) ? urldecode( $data['subject'] ) : urldecode( $post->post_title );
+		$from_name		= isset( $data['from_name'] ) ? $data['from_name'] : newsletterglue_get_default_from_name();
+		$from_email		= isset( $data['from_email'] ) ? $data['from_email'] : $this->get_current_user_email();
 		$lists			= ! empty( $data['lists'] ) ? $data['lists'] : '';
 		$brand			= ! empty( $data['brand'] ) ? $data['brand'] : '';
 		$schedule   	= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
 		$track_opens 	= ! empty( $data[ 'track_opens' ] ) ? absint( $data[ 'track_opens' ] ) : 0;
 		$track_clicks 	= ! empty( $data[ 'track_clicks' ] ) ? absint( $data[ 'track_clicks' ] ) : 0;
 
-		$post 		= get_post( $post_id );
 		$html_text 	= newsletterglue_generate_content( $post, $subject, $this->app );
 
 		// Empty content.

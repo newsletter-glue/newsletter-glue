@@ -164,11 +164,17 @@
 	position: relative;
 }
 
+.ngl-form.ngl-portrait {
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .ngl-form h2 {
 	font-size: 24px !important;
 }
 
-.ngl-form-input-text {
+.ngl-form-input-text,
+input.ngl-form-input-text {
 	border: 1px solid #aaa;
 	padding: 5px 14px;
 	border-radius: 0;

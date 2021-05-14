@@ -202,6 +202,8 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 		define( 'NGL_SEND_IN_PROGRESS', 'sending' );
 
+		$post = get_post( $post_id );
+
 		// If no data was provided. Get it from the post.
 		if ( empty( $data ) ) {
 			$data = get_post_meta( $post_id, '_newsletterglue', true );
@@ -209,14 +211,12 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 
 		$campaignId = 0;
 
-		$subject 	= isset( $data['subject'] ) ? $data['subject'] : '';
-		$from_name	= isset( $data['from_name'] ) ? $data['from_name'] : '';
-		$from_email	= isset( $data['from_email'] ) ? $data['from_email'] : '';
-		$groups		= isset( $data['groups'] ) && ! empty( $data['groups'] ) && is_array( $data['groups'] ) ? array_map( 'intval', $data['groups'] ) : '';
-		$segments	= isset( $data['segments'] ) && ! empty( $data['segments'] ) && is_array( $data['segments'] ) ? array_map( 'intval', $data['segments'] ) : '';
-		$schedule   = isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
-
-		$post = get_post( $post_id );
+		$subject 		= isset( $data['subject'] ) ? urldecode( $data['subject'] ) : urldecode( $post->post_title );
+		$from_name		= isset( $data['from_name'] ) ? $data['from_name'] : newsletterglue_get_default_from_name();
+		$from_email		= isset( $data['from_email'] ) ? $data['from_email'] : $this->get_current_user_email();
+		$groups			= isset( $data['groups'] ) && ! empty( $data['groups'] ) && is_array( $data['groups'] ) ? array_map( 'intval', $data['groups'] ) : '';
+		$segments		= isset( $data['segments'] ) && ! empty( $data['segments'] ) && is_array( $data['segments'] ) ? array_map( 'intval', $data['segments'] ) : '';
+		$schedule		= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
 
 		// Empty content.
 		if ( $test && isset( $post->post_status ) && $post->post_status === 'auto-draft' ) {

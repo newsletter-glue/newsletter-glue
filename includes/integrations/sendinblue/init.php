@@ -225,16 +225,18 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 
 		define( 'NGL_SEND_IN_PROGRESS', 'sending' );
 
+		$post = get_post( $post_id );
+
 		// If no data was provided. Get it from the post.
 		if ( empty( $data ) ) {
 			$data = get_post_meta( $post_id, '_newsletterglue', true );
 		}
 
-		$subject 	= isset( $data['subject'] ) ? $data['subject'] : '';
-		$from_name	= isset( $data['from_name'] ) ? $data['from_name'] : '';
-		$from_email	= isset( $data['from_email'] ) ? $data['from_email'] : '';
-		$schedule   = isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
-		$lists      = isset( $data['lists'] ) && ! empty( $data['lists'] ) && is_array( $data['lists'] ) ? array_map( 'intval', $data['lists'] ) : '';
+		$subject 		= isset( $data['subject'] ) ? urldecode( $data['subject'] ) : urldecode( $post->post_title );
+		$from_name		= isset( $data['from_name'] ) ? $data['from_name'] : newsletterglue_get_default_from_name();
+		$from_email		= isset( $data['from_email'] ) ? $data['from_email'] : $this->get_current_user_email();
+		$schedule   	= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
+		$lists      	= isset( $data['lists'] ) && ! empty( $data['lists'] ) && is_array( $data['lists'] ) ? array_map( 'intval', $data['lists'] ) : '';
 
 		$this->api  = new NGL_SendinblueApiClient( $this->api_key );
 
@@ -243,8 +245,6 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 			$_lists 	= $this->get_lists();
 			$lists 		= array_keys( $_lists );
 		}
-
-		$post = get_post( $post_id );
 
 		// Empty content.
 		if ( $test && isset( $post->post_status ) && $post->post_status === 'auto-draft' ) {

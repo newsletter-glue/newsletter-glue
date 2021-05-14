@@ -101,6 +101,12 @@ abstract class NGL_Abstract_Integration {
 	 * Show subject.
 	 */
 	public function show_subject( $settings, $defaults, $post ) {
+		global $post_type;
+
+		if ( $post_type === 'ngl_pattern' ) {
+			return;
+		}
+
 		include NGL_PLUGIN_DIR . 'includes/admin/metabox/views/subject-line.php';
 	}
 
@@ -108,6 +114,12 @@ abstract class NGL_Abstract_Integration {
 	 * Show from name/email options.
 	 */
 	public function show_from_options( $settings, $defaults, $post ) {
+		global $post_type;
+
+		if ( $post_type === 'ngl_pattern' ) {
+			return;
+		}
+
 		include NGL_PLUGIN_DIR . 'includes/admin/metabox/views/send-from-settings.php';
 	}
 
@@ -193,6 +205,12 @@ abstract class NGL_Abstract_Integration {
 	 * Show schedule / header image options.
 	 */
 	public function show_schedule_and_image_options( $settings, $defaults, $post ) {
+		global $post_type;
+
+		if ( $post_type === 'ngl_pattern' ) {
+			return;
+		}
+
 		include NGL_PLUGIN_DIR . 'includes/admin/metabox/views/send-options.php';
 	}
 
@@ -307,6 +325,14 @@ abstract class NGL_Abstract_Integration {
 		$response = array( 'successful' => true );
 
 		return $response;
+	}
+
+	/**
+	 * Get current user email.
+	 */
+	public function get_current_user_email() {
+		global $current_user;
+		return $current_user->user_email;
 	}
 
 }

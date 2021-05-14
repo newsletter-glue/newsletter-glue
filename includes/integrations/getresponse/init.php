@@ -223,20 +223,20 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 
 		define( 'NGL_SEND_IN_PROGRESS', 'sending' );
 
+		$post = get_post( $post_id );
+
 		// If no data was provided. Get it from the post.
 		if ( empty( $data ) ) {
 			$data = get_post_meta( $post_id, '_newsletterglue', true );
 		}
 
-		$subject 		= isset( $data['subject'] ) ? urldecode( $data['subject'] ) : '';
-		$from_name		= isset( $data['from_name'] ) ? $data['from_name'] : '';
-		$from_email		= isset( $data['from_email'] ) ? $data['from_email'] : '';
+		$subject 		= isset( $data['subject'] ) ? urldecode( $data['subject'] ) : urldecode( $post->post_title );
+		$from_name		= isset( $data['from_name'] ) ? $data['from_name'] : newsletterglue_get_default_from_name();
+		$from_email		= isset( $data['from_email'] ) ? $data['from_email'] : $this->get_current_user_email();
 		$campaign		= isset( $data['lists'] ) ? $data['lists'] : '';
 		//$segment		= isset( $data['segment'] ) && $data['segment'] && ( $data['segment'] != '_everyone' ) ? $data['segment'] : '';
 		$schedule  	 	= isset( $data['schedule'] ) ? $data['schedule'] : 'immediately';
 		$fromFieldId    = '';
-
-		$post = get_post( $post_id );
 
 		// Empty content.
 		if ( $test && isset( $post->post_status ) && $post->post_status === 'auto-draft' ) {

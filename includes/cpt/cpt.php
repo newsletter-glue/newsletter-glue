@@ -100,24 +100,48 @@ class NGL_CPT {
 						'items_list_navigation' => __( 'Newsletters navigation', 'newsletter-glue' ),
 						'items_list'            => __( 'Newsletters list', 'newsletter-glue' ),
 					),
-					'description'         => __( 'This is where you can add new Newsletters to Newsletter Glue plugin.', 'newsletter-glue' ),
-					'public'              => true,
-					'show_ui'             => true,
-					'capability_type'     => 'post',
-					'map_meta_cap'        => true,
-					'publicly_queryable'  => true,
-					'exclude_from_search' => true,
-					'show_in_menu'        => false,
-					'hierarchical'        => false,
-					'rewrite'             => array( 'slug' => 'newsletter', 'with_front' => false ),
-					'query_var'           => true,
-					'supports'            => array( 'title', 'editor', 'thumbnail' ),
-					'show_in_nav_menus'   => true,
-					'show_in_admin_bar'   => true,
-					'show_in_rest'		  => true,
+					'description'         	=> __( 'This is where you can add new Newsletters to Newsletter Glue plugin.', 'newsletter-glue' ),
+					'public'              	=> true,
+					'show_ui'             	=> true,
+					'capability_type'     	=> 'post',
+					'map_meta_cap'        	=> true,
+					'publicly_queryable'  	=> true,
+					'exclude_from_search' 	=> false,
+					'show_in_menu'        	=> false,
+					'hierarchical'        	=> false,
+					'rewrite'             	=> array( 'slug' => 'newsletter', 'with_front' => false ),
+					'query_var'           	=> true,
+					'supports'           	=> array( 'title', 'editor', 'thumbnail' ),
+					'taxonomies'        	=> array( 'ngl_newsletter_cat' ),
+					'show_in_nav_menus'		=> true,
+					'show_in_admin_bar'   	=> true,
+					'show_in_rest'		  	=> true,
 				)
 			)
 		);
+
+		// Create newsletter category taxonomy.
+		$args = array(
+			'label'        			=> __( 'Newsletter category', 'newsletter-glue' ),
+			'hierarchical' 			=> true,
+			'rewrite'      			=> array( 'slug' => 'newsletters' ),
+			'show_in_rest' 			=> true,
+			'show_admin_column'		=> false,
+		);
+
+		register_taxonomy( 'ngl_newsletter_cat', array( 'newsletterglue' ), $args );
+
+		// Add default terms (pattern categories)
+		$default_categories = array(
+			'newsletters' 		=> __( 'Newsletters', 'newsletter-glue' ),
+		);
+
+		foreach( $default_categories as $cat_id => $cat_name ) {
+			$term = term_exists( $cat_id, 'ngl_newsletter_cat' );
+			if ( ! $term ) {
+				wp_insert_term( $cat_name, 'ngl_newsletter_cat', array( 'slug' => $cat_id ) );
+			}
+		}
 
 		// Create pattern post type.
 		$args = array(
@@ -139,14 +163,17 @@ class NGL_CPT {
 				'items_list_navigation' => __( 'Patterns navigation', 'newsletter-glue' ),
 				'items_list'            => __( 'Patterns list', 'newsletter-glue' ),
 			),
-			'description'       => __( 'Description', 'newsletter-glue' ),
-			'supports'          => array( 'title', 'editor' ),
-			'taxonomies'        => array( 'ngl_pattern_category' ),
-			'show_ui'           => true,
-			'rewrite'           => false,
-			'show_in_rest'      => true,
-			'show_in_menu'      => false,
-			'show_in_admin_bar' => false,
+			'description'       	=> __( 'Description', 'newsletter-glue' ),
+			'query_var'         	=> false,
+			'supports'          	=> array( 'title', 'editor' ),
+			'taxonomies'        	=> array( 'ngl_pattern_category' ),
+			'publicly_queryable'  	=> true,
+			'exclude_from_search' 	=> true,
+			'show_ui'           	=> true,
+			'rewrite'           	=> false,
+			'show_in_rest'      	=> true,
+			'show_in_menu'      	=> false,
+			'show_in_admin_bar' 	=> false,
 		);
 
 		register_post_type( 'ngl_pattern', $args );
