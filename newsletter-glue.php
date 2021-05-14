@@ -100,7 +100,7 @@ final class Newsletter_Glue {
 	 */
 	private function includes() {
 
-		if ( ! function_exists( 'file_get_html' ) ) {
+		if ( ! function_exists( 'file_get_html' ) && ! class_exists( 'simple_html_dom' ) && ! class_exists( 'simple_html_dom_node' ) ) {
 			include_once NGL_PLUGIN_DIR . 'includes/libraries/simple_html_dom.php';
 		}
 
