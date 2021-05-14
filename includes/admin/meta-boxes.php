@@ -20,13 +20,10 @@ function newsletterglue_add_meta_box() {
 		$post_types = apply_filters( 'newsletterglue_supported_core_types', array( 'post', 'page' ) );
 	}
 
-	$post_types = array_merge( $post_types, array( 'newsletterglue' ) );
+	$post_types = array_merge( $post_types, array( 'newsletterglue', 'ngl_pattern' ) );
 
 	if ( is_array( $post_types ) ) {
 		foreach( $post_types as $post_type ) {
-			if ( $post_type === 'ngl_pattern' ) {
-				continue;
-			}
 			if ( ! in_array( $post_type, apply_filters( 'newsletterglue_unsupported_post_types', $unsupported ) ) ) {
 				add_meta_box( 'newsletter_glue_metabox', __( 'Newsletter Glue: Send as newsletter', 'newsletter-glue' ), 'newsletterglue_meta_box', $post_type, 'normal', 'high' );
 			}
@@ -119,7 +116,7 @@ add_action( 'save_post', 'newsletterglue_save_meta_box', 1, 2 );
  * Shows the metabox content.
  */
 function newsletterglue_meta_box() {
-	global $post, $the_lists;
+	global $post, $the_lists, $post_type;
 
 	$settings   = newsletterglue_get_data( $post->ID );
 
@@ -155,7 +152,9 @@ function newsletterglue_meta_box() {
 
 		include( 'metabox/views/before-metabox.php' );
 
-		include newsletterglue_get_path( $app ) . '/metabox.php';
+		if ( $post_type != 'ngl_pattern' ) {
+			include newsletterglue_get_path( $app ) . '/metabox.php';
+		}
 
 		include( 'metabox/views/after-metabox.php' );
 

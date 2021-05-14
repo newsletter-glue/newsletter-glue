@@ -7,6 +7,48 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Add newsletter category column.
+ */
+function newsletterglue_add_category_column( $columns ) {
+
+	foreach( $columns as $key => $value ) {
+		$ngl_columns[ $key ] = $value;
+		if ( $key == 'title' ) {
+			$ngl_columns[ 'ngl_category' ] = __( 'Newsletter category', 'newsletter-glue' );
+		}
+	}
+
+	return $ngl_columns;
+
+}
+add_filter( "manage_newsletterglue_posts_columns", 'newsletterglue_add_category_column', 100 );
+
+/**
+ * Display custom post columns.
+ */
+function newsletterglue_display_category_column( $column, $post_id ) {
+
+	switch ( $column ) {
+		case 'ngl_category' :
+
+			$terms = wp_get_post_terms( $post_id, 'ngl_newsletter_cat' );
+			if ( ! empty( $terms ) ) {
+				$output = '';
+				foreach( $terms as $term ) {
+					$output .= '<a href="' . admin_url( 'edit.php?post_type=newsletterglue&ngl_newsletter_cat=newsletters' ) . '">' . $term->name . '</a> (<a href="' . admin_url( 'term.php?taxonomy=ngl_newsletter_cat&tag_ID=' . $term->term_id . '&post_type=post' ) . '">' . __( 'Edit', 'newsletter-glue' ) . '</a>)<span style="display:inline-block;width:20px;"></span>';
+				}
+				echo $output;
+			} else {
+				echo '&mdash;';
+			}
+
+		break;
+	}
+
+}
+add_action( "manage_newsletterglue_posts_custom_column", 'newsletterglue_display_category_column', 99, 2 );
+
+/**
  * Adds support to display newsletter status in posts list.
  */
 add_action( 'init', 'newsletterglue_add_newsletter_status' );
