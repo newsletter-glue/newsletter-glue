@@ -66,6 +66,9 @@ class NGL_CPT {
 
 		// Filter for Gutenberg use.
 		add_filter( 'use_block_editor_for_post_type', array( __CLASS__, 'use_block_editor_for_post_type' ), 99999, 2 );
+
+		// Hook for web view.
+		add_action( 'wp', array( __CLASS__, 'show_webview' ), 99 );
 	}
 
 	/**
@@ -114,7 +117,7 @@ class NGL_CPT {
 					'hierarchical'        	=> false,
 					'rewrite'             	=> array( 'slug' => 'newsletter/%newsletter%', 'with_front' => true ),
 					'query_var'           	=> true,
-					'supports'           	=> array( 'title', 'editor', 'thumbnail' ),
+					'supports'           	=> array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
 					'taxonomies'        	=> array( 'ngl_newsletter_cat' ),
 					'show_in_nav_menus'		=> true,
 					'show_in_admin_bar'   	=> true,
@@ -207,6 +210,19 @@ class NGL_CPT {
 				wp_insert_term( $cat_name, 'ngl_pattern_category', array( 'slug' => $cat_id ) );
 			}
 		}
+
+		// Register post meta for rest use.
+		register_post_meta(
+			'newsletterglue',
+			'_webview',
+			array(
+				'show_in_rest' 	=> true,
+				'single'       	=> true,
+				'type'         	=> 'string',
+				'default'       => 'blog',
+				'auth_callback' => function () { return current_user_can( 'manage_newsletterglue' ); }
+			)
+		);
 
 		do_action( 'newsletterglue_after_register_post_type' );
 
@@ -756,6 +772,11 @@ class NGL_CPT {
 	 * Enqueue block editor js.
 	 */
 	public static function enqueue_block_editor_assets() {
+		global $post_type;
+
+		if ( $post_type != 'newsletterglue' ) {
+			return;
+		}
 
 		$js_dir = NGL_PLUGIN_URL . 'assets/js/gutenberg/';
 
@@ -838,6 +859,38 @@ class NGL_CPT {
 		}
 
 		return $is_enabled;
+	}
+
+	/**
+	 * Webview.
+	 */
+	public static function show_webview() {
+		global $post;
+
+		if ( is_single() && isset( $post ) && ! empty( $post->post_type ) && $post->post_type == 'newsletterglue' ) {
+			$webview = get_post_meta( $post->ID, '_webview', true );
+			if ( $webview === 'email' ) {
+				ob_start();
+
+				$post_id 	= $post->ID;
+				$data 		= get_post_meta( $post_id, '_newsletterglue', true );
+				$app 		= isset( $data[ 'app' ] ) ? $data[ 'app' ] : '';
+
+				if ( $app ) {
+					include_once newsletterglue_get_path( $app ) . '/init.php';
+					$classname = 'NGL_' . ucfirst( $app );
+					$api = new $classname();
+				}
+
+				echo newsletterglue_generate_content( $post_id, ! empty( $data[ 'subject' ] ) ? $data[ 'subject' ] : '', $app );
+
+				$message = ob_get_clean();
+
+				echo $message;
+
+				exit;
+			}
+		}
 	}
 
 }
