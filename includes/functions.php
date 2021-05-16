@@ -12,6 +12,25 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function newsletterglue_archive( $atts ) {
 	ob_start();
 
+	if ( ! empty( $atts[ 'filter' ] ) && $atts[ 'filter' ] == 'latest' ) {
+		$newsletters = get_posts(
+			array(
+				'posts_per_page' 	=> -1,
+				'post_type' 		=> 'newsletterglue',
+				'orderby'			=> 'date',
+				'order'				=> 'desc',
+				'post_status'		=> 'publish',
+			)
+		);
+		if ( $newsletters ) {
+			?>
+			<?php foreach( $newsletters as $newsletter ) { ?>
+			<h3><a href="<?php echo get_permalink( $newsletter->ID ); ?>"><?php echo get_the_title( $newsletter->ID ); ?></a> &mdash; <?php echo get_the_date( 'M d Y' ); ?></h3>
+			<?php }
+		}
+		return ob_get_clean();
+	}
+
 	$terms = get_terms( array(
 		'taxonomy'		=> 'ngl_newsletter_cat',
 		'hide_empty'	=> true,
@@ -31,6 +50,7 @@ function newsletterglue_archive( $atts ) {
 					array(
 						'posts_per_page' 	=> -1,
 						'post_type' 		=> 'newsletterglue',
+						'post_status'		=> 'publish',
 						'tax_query' 		=> array(
 							array(
 								'taxonomy' 	=> 'ngl_newsletter_cat',
