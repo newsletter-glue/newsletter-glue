@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function newsletterglue_archive( $atts ) {
 	ob_start();
 
-	if ( ! empty( $atts[ 'filter' ] ) && $atts[ 'filter' ] == 'latest' ) {
+	if ( ! empty( $atts[ 'sortby' ] ) && $atts[ 'sortby' ] == 'latest' ) {
 		$newsletters = get_posts(
 			array(
 				'posts_per_page' 	=> -1,
