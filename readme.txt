@@ -192,6 +192,14 @@ Yes! Check it out [here](https://newsletterglue.com).
 
 == Changelog ==
 
+= 1.3.3, May 17, 2021 =
+
+**Bug fixes**
+
+* Fixed js cache issue preventing some newsletters from sending.
+* Fixed bug causing slashing to be inserted in From Name when apostrophes were present.
+* Fixed bug in Connect page when an invalid API key is entered causing the plugin to show the wrong screen.
+
 = 1.3.2, May 10, 2021 =
 
 **Bug fixes**
