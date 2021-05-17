@@ -413,6 +413,8 @@
 			return false;
 		}
 
+		console.log( ngl_app );
+
 		xhr = $.ajax( {
 			type : 'post',
 			url : newsletterglue_params.ajaxurl,
@@ -465,7 +467,7 @@
 	$( document ).on( 'click', '.ngl-ajax-test-again', function( event ) {
 		event.preventDefault();
 		if ( $( '.ngl-card-add2 .ngl-fields form' ).length ) {
-			$( '.ngl-card-add2 .ngl-fields form' ).trigger( 'submit' );
+			$( '.ngl-card-add2[data-app="' + ngl_app + '"] .ngl-fields form' ).trigger( 'submit' );
 		}
 		if ( $( '.ngl-card-add2 .ngl-license-form' ).length ) {
 			$( '.ngl-card-add2 .ngl-license-form' ).trigger( 'submit' );

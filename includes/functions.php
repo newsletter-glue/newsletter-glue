@@ -200,7 +200,7 @@ function newsletterglue_get_option( $option_id = '', $app = '' ) {
 	$options = get_option( 'newsletterglue_options' );
 
 	if ( isset( $options[ $app ][ $option_id ] ) ) {
-		return $options[ $app ][ $option_id ];
+		return stripslashes_deep( $options[ $app ][ $option_id ] );
 	}
 
 	return false;
