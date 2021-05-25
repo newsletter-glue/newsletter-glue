@@ -165,5 +165,52 @@ function newsletterglue_js_data() {
 
 	}
 
+	// Newsletter and patterns.
+	if ( isset( $post->post_type ) && in_array( $post->post_type, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
+		?>
+		<div class="ngl-gutenberg-pop">
+			<?php
+				$tags = newsletterglue_get_merge_tags();
+				foreach( $tags as $group_id => $group ) {
+					echo '<div class="components-menu-group"><div role="group">';
+					echo '<button type="button" role="menuitem" class="components-button components-menu-item__button ngl-submenu-trigger">
+								<span class="components-menu-item__item"><strong>' . esc_html( $group[ 'title' ] ) . '</strong></span>
+								<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="components-menu-items__item-icon" role="img" aria-hidden="true" focusable="false">
+									<path d="M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"></path>
+								</svg>
+							</button>';
+					foreach( $group[ 'tags' ] as $id => $tag ) {
+						$default_link_text 	= ! empty( $tag[ 'default_link_text' ] ) ? $tag[ 'default_link_text' ] : '';
+						$fallback_label     = ! empty( $default_link_text ) ? __( 'Link text', 'newsletter-glue' ) : __( 'Fallback', 'newsletter-glue' );
+						$show_helper		= ! empty( $default_link_text ) ? '' : sprintf( __( 'Show this if %s doesn&rsquo;t exist. You can leave it blank.', 'newsletter-glue' ), esc_html( strtolower( $tag[ 'title' ] ) ) );
+						$helper				= isset( $tag[ 'helper' ] ) ? $tag[ 'helper' ] : $show_helper;
+						echo '<button type="button" role="menuitem" class="components-button components-menu-item__button ngl-submenu-item" data-default-link-text="' . esc_attr( $default_link_text ) . '" data-tag-id="' . esc_attr( $id ) . '" data-ngl-tag="{{ ' . esc_attr( $id ) . ' }}">
+								<span class="components-menu-item__item">' . esc_html( $tag[ 'title' ] ) . '</span>';
+						
+						if ( ! isset( $tag[ 'uneditable' ] ) ) {
+							echo '<span class="ngl-gutenberg-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 27.004 27.004" class="components-menu-items__item-icon" role="img" aria-hidden="true" focusable="false"><path d="M4.5,25.875V31.5h5.625l16.59-16.59L21.09,9.285ZM31.065,10.56a1.494,1.494,0,0,0,0-2.115l-3.51-3.51a1.494,1.494,0,0,0-2.115,0L22.695,7.68l5.625,5.625,2.745-2.745Z" transform="translate(-4.5 -4.496)"/></svg>
+								</span>';
+						}
+						echo '</button>';
+						if ( isset( $tag[ 'uneditable' ] ) && $tag[ 'helper' ] ) {
+							echo '<div class="ngl-outside-helper" >' . $tag[ 'helper' ] . '</div>';
+						}
+						if ( ! isset( $tag[ 'uneditable' ] ) ) {
+							echo '<div class="ngl-fallback" data-tag="' . esc_attr( $id ) . '">
+									<div class="ngl-fallback-title"><label for="__fallback_' . esc_attr( $id ) . '">' . $fallback_label . '</label></div>
+									<div class="ngl-fallback-input"><input type="text" value="' . newsletterglue_get_merge_tag_fallback( $id ) . '" id="__fallback_' . esc_attr( $id ) . '" data-tag-input-id="' . esc_attr( $id ) . '" placeholder="' . $default_link_text . '" /></div>
+									<div class="ngl-fallback-helper">' . $helper . '</div>
+								</div>
+							';
+						}
+					}
+					echo '</div></div>';
+				}
+			?>
+		</div>
+		<?php
+	}
+
 }
 add_action( 'admin_footer', 'newsletterglue_js_data' );
