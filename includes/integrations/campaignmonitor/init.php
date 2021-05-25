@@ -557,10 +557,6 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	 */
 	public function html_content( $html, $post_id ) {
 
-		if ( ! defined( 'NGL_SEND_IN_PROGRESS' ) ) {
-			return $html;
-		}
-
 		$output = new simple_html_dom();
 		$output->load( $html, true, false );
 
@@ -574,11 +570,25 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 
 		$output->save();
 
-		$thehtml = ( string ) $output;
+		$html = ( string ) $output;
 
-		$thehtml = str_replace( '{{ unsubscribe_link }}', '<unsubscribe>' . __( 'Unsubscribe', 'newsletter-glue' ) . '</unsubscribe>', $thehtml );
+		$html = str_replace( '{{ unsubscribe_link }}', '<unsubscribe>' . __( 'Unsubscribe', 'newsletter-glue' ) . '</unsubscribe>', $html );
 
-		return $thehtml;
+		$html = $this->convert_tags( $html, $post_id );
+
+		return $html;
+	}
+
+	/**
+	 * Code supported tags for this ESP.
+	 */
+	public function get_tag( $tag, $post_id = 0 ) {
+
+		switch ( $tag ) {
+
+		}
+
+		return false;
 	}
 
 }

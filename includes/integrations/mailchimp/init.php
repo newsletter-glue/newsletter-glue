@@ -297,6 +297,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 			'subject_line' 	=> $subject,
 			'reply_to' 		=> $from_email,
 			'from_name' 	=> $from_name,
+			'auto_footer'	=> false,
 		);
 
 		// Setup campaign array.
@@ -602,17 +603,47 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 	 */
 	public function html_content( $html, $post_id ) {
 
-		if ( ! defined( 'NGL_SEND_IN_PROGRESS' ) ) {
-			return $html;
-		}
-
-		$html = str_replace( '{{ unsubscribe_link }}', '*|UNSUB|*', $html );
-		$html = str_replace( '{{ list }}', '*|LIST:NAME|*', $html );
-		$html = str_replace( '{{ address }}', '*|LIST:ADDRESS|*', $html );
-		$html = str_replace( '{{ address_html }}', '*|HTML:LIST_ADDRESS_HTML|*', $html );
-		$html = str_replace( '{{ rewards }}', '*|IF:REWARDS|* *|REWARDS|* *|END:IF|*', $html );
+		$html = $this->convert_tags( $html, $post_id );
 
 		return $html;
+	}
+
+	/**
+	 * Code supported tags for this ESP.
+	 */
+	public function get_tag( $tag, $post_id = 0 ) {
+
+		switch ( $tag ) {
+			case 'unsubscribe_link' :
+				return '*|UNSUB|*';
+			break;
+			case 'admin_address' :
+				return '*|USER:ADDRESS|*';
+			break;
+			case 'admin_address_html' :
+				return '*|HTML:USER_ADDRESS_HTML|*';
+			break;
+			case 'rewards' :
+				return '*|IF:REWARDS|* *|REWARDS|* *|END:IF|*';
+			break;
+			case 'list' :
+				return '*|LIST:NAME|*';
+			break;
+			case 'first_name' :
+				return '*|FNAME|*';
+			break;
+			case 'last_name' :
+				return '*|LNAME|*';
+			break;
+			case 'email' :
+				return '*|EMAIL|*';
+			break;
+			case 'address' :
+				return '*|ADDRESS|*';
+			break;
+		}
+
+		return false;
 	}
 
 }

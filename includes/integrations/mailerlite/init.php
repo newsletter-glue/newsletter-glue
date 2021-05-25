@@ -474,13 +474,23 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 	 */
 	public function html_content( $html, $post_id ) {
 
-		if ( ! defined( 'NGL_SEND_IN_PROGRESS' ) ) {
-			return $html;
-		}
-
-		$html = str_replace( '{{ unsubscribe_link }}', '{$unsubscribe}', $html );
+		$html = $this->convert_tags( $html, $post_id );
 
 		return $html;
+	}
+
+	/**
+	 * Code supported tags for this ESP.
+	 */
+	public function get_tag( $tag, $post_id = 0 ) {
+
+		switch ( $tag ) {
+			case 'unsubscribe_link' :
+				return '{$unsubscribe}';
+			break;
+		}
+
+		return false;
 	}
 
 }

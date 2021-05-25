@@ -118,7 +118,7 @@ class NGL_CPT {
 					'rewrite'             	=> array( 'slug' => 'newsletter/%newsletter%', 'with_front' => true ),
 					'query_var'           	=> true,
 					'supports'           	=> array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
-					'taxonomies'        	=> array( 'ngl_newsletter_cat' ),
+					'taxonomies'        	=> array( 'ngl_newsletter_cat', 'ngl_newsletter_tag' ),
 					'show_in_nav_menus'		=> true,
 					'show_in_admin_bar'   	=> true,
 					'show_in_rest'		  	=> true,
@@ -136,6 +136,17 @@ class NGL_CPT {
 		);
 
 		register_taxonomy( 'ngl_newsletter_cat', array( 'newsletterglue' ), $args );
+
+		// Create newsletter tag taxonomy.
+		$args = array(
+			'label'        			=> __( 'Newsletter tags', 'newsletter-glue' ),
+			'hierarchical' 			=> false,
+			'rewrite'      			=> array( 'slug' => 'newsletter-tag' ),
+			'show_in_rest' 			=> true,
+			'show_admin_column'		=> false,
+		);
+
+		register_taxonomy( 'ngl_newsletter_tag', array( 'newsletterglue' ), $args );
 
 		// Add default terms (pattern categories)
 		$default_categories = array(
@@ -171,7 +182,7 @@ class NGL_CPT {
 			),
 			'description'       	=> __( 'Description', 'newsletter-glue' ),
 			'query_var'         	=> false,
-			'supports'          	=> array( 'title', 'editor' ),
+			'supports'          	=> array( 'title', 'editor', 'custom-fields' ),
 			'taxonomies'        	=> array( 'ngl_pattern_category' ),
 			'publicly_queryable'  	=> true,
 			'exclude_from_search' 	=> true,
@@ -214,6 +225,18 @@ class NGL_CPT {
 		// Register post meta for rest use.
 		register_post_meta(
 			'newsletterglue',
+			'_webview',
+			array(
+				'show_in_rest' 	=> true,
+				'single'       	=> true,
+				'type'         	=> 'string',
+				'default'       => 'blog',
+				'auth_callback' => function () { return current_user_can( 'manage_newsletterglue' ); }
+			)
+		);
+
+		register_post_meta(
+			'ngl_pattern',
 			'_webview',
 			array(
 				'show_in_rest' 	=> true,
@@ -377,7 +400,7 @@ class NGL_CPT {
 				div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link:active
 			{ padding: 12px 20px; color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; background-color: transparent !important; border: 2px solid ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; }';
 
-			echo 'div.editor-styles-wrapper .wp-block .wp-block-newsletterglue-callout .block-editor-block-list__layout > * { color: inherit; }';
+			echo 'div.editor-styles-wrapper .wp-block .wp-block-newsletterglue-callout.is-color-set .block-editor-block-list__layout > * { color: inherit; }';
 
 			echo '.wp-block-spacer, div.block-library-spacer__resize-container.has-show-handle { background-color: ' . $spacer_bg . '; }';
 
@@ -774,7 +797,7 @@ class NGL_CPT {
 	public static function enqueue_block_editor_assets() {
 		global $post_type;
 
-		if ( $post_type != 'newsletterglue' ) {
+		if ( ! in_array( $post_type, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
 			return;
 		}
 
@@ -787,6 +810,16 @@ class NGL_CPT {
 			array( 'wp-blocks', 'wp-dom-ready', 'wp-edit-post' ),
 			time()
 		);
+
+		$app = newsletterglue_default_connection();
+		if ( $app && $app === 'mailchimp' ) {
+			wp_enqueue_script(
+				'ngl-editor-bw-js',
+				$js_dir . 'editor-bw.js',
+				array( 'wp-blocks', 'wp-dom-ready', 'wp-edit-post' ),
+				time()
+			);
+		}
 	}
 
 	/**
