@@ -1,11 +1,16 @@
-var el = wp.element.createElement;
-var registerPlugin = wp.plugins.registerPlugin;
-var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
+( function( blocks, editor, element, components ) {
 
+const el = wp.element.createElement;
+const registerPlugin = wp.plugins.registerPlugin;
+const PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
 const { withSelect, withDispatch, dispatch, select } = wp.data;
+const { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, RangeControl, BaseControl, ButtonGroup, Button, IconButton, Toolbar, ToolbarButton, ToolbarGroup, ToolbarDropdownMenu } = components;
+const { createHigherOrderComponent } = wp.compose;
+const { InspectorControls, BlockControls } = editor;
 
-var { TextControl, SelectControl, ToggleControl, Panel, PanelBody, PanelRow, RangeControl, BaseControl, ButtonGroup, Button } = wp.components;
-
+/**
+ * Add a panel to control additional Newsletter settings.
+ */
 function NewsletterGluePanel() {
 	
     if ( ! select('core/editor').getEditedPostAttribute('meta')['_webview']) {
@@ -19,11 +24,11 @@ function NewsletterGluePanel() {
 		{
 			name: 'newsletterglue-doc-plugin',
 			className: 'newsletterglue-doc-plugin',
-			title: 'Newsletter Glue',
+			title: 'Web view',
 		},
 		el( BaseControl,
 			{
-				label: 'Web view',
+				label: 'When reading online, visitors see',
 				className: 'ngl-gutenberg-base--fullwidth',
 			},
 			el( ButtonGroup, { className: 'ngl-gutenberg--fullwidth' },
@@ -50,3 +55,10 @@ registerPlugin( 'newsletterglue-doc-plugin', {
   render: NewsletterGluePanel,
   icon: '',
 } );
+
+} ) (
+	window.wp.blocks,
+	window.wp.blockEditor,
+	window.wp.element,
+	window.wp.components
+);

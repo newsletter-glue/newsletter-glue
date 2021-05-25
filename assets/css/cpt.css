@@ -130,3 +130,10 @@ div.block-editor-block-list__block[data-type="core/spacer"]:hover::before {
 	height: 20px;
 	z-index: 999999999;
 }
+
+.block-editor-writing-flow .ngl-tag {
+	background: #f9f9f9;
+    border-radius: 3px;
+    padding: 4px;
+    font-size: 0.9em;
+}

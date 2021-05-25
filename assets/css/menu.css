@@ -255,3 +255,90 @@ p.ngl-notice-logo {
 .ngl-notice-dismiss i {
 	font-size: 22px !important;
 }
+
+/* Gutenberg pop */
+.ngl-gutenberg-pop {
+	position: absolute;
+	z-index: 999;
+	top: 0;
+	left: 0;
+	width: 240px;
+	background: #fff;
+	border: 1px solid #1e1e1e;
+	box-sizing: border-box;
+	display: none;
+	opacity: 0;
+	pointer-events: none;
+    animation: components-animate__appear-animation 0.1s cubic-bezier(0, 0, 0.2, 1) 0s;
+    animation-fill-mode: forwards;
+	transform-origin: top left;
+}
+
+.ngl-gutenberg-pop.is-open {
+	display: block;
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.ngl-gutenberg-pop .components-menu-group {
+	padding: 12px;
+	margin: 0;
+}
+
+.ngl-gutenberg-icon {
+    display: none;
+    width: 32px;
+    height: 32px;
+    margin-right: -4px;
+    align-items: center;
+    justify-content: center;
+}
+
+.ngl-gutenberg-icon .components-menu-items__item-icon {
+	margin: 0 !important;
+}
+
+.ngl-gutenberg-pop .components-button:hover .ngl-gutenberg-icon {
+	display: flex;
+}
+
+.ngl-gutenberg-pop .ngl-submenu-item {
+	display: none;
+}
+
+.ngl-submenu-item.is-active {
+	color: #007cba;
+}
+
+.ngl-submenu-item.is-active .ngl-gutenberg-icon {
+	display: flex;
+}
+
+.ngl-fallback {
+	display: none;
+	padding: 0 12px 8px 12px;
+	font-size: 0.9em;
+	cursor: default;
+}
+
+.ngl-fallback-title {
+	margin: 0 0 3px;
+}
+
+.ngl-fallback-input input {
+	width: 100%;
+}
+
+.ngl-fallback-helper {
+    color: #999;
+    line-height: 1.4;
+    margin: 4px 0 0;
+}
+
+.ngl-outside-helper {
+	display: none;
+	padding: 0 12px;
+	font-size: 0.9em;
+	color: #999;
+	line-height: 1.3;
+}
