@@ -24,8 +24,10 @@ function newsletterglue_archive( $atts ) {
 		);
 		if ( $newsletters ) {
 			?>
+			<div class="newsletterglue-archive">
 			<?php foreach( $newsletters as $newsletter ) { ?>
-			<h3><a href="<?php echo get_permalink( $newsletter->ID ); ?>"><?php echo get_the_title( $newsletter->ID ); ?></a> &mdash; <?php echo get_the_date( 'M j, Y', $newsletter ); ?></h3>
+			<p class="newsletterglue-archive-item"><a href="<?php echo get_permalink( $newsletter->ID ); ?>"><?php echo get_the_title( $newsletter->ID ); ?></a> &mdash; <?php echo get_the_date( 'M j, Y', $newsletter ); ?></p>
+			</div>
 			<?php }
 		}
 		return ob_get_clean();
@@ -43,7 +45,7 @@ function newsletterglue_archive( $atts ) {
 	<div class="newsletterglue-archive">
 		<?php foreach( $terms as $term ) { ?>
 		<div class="newsletterglue-archive--category" style="margin-bottom: 30px;">
-			<h3 class="newsletterglue-archive--category-name"><a href="<?php echo get_term_link( $term ); ?>"><?php echo esc_html( $term->name ); ?></h3>
+			<h3 class="newsletterglue-archive--category-name"><a href="<?php echo get_term_link( $term ); ?>"><?php echo esc_html( $term->name ); ?></a></h3>
 			<ul class="newsletterglue-archive--list">
 				<?php
 				$newsletters = get_posts(
@@ -272,3 +274,92 @@ function newsletterglue_sanitize( $var ) {
 		return is_scalar( $var ) ? wp_kses_post( $var ) : $var;
 	}
 }
+
+/**
+ * Return array of all merge tags.
+ */
+function newsletterglue_get_merge_tags() {
+
+	$app = newsletterglue_default_connection();
+
+	$merge_tags = array(
+		'personalization'	=> array(
+			'title'		=> __( 'Personalization', 'newsletter-glue' ),
+			'tags'	=> array(
+				'first_name'	=> array(
+					'title'		=> __( 'First name', 'newsletter-glue' ),
+				),
+				'last_name' 	=> array(
+					'title'		=> __( 'Last name', 'newsletter-glue' ),
+				),
+				'email' => array(
+					'title'		=> __( 'Email address', 'newsletter-glue' ),
+				),
+				'address'		=> array(
+					'title'		=> __( 'Subscriber address', 'newsletter-glue' ),
+				),
+				'list' 			=> array(
+					'title'		=> __( 'List', 'newsletter-glue' ),
+				),
+			),
+		),
+		'read_online'		=> array(
+			'title'			=> __( 'Read online', 'newsletter-glue' ),
+			'tags'			=> array(
+				'blog_post' => array(
+					'title'		=> __( 'Blog post', 'newsletter-glue' ),
+					'default_link_text'	=> __( 'Read online', 'newsletter-glue' ),
+				),
+				'webversion' => array(
+					'title'		=> __( 'Email HTML', 'newsletter-glue' ),
+					'default_link_text'	=> __( 'Read online', 'newsletter-glue' ),
+				),
+			),
+		),
+		'footer'			=> array(
+			'title'			=> __( 'Footer', 'newsletter-glue' ),
+			'tags'			=> array(
+				'admin_address' => array(
+					'title'	=> __( 'Admin address', 'newsletter-glue' ),
+				),
+				'unsubscribe_link' => array(
+					'title'	=> __( 'Unsubscribe link', 'newsletter-glue' ),
+					'default_link_text'	=> __( 'Unsubscribe', 'newsletter-glue' ),
+					'helper' => __( 'Your subscribers click this text to unsubscribe.', 'newsletter-glue' ),
+				),
+			),
+		),
+	);
+
+	$merge_tags = apply_filters( "newsletterglue_get_{$app}_merge_tags", $merge_tags );
+
+	return apply_filters( 'newsletterglue_get_merge_tags', $merge_tags, $app );
+}
+
+/**
+ * Get a merge tag fallback.
+ */
+function newsletterglue_get_merge_tag_fallback( $tag = '' ) {
+
+	$tags = get_option( 'newsletterglue_merge_tag_fallbacks' );
+
+	$value = isset( $tags[ $tag ] ) ? $tags[ $tag ] : '';
+
+	return apply_filters( 'newsletterglue_get_merge_tag_fallback', $value, $tag );
+}
+
+/**
+ * Mailchimp: merge tags.
+ */
+function newsletterglue_get_mailchimp_merge_tags( $merge_tags ) {
+
+	$merge_tags[ 'footer' ][ 'tags' ][ 'rewards' ] = array(
+		'title'			=> __( 'Rewards', 'newsletter-glue' ),
+		'uneditable' 	=> true,
+		'helper' 		=> __( 'If you are on a <strong>free</strong> Mailchimp account, you must add this to your footer.', 'newsletter-glue' ),
+	);
+
+	return $merge_tags;
+
+}
+add_filter( 'newsletterglue_get_mailchimp_merge_tags', 'newsletterglue_get_mailchimp_merge_tags' );

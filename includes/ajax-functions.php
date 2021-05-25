@@ -23,6 +23,42 @@ function newsletterglue_get_ajax_url() {
 }
 
 /**
+ * Update a merge tag.
+ */
+function newsletterglue_update_merge_tag() {
+
+	check_ajax_referer( 'newsletterglue-ajax-nonce', 'security' );
+
+	if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+		wp_die( -1 );
+	}
+
+	$id 	= isset( $_REQUEST[ 'id' ] ) ? sanitize_title( $_REQUEST[ 'id' ] ) : '';
+	$value 	= isset( $_REQUEST[ 'value' ] ) ? wp_kses_post( $_REQUEST[ 'value' ] ) : '';
+
+	if ( empty( $id ) ) {
+		wp_die( -1 );
+	}
+
+	$tags = get_option( 'newsletterglue_merge_tag_fallbacks' );
+
+	if ( empty( $tags ) ) {
+		$tags = array(
+			$id	=> $value
+		);
+	} else {
+		$tags[ $id ] = $value;
+	}
+
+	update_option( 'newsletterglue_merge_tag_fallbacks', $tags );
+
+	die();
+
+}
+add_action( 'wp_ajax_newsletterglue_update_merge_tag', 'newsletterglue_update_merge_tag' );
+add_action( 'wp_ajax_nopriv_newsletterglue_update_merge_tag', 'newsletterglue_update_merge_tag' );
+
+/**
  * Save default theme colors.
  */
 function newsletterglue_save_default_colors() {

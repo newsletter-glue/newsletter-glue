@@ -515,8 +515,6 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	$html = str_replace( '{{ content }}', $the_content, $html );
 	$html = str_replace( 'http://{{', '{{', $html );
 	$html = str_replace( 'https://{{', '{{', $html );
-	$html = str_replace( '{{ blog_post }}', get_permalink( $post->ID ), $html );
-	$html = str_replace( '{{ webversion }}', newsletterglue_generate_web_link( $post->ID ), $html );
 
 	// Filter for original content. before email work.
 	$html = apply_filters( 'newsletterglue_generate_content', $html, $post );
@@ -537,11 +535,10 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D', '*%7C', '%7C*' ), array( '{', '}', '$', '[', ']', '*|', '|*' ), $html );
-	$html = str_replace( '@media only screen and (max-width:642px) {', 'p.ngl-unsubscribe a { color: #999 !important; text-decoration: underline; } a { color: ' . newsletterglue_get_theme_option( 'a_colour' ) . '; } @media only screen and (max-width:642px) {' . "\r\n", $html );
+	$html = str_replace( '@media only screen and (max-width:642px) {', 'p.ngl-unsubscribe a { color: #707070 !important; text-decoration: underline; } a { color: ' . newsletterglue_get_theme_option( 'a_colour' ) . '; } @media only screen and (max-width:642px) {' . "\r\n", $html );
 	$html = wp_encode_emoji( $html );
-	$html = str_replace( 'http://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
-	$html = str_replace( 'https://{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
-	$html = str_replace( '{{%20unsubscribe_link%20}}', '{{ unsubscribe_link }}', $html );
+	$html = str_replace( '{{%20', '{{ ', $html );
+	$html = str_replace( '%20}}', ' }}', $html );
 
 	// ESP html filter.
 	$html = apply_filters( "newsltterglue_{$app}_html_content", $html, $post->ID );
@@ -639,7 +636,7 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 
 	$replace = '.ngl-embed-icon';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->outertext = '<td width="50%" align="right" valign="top" style="vertical-align: top;margin:0 !important;">' . $element->outertext . '</td></tr></table>';
+		$output->find( $replace, $key )->outertext = '<td width="50%" align="right" valign="top" style="vertical-align: top;margin:0 !important;text-align: right !important;">' . $element->outertext . '</td></tr></table>';
 	}
 
 	// Gallery block.
@@ -867,6 +864,18 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 			$element->outertext = $clean_height;
 			$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-spacer"><tr><td height="' . $clean_height .'" style="height: ' . $clean_height . 'px; padding: 0 !important; font-size: 0px; line-height: 100%;">&nbsp;</td></tr></table>';
 		}
+	}
+
+	// Remove richtext spacers.
+	$replace = 'i.ngl-tag-spacer';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->outertext = ' ';
+	}
+
+	// Content in merge tags.
+	$replace = 'span.ngl-tag';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->outertext = $element->innertext;
 	}
 
 	$output->save();
@@ -1557,7 +1566,7 @@ table {
 }
 
 .ngl-article-img-full td {
-	padding: 0 0 20px;
+	padding: 0;
 }
 
 .ngl-table-article td {
@@ -1587,6 +1596,10 @@ table {
 
 .ngl-table-posts-colored .ngl-article-mob-wrap {
 	padding: 20px;
+	margin: 0 0 10px;
+}
+
+.ngl-table-posts-colored .ngl-article {
 	margin: 0 0 10px;
 }
 
@@ -1787,12 +1800,12 @@ p.ngl-credits,
 p.ngl-unsubscribe {
 	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ) - 2 ; ?>px;
 	text-align: center;
-	color: #999 !important;
+	color: #707070 !important;
 }
 
 p.ngl-credits a,
 p.ngl-unsubscribe a {
-	color: #999 !important;
+	color: #707070 !important;
 	text-decoration: underline;
 }
 
@@ -1870,6 +1883,10 @@ p.ngl-unsubscribe a {
 
 .ngl-table-ngl-embed-social > tr > td {
 	padding: 20px;
+}
+
+.ngl-embed-meta td {
+	padding: 20px !important;
 }
 
 @media only screen and (max-width:642px) {

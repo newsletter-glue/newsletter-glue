@@ -335,4 +335,62 @@ abstract class NGL_Abstract_Integration {
 		return $current_user->user_email;
 	}
 
+	/**
+	 * Convert merge tags in HTML.
+	 */
+	public function convert_tags( $html, $post_id = 0 ) {
+
+		preg_match_all( "/{{(.*?)}}/", $html, $matches );
+
+		if ( ! empty( $matches[0] ) ) {
+			$results = $matches[0];
+			foreach( $results as $result ) {
+				$clean = explode( ',fallback=', $result );
+				$tag = trim( str_replace( array( '{{', '}}' ), '', $clean[0] ) );
+				// Find the tag in ESP list first.
+				if ( $this->get_tag( $tag, $post_id ) ) {
+					$html = str_replace( $result, $this->get_tag( $tag, $post_id ), $html );
+				} else if ( $this->get_global_tag( $tag, $post_id ) ) {
+					$html = str_replace( $result, $this->get_global_tag( $tag, $post_id ), $html );
+				// If the ESP does not support it. Add fallback.
+				} else {
+					if ( isset( $clean[1] ) ) {
+						$string = str_replace( ' }}', '', $clean[1] );
+						$string = trim( $string );
+						$html = str_replace( $result, $string, $html );
+					} else {
+						$html = str_replace( $clean[0], '', $html );
+					}
+				}
+			}
+		}
+
+		return $html;
+
+	}
+
+	/**
+	 * Code supported tags for this ESP.
+	 */
+	public function get_tag( $tag, $post_id = 0 ) {
+		return false;
+	}
+
+	/**
+	 * Global merge tags.
+	 */
+	public function get_global_tag( $tag, $post_id = 0 ) {
+
+		switch( $tag ) {
+			case 'webversion' :
+				return newsletterglue_generate_web_link( $post_id );
+			break;
+			case 'blog_post' :
+				return get_permalink( $post_id );
+			break;
+		}
+
+		return false;
+	}
+
 }
