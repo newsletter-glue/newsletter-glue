@@ -418,6 +418,20 @@ function newsletterglue_add_title( $title, $post ) {
 	return '<h1 class="title">' . $title . '</h1>';
 }
 
+
+/**
+ * Fix the content.
+ */
+function newsletterglue_fix_the_content( $content ) {
+
+	$content = str_replace( trailingslashit( admin_url() ) . '%7B%7B%20', '{{ ', $content );
+	$content = str_replace( untrailingslashit( admin_url() ) . '%7B%7B%20', '{{ ', $content );
+	$content = str_replace( '%20%7D%7D', ' }}', $content );
+
+	return $content;
+}
+add_filter( 'the_content', 'newsletterglue_fix_the_content', 999 );
+
 /**
  * Generate email template content from post and subject.
  */
@@ -535,10 +549,12 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	$html = str_replace( array( '%7B', '%7D', '%24', '%5B', '%5D', '*%7C', '%7C*' ), array( '{', '}', '$', '[', ']', '*|', '|*' ), $html );
-	$html = str_replace( '@media only screen and (max-width:642px) {', 'p.ngl-unsubscribe a { color: #707070 !important; text-decoration: underline; } a { color: ' . newsletterglue_get_theme_option( 'a_colour' ) . '; } @media only screen and (max-width:642px) {' . "\r\n", $html );
+	$html = str_replace( '@media only screen and (max-width:642px) {', 'p.ngl-unsubscribe a { color: #707070 !important; text-decoration: underline; } a, #template_inner td a { color: ' . newsletterglue_get_theme_option( 'a_colour' ) . '; } @media only screen and (max-width:642px) {' . "\r\n", $html );
 	$html = wp_encode_emoji( $html );
 	$html = str_replace( '{{%20', '{{ ', $html );
 	$html = str_replace( '%20}}', ' }}', $html );
+	$html = str_replace( trailingslashit( admin_url() ) . '{{', '{{', $html );
+	$html = str_replace( untrailingslashit( admin_url() ) . '{{', '{{', $html );
 
 	// ESP html filter.
 	$html = apply_filters( "newsltterglue_{$app}_html_content", $html, $post->ID );
