@@ -128,6 +128,10 @@ class NGL_CPT {
 
 		// Create newsletter category taxonomy.
 		$args = array(
+			'labels' => array(
+				'name' 			=> __( 'Newsletter category', 'newsletter-glue' ),
+				'singular_name' => __( 'Newsletter category', 'newsletter-glue' ),
+			),
 			'label'        			=> __( 'Newsletter category', 'newsletter-glue' ),
 			'hierarchical' 			=> true,
 			'rewrite'      			=> array( 'slug' => 'newsletter' ),
@@ -139,6 +143,10 @@ class NGL_CPT {
 
 		// Create newsletter tag taxonomy.
 		$args = array(
+			'labels' => array(
+				'name' 			=> __( 'Newsletter tags' ),
+				'singular_name' => __( 'Newsletter tag' ),
+			),
 			'label'        			=> __( 'Newsletter tags', 'newsletter-glue' ),
 			'hierarchical' 			=> false,
 			'rewrite'      			=> array( 'slug' => 'newsletter-tag' ),
