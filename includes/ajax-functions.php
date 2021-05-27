@@ -924,6 +924,7 @@ function newsletterglue_deactivate() {
         'php_version'       => PHP_VERSION,
         'plugin_version'    => NGL_VERSION,
         'plugin_name' 		=> 'Newsletter Glue',
+		'is_pro'			=> ! newsletterglue_is_free_version(),
 	);
 
 	$response = wp_remote_post( NGL_FEEDBACK_SERVER, array(
@@ -965,6 +966,7 @@ function newsletterglue_send_feedback() {
         'details'			=> $details,
 		'software'			=> $software,
 		'plugin_name' 		=> 'Newsletter Glue',
+		'is_pro'			=> ! newsletterglue_is_free_version(),
 	);
 
 	$response = wp_remote_post( NGL_FEEDBACK_SERVER, array(
@@ -1008,6 +1010,7 @@ function newsletterglue_bug_report() {
         'php_version'       => PHP_VERSION,
         'plugin_version'    => NGL_VERSION,
         'plugin_name' 		=> 'Newsletter Glue',
+		'is_pro'			=> ! newsletterglue_is_free_version(),
 	);
 
 	$response = wp_remote_post( NGL_FEEDBACK_SERVER, array(
@@ -1051,6 +1054,7 @@ function newsletterglue_feature_request() {
         'php_version'       => PHP_VERSION,
         'plugin_version'    => NGL_VERSION,
         'plugin_name' 		=> 'Newsletter Glue',
+		'is_pro'			=> ! newsletterglue_is_free_version(),
 	);
 
 	$response = wp_remote_post( NGL_FEEDBACK_SERVER, array(

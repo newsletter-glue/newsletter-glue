@@ -591,4 +591,11 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 		return false;
 	}
 
+	/**
+	 * Get lists compat.
+	 */
+	public function _get_lists_compat() {
+		return $this->get_lists();
+	}
+
 }

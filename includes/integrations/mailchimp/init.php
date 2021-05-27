@@ -646,4 +646,13 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 		return false;
 	}
 
+	/**
+	 * Get lists compat.
+	 */
+	public function _get_lists_compat() {
+		$this->api = new NGL_Mailchimp_API( $this->api_key );
+		$this->api->verify_ssl = false;
+		return $this->get_audiences();
+	}
+
 }

@@ -393,4 +393,11 @@ abstract class NGL_Abstract_Integration {
 		return false;
 	}
 
+	/**
+	 * Get lists compat.
+	 */
+	public function _get_lists_compat() {
+		return null;
+	}
+
 }

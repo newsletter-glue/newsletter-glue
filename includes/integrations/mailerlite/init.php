@@ -493,4 +493,12 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 		return false;
 	}
 
+	/**
+	 * Get lists compat.
+	 */
+	public function _get_lists_compat() {
+		$this->api = new \MailerLiteApi\MailerLite( $this->api_key );
+		return $this->get_groups();
+	}
+
 }

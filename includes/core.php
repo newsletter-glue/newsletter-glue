@@ -424,9 +424,19 @@ function newsletterglue_add_title( $title, $post ) {
  */
 function newsletterglue_fix_the_content( $content ) {
 
+	$post_id = get_the_ID();
+
 	$content = str_replace( trailingslashit( admin_url() ) . '%7B%7B%20', '{{ ', $content );
 	$content = str_replace( untrailingslashit( admin_url() ) . '%7B%7B%20', '{{ ', $content );
 	$content = str_replace( '%20%7D%7D', ' }}', $content );
+
+	$app = newsletterglue_default_connection();
+	if ( ! empty( $post_id ) && $app ) {
+		include_once newsletterglue_get_path( $app ) . '/init.php';
+		$classname = 'NGL_' . ucfirst( $app );
+		$api = new $classname();
+		$content = apply_filters( "newsltterglue_{$app}_html_content", $content, $post_id );
+	}
 
 	return $content;
 }
