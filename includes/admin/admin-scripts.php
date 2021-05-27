@@ -125,6 +125,16 @@ function newsletterglue_js_data() {
 
 		// Add lists.
 		$the_lists = newsletterglue()::$the_lists;
+		if ( $app && empty( $the_lists ) ) {
+
+			include_once newsletterglue_get_path( $app ) . '/init.php';
+			$classname 	= 'NGL_' . ucfirst( $app );
+			$api		= new $classname();
+
+			newsletterglue()::$the_lists = $api->_get_lists_compat();
+
+			$the_lists = newsletterglue()::$the_lists;
+		}
 		if ( ! empty( $the_lists ) ) {
 			$lists = array();
 			if ( $app == 'mailerlite' ) {
