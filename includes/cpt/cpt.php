@@ -263,12 +263,8 @@ class NGL_CPT {
 				'
 				wp.data.select( "core/edit-post" ).isFeatureActive( "welcomeGuide" ) && wp.data.dispatch( "core/edit-post" ).toggleFeature( "welcomeGuide" );
 				var isFullScreenMode = wp.data.select( "core/edit-post" ).isFeatureActive( "fullscreenMode" );
-				var isFixedToolbar = wp.data.select( "core/edit-post" ).isFeatureActive( "fixedToolbar" );
 				if ( ! isFullScreenMode ) {
 					wp.data.dispatch( "core/edit-post" ).toggleFeature( "fullscreenMode" );
-				}
-				if ( ! isFixedToolbar ) {
-					wp.data.dispatch( "core/edit-post" ).toggleFeature( "fixedToolbar" );
 				}
 				wp.domReady(function () {
 				  const allowedEmbedBlocks = [

@@ -13,19 +13,40 @@
 		pop.find( 'button.ngl-submenu-item' ).removeClass( 'is-active' );
 	}
 
+	// Fix scroll.
+	setTimeout( function() {
+		$( '.interface-interface-skeleton__content' ).on( 'scroll', function() {
+			var pop = $( '.ngl-gutenberg-pop' );
+			if ( pop.hasClass( 'is-open' ) ) {
+				if ( $( '.block-editor-block-toolbar' ).hasClass( 'is-showing-movers' ) ) {
+					var topgap = $( '.ngl-toolbar-mergetags' ).offset().top + $( '.ngl-toolbar-mergetags' ).height() + 24;
+					var leftgap = $( '.block-editor-block-toolbar' ).offset().left;
+				} else {
+					var topgap = $( '.block-editor-block-toolbar' ).offset().top + $( '.ngl-toolbar-mergetags' ).height() + 24;
+					var leftgap = $( '.block-editor-block-toolbar' ).offset().left;
+				}
+				pop.css( {
+					top: topgap + 'px',
+				} );
+			}
+		} );
+	}, 1000 );
+
 	// Open merge tags list.
 	$( document ).on( 'click', '.ngl-toolbar-mergetags', function() {
 		var pop = $( '.ngl-gutenberg-pop' );
-		if ( $( this ).parents( '.block-editor-block-toolbar' ).hasClass( '.is-showing-movers' ) ) {
-			var topgap = 30;
+		if ( $( this ).parents( '.block-editor-block-toolbar' ).hasClass( 'is-showing-movers' ) ) {
+			var topgap = $( this ).offset().top + $( this ).height() + 24;
+			var leftgap = $( this ).offset().left;
 		} else {
-			var topgap = 25;
+			var topgap = $( this ).parents( '.block-editor-block-toolbar' ).offset().top + $( this ).height() + 24;
+			var leftgap = $( this ).offset().left;
 		}
 		if ( ! pop.hasClass( 'is-open' ) ) {
 			pop.addClass( 'is-open' );
 			pop.css( {
-				left: $( this ).offset().left,
-				top: $( this ).offset().top + $( this ).height() + topgap + 'px'
+				left: leftgap + 'px',
+				top: topgap + 'px',
 			} );
 		} else {
 			ngl_close_popover();
@@ -35,7 +56,7 @@
 	// When clicked in body.
 	$( 'body' ).on( 'click', function(event) {
 		var pop = $( '.ngl-gutenberg-pop' );
-		if ( $( event.target ).parents( '.ngl-toolbar-mergetags' ).length ) {
+		if ( $( event.target ).parents( '.ngl-toolbar-mergetags' ).length || $( event.target ).hasClass( 'ngl-toolbar-mergetags' ) ) {
 			return true;
 		}
 		if( ! $( event.target ).is( '.ngl-gutenberg-pop' ) && ! $( event.target ).parents( '.ngl-gutenberg-pop' ).length ){
