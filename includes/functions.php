@@ -7,6 +7,31 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Main query.
+ */
+add_action( 'pre_get_posts', 'newsletterglue_main_query' );
+function newsletterglue_main_query( $query ) {
+
+	if ( ! is_admin() && is_tag() && $query->is_main_query() ) {
+		$types = get_taxonomy( 'post_tag' )->object_type;
+		$query->set( 'post_type', $types );
+	}
+
+	if ( is_admin() && isset( $_REQUEST[ 'post_type' ] ) && isset( $_REQUEST[ 'post_tag' ] ) ) {
+		$taxquery = array(
+			array(
+				'taxonomy' => 'post_tag',
+				'field' => 'slug',
+				'terms' => array( $_REQUEST[ 'post_tag' ] ),
+			)
+		);
+
+		$query->set( 'tax_query', $taxquery );
+	}
+
+}
+
+/**
  * Shortcode: Archive.
  */
 function newsletterglue_archive( $atts ) {

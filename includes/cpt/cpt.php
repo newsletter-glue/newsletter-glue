@@ -118,7 +118,7 @@ class NGL_CPT {
 					'rewrite'             	=> array( 'slug' => 'newsletter/%newsletter%', 'with_front' => true ),
 					'query_var'           	=> true,
 					'supports'           	=> array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
-					'taxonomies'        	=> array( 'ngl_newsletter_cat', 'ngl_newsletter_tag' ),
+					'taxonomies'        	=> array( 'ngl_newsletter_cat' ),
 					'show_in_nav_menus'		=> true,
 					'show_in_admin_bar'   	=> true,
 					'show_in_rest'		  	=> true,
@@ -140,21 +140,6 @@ class NGL_CPT {
 		);
 
 		register_taxonomy( 'ngl_newsletter_cat', array( 'newsletterglue' ), $args );
-
-		// Create newsletter tag taxonomy.
-		$args = array(
-			'labels' => array(
-				'name' 			=> __( 'Newsletter tags' ),
-				'singular_name' => __( 'Newsletter tag' ),
-			),
-			'label'        			=> __( 'Newsletter tags', 'newsletter-glue' ),
-			'hierarchical' 			=> false,
-			'rewrite'      			=> array( 'slug' => 'newsletter-tag' ),
-			'show_in_rest' 			=> true,
-			'show_admin_column'		=> false,
-		);
-
-		register_taxonomy( 'ngl_newsletter_tag', array( 'newsletterglue' ), $args );
 
 		// Add default terms (pattern categories)
 		$default_categories = array(
@@ -254,6 +239,8 @@ class NGL_CPT {
 				'auth_callback' => function () { return current_user_can( 'manage_newsletterglue' ); }
 			)
 		);
+
+		register_taxonomy_for_object_type( 'post_tag', 'newsletterglue' );
 
 		do_action( 'newsletterglue_after_register_post_type' );
 

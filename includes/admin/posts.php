@@ -18,6 +18,8 @@ function newsletterglue_add_category_column( $columns ) {
 		}
 	}
 
+	unset( $ngl_columns[ 'tags' ] );
+
 	return $ngl_columns;
 
 }
@@ -63,11 +65,11 @@ function newsletterglue_display_category_column( $column, $post_id ) {
 
 		case 'ngl_tag' :
 
-			$terms = wp_get_post_terms( $post_id, 'ngl_newsletter_tag' );
+			$terms = wp_get_post_terms( $post_id, 'post_tag' );
 			if ( ! empty( $terms ) ) {
 				$output = '';
 				foreach( $terms as $term ) {
-					$output .= '<a href="' . admin_url( 'edit.php?post_type=newsletterglue&ngl_newsletter_tag=' . $term->slug ) . '">' . $term->name . '</a> (<a href="' . admin_url( 'term.php?taxonomy=ngl_newsletter_tag&tag_ID=' . $term->term_id . '&post_type=newsletterglue' ) . '">' . __( 'Edit', 'newsletter-glue' ) . '</a>)<span style="display:inline-block;width:20px;"></span>';
+					$output .= '<a href="' . admin_url( 'edit.php?post_type=newsletterglue&post_tag=' . $term->slug ) . '">' . $term->name . '</a> (<a href="' . admin_url( 'term.php?taxonomy=post_tag&tag_ID=' . $term->term_id ) . '">' . __( 'Edit', 'newsletter-glue' ) . '</a>)<span style="display:inline-block;width:20px;"></span>';
 				}
 				echo $output;
 			} else {

@@ -598,7 +598,11 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 			$element->find( 'img', 0 )->{'data-href'} = $element->find( 'a', 0 )->href;
 			$element->find( 'a', 0 )->outertext = $element->innertext;
 		}
-		$element->outertext = $element->find( 'img', 0 )->outertext;
+		if ( $element->find( 'figcaption', 0 ) ) {
+			$element->outertext = $element->find( 'img', 0 )->outertext . $element->find( 'figcaption', 0 )->outertext;
+		} else {
+			$element->outertext = $element->find( 'img', 0 )->outertext;
+		}
 	}
 
 	// Output column.
@@ -1216,6 +1220,12 @@ function newsletterglue_generated_html_output_hook6( $html, $post_id, $app ) {
 		$element->outertext = '<a href="' . $element->{'data-href'} . '">' . $element->outertext . '</a>';
 	}
 
+	// Figcaption.
+	$replace = '#template_inner figcaption';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-caption"><tr><td>' . $element->innertext . '</td></tr></table>';
+	}
+
 	$output->save();
 
 	return ( string ) $output;
@@ -1568,6 +1578,13 @@ table {
 
 .ngl-table-divider-wrap td {
 	padding: 10px 0;
+}
+
+.ngl-table-caption td {
+	padding-top: 0 !important;
+	text-align: center;
+	font-size: <?php echo newsletterglue_get_theme_option( 'p_size' ) - 3 ; ?>px;
+	opacity: 0.7;
 }
 
 .ngl-table-wp-block-separator td {
