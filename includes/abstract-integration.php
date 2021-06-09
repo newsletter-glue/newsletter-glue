@@ -347,9 +347,17 @@ abstract class NGL_Abstract_Integration {
 			foreach( $results as $result ) {
 				$clean = explode( ',fallback=', $result );
 				$tag = trim( str_replace( array( '{{', '}}' ), '', $clean[0] ) );
+
+				if ( isset( $clean[1] ) ) {
+					$fallback = str_replace( ' }}', '', $clean[1] );
+					$fallback = trim( $fallback );
+				} else {
+					$fallback = '';
+				}
+
 				// Find the tag in ESP list first.
-				if ( $this->get_tag( $tag, $post_id ) && ! isset( $_REQUEST[ 'view_newsletter' ] ) && ! isset( $_REQUEST[ 'preview_email' ] ) ) {
-					$html = str_replace( $result, $this->get_tag( $tag, $post_id ), $html );
+				if ( $this->get_tag( $tag, $post_id, $fallback ) && ! isset( $_REQUEST[ 'view_newsletter' ] ) && ! isset( $_REQUEST[ 'preview_email' ] ) ) {
+					$html = str_replace( $result, $this->get_tag( $tag, $post_id, $fallback ), $html );
 				} else if ( $this->get_global_tag( $tag, $post_id ) ) {
 					$html = str_replace( $result, $this->get_global_tag( $tag, $post_id ), $html );
 				// If the ESP does not support it. Add fallback.
@@ -372,7 +380,7 @@ abstract class NGL_Abstract_Integration {
 	/**
 	 * Code supported tags for this ESP.
 	 */
-	public function get_tag( $tag, $post_id = 0 ) {
+	public function get_tag( $tag, $post_id = 0, $fallback = null ) {
 		return false;
 	}
 
