@@ -370,6 +370,8 @@ class NGL_CPT {
 
 			echo 'div.editor-styles-wrapper a, div.editor-styles-wrapper .wp-block a { color: ' . newsletterglue_get_theme_option( 'a_colour' ) . '; text-decoration: none !important; }';
 
+			echo 'div.editor-styles-wrapper a, div.editor-styles-wrapper .wp-block.has-text-color a { color: inherit; text-decoration: underline !important; }';
+
 			echo 'div.editor-styles-wrapper, div.editor-styles-wrapper p { color: ' . newsletterglue_get_theme_option( 'p_colour' ) . '; }';
 			echo 'div.editor-styles-wrapper p, div.editor-styles-wrapper li, div.editor-styles-wrapper blockquote.wp-block-quote p, div.editor-styles-wrapper blockquote p { font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; }';
 			echo '.editor-styles-wrapper blockquote.wp-block-quote p { font-weight: normal; }';
@@ -385,11 +387,16 @@ class NGL_CPT {
 			echo 'div.editor-styles-wrapper .wp-block-button__link,
 				div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:hover,
 				div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:active
-				{ font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; text-transform: none; padding: 14px 20px; font-weight: inherit; min-width: ' . newsletterglue_get_theme_option( 'btn_width' ) . 'px; background-color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; color: ' . newsletterglue_get_theme_option( 'btn_colour' ) . '!important; border: 0 !important; line-height: 1.3 !important; }';
+				{ font-size: ' . newsletterglue_get_theme_option( 'p_size' ) . 'px; text-transform: none; padding: 14px 20px; font-weight: inherit; min-width: ' . newsletterglue_get_theme_option( 'btn_width' ) . 'px; background-color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '; color: ' . newsletterglue_get_theme_option( 'btn_colour' ) . '; border: 0 !important; line-height: 1.3 !important; }';
+
 			echo 'div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link,
 				div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link:hover,
 				div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link:active
 			{ padding: 12px 20px; color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; background-color: transparent !important; border: 2px solid ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; }';
+
+			echo 'div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:hover, div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:active {
+					background-color: 0 !important;
+			}';
 
 			echo 'div.editor-styles-wrapper .wp-block .wp-block-newsletterglue-callout.is-color-set .block-editor-block-list__layout > * { color: inherit; }';
 
@@ -803,13 +810,17 @@ class NGL_CPT {
 		);
 
 		$app = newsletterglue_default_connection();
-		if ( $app && $app === 'mailchimp' ) {
-			wp_enqueue_script(
-				'ngl-editor-bw-js',
-				$js_dir . 'editor-bw.js',
-				array( 'wp-blocks', 'wp-dom-ready', 'wp-edit-post' ),
-				time()
-			);
+		if ( $app ) {
+			include_once newsletterglue_get_path( $app ) . '/functions.php';
+			$function = 'newsletterglue_get_' . strtolower( $app ) . '_tags';
+			if ( function_exists( $function ) ) {
+				wp_enqueue_script(
+					'ngl-editor-bw-js',
+					$js_dir . 'editor-bw.js',
+					array( 'wp-blocks', 'wp-dom-ready', 'wp-edit-post' ),
+					time()
+				);
+			}
 		}
 	}
 

@@ -641,6 +641,9 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 			case 'address' :
 				return '*|ADDRESS|*';
 			break;
+			default :
+				return apply_filters( "newsletterglue_{$this->app}_custom_tag", '', $tag, $post_id );
+			break;
 		}
 
 		return false;

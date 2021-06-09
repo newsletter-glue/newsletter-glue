@@ -488,6 +488,27 @@ class NGL_Mailerlite extends NGL_Abstract_Integration {
 			case 'unsubscribe_link' :
 				return '{$unsubscribe}';
 			break;
+			case 'name' :
+				return '{$name}';
+			break;
+			case 'email' :
+				return '{$email}';
+			break;
+			case 'country' :
+				return '{$country}';
+			break;
+			case 'city' :
+				return '{$city}';
+			break;
+			case 'state' :
+				return '{$state}';
+			break;
+			case 'phone' :
+				return '{$phone}';
+			break;
+			default :
+				return apply_filters( "newsletterglue_{$this->app}_custom_tag", '', $tag, $post_id );
+			break;
 		}
 
 		return false;
