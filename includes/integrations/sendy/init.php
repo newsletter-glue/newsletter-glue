@@ -460,7 +460,7 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 	/**
 	 * Code supported tags for this ESP.
 	 */
-	public function get_tag( $tag, $post_id = 0 ) {
+	public function get_tag( $tag, $post_id = 0, $fallback = null ) {
 
 		switch ( $tag ) {
 			case 'unsubscribe_link' :

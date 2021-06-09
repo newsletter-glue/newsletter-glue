@@ -582,10 +582,24 @@ class NGL_Campaignmonitor extends NGL_Abstract_Integration {
 	/**
 	 * Code supported tags for this ESP.
 	 */
-	public function get_tag( $tag, $post_id = 0 ) {
+	public function get_tag( $tag, $post_id = 0, $fallback = null ) {
 
 		switch ( $tag ) {
-
+			case 'fullname' :
+				return ! empty( $fallback ) ? '[fullname,fallback=' . $fallback . ']' : '[fullname]';
+			break;
+			case 'firstname' :
+				return ! empty( $fallback ) ? '[firstname,fallback=' . $fallback . ']' : '[firstname]';
+			break;
+			case 'lastname' :
+				return ! empty( $fallback ) ? '[lastname,fallback=' . $fallback . ']' : '[lastname]';
+			break;
+			case 'email' :
+				return ! empty( $fallback ) ? '[email,fallback=' . $fallback . ']' : '[email]';
+			break;
+			default :
+				return apply_filters( "newsletterglue_{$this->app}_custom_tag", '', $tag, $post_id );
+			break;
 		}
 
 		return false;
