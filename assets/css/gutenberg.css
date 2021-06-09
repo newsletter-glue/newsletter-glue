@@ -125,6 +125,7 @@
 .ngl-author-twitch { background-color: #9047FF; }
 .ngl-author-tiktok { background-color: #fe2c55; }
 .ngl-author-youtube { background-color: #FF0000; }
+.ngl-author-linkedin { background-color: #0e76a8; }
 
 .ngl-author-btn-outlined.ngl-author-twitter { border-color: #1DA1F2 !important; }
 .ngl-author-btn-outlined.ngl-author-instagram { border-color: #ed4956 !important; }
@@ -132,6 +133,7 @@
 .ngl-author-btn-outlined.ngl-author-twitch { border-color: #9047FF !important; }
 .ngl-author-btn-outlined.ngl-author-tiktok { border-color: #fe2c55 !important; }
 .ngl-author-btn-outlined.ngl-author-youtube { border-color: #FF0000 !important; }
+.ngl-author-btn-outlined.ngl-author-linkedin { border-color: #0e76a8 !important; }
 
 /* Callout card */
 .wp-block-newsletterglue-callout {
@@ -403,9 +405,14 @@ p.ngl-form-checkbox input[type=checkbox] {
 	margin: 0 0 30px;
 }
 
+.ngl-articles.colored .ngl-article {
+	padding: 20px !important;
+}
+
 .ngl-article-title {
 	margin: 0 0 8px;
 	line-height: 1.4;
+	word-wrap: break-word;
 }
 
 .ngl-article-title a {
@@ -415,6 +422,7 @@ p.ngl-form-checkbox input[type=checkbox] {
 
 .ngl-article-excerpt {
 	line-height: 1.4;
+	word-wrap: break-word;
 }
 
 .ngl-article-featured {

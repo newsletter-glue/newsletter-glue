@@ -84,16 +84,20 @@
 	// Add the tag.
 	$( document ).on( 'click', '.ngl-submenu-item', function() {
 
-		var $block = wp.data.select( 'core/block-editor' ).getSelectedBlock();
-
-		ngl_close_popover();
-
 		var tag 	= $( this ).attr( 'data-ngl-tag' );
 		var tag_id 	= $( this ).attr( 'data-tag-id' );
-
 		var fallback = $( 'input[type=text]#__fallback_' + tag_id );
-
+		var $block = wp.data.select( 'core/block-editor' ).getSelectedBlock();
+		var btn = $( this );
 		var uniqid = Math.round( new Date().getTime() + ( Math.random() * 100 ) );
+
+		if ( btn.attr( 'data-require-fb' ) & btn.attr( 'data-require-fb' ) == 1 && fallback.val() == '' ) {
+			btn.find( '.ngl-gutenberg-icon' ).trigger( 'click' );
+			fallback.addClass( 'is-mandatory' );
+			return false;
+		}
+
+		ngl_close_popover();
 
 		// Make tag markup.
 		if ( tag_id == 'unsubscribe_link' || tag_id == 'webversion' || tag_id == 'blog_post' ) {
@@ -151,7 +155,20 @@
 	$( document ).on( 'keyup', '.ngl-fallback-input input', function ( e ) {
 		if ( e.key === 'Enter' || e.keyCode === 13 ) {
 			var id = $( this ).attr( 'data-tag-input-id' );
-			$( '.ngl-submenu-item[data-tag-id=' + id + ']' ).trigger( 'click' );
+			var btn = $( '.ngl-submenu-item[data-tag-id=' + id + ']' );
+			if ( $( this ).hasClass( 'is-mandatory' ) && $( this ).val() == '' ) {
+				return false;
+			}
+			btn.trigger( 'click' );
+		}
+	} );
+
+	// When fallback input is changed.
+	$( document ).on( 'change', '.ngl-fallback-input input', function( event ) {
+		if ( $( this ).val() != '' ) {
+			$( this ).removeClass( 'is-mandatory' );
+		} else {
+			$( this ).addClass( 'is-mandatory' );
 		}
 	} );
 

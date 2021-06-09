@@ -329,6 +329,12 @@ p.ngl-notice-logo {
 	width: 100%;
 }
 
+.ngl-fallback-input input[type=text].is-mandatory {
+    border-color: #cc3000;
+    box-shadow: 0 0 0 1px #cc3000;
+    outline: 2px solid transparent;
+}
+
 .ngl-fallback-helper {
     color: #999;
     line-height: 1.4;

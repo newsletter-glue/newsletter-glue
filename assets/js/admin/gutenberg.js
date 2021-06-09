@@ -97,7 +97,7 @@ jQuery.fn.selectText = function(){
 	}
 
 	// Reorder keys.
-	function ngl_reorder_keys( wrap ) {
+	function ngl_reorder_keys( wrap, is_dup = 0 ) {
 
 		wrap.find( '.ngl-articles-wrap .ngl-article:visible' ).each( function() {
 			var elements = wrap.find( '.ngl-article:visible' );
@@ -116,7 +116,7 @@ jQuery.fn.selectText = function(){
 			values.push( id );
 		} );
 
-		var data = 'action=newsletterglue_ajax_order_articles&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&keys=' + keys + '&values=' + values;
+		var data = 'action=newsletterglue_ajax_order_articles&security=' + newsletterglue_params.ajaxnonce + '&block_id=' + block_id + '&keys=' + keys + '&values=' + values + '&is_dup=' + is_dup;
 
 		$.ajax( {
 			type : 'post',
@@ -719,5 +719,51 @@ jQuery.fn.selectText = function(){
 
 		return false;
 	} );
+
+	// Update embeds interval.
+	function updateEmbeds() {
+		var inp = $( '.ngl_article_s' );
+		if ( inp.length == 0 ) {
+			return false;
+		}
+		var theid = ''
+		var count = 0;
+		inp.each( function() {
+
+			var curr_block_id = $( this ).parents( 'div[data-type="newsletterglue/article"]' ).attr( 'data-block' );
+			var orig_block_id = $( this ).parents( '.ngl-articles' ).attr( 'data-block-id' );
+			var thearticles = $( this ).parents( '.ngl-articles' );
+			var $theblock = wp.data.select( 'core/block-editor' ).getBlock( curr_block_id );
+			var scope = $theblock && $theblock.attributes.scope ? $theblock.attributes.scope : 'regular';
+			if ( scope == 'pattern' && typenow && typenow != 'ngl_pattern' ) {
+				var new_id = curr_block_id.replace( /-/g, '' );
+				$theblock.attributes.block_id = new_id;
+				$theblock.attributes.scope = 'regular';
+				thearticles.attr( 'data-block-id', new_id );
+				wp.data.dispatch( 'core/block-editor' ).updateBlock( $theblock.clientId, $theblock.attributes );
+				ngl_reorder_keys( thearticles, orig_block_id );
+				thearticles.parents( 'div[data-type="newsletterglue/article"]' ).find( '.ngl-ajax-block-id' ).html( 'ID: ' + new_id );
+				thearticles.parents( 'div[data-type="newsletterglue/article"]' ).find( '.ngl-ajax-block-scope' ).html( 'regular' );
+			}
+
+			var itms = $( this ).parents( '.ngl-articles' );
+			var theid = itms.attr( 'data-block-id' );
+			var count = $( '.ngl-articles[data-block-id="' + theid + '"]' ).length;
+			if ( count > 1 ) {
+				var original_id = $( '.ngl-articles[data-block-id="' + theid + '"]:first' );
+				var to_update   = $( '.ngl-articles[data-block-id="' + theid + '"]:last' );
+				var to_update_id = to_update.parents( 'div[data-type="newsletterglue/article"]' ).attr( 'data-block' );
+				var $block = wp.data.select( 'core/block-editor' ).getBlock( to_update_id );
+				var new_instance_id = to_update_id.replace( /-/g, '' );
+				$block.attributes.block_id = new_instance_id;
+				to_update.attr( 'data-block-id', new_instance_id );
+				wp.data.dispatch( 'core/block-editor' ).updateBlock( $block.clientId, $block.attributes );
+				ngl_reorder_keys( to_update, original_id.attr( 'data-block-id' ) );
+				to_update.parents( 'div[data-type="newsletterglue/article"]' ).find( '.ngl-ajax-block-id' ).html( 'ID: ' + new_instance_id );
+			}
+
+		} );
+	}
+	var update_embed_handler = setInterval( updateEmbeds, 100 );
 
 } )( jQuery );
