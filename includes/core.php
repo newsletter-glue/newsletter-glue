@@ -13,6 +13,25 @@ add_filter( 'newsletterglue_settings_tab_blocks_save_button', '__return_false' )
 add_filter( 'newsletterglue_settings_tab_connect_save_button', '__return_false' );
 
 /**
+ * Allow pagination in newsletter category archive.
+ */
+function newsletterglue_generate_taxonomy_rewrite_rules( $wp_rewrite ) {
+
+	$rules = array();
+
+	$post_type_name = 'newsletterglue';
+	$terms = get_categories( array( 'type' => $post_type_name, 'taxonomy' => 'ngl_newsletter_cat', 'hide_empty' => 0 ) );
+
+	foreach ( $terms as $term ) {
+		$rules[ 'newsletter/' . $term->slug . '/page/?([0-9]{1,})/?$' ] = 'index.php?' .'type=' .$post_type_name."&" . $term->taxonomy . '=' . $term->slug . '&paged=' . $wp_rewrite->preg_index( 1 );
+	}
+
+	$wp_rewrite->rules = $rules + $wp_rewrite->rules;
+
+}
+add_action( 'generate_rewrite_rules', 'newsletterglue_generate_taxonomy_rewrite_rules', 100 );
+
+/**
  * Generates custom link for each newsletter.
  */
 function newsletterglue_generate_newsletter_post_link( $post_link, $id = 0 ){
@@ -571,6 +590,125 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 }
 
 /**
+ * After all emogrify is done.
+ */
+add_filter( 'newsletterglue_final_html_content', 'newsletterglue_final_html_content', 10, 1 );
+function newsletterglue_final_html_content( $html ) {
+
+	if ( newsletterglue_get_theme_option( 'font' ) ) {
+		$font = "'" . newsletterglue_get_font_name( newsletterglue_get_theme_option( 'font' ) ) . "', Arial, Helvetica, sans-serif";
+		} else {
+		$font = "Arial, Helvetica, sans-serif";
+	}
+
+	$output = new simple_html_dom();
+	$output->load( $html, true, false );
+
+	// Outlook rect for button.
+	$replace = 'a.wp-block-button__link';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$s = $element->style;
+		$results = [];
+		$styles = explode(';', $s);
+
+		foreach ($styles as $style) {
+			$properties = explode(':', $style);
+			if (2 === count($properties)) {
+				$results[trim($properties[0])] = trim($properties[1]);
+			}
+		}
+
+		$color 		= ! empty( $results[ 'color' ] ) ? $results[ 'color' ] : 'inherit';
+		$background = ! empty( $results[ 'background-color' ] ) ? $results[ 'background-color' ] : '#0088A0';
+		$font_size  = newsletterglue_get_theme_option( 'p_size' ) . 'px';
+		$innertext  = wp_strip_all_tags( $element->innertext );
+		$href		= $element->href;
+		$length     = ( mb_strlen( $innertext ) * 10 ) + 25;
+		$radius		= ! empty( $results[ 'border-radius' ] ) ? $results[ 'border-radius' ] : '0px';
+		$radius		= str_replace( 'px', '', $radius );
+		$radius		= $radius * 2 . '%';
+
+		if ( strstr( $element->class, 'is-style-outlined' ) ) {
+			if ( $element->style ) {
+				$element->style = $element->style . ';color: ' . $background . ' !important;';
+			}
+		}
+
+		if ( strstr( $element->class, 'is-style-outlined' ) ) {
+
+			$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . ';">' . $element->innertext . '</span>';
+			$element->outertext = '<!--[if mso]>
+									<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:49px; " arcsize="' . $radius . '" strokecolor="' . $color . '" strokeweight="1pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
+									<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
+									</v:roundrect>
+									<![endif]-->' . $element->outertext;
+		} else {
+
+			$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . ';">' . $element->innertext . '</span>';
+			$element->outertext = '<!--[if mso]>
+									<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:49px; " arcsize="' . $radius . '" strokecolor="' . $background . '" strokeweight="0pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
+									<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
+									</v:roundrect>
+									<![endif]-->' . $element->outertext;
+		}
+
+	}
+
+	// Author bio button.
+	$replace = 'div.ngl-author-cta a';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$s = $element->style;
+		$results = [];
+		$styles = explode(';', $s);
+
+		foreach ($styles as $style) {
+			$properties = explode(':', $style);
+			if (2 === count($properties)) {
+				$results[trim($properties[0])] = trim($properties[1]);
+			}
+		}
+
+		$color 		= ! empty( $results[ 'color' ] ) ? $results[ 'color' ] : '#ffffff';
+		$background = ! empty( $results[ 'background-color' ] ) ? $results[ 'background-color' ] : '#0088A0';
+		$font_size  = '12px';
+		$innertext  = wp_strip_all_tags( $element->innertext );
+		$href		= $element->href;
+		$length     = ( mb_strlen( $innertext ) * 10 ) + 25;
+		$radius		= ! empty( $results[ 'border-radius' ] ) ? $results[ 'border-radius' ] : '0px';
+		$radius		= str_replace( 'px', '', $radius );
+		$radius		= $radius * 2 . '%';
+
+		if ( ! empty( $results[ 'border-width' ] ) && $results[ 'border-width' ] == '2px' ) {
+
+			if ( isset( $results[ 'border-color' ] ) ) {
+				$strokecolor = $results[ 'border-color' ];
+			} else {
+				$strokecolor = $color;
+			}
+
+			$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . ';">' . $element->innertext . '</span>';
+			$element->outertext = '<!--[if mso]>
+										<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:30px; " arcsize="' . $radius . '" strokecolor="' . $strokecolor . '" strokeweight="1pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
+										<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
+										</v:roundrect>
+										<![endif]-->' . $element->outertext;
+		} else {
+
+			$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . ';">' . $element->innertext . '</span>';
+			$element->outertext = '<!--[if mso]>
+										<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:30px; " arcsize="' . $radius . '" strokecolor="' . $background . '" strokeweight="0pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
+										<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
+										</v:roundrect>
+										<![endif]-->' . $element->outertext;
+		}
+	}
+
+	$output->save();
+
+	return ( string ) $output;
+}
+
+/**
  * Fix most email client issues here.
  */
 add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_hook1', 1, 3 );
@@ -578,6 +716,14 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
 	$output->load( $html, true, false );
+
+	// Outline style.
+	$replace = '.is-style-outline';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		foreach( $element->find( 'a' ) as $a => $b ) {
+			$b->class = $b->class . ' is-style-outlined';
+		}
+	}
 
 	// Force image width.
 	$replace = 'figure.wp-block-image img';
@@ -592,7 +738,10 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 		if ( strstr( $element->class, 'is-style-rounded' ) ) {
 			$element->find( 'img', 0 )->style = 'border-radius: 999px;' . $element->find( 'img', 0 )->style;
 		}
-		if ( $element->find( 'a' ) ) {
+		if ( $element->find( 'figcaption', 0 ) ) {
+			$element->find( 'figcaption', 0 )->find( 'a', 0 )->class = 'caption-link';
+		}
+		if ( $element->find( 'a' ) && ! strstr( $element->find( 'a', 0 )->class, 'caption-link' ) ) {
 			$element->find( 'img', 0 )->{'data-href'} = $element->find( 'a', 0 )->href;
 			$element->find( 'a', 0 )->outertext = $element->innertext;
 		}
@@ -727,93 +876,6 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
 	}
 
-	// Outlook button fix.
-	$replace = 'a.wp-block-button__link';
-	foreach( $output->find( $replace ) as $key => $element ) {
-		$s = $element->style;
-		$results = [];
-		$styles = explode(';', $s);
-
-		foreach ($styles as $style) {
-			$properties = explode(':', $style);
-			if (2 === count($properties)) {
-				$results[trim($properties[0])] = trim($properties[1]);
-			}
-		}
-
-		$color 		= ! empty( $results[ 'color' ] ) ? $results[ 'color' ] : '#ffffff';
-		$background = ! empty( $results[ 'background-color' ] ) ? $results[ 'background-color' ] : '#0088A0';
-		$font_size  = newsletterglue_get_theme_option( 'p_size' ) . 'px';
-		$innertext  = wp_strip_all_tags( $element->innertext );
-		$href		= $element->href;
-		$length     = ( mb_strlen( $innertext ) * 10 ) + 25;
-		$radius		= ! empty( $results[ 'border-radius' ] ) ? $results[ 'border-radius' ] : '0px';
-		$radius		= str_replace( 'px', '', $radius );
-		$radius		= $radius * 2 . '%';
-
-		if ( ! empty( $results[ 'border-width' ] ) && $results[ 'border-width' ] == '2px' ) {
-
-			$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . ';">' . $element->innertext . '</span>';
-			$element->outertext = '<!--[if mso]>
-									<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:49px; " arcsize="' . $radius . '" strokecolor="' . $color . '" strokeweight="1pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
-									<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
-									</v:roundrect>
-									<![endif]-->' . $element->outertext;
-		} else {
-
-			$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . ';">' . $element->innertext . '</span>';
-			$element->outertext = '<!--[if mso]>
-									<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:49px; " arcsize="' . $radius . '" strokecolor="' . $background . '" strokeweight="0pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
-									<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
-									</v:roundrect>
-									<![endif]-->' . $element->outertext;
-		}
-
-	}
-
-	// Author bio button.
-	$replace = 'div.ngl-author-cta a';
-	foreach( $output->find( $replace ) as $key => $element ) {
-		$s = $element->style;
-		$results = [];
-		$styles = explode(';', $s);
-
-		foreach ($styles as $style) {
-			$properties = explode(':', $style);
-			if (2 === count($properties)) {
-				$results[trim($properties[0])] = trim($properties[1]);
-			}
-		}
-
-		$color 		= ! empty( $results[ 'color' ] ) ? $results[ 'color' ] : '#ffffff';
-		$background = ! empty( $results[ 'background-color' ] ) ? $results[ 'background-color' ] : '#0088A0';
-		$font_size  = '12px';
-		$innertext  = wp_strip_all_tags( $element->innertext );
-		$href		= $element->href;
-		$length     = ( mb_strlen( $innertext ) * 10 ) + 25;
-		$radius		= ! empty( $results[ 'border-radius' ] ) ? $results[ 'border-radius' ] : '0px';
-		$radius		= str_replace( 'px', '', $radius );
-		$radius		= $radius * 2 . '%';
-
-		if ( ! empty( $results[ 'border-width' ] ) && $results[ 'border-width' ] == '2px' ) {
-
-			$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . ';">' . $element->innertext . '</span>';
-			$element->outertext = '<!--[if mso]>
-										<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:30px; " arcsize="' . $radius . '" strokecolor="' . $color . '" strokeweight="1pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
-										<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
-										</v:roundrect>
-										<![endif]-->' . $element->outertext;
-		} else {
-
-			$element->innertext = '<span style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . ';">' . $element->innertext . '</span>';
-			$element->outertext = '<!--[if mso]>
-										<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="' . $href . '" style="v-text-anchor:middle; width: ' . $length . 'px; height:30px; " arcsize="' . $radius . '" strokecolor="' . $background . '" strokeweight="0pt" fillcolor="' . $background . '" o:button="true" o:allowincell="true" o:allowoverlap="false">
-										<v:textbox inset="2px,2px,2px,2px"><center style="font-family: ' . $font . '; color: ' . $color . '; font-size: ' . $font_size . '; line-height: 1.1;">' . $innertext.  '</center></v:textbox>
-										</v:roundrect>
-										<![endif]-->' . $element->outertext;
-		}
-	}
-
 	// Cite.
 	$replace = 'cite';
 	$cite_style = 'font-weight: bold;font-size: 14px;font-style:normal;margin-top:10px;display:block;';
@@ -904,6 +966,16 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 	$replace = 'span.ngl-tag';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$element->outertext = $element->innertext;
+	}
+
+	// Force publish date for some tags.
+	$replace = 'span.auto_date';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$format 	= $element->{ 'data-date-format' };
+		$post_id 	= $element->{ 'data-post-id' };
+		if ( $format && $post_id ) {
+			$element->outertext = date_i18n( $format, get_post_timestamp( $post_id ) );
+		}
 	}
 
 	$output->save();
@@ -1111,7 +1183,7 @@ function newsletterglue_generated_html_output_hook5( $html, $post_id, $app ) {
 	}
 
 	// Has background.
-	$replace = 'p.has-background';
+	$replace = 'p.has-background, a.has-background';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$td = $element->parent;
 		if ( $element->style ) {
@@ -1300,11 +1372,17 @@ function newsletterglue_add_masthead_image( $post, $position = 'below' ) {
 	$data 		= get_post_meta( $post_id, '_newsletterglue', true );
 	$use_image 	= isset( $data[ 'add_featured' ] ) ? sanitize_text_field( $data[ 'add_featured' ] ) : get_option( 'newsletterglue_add_featured' );
 
+	$link_featured_image = get_option( 'newsletterglue_link_featured' );
+
 	// Use of featured image.
 	if ( $use_image ) {
 		$url = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
 		if ( $url ) {
-			return '<div class="ngl-masthead ngl-masthead-' . $position . '"><img src="' . $url . '" class="masthead" /></div>';
+			if ( $link_featured_image && $link_featured_image === 'yes' ) {
+				return '<div class="ngl-masthead ngl-masthead-' . $position . '"><a href="' . get_permalink( $post_id ) . '" class="masthead-link"><img src="' . $url . '" class="masthead" /></a></div>';
+			} else {
+				return '<div class="ngl-masthead ngl-masthead-' . $position . '"><img src="' . $url . '" class="masthead" /></div>';
+			}
 		}
 	}
 
@@ -1658,8 +1736,11 @@ table {
 		foreach( $colors as $key => $color ) {
 			$slug 	= $color->slug;
 			$color 	= $color->color;
-			echo ".has-$slug-color { color: $color; }";
-			echo ".has-$slug-background-color { background-color: $color; }";
+			echo ".has-$slug-color, a.has-$slug-color { color: $color !important; }";
+			echo ".has-$slug-background-color { background-color: $color !important; }";
+			echo "a.has-$slug-background-color { background-color: $color !important; }";
+			echo "a.has-$slug-background-color { border-color: $color !important; }";
+			echo ".wp-block-button.is-style-outline a.has-$slug-background-color { color: $color !important; }";
 		}
 	}
 ?>
@@ -1868,11 +1949,20 @@ p.ngl-unsubscribe a {
 	box-sizing: border-box;
 	padding: 11px 20px;
 	text-decoration: none;
-	background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?> !important;
-	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;
+	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?>;
 	min-width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px !important;
-	border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?> !important;
+	border-width: 1px;
+	border-style: solid;
 	border-radius: <?php echo (int) newsletterglue_get_theme_option( 'btn_radius' ); ?>px;
+}
+
+.wp-block-button__link.has-background {
+
+}
+
+.wp-block-button__link:not(.has-background) {
+	background-color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?> !important;
+	border: 1px solid <?php echo newsletterglue_get_theme_option( 'btn_border' ); ?> !important;
 }
 
 .wp-block-button.wp-block-button__width-100 {
@@ -1888,7 +1978,6 @@ p.ngl-unsubscribe a {
 	background-color: transparent !important;
 	border-width: 2px !important;
 	padding: 10px 24px;
-	color: <?php echo newsletterglue_get_theme_option( 'btn_bg' ); ?> !important;
 }
 
 .wp-block-column img {
@@ -1978,6 +2067,10 @@ p.ngl-unsubscribe a {
 
 	#template_inner img.logo-image {
 		max-height: 60px !important;
+	}
+
+	.ngl-table-ngl-unsubscribe td {
+		padding: 20px !important;
 	}
 
 }

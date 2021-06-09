@@ -348,7 +348,7 @@ abstract class NGL_Abstract_Integration {
 				$clean = explode( ',fallback=', $result );
 				$tag = trim( str_replace( array( '{{', '}}' ), '', $clean[0] ) );
 				// Find the tag in ESP list first.
-				if ( $this->get_tag( $tag, $post_id ) ) {
+				if ( $this->get_tag( $tag, $post_id ) && ! isset( $_REQUEST[ 'view_newsletter' ] ) && ! isset( $_REQUEST[ 'preview_email' ] ) ) {
 					$html = str_replace( $result, $this->get_tag( $tag, $post_id ), $html );
 				} else if ( $this->get_global_tag( $tag, $post_id ) ) {
 					$html = str_replace( $result, $this->get_global_tag( $tag, $post_id ), $html );

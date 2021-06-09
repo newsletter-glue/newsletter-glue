@@ -576,6 +576,15 @@ function newsletterglue_ajax_save_theme_setting() {
 		die();
 	}
 
+	if ( $id == 'ngl_link_featured' ) {
+		if ( $value ) {
+			update_option( 'newsletterglue_link_featured', 'yes' );
+		} else {
+			update_option( 'newsletterglue_link_featured', 'no' );
+		}
+		die();
+	}
+
 	if ( strstr( $id, 'ngl_' ) ) {
 		$key = str_replace( 'ngl_', '', $id );
 		update_option( 'newsletterglue_' . $key, $value );
