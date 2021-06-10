@@ -105,7 +105,9 @@ function newsletterglue_preview_emails() {
 		echo $message;
 
 		// Debug
-		// echo round( strlen( $message ) / 1024 ) . 'kb';
+		if ( isset( $_REQUEST[ 'showsize' ] ) ) {
+			echo '<center><br /><br /><small>Estimated email size in kilobytes: ' . round( strlen( $message ) / 1024 ) . 'kb' . '</small><br /><br /></center>';
+		}
 
 		exit;
 
@@ -447,6 +449,10 @@ function newsletterglue_fix_the_content( $content ) {
 
 	$content = str_replace( trailingslashit( admin_url() ) . '%7B%7B%20', '{{ ', $content );
 	$content = str_replace( untrailingslashit( admin_url() ) . '%7B%7B%20', '{{ ', $content );
+	$content = str_replace( 'http://%7B%7B%20', '{{ ', $content );
+	$content = str_replace( 'https://%7B%7B%20', '{{ ', $content );
+	$content = str_replace( 'http://', '', $content );
+	$content = str_replace( '%20%7D%7D/', ' }}', $content );
 	$content = str_replace( '%20%7D%7D', ' }}', $content );
 
 	if ( ! empty( $post_id ) ) {
@@ -457,7 +463,7 @@ function newsletterglue_fix_the_content( $content ) {
 
 	return $content;
 }
-add_filter( 'the_content', 'newsletterglue_fix_the_content', 999 );
+add_filter( 'the_content', 'newsletterglue_fix_the_content', 1 );
 
 /**
  * Generate email template content from post and subject.
@@ -703,6 +709,58 @@ function newsletterglue_final_html_content( $html ) {
 		}
 	}
 
+	// Fix weird markup.
+	$replace = '.wp-block-image table figure table';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( $element->find( 'img' ) ) {
+		$theimage = $element->find( 'img', 0 )->outertext;
+		$element->outertext = '';
+		if ( $element->parent()->find( 'a' ) ) {
+			$element->parent()->find( 'a', 0 )->innertext = $theimage;
+		} else {
+			$element->parent()->innertext = $theimage;
+		}
+		}
+	}
+
+	// Remove unwanted class junk.
+	$replace = 'table.ngl-table';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( ! strstr( $element->class, 'ngl-table-ngl-unsubscribe' ) ) {
+			$element->class = '';
+			$element->removeAttribute( 'class' );
+		} else {
+			$element->class = 'ngl-table-ngl-unsubscribe';
+		}
+	}
+
+	$output->save();
+
+	return ( string ) $output;
+}
+
+
+/**
+ * After all emogrify is done.
+ */
+add_filter( 'newsletterglue_final_html_content', 'newsletterglue_final_html_content2', 20, 1 );
+function newsletterglue_final_html_content2( $html ) {
+
+	$output = new simple_html_dom();
+	$output->load( $html, true, false );
+
+	// Fix weird markup.
+	$replace = '.wp-block-image';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->outertext = $element->innertext;
+	}
+
+	// Fix weird markup.
+	$replace = '.wp-block-newsletterglue-group';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->outertext = $element->innertext;
+	}
+
 	$output->save();
 
 	return ( string ) $output;
@@ -739,7 +797,9 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 			$element->find( 'img', 0 )->style = 'border-radius: 999px;' . $element->find( 'img', 0 )->style;
 		}
 		if ( $element->find( 'figcaption', 0 ) ) {
-			$element->find( 'figcaption', 0 )->find( 'a', 0 )->class = 'caption-link';
+			if ( $element->find( 'figcaption', 0 )->find( 'a' ) ) {
+				$element->find( 'figcaption', 0 )->find( 'a', 0 )->class = 'caption-link';
+			}
 		}
 		if ( $element->find( 'a' ) && ! strstr( $element->find( 'a', 0 )->class, 'caption-link' ) ) {
 			$element->find( 'img', 0 )->{'data-href'} = $element->find( 'a', 0 )->href;
@@ -1607,6 +1667,7 @@ function newsletterglue_add_theme_designer_css() {
 }
 
 body {
+	mso-line-height-rule: exactly;
 	line-height: 150%;
 	-webkit-text-size-adjust: none;
 	-ms-text-size-adjust: none;
@@ -1653,7 +1714,7 @@ table {
 }
 
 .ngl-table-divider-wrap td {
-	padding: 10px 0;
+	padding: 20px;
 }
 
 .ngl-table-caption td {
@@ -1758,11 +1819,6 @@ p.has-text-color * {
 	table-layout: fixed;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	color: black; 
-	line-height: 100%; 
-}
-
 a {
 	color: #2A5DB0;
 	text-decoration: underline;
@@ -1771,8 +1827,8 @@ a {
 hr {
 	margin: 0;
     height: 1px;
-	background-color: #333;
-	color: #333;
+	background-color: #ddd;
+	color: #ddd;
     font-size: 0;
     border: 0;
 }
@@ -1799,14 +1855,11 @@ hr {
 	padding-bottom: <?php echo absint( newsletterglue_get_theme_option( 'container_padding1' ) ); ?>px;
 }
 
-td, th, p, a, h1, h2, h3, h4, h5, h6 {
-	mso-line-height-rule: exactly;
-}
-
 h1, h2, h3, h4, h5, h6 {
+	color: black;
 	padding: 0 !important;
 	margin: 0;
-	line-height: 150%;
+	line-height: 120%;
 }
 
 img.wp-image {
@@ -1841,7 +1894,6 @@ h1 a.ngl-title-to-post {
 p, ul, ol {
 	padding: 0;
 	margin: 0;
-	line-height: 150%;
 }
 
 ul, ol {
@@ -1874,7 +1926,6 @@ figure {
 figcaption {
 	font-size: 14px;
 	opacity: 0.7;
-	line-height: 130%;
 	margin-top: 10px;
 }
 
@@ -1949,7 +2000,7 @@ p.ngl-unsubscribe a {
 	box-sizing: border-box;
 	padding: 11px 20px;
 	text-decoration: none;
-	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?>;
+	color: <?php echo newsletterglue_get_theme_option( 'btn_colour' ); ?> !important;
 	min-width: <?php echo (int) newsletterglue_get_theme_option( 'btn_width' ); ?>px !important;
 	border-width: 1px;
 	border-style: solid;

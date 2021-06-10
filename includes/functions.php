@@ -311,3 +311,26 @@ function newsletterglue_get_merge_tag_fallback( $tag = '' ) {
 
 	return apply_filters( 'newsletterglue_get_merge_tag_fallback', $value, $tag );
 }
+
+/**
+ * Remove unwanted stuff from the feed.
+ */
+function newsletterglue_content_feed( $content ) {
+
+	$content = str_replace( '<!--[if !mso]><\!-->', '', $content );
+	$content = str_replace( '<!-- <![endif]-->', '', $content );
+
+	$output = new simple_html_dom();
+	$output->load( $content, true, false );
+
+	$replace = '.ngl-article';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->outertext = '';
+	}
+
+	$output->save();
+
+	return ( string ) $output;
+
+}
+add_filter( 'the_content_feed', 'newsletterglue_content_feed', 500 );
