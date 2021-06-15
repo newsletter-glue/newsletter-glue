@@ -19,7 +19,7 @@ add_filter( 'newsletterglue_email_content','newsletterglue_filter_post_local_to_
  */
 function newsletterglue_duplicate_post_excludelist_filter( $meta_excludelist ) {
 
-	return array_merge( $meta_excludelist, [ '_ngl_results' ] );
+	return array_merge( $meta_excludelist, [ '_ngl_results', '_ngl_core_pattern' ] );
 
 }
 add_filter( 'duplicate_post_excludelist_filter', 'newsletterglue_duplicate_post_excludelist_filter' );

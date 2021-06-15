@@ -71,6 +71,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 			'refreshed_html'	=> __( 'Refreshed!', 'newsletter-glue' ),
 			'unknown_error'		=> __( 'Unknown error occured.', 'newsletter-glue' ),
 			'loader'			=> '<span class="ngl-state-loader"><img src="' . NGL_PLUGIN_URL . 'assets/images/loading.gif" /><i>' . __( 'Working on your newsletter...', 'newsletter-glue' ) . '</span>',
+			'pattern_edit'		=> '<div class="ngl-pattern-row" style="margin: 4px 0;color: #333;opacity: 1;">' . __( 'You&rsquo;re about to edit a default pattern. Consider duplicating the default pattern instead?', 'newsletter-glue' ) . '<div style="margin: 4px 0 0 0;"><a href="#" class="ngl-pattern-edit" style="margin: 0 20px 0 0;"><b>' . __( 'Edit', 'newsletter-glue' ) . '</b></a><a href="#" class="ngl-pattern-dp" style="margin: 0 20px 0 0;color:#666;">' . __( 'Duplicate', 'newsletter-glue' ) . '</a><a href="#" style="color:#666;" class="ngl-pattern-bk">' . __( 'Go back', 'newsletter-glue' ) . '</a></div></div>',
 		) ) );
 
 		wp_enqueue_style( 'newsletterglue_material_icons' );
@@ -92,7 +93,7 @@ function newsletterglue_load_admin_scripts( $hook ) {
 	}
 
 	// Add CPT stuff.
-	if ( in_array( $screen_id, array( 'newsletterglue', 'ngl_pattern' ) ) ) {
+	if ( in_array( $screen_id, array( 'newsletterglue', 'ngl_pattern', 'edit-ngl_pattern' ) ) ) {
 		wp_enqueue_script( 'newsletterglue_cpt' );
 		wp_enqueue_style( 'newsletterglue_cpt' );
 	}
@@ -122,6 +123,7 @@ function newsletterglue_js_data() {
 			'app_name'		=> newsletterglue_get_name( $app ) ? sprintf( __( '%s integration', 'newsletter-glue' ), newsletterglue_get_name( $app ) ) : __( 'Email integration', 'newsletter-glue' ),
 			'readtime'		=> newsletterglue_content_estimated_reading_time( $post->post_content ),
 			'locale'		=> str_replace( '_', '-', get_locale() ),
+			'reset_pattern' => add_query_arg( 'reset-pattern', 'true', get_edit_post_link( $post->ID, false ) ),
 		);
 
 		// Add lists.

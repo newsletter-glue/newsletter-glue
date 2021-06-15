@@ -7,6 +7,36 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Resets a pattern to original.
+ */
+function newsletterglue_reset_pattern_action() {
+
+	if ( isset( $_REQUEST[ 'reset-pattern' ] ) && current_user_can( 'manage_newsletterglue' ) ) {
+		$post_id = absint( $_REQUEST[ 'post' ] );
+		if ( $post_id ) {
+			require_once( NGL_PLUGIN_DIR . 'includes/cpt/default-patterns.php' );
+			$patterns = new NGL_Default_Patterns();
+			$list = $patterns->get_patterns();
+			$core_pattern = get_post_meta( $post_id, '_ngl_core_pattern', true );
+			if ( $core_pattern && isset( $list[ $core_pattern ] ) ) {
+				$pattern = $list[ $core_pattern ];
+				$args = array(
+					'post_type' 	=> 'ngl_pattern',
+					'post_status'	=> 'publish',
+					'post_author'	=> 1,
+					'post_title'	=> $pattern[ 'title' ],
+					'post_content'	=> $pattern[ 'content' ],
+				);
+				wp_update_post( array_merge( array( 'ID' => $post_id ), $args ) );
+				exit( wp_redirect( get_edit_post_link( $post_id, false ) ) );
+			}
+		}
+	}
+
+}
+add_action( 'admin_init', 'newsletterglue_reset_pattern_action', 10 );
+
+/**
  * Creates the admin menu links.
  */
 function newsletterglue_get_screen_ids() {

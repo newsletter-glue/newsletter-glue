@@ -1755,11 +1755,11 @@ table {
 }
 
 .ngl-table-inline.align-left td td {
-	padding: 0 8px 0 0;
+	padding: 0 8px 0 0 !important;
 }
 
 .ngl-table-inline.align-right td td {
-	padding: 0 0 0 8px;
+	padding: 0 0 0 8px !important;
 }
 
 .ngl-table-ngl-credits td {
@@ -1913,6 +1913,11 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 0 !important;
 	margin: 0;
 	line-height: 120%;
+}
+
+p {
+	mso-line-height-rule: exactly;
+	line-height: 150%;
 }
 
 img.wp-image {
@@ -2340,6 +2345,8 @@ function newsletterglue_duplicate_item( $post = null, $post_id = 0 ) {
 	}
 
 	delete_post_meta( $new_post_id, '_ngl_results' );
+
+	delete_post_meta( $new_post_id, '_ngl_core_pattern' );
 
 }
 

@@ -15,11 +15,16 @@ class NGL_CPT {
 	 * Constructor.
 	 */
 	public static function init() {
+		add_filter( 'display_post_states', array( __CLASS__, 'display_post_states' ), 50, 2 );
+
 		// Register post types.
 		add_action( 'init', array( __CLASS__, 'register_post_types' ), 5 );
 
 		// Load block patterns.
 		add_action( 'init', array( __CLASS__, 'load_block_patterns' ), 7 );
+
+		// Default patterns.
+		add_action( 'init', array( __CLASS__, 'create_default_patterns' ), 50 );
 
 		// Register block category.
 		add_action( 'init', array( __CLASS__, 'register_block_category' ), 999999999 );
@@ -69,6 +74,43 @@ class NGL_CPT {
 
 		// Hook for web view.
 		add_action( 'wp', array( __CLASS__, 'show_webview' ), 99 );
+	}
+
+	/**
+	 * Mark pattern as default.
+	 */
+	public static function display_post_states( $post_states, $post ) {
+		if ( 'ngl_pattern' === $post->post_type ) {
+			if ( get_post_meta( $post->ID, '_ngl_core_pattern', true ) ) {
+				$post_states[ 'ngl_default' ] = '<span class="ngl-pattern-state" style="color: #999;font-weight:normal;font-size:13px;">' . __( 'Default', 'newsletter-glue' ) . '</span>';
+			}
+		}
+		return $post_states;
+	}
+
+	/**
+	 * Create default patterns.
+	 */
+	public static function create_default_patterns() {
+
+		if ( ! current_user_can( 'manage_newsletterglue' ) ) {
+			return;
+		}
+
+		if ( get_option( 'newsletterglue_default_patterns' ) && ! isset( $_REQUEST[ 'recreate-patterns' ] ) ) {
+			return;
+		}
+
+		require_once( NGL_PLUGIN_DIR . 'includes/cpt/default-patterns.php' );
+
+		$patterns = new NGL_Default_Patterns();
+		$patterns->create();
+
+		update_option( 'newsletterglue_default_patterns', 'yes' );
+
+		if ( isset( $_REQUEST[ 'recreate-patterns' ] ) ) {
+			exit( wp_redirect( remove_query_arg( 'recreate-patterns' ) ) );
+		}
 	}
 
 	/**
@@ -236,6 +278,18 @@ class NGL_CPT {
 				'single'       	=> true,
 				'type'         	=> 'string',
 				'default'       => 'blog',
+				'auth_callback' => function () { return current_user_can( 'manage_newsletterglue' ); }
+			)
+		);
+
+		register_post_meta(
+			'ngl_pattern',
+			'_ngl_core_pattern',
+			array(
+				'show_in_rest' 	=> true,
+				'single'       	=> true,
+				'type'         	=> 'string',
+				'default'       => '',
 				'auth_callback' => function () { return current_user_can( 'manage_newsletterglue' ); }
 			)
 		);
@@ -713,11 +767,11 @@ class NGL_CPT {
 	public static function post_row_actions( $actions, $post ) {
 
 		if ( $post->post_type == 'ngl_pattern' ) {
-			$actions[ 'ngl_duplicate' ] = '<a href="' . wp_nonce_url( 'admin.php?action=ngl_duplicate_as_pattern&post=' . $post->ID, basename(__FILE__), 'ngl_duplicate_nonce' ) . '" title="' . __( 'Duplicate this pattern', 'newsletter-glue' ) . '" rel="permalink">' . __( 'Duplicate', 'newsletter-glue' ) . '</a>';
+			$actions[ 'ngl_duplicate' ] = '<a href="' . wp_nonce_url( admin_url( 'admin.php?action=ngl_duplicate_as_pattern&post=' . $post->ID ), basename(__FILE__), 'ngl_duplicate_nonce' ) . '" title="' . __( 'Duplicate this pattern', 'newsletter-glue' ) . '" rel="permalink">' . __( 'Duplicate', 'newsletter-glue' ) . '</a>';
 		}
 
 		if ( $post->post_type == 'newsletterglue' ) {
-			$actions[ 'ngl_duplicate' ] = '<a href="' . wp_nonce_url( 'admin.php?action=ngl_duplicate_as_newsletter&post=' . $post->ID, basename(__FILE__), 'ngl_duplicate_nonce' ) . '" title="' . __( 'Duplicate this newsletter', 'newsletter-glue' ) . '" rel="permalink">' . __( 'Duplicate', 'newsletter-glue' ) . '</a>';
+			$actions[ 'ngl_duplicate' ] = '<a href="' . wp_nonce_url( admin_url( 'admin.php?action=ngl_duplicate_as_newsletter&post=' . $post->ID ), basename(__FILE__), 'ngl_duplicate_nonce' ) . '" title="' . __( 'Duplicate this newsletter', 'newsletter-glue' ) . '" rel="permalink">' . __( 'Duplicate', 'newsletter-glue' ) . '</a>';
 		}
 
 		return $actions;
