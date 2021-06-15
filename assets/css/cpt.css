@@ -143,3 +143,8 @@ div.block-editor-block-list__block[data-type="core/spacer"]:hover::before {
     padding: 4px;
     font-size: 0.9em;
 }
+
+div.wp-block[data-type="newsletterglue/share-link"]::before,
+div.wp-block[data-type="newsletterglue/share-link"]::after {
+	display: none !important;
+}

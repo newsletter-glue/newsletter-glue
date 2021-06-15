@@ -100,7 +100,7 @@
 		ngl_close_popover();
 
 		// Make tag markup.
-		if ( tag_id == 'unsubscribe_link' || tag_id == 'webversion' || tag_id == 'blog_post' ) {
+		if ( tag_id == 'unsubscribe_link' || tag_id == 'webversion' || tag_id == 'blog_post' || tag_id == 'update_preferences' ) {
 			var link_text = fallback.val() ? fallback.val() : $( this ).attr( 'data-default-link-text' );
 			tag = '<a href="' + tag + '">' + link_text + '</a><i class="ngl-tag-spacer" id="ngl-tag-spacer-' + uniqid + '">&nbsp;</i>';
 		} else {
@@ -184,6 +184,37 @@
 			data : data,
 			success: function( ) { }
 		} );
+	} );
+
+	// Default patterns row actions.
+	$( document ).on( 'click', '.type-ngl_pattern span.edit a', function( event ) {
+		if ( $( this ).parents( 'td' ).find( '.ngl-pattern-state' ).length ) {
+			event.preventDefault();
+			var row = $( this ).parents( 'td' ).find( '.row-actions' );
+			var html = newsletterglue_params.pattern_edit;
+			row.append( html );
+			return false;
+		}
+	} );
+
+	$( document ).on( 'click', '.ngl-pattern-bk', function( event ) {
+		event.preventDefault();
+		$( this ).parents( '.ngl-pattern-row' ).remove();
+		return false;
+	} );
+
+	$( document ).on( 'click', '.ngl-pattern-dp', function( event ) {
+		event.preventDefault();
+		var url = $( this ).parents( 'td.column-title' ).find( 'span.ngl_duplicate a' ).attr( 'href' );
+		window.location.href = url;
+		return false;
+	} );
+
+	$( document ).on( 'click', '.ngl-pattern-edit', function( event ) {
+		event.preventDefault();
+		var url = $( this ).parents( 'td.column-title' ).find( 'span.edit a' ).attr( 'href' );
+		window.location.href = url;
+		return false;
 	} );
 
 } ) ( jQuery );

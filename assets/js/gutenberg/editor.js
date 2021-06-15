@@ -9,6 +9,41 @@ const { createHigherOrderComponent } = wp.compose;
 const { InspectorControls, BlockControls } = editor;
 
 /**
+ * Add a panel to reset pattern.
+ */
+function NewsletterGluePatternReset() {
+
+	if ( ! select('core/editor').getEditedPostAttribute('meta')[ '_ngl_core_pattern' ] ) {
+		return '';
+	}
+
+	var pattern = select('core/editor').getEditedPostAttribute('meta')['_ngl_core_pattern'];
+
+	return el(
+		PluginDocumentSettingPanel,
+		{
+			name: 'newsletterglue-doc-plugin',
+			className: 'newsletterglue-doc-plugin',
+			title: 'Default newsletter pattern',
+		},
+		el( 'div', { },
+			'You are currently editing a default pattern.' 
+		),
+		el( 'div', { style: { marginTop: '4px', marginBottom: '10px' } },
+			'Want to reset it back to the original?'
+		),
+		el( 'a', { className: 'ngl-reset-pattern-btn components-button is-secondary', style: { marginBottom: '10px' }, href: newsletterglue_meta.reset_pattern },
+			'Reset default pattern'
+		)
+	);
+}
+
+registerPlugin( 'newsletterglue-pattern-plugin', {
+  render: NewsletterGluePatternReset,
+  icon: '',
+} );
+
+/**
  * Add a panel to control additional Newsletter settings.
  */
 function NewsletterGluePanel() {
