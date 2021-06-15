@@ -451,7 +451,6 @@ function newsletterglue_fix_the_content( $content ) {
 	$content = str_replace( untrailingslashit( admin_url() ) . '%7B%7B%20', '{{ ', $content );
 	$content = str_replace( 'http://%7B%7B%20', '{{ ', $content );
 	$content = str_replace( 'https://%7B%7B%20', '{{ ', $content );
-	$content = str_replace( 'http://', '', $content );
 	$content = str_replace( '%20%7D%7D/', ' }}', $content );
 	$content = str_replace( '%20%7D%7D', ' }}', $content );
 
@@ -775,6 +774,26 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 	$output = new simple_html_dom();
 	$output->load( $html, true, false );
 
+	// Spacers.
+	$replace = '.wp-block-spacer';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$s = $element->style;
+		$results = [];
+		$styles = explode(';', $s);
+
+		foreach ($styles as $style) {
+			$properties = explode(':', $style);
+			if (2 === count($properties)) {
+				$results[trim($properties[0])] = trim($properties[1]);
+			}
+		}
+		if ( ! empty( $results[ 'height' ] ) ) {
+			$clean_height = absint( $results[ 'height' ] );
+			$element->outertext = $clean_height;
+			$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-spacer"><tr><td height="' . $clean_height .'" style="height: ' . $clean_height . 'px; padding: 0 !important; font-size: 0px; line-height: 100%;">&nbsp;</td></tr></table>';
+		}
+	}
+
 	// Outline style.
 	$replace = '.is-style-outline';
 	foreach( $output->find( $replace ) as $key => $element ) {
@@ -993,26 +1012,6 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 			if ( ! $td->width && $unset == $holder && $col_count == 2 ) {
 				$td->width = $holder / 2;
 			}
-		}
-	}
-
-	// Spacers.
-	$replace = '.wp-block-spacer';
-	foreach( $output->find( $replace ) as $key => $element ) {
-		$s = $element->style;
-		$results = [];
-		$styles = explode(';', $s);
-
-		foreach ($styles as $style) {
-			$properties = explode(':', $style);
-			if (2 === count($properties)) {
-				$results[trim($properties[0])] = trim($properties[1]);
-			}
-		}
-		if ( ! empty( $results[ 'height' ] ) ) {
-			$clean_height = absint( $results[ 'height' ] );
-			$element->outertext = $clean_height;
-			$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-spacer"><tr><td height="' . $clean_height .'" style="height: ' . $clean_height . 'px; padding: 0 !important; font-size: 0px; line-height: 100%;">&nbsp;</td></tr></table>';
 		}
 	}
 
@@ -1291,7 +1290,11 @@ function newsletterglue_generated_html_output_hook6( $html, $post_id, $app ) {
 				$max_width = '100%';
 				$element->height = '';
 			}
-			$element->style = $element->style . 'max-width: ' . $max_width . ';';
+			if ( $element->style ) {
+				$element->style = $element->style . ';max-width: ' . $max_width . ';';
+			} else {
+				$element->style = 'max-width: ' . $max_width . ';';
+			}
 		}
 	}
 
@@ -1354,6 +1357,36 @@ function newsletterglue_generated_html_output_hook6( $html, $post_id, $app ) {
 	$replace = '#template_inner figcaption';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ngl-table-caption"><tr><td>' . $element->innertext . '</td></tr></table>';
+	}
+
+	// Tables containing inline elements.
+	$replace = '.ngl-table-inline';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$align = 'left';
+		if ( strstr( $element->class, '-center' ) ) {
+			$align = 'center';
+		} else if ( strstr( $element->class, '-right' ) ) {
+			$align = 'right';
+		}
+
+		if ( $element->find( '.ngl-share-description' ) ) {
+			$saved_text = $element->find( '.ngl-share-description', 0 )->outertext;
+			$element->find( '.ngl-share-description', 0 )->outertext = '';
+		} else {
+			$saved_text = '';
+		}
+
+		$inner_html = strip_tags( $element->innertext, '<a><img>' );
+		$inner_html = str_replace( '<a', '<td><a', $inner_html );
+		$inner_html = str_replace( '</a>', '</a></td>', $inner_html );
+		$inner_html = '<table border="0" cellpadding="0" cellspacing="0" align="' . $align . '"><tr>' . $inner_html . '</tr></table>';
+
+		if ( $saved_text ) {
+			$saved_text = '<table width="100%" border="0" cellpadding="0" cellspacing="0" align="' . $align . '"><tr><td valign="middle" align="' . $align . '" style="text-align: ' . $align . ';padding-bottom: 10px !important;">' . $saved_text . '</td></tr></table>';
+		}
+
+		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ' . str_replace( 'undefined', '', $element->class ) . ' align-' . $align . '"><tr><td valign="middle" align="' . $align . '">' . $saved_text . $inner_html . '</td></tr></table>';
+
 	}
 
 	$output->save();
@@ -1707,6 +1740,26 @@ table {
 
 .ngl-table-masthead td {
 	padding: 10px 20px;
+}
+
+.ngl-table-inline td {
+	padding: 10px 20px;
+}
+
+.ngl-table-inline td a {
+	display: inline-block;
+}
+
+.ngl-table-inline.align-center td td {
+	padding: 0 4px !important;
+}
+
+.ngl-table-inline.align-left td td {
+	padding: 0 8px 0 0;
+}
+
+.ngl-table-inline.align-right td td {
+	padding: 0 0 0 8px;
 }
 
 .ngl-table-ngl-credits td {

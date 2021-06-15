@@ -18,6 +18,7 @@ function newsletterglue_get_blocks() {
 		'newsletterglue_block_author' 				=> array(),
 		'newsletterglue_block_callout' 				=> array(),
 		'newsletterglue_block_metadata' 			=> array(),
+		'newsletterglue_block_share' 				=> array(),
 	);
 
 	return apply_filters( 'newsletterglue_get_blocks', $blocks );

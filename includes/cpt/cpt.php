@@ -299,6 +299,8 @@ class NGL_CPT {
 					'newsletterglue/author',
 					'newsletterglue/callout',
 					'newsletterglue/metadata',
+					'newsletterglue/share',
+					'newsletterglue/share-link',
 					'core/block',
 					'core/paragraph',
 					'core/image',

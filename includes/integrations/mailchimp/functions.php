@@ -30,6 +30,10 @@ function newsletterglue_get_mailchimp_tags() {
 				'list' 			=> array(
 					'title'		=> __( 'List', 'newsletter-glue' ),
 				),
+				'update_preferences' => array(
+					'title'		=> __( 'Update preferences', 'newsletter-glue' ),
+					'default_link_text' => __( 'Update preferences', 'newsletter-glue' ),
+				),
 			),
 		),
 		'read_online'		=> array(

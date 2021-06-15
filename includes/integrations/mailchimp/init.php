@@ -294,6 +294,7 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 
 		// Settings.
 		$settings = array(
+			'title'			=> ! empty( urldecode( $post->post_title ) ) ? urldecode( $post->post_title ) : $subject,
 			'subject_line' 	=> $subject,
 			'reply_to' 		=> $from_email,
 			'from_name' 	=> $from_name,
@@ -640,6 +641,9 @@ class NGL_Mailchimp extends NGL_Abstract_Integration {
 			break;
 			case 'address' :
 				return '*|ADDRESS|*';
+			break;
+			case 'update_preferences' :
+				return '*|UPDATE_PROFILE|*';
 			break;
 			default :
 				return apply_filters( "newsletterglue_{$this->app}_custom_tag", '', $tag, $post_id );
