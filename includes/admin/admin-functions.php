@@ -7,6 +7,35 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Add pattern reset UI.
+ */
+add_action( 'manage_posts_extra_tablenav', 'ngl_add_pattern_reset_ui', 10, 1 );
+function ngl_add_pattern_reset_ui( $which ) {
+	global $post_type;
+
+	if ( $which == 'top' || empty( $post_type ) || $post_type != 'ngl_pattern' ) return;
+
+	require_once( NGL_PLUGIN_DIR . 'includes/cpt/default-patterns.php' );
+
+	$class		= new NGL_Default_Patterns();
+	$patterns 	= $class->get_patterns();
+	?>
+	<div class="ngl-pattern-reset">
+		<a href="#" class="ngl-pattern-reset-toggle"><strong><?php _e( 'Restore and reset default patterns?', 'newsletter-glue' ); ?></strong></a>
+		<div class="ngl-pattern-reset-ui">
+			<select>
+				<option value="all" data-url="<?php echo add_query_arg( 'recreate-patterns', 'all', admin_url( 'edit.php?post_type=ngl_pattern' ) ); ?>" selected><?php _e( 'All default patterns', 'newsletter-glue' ); ?></option>
+				<?php foreach( $patterns as $key => $data ) : ?>
+				<option value="<?php echo esc_attr( $key ); ?>" data-url="<?php echo add_query_arg( 'recreate-patterns', $key, admin_url( 'edit.php?post_type=ngl_pattern' ) ); ?>"><?php echo esc_html( $data[ 'title' ] ); ?></option>
+				<?php endforeach; ?>
+			</select>
+			<a href="<?php echo add_query_arg( 'recreate-patterns', 'all', admin_url( 'edit.php?post_type=ngl_pattern' ) ); ?>" class="button action ngl-pattern-reset-start"><?php _e( 'Restore', 'newsletter-glue' ); ?></a>
+		</div>
+	</div>
+	<?php
+}
+
+/**
  * Resets a pattern to original.
  */
 function newsletterglue_reset_pattern_action() {

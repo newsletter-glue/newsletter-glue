@@ -97,16 +97,23 @@ class NGL_CPT {
 			return;
 		}
 
-		if ( get_option( 'newsletterglue_default_patterns' ) && ! isset( $_REQUEST[ 'recreate-patterns' ] ) ) {
+		if ( get_option( 'newsletterglue_did_default_patterns' ) && ! isset( $_REQUEST[ 'recreate-patterns' ] ) ) {
 			return;
 		}
 
 		require_once( NGL_PLUGIN_DIR . 'includes/cpt/default-patterns.php' );
 
-		$patterns = new NGL_Default_Patterns();
-		$patterns->create();
+		$param = false;
+		if ( isset( $_REQUEST[ 'recreate-patterns' ] ) ) {
+			if ( $_REQUEST[ 'recreate-patterns' ] != 'all' && $_REQUEST[ 'recreate-patterns' ] != 'true' ) {
+				$param = esc_attr( $_REQUEST[ 'recreate-patterns' ] );
+			}				
+		}
 
-		update_option( 'newsletterglue_default_patterns', 'yes' );
+		$patterns = new NGL_Default_Patterns();
+		$patterns->create( $param );
+
+		update_option( 'newsletterglue_did_default_patterns', 'yes' );
 
 		if ( isset( $_REQUEST[ 'recreate-patterns' ] ) ) {
 			exit( wp_redirect( remove_query_arg( 'recreate-patterns' ) ) );

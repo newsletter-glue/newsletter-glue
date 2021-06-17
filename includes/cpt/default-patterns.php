@@ -36,13 +36,17 @@ class NGL_Default_Patterns {
 	/**
 	 * Create.
 	 */
-	public function create() {
+	public function create( $include = false ) {
 
 		$defaults = $this->get_patterns();
 
 		$found_post = 0;
 
 		foreach( $defaults as $key => $pattern ) {
+
+			if ( $include && isset( $defaults[ $include ] ) && $key != $include ) {
+				continue;
+			}
 
 			$args = array(
 				'post_type' 	=> 'ngl_pattern',

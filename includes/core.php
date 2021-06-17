@@ -723,11 +723,14 @@ function newsletterglue_final_html_content( $html ) {
 	}
 
 	// Remove unwanted class junk.
-	$replace = 'table.ngl-table';
+	$replace = 'table.ngl-table, table.ngl-table-columns, #template_inner img, table.ngl-table-callout, table.wp-block-newsletterglue-callout, td.ngl-callout-content, a.ngl-metadata-permalink, .wp-block-separator, .wp-block-button__link, div.wp-block-buttons, .wp-block-button, h1.title';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		if ( ! strstr( $element->class, 'ngl-table-ngl-unsubscribe' ) ) {
 			$element->class = '';
 			$element->removeAttribute( 'class' );
+			$element->removeAttribute( 'alt' );
+			$element->removeAttribute( 'data-gap' );
+			$element->removeAttribute( 'data-href' );
 		} else {
 			$element->class = 'ngl-table-ngl-unsubscribe';
 		}
@@ -748,16 +751,30 @@ function newsletterglue_final_html_content2( $html ) {
 	$output = new simple_html_dom();
 	$output->load( $html, true, false );
 
-	// Fix weird markup.
+	// Do not include the wp block image div.
 	$replace = '.wp-block-image';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$element->outertext = $element->innertext;
 	}
 
-	// Fix weird markup.
+	// Remove unwanted group block.
 	$replace = '.wp-block-newsletterglue-group';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		$element->outertext = $element->innertext;
+	}
+
+	// Remove unwanted class junk.
+	$replace = 'table.ngl-table, table.ngl-table-columns, #template_inner img, table.ngl-table-callout, table.wp-block-newsletterglue-callout, td.ngl-callout-content, a.ngl-metadata-permalink, .wp-block-separator, .wp-block-button__link, div.wp-block-buttons, .wp-block-button, h1.title';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( ! strstr( $element->class, 'ngl-table-ngl-unsubscribe' ) ) {
+			$element->class = '';
+			$element->removeAttribute( 'class' );
+			$element->removeAttribute( 'alt' );
+			$element->removeAttribute( 'data-gap' );
+			$element->removeAttribute( 'data-href' );
+		} else {
+			$element->class = 'ngl-table-ngl-unsubscribe';
+		}
 	}
 
 	$output->save();
@@ -773,6 +790,14 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
 	$output->load( $html, true, false );
+
+	// Fix border-radius.
+	$replace = '.is-style-rounded';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		foreach( $element->find( 'img' ) as $a => $b ) {
+			$b->style = $b->style . ';border-radius: 999px !important;';
+		}
+	}
 
 	// Spacers.
 	$replace = '.wp-block-spacer';
@@ -802,6 +827,30 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 		}
 	}
 
+	// Fix figures. direct images.
+	$replace = 'figure.aligncenter, figure.alignleft, figure.alignright, figure.wp-block-image';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$align = 'center';
+		if ( strstr( $element->class, 'aligncenter' ) ) {
+			$align = 'center';
+		}
+		if ( strstr( $element->class, 'alignleft' ) ) {
+			$align = 'left';
+		}
+		if ( strstr( $element->class, 'alignright' ) ) {
+			$align = 'right';
+		}
+		foreach( $element->find( 'img' ) as $a => $b ) {
+			if ( ! $b->class ) {
+				$b->class = 'wp-image wp-image-' . $align;
+			}
+			if ( $b->class && strstr( $b->class, 'wp-image-' ) ) {
+				$b->class = $b->class . ' wp-image wp-image-' . $align;
+			}
+		}
+		$element->outertext = $element->innertext;
+	}
+
 	// Force image width.
 	$replace = 'figure.wp-block-image img';
 	foreach( $output->find( $replace ) as $key => $element ) {
@@ -809,12 +858,9 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 		$element->style = $element->style . 'min-width: 10px; margin-bottom:0 !important;';
 	}
 
-	// Add columns wrapper as a table.
-	$replace = 'figure.wp-block-image';
+	// Fix figures/images.
+	$replace = 'figure.aligncenter, figure.alignleft, figure.alignright, figure.wp-block-image';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		if ( strstr( $element->class, 'is-style-rounded' ) ) {
-			$element->find( 'img', 0 )->style = 'border-radius: 999px;' . $element->find( 'img', 0 )->style;
-		}
 		if ( $element->find( 'figcaption', 0 ) ) {
 			if ( $element->find( 'figcaption', 0 )->find( 'a' ) ) {
 				$element->find( 'figcaption', 0 )->find( 'a', 0 )->class = 'caption-link';
@@ -875,7 +921,7 @@ function newsletterglue_generated_html_output_hook1( $html, $post_id, $app ) {
 	// Add columns wrapper as a table.
 	$replace = '.wp-block-columns';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		$output->find( $replace, $key )->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table-columns"><tr>' . $element->innertext . '</tr></table>';
+		$output->find( $replace, $key )->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table-columns"><tr class="root-tr">' . $element->innertext . '</tr></table>';
 	}
 
 	// Change all figures.
@@ -949,11 +995,6 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 
 	$output = new simple_html_dom();
 	$output->load( $html, true, false );
-
-	$replace = '#template_inner > div > img, #template_inner > div.wp-block-image img';
-	foreach( $output->find( $replace ) as $key => $element ) {
-		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" style="vertical-align: top;margin:0;">' . $element->outertext . '</td></tr></table>';
-	}
 
 	// Cite.
 	$replace = 'cite';
@@ -1301,7 +1342,7 @@ function newsletterglue_generated_html_output_hook6( $html, $post_id, $app ) {
 	// Images inside columns td.
 	$replace = '#template_inner .ngl-table-columns td';
 	foreach( $output->find( $replace ) as $key => $element ) {
-		if ( $element->width ) {
+		if ( $element->width && is_numeric( $element->width ) && ! strstr( $element->class, 'ngl-td-auto' ) ) {
 			$max_w = $element->width - 40;
 			foreach( $element->find( 'img' ) as $image_id => $el ) {
 				if ( $el->width && $el->width > $max_w ) {
@@ -1387,6 +1428,57 @@ function newsletterglue_generated_html_output_hook6( $html, $post_id, $app ) {
 
 		$element->outertext = '<table width="100%" border="0" cellpadding="0" cellspacing="0" class="ngl-table ' . str_replace( 'undefined', '', $element->class ) . ' align-' . $align . '"><tr><td valign="middle" align="' . $align . '">' . $saved_text . $inner_html . '</td></tr></table>';
 
+	}
+
+	// Alignment.
+	$replace = 'table.wp-image-center td';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->align = 'center';
+	}
+
+	$replace = 'table.wp-image-left td';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->align = 'left';
+	}
+
+	$replace = 'table.wp-image-right td';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->align = 'right';
+	}
+
+	$output->save();
+
+	return ( string ) $output;
+
+}
+
+/**
+ * Fix wrong td widths.
+ */
+add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_hook7', 6, 3 );
+function newsletterglue_generated_html_output_hook7( $html, $post_id, $app ) {
+
+	$output = new simple_html_dom();
+	$output->load( $html, true, false );
+
+	$replace = '#template_inner > .ngl-table-columns .root-tr';
+	$count = 0;
+	$width = 0;
+	foreach( $output->find( $replace ) as $key => $element ) {
+		foreach( $element->find( 'td' ) as $a => $b ) {
+			if ( $b->parent()->tag == 'tr' && strstr( $b->parent()->class, 'root-tr' ) ) {
+				$count = $count + 1;
+				$width = $width + $b->width;
+			}
+		}
+		if ( $width < 600 ) {
+			$new_width = 600 / $count;
+			foreach( $element->find( 'td' ) as $a => $b ) {
+				if ( $b->parent()->tag == 'tr' && strstr( $b->parent()->class, 'root-tr' ) ) {
+					$b->width = $new_width;
+				}
+			}
+		}
 	}
 
 	$output->save();
@@ -2051,6 +2143,11 @@ p.ngl-unsubscribe a {
 	text-align: center;
 }
 
+.aligncenter img {
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
 .wp-block-button__link {
 	mso-hide: all;
 	display: inline-block;
@@ -2301,7 +2398,7 @@ function newsletterglue_duplicate_item( $post = null, $post_id = 0 ) {
 		'post_parent'    => $post->post_parent,
 		'post_password'  => $post->post_password,
 		'post_status'    => $post->post_status,
-		'post_title'     => $post->post_title,
+		'post_title'     => sprintf( __( 'Copy of %s', 'newsletter-glue' ), $post->post_title ),
 		'post_type'      => $post->post_type,
 		'to_ping'        => $post->to_ping,
 		'menu_order'     => $post->menu_order

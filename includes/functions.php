@@ -52,8 +52,9 @@ function newsletterglue_archive( $atts ) {
 			<div class="newsletterglue-archive">
 			<?php foreach( $newsletters as $newsletter ) { ?>
 			<p class="newsletterglue-archive-item"><a href="<?php echo get_permalink( $newsletter->ID ); ?>"><?php echo get_the_title( $newsletter->ID ); ?></a> &mdash; <?php echo get_the_date( 'M j, Y', $newsletter ); ?></p>
+			<?php } ?>
 			</div>
-			<?php }
+			<?php
 		}
 		return ob_get_clean();
 	}
