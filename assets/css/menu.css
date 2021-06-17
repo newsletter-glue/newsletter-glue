@@ -348,3 +348,7 @@ p.ngl-notice-logo {
 	color: #999;
 	line-height: 1.3;
 }
+
+.ngl-bold {
+	font-weight: bold;
+}

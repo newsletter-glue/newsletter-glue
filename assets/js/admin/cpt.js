@@ -189,31 +189,46 @@
 	// Default patterns row actions.
 	$( document ).on( 'click', '.type-ngl_pattern span.edit a', function( event ) {
 		if ( $( this ).parents( 'td' ).find( '.ngl-pattern-state' ).length ) {
-			event.preventDefault();
 			var row = $( this ).parents( 'td' ).find( '.row-actions' );
-			var html = newsletterglue_params.pattern_edit;
-			row.append( html );
-			return false;
+			if ( row.find( '.ngl-pattern-row' ).length == 0 ) {
+				event.preventDefault();
+				row.find( 'span.ngl_duplicate' ).addClass( 'ngl-bold' );
+				var html = newsletterglue_params.pattern_edit;
+				row.append( html );
+				return false;
+			}
 		}
 	} );
 
+	// Go back - default patterns text.
 	$( document ).on( 'click', '.ngl-pattern-bk', function( event ) {
 		event.preventDefault();
+		var row = $( this ).parents( 'td' ).find( '.row-actions' );
+		row.find( 'span.ngl_duplicate' ).removeClass( 'ngl-bold' );
 		$( this ).parents( '.ngl-pattern-row' ).remove();
 		return false;
 	} );
 
-	$( document ).on( 'click', '.ngl-pattern-dp', function( event ) {
+	// Show patterns reset UI on load.
+	$( '.ngl-pattern-reset' ).show().insertBefore( '#ajax-response' );
+
+	// Toggle the reset pattern.
+	$( document ).on( 'click', '.ngl-pattern-reset-toggle', function( event ) {
 		event.preventDefault();
-		var url = $( this ).parents( 'td.column-title' ).find( 'span.ngl_duplicate a' ).attr( 'href' );
-		window.location.href = url;
+		var el = $( this ).parents( '.ngl-pattern-reset' ).find( '.ngl-pattern-reset-ui' );
+		if ( el.is( ':visible' ) ) {
+			el.hide();
+		} else {
+			el.show();
+		}
 		return false;
 	} );
 
-	$( document ).on( 'click', '.ngl-pattern-edit', function( event ) {
+	// When reset pattern select is changed.
+	$( document ).on( 'change', '.ngl-pattern-reset-ui select', function( event ) {
 		event.preventDefault();
-		var url = $( this ).parents( 'td.column-title' ).find( 'span.edit a' ).attr( 'href' );
-		window.location.href = url;
+		var selected = $( this ).find( ':selected' ).attr( 'data-url' );
+		$( this ).parents( '.ngl-pattern-reset-ui' ).find( '.ngl-pattern-reset-start' ).attr( 'href', selected );
 		return false;
 	} );
 

@@ -148,3 +148,20 @@ div.wp-block[data-type="newsletterglue/share-link"]::before,
 div.wp-block[data-type="newsletterglue/share-link"]::after {
 	display: none !important;
 }
+
+/* Reset patterns UI */
+.ngl-pattern-reset {
+	display: none;
+	margin: 20px 0 40px;
+}
+
+a.ngl-pattern-reset-toggle {
+	text-decoration: none;
+	font-size: 1.1em;
+	box-shadow: none !important;
+}
+
+.ngl-pattern-reset-ui {
+	margin: 10px 0 0;
+	display: none;
+}
