@@ -34,10 +34,6 @@ div.editor-styles-wrapper div.wp-block.editor-post-title__block {
 	margin-right: 20px;
 }
 
-hr.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots) {
-	height: 1px !important;
-}
-
 div.editor-styles-wrapper .wp-block.wp-block-separator,
 div.editor-styles-wrapper .wp-block.wp-block-spacer,
 div.editor-styles-wrapper .wp-block .wp-block {
@@ -147,6 +143,30 @@ div.block-editor-block-list__block[data-type="core/spacer"]:hover::before {
 div.wp-block[data-type="newsletterglue/share-link"]::before,
 div.wp-block[data-type="newsletterglue/share-link"]::after {
 	display: none !important;
+}
+
+hr.wp-block-separator {
+	width: 100%;
+	max-width: 100% !important;
+	opacity: 1 !important;
+}
+
+div.editor-styles-wrapper .is-root-container hr.wp-block.wp-block-separator {
+	height: 1px !important;
+}
+
+div.editor-styles-wrapper .is-root-container > hr.wp-block.wp-block-separator {
+	margin: 20px !important;
+	width: auto !important;
+	height: 1px !important;
+}
+
+div.editor-styles-wrapper .is-root-container > hr.wp-block.wp-block-separator.is-short {
+	width: 50px !important;
+}
+
+div.editor-styles-wrapper .is-root-container hr.wp-block.wp-block-separator.is-style-twentytwentyone-separator-thick {
+	height: 3px !important;
 }
 
 /* Reset patterns UI */

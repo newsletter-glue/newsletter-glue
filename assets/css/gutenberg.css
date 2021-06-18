@@ -575,16 +575,16 @@ p.ngl-form-checkbox input[type=checkbox] {
 }
 
 .wp-block-newsletter-share-center > a {
-	margin: 0 4px !important;
+	margin: 0 8px !important;
 }
 
 .wp-block-newsletter-share-right > a {
-	margin: 0 0 0 8px !important;
+	margin: 0 0 0 12px !important;
 }
 
 .wp-block-newsletterglue-share > a {
 	display: flex;
-	margin: 0 8px 0 0;
+	margin: 0 12px 0 0;
 }
 
 .wp-block-newsletterglue-share img {
