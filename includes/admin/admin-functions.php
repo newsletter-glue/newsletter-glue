@@ -342,6 +342,12 @@ function newsletterglue_setting_text( $id = '', $title = '' ) {
  */
 function newsletterglue_setting_size( $id = '', $title = '', $max = 999 ) {
 	$class = 'ngl-' . str_replace( '_', '-', $id );
+
+	$label = false;
+
+	if ( $id == 'container_padding1' || $id == 'container_margin1' ) {
+		$label = '<div style="margin: 0 0 1px;font-size:12px;">' . __( 'Top', 'newsletter-glue' ) . '</div>';
+	}
 	?>
 	<div class="components-base-control <?php echo esc_attr( $class ); ?>">
 		<div class="components-base-control__field">
@@ -349,17 +355,29 @@ function newsletterglue_setting_size( $id = '', $title = '', $max = 999 ) {
 				<label class="components-base-control__label" for="ngl_theme_<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $title ); ?></label>
 			</div>
 			<div class="ngl-theme-px">
+				<?php echo $label; ?>
 				<input class="components-font-size-picker__number ngl-theme-input ngl-desktop" id="ngl_theme_<?php echo esc_attr( $id ); ?>" type="number" min="0" max="<?php echo $max; ?>" value="<?php echo (int) newsletterglue_get_theme_option( $id ); ?>" data-option="<?php echo esc_attr( $id ); ?>" >
 				<input class="components-font-size-picker__number ngl-theme-input ngl-mobile" id="ngl_theme_<?php echo esc_attr( $id ); ?>_mobile" type="number" min="0" max="<?php echo $max; ?>" value="<?php echo (int) newsletterglue_get_theme_option( 'mobile_' . $id ); ?>" data-option="mobile_<?php echo esc_attr( $id ); ?>" >
-				<span class="ngl-px">px</span>
-
-				<?php if ( strstr( $id, 'container_padding' ) || strstr( $id, 'container_margin' ) ) { ?>
-				<span class="ngl-px-helper">
-					<?php _e( 'Top-bottom', 'newsletter-glue' ); ?>
-				</span>
-				<?php } ?>
-
+				<span class="ngl-px <?php echo $label ? 'ngl-px-with-label' : ''; ?>">px</span>
 			</div>
+
+			<?php if ( $id == 'container_padding1' ) { $id = 'container_padding2'; ?>
+			<div class="ngl-theme-px">
+				<?php echo '<div style="margin: 0 0 1px;font-size:12px;">' . __( 'Bottom', 'newsletter-glue' ) . '</div>'; ?>
+				<input class="components-font-size-picker__number ngl-theme-input ngl-desktop" id="ngl_theme_<?php echo esc_attr( $id ); ?>" type="number" min="0" max="<?php echo $max; ?>" value="<?php echo (int) newsletterglue_get_theme_option( $id ); ?>" data-option="<?php echo esc_attr( $id ); ?>" >
+				<input class="components-font-size-picker__number ngl-theme-input ngl-mobile" id="ngl_theme_<?php echo esc_attr( $id ); ?>_mobile" type="number" min="0" max="<?php echo $max; ?>" value="<?php echo (int) newsletterglue_get_theme_option( 'mobile_' . $id ); ?>" data-option="mobile_<?php echo esc_attr( $id ); ?>" >
+				<span class="ngl-px <?php echo $label ? 'ngl-px-with-label' : ''; ?>">px</span>
+			</div>
+			<?php } ?>
+
+			<?php if ( $id == 'container_margin1' ) { $id = 'container_margin2'; ?>
+			<div class="ngl-theme-px">
+				<?php echo '<div style="margin: 0 0 1px;font-size:12px;">' . __( 'Bottom', 'newsletter-glue' ) . '</div>'; ?>
+				<input class="components-font-size-picker__number ngl-theme-input ngl-desktop" id="ngl_theme_<?php echo esc_attr( $id ); ?>" type="number" min="0" max="<?php echo $max; ?>" value="<?php echo (int) newsletterglue_get_theme_option( $id ); ?>" data-option="<?php echo esc_attr( $id ); ?>" >
+				<input class="components-font-size-picker__number ngl-theme-input ngl-mobile" id="ngl_theme_<?php echo esc_attr( $id ); ?>_mobile" type="number" min="0" max="<?php echo $max; ?>" value="<?php echo (int) newsletterglue_get_theme_option( 'mobile_' . $id ); ?>" data-option="mobile_<?php echo esc_attr( $id ); ?>" >
+				<span class="ngl-px <?php echo $label ? 'ngl-px-with-label' : ''; ?>">px</span>
+			</div>
+			<?php } ?>
 
 			<div>
 				<?php newsletterglue_show_save_text(); ?>
