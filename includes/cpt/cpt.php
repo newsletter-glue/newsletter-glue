@@ -774,7 +774,9 @@ class NGL_CPT {
 	public static function post_row_actions( $actions, $post ) {
 
 		if ( $post->post_type == 'ngl_pattern' ) {
-			$actions[ 'ngl_preview' ] = '<a href="' . add_query_arg( 'preview_email', $post->ID, home_url() ) . '" title="' . __( 'Email preview', 'newsletter-glue' ) . '" target="_blank">' . __( 'Preview (Email)', 'newsletter-glue' ) . '</a>';
+			$actions[ 'view' ] = '<a href="' . get_permalink( $post->ID ) . '" title="' . __( 'View post', 'newsletter-glue' ) . '" target="_blank">' . __( 'View post', 'newsletter-glue' ) . '</a>';
+
+			$actions[ 'ngl_preview' ] = '<a href="' . add_query_arg( 'preview_email', $post->ID, home_url() ) . '" title="' . __( 'View email preview', 'newsletter-glue' ) . '" target="_blank">' . __( 'View email preview', 'newsletter-glue' ) . '</a>';
 	
 			$actions[ 'ngl_duplicate' ] = '<a href="' . wp_nonce_url( admin_url( 'admin.php?action=ngl_duplicate_as_pattern&post=' . $post->ID ), basename(__FILE__), 'ngl_duplicate_nonce' ) . '" title="' . __( 'Duplicate this pattern', 'newsletter-glue' ) . '" rel="permalink">' . __( 'Duplicate', 'newsletter-glue' ) . '</a>';
 		}
