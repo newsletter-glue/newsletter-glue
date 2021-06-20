@@ -184,10 +184,16 @@
 
 		// container
 		if ( id == 'container_padding1' || id == 'mobile_container_padding1' ) {
-			email.find( '.ngl-email-container' ).css( { 'padding-top' : value + 'px', 'padding-bottom' : value + 'px' } );
+			email.find( '.ngl-email-container' ).css( { 'padding-top' : value + 'px' } );
 		}
-		if ( id == 'container_margin' || id == 'mobile_container_margin' ) {
-			email.find( '.ngl-email-container' ).css( { 'margin-top' : value + 'px', 'margin-bottom' : value + 'px' } );
+		if ( id == 'container_padding2' || id == 'mobile_container_padding2' ) {
+			email.find( '.ngl-email-container' ).css( { 'padding-bottom' : value + 'px' } );
+		}
+		if ( id == 'container_margin1' || id == 'mobile_container_margin1' ) {
+			email.find( '.ngl-email-container' ).css( { 'margin-top' : value + 'px' } );
+		}
+		if ( id == 'container_margin2' || id == 'mobile_container_margin2' ) {
+			email.find( '.ngl-email-container' ).css( { 'margin-bottom' : value + 'px' } );
 		}
 
 		// credits.
@@ -196,6 +202,15 @@
 				$( '.ngl-email' ).find( '.ngl-credits' ).removeClass( 'is-hidden' );
 			} else {
 				$( '.ngl-email' ).find( '.ngl-credits' ).addClass( 'is-hidden' );
+			}
+		}
+
+		// show/hide logo.
+		if ( id == 'ngl_add_logo' ) {
+			if ( value == 1 ) {
+				$( '.ngl-email' ).find( '.ngl-email-logo' ).removeClass( 'is-hidden' );
+			} else {
+				$( '.ngl-email' ).find( '.ngl-email-logo' ).addClass( 'is-hidden' );
 			}
 		}
 

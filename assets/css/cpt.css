@@ -169,6 +169,11 @@ div.editor-styles-wrapper .is-root-container hr.wp-block.wp-block-separator.is-s
 	height: 3px !important;
 }
 
+.wp-block[data-align=center] > .wp-block-image {
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
 /* Reset patterns UI */
 .ngl-pattern-reset {
 	display: none;

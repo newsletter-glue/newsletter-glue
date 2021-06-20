@@ -26,11 +26,8 @@
 }
 
 .ngl-metadata-permalink-arrow {
-	width: 10px !important;
-	display: inline-block !important;
-	margin: 0 0 0 4px !important;
-	position: relative !important;
-	top: 2px !important;
+	display: none !important;
+	visibility: hidden !important;
 }
 
 .ngl-metadata-permalink {
