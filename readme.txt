@@ -192,6 +192,19 @@ Yes! Check it out [here](https://newsletterglue.com).
 
 == Changelog ==
 
+= 1.3.6, June 24, 2021 =
+
+**Improvement**
+
+* Mailchimp now uses WordPress post title as the campaign title for better campaign management.
+
+**Fixes**
+
+* Fixed image sizing and alignment issues.
+* Fixed a bug that caused images to be duplicated when a link is used in the image caption.
+* Note: Fix the title of the free plugin to remove all the ESP names except Mailchimp.
+* A bug is happening when Newsletter Glue meta box is activated on a post that uses the classic editor. This has now been fixed.
+
 = 1.3.4, May 28, 2021 =
 
 **Bug fixes**
