@@ -784,6 +784,11 @@ function newsletterglue_ajax_save_image() {
 
 		$url = wp_get_attachment_url( $attachment_id );
 
+		// Update logo.
+		if ( $option_id == 'newsletterglue_logo' ) {
+
+		}
+
 		// No URL.
 		if ( ! $url ) {
 

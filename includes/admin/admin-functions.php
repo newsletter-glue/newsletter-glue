@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Add pattern reset UI.
  */
-add_action( 'manage_posts_extra_tablenav', 'ngl_add_pattern_reset_ui', 10, 1 );
+//add_action( 'manage_posts_extra_tablenav', 'ngl_add_pattern_reset_ui', 10, 1 );
 function ngl_add_pattern_reset_ui( $which ) {
 	global $post_type;
 

@@ -484,6 +484,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	$ng_post = $post;
 
+	// This is intended for email.
 	if ( ! defined( 'NGL_IN_EMAIL' ) ) {
 		define( 'NGL_IN_EMAIL', true );
 	}
@@ -504,9 +505,6 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	// Blog logo.
 	$show_logo		= get_option( 'newsletterglue_add_logo' );
-
-	// Get the email template including css tags.
-	$html = newsletterglue_get_email_template( $post, $subject, $app );
 
 	// Remove auto embed.
 	remove_filter( 'the_content', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
@@ -551,7 +549,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	// Credits.
 	if ( get_option( 'newsletterglue_credits' ) && $post_type != 'ngl_pattern' ) {
-		$the_content .= '<p class="ngl-credits">' . sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="https://wordpress.org/plugins/newsletter-glue/">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ) . '</p>';
+		$the_content .= '<p class="ngl-credits">' . sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="https://newsletterglue.com/" target="_blank">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ) . '</p>';
 	}
 
 	// Allow 3rd party to customize content tag.
@@ -560,6 +558,9 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 	}
 
 	$the_content = apply_filters( 'newsletterglue_email_content', $the_content, $post, $subject, $app );
+
+	// Get the email template including css tags.
+	$html = newsletterglue_get_email_template( $post, $subject, $app );
 
 	// Process content tags.
 	$html = str_replace( '{{ title }}', $subject, $html );
@@ -735,7 +736,7 @@ function newsletterglue_final_html_content( $html ) {
 	}
 
 	// Remove unwanted class junk.
-	$replace = 'table.ngl-table, #template_inner img, table.ngl-table-callout, table.wp-block-newsletterglue-callout, td.ngl-callout-content, a.ngl-metadata-permalink, .wp-block-button__link, div.wp-block-buttons, .wp-block-button, h1.title, p.has-drop-cap, p.has-text-color, a.logo, tr.root-tr';
+	$replace = 'table.ngl-table, #template_inner img, table.ngl-table-callout, table.wp-block-newsletterglue-callout, td.ngl-callout-content, a.ngl-metadata-permalink, .wp-block-button__link, div.wp-block-buttons, .wp-block-button, h1.title, p.has-drop-cap, p.has-text-color, a.logo, tr.root-tr, .has-inline-color, .has-text-align-left, .has-text-align-center, .ngl-social-link, .ngl-share-description';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		if ( ! strstr( $element->class, 'ngl-table-ngl-unsubscribe' ) && ! strstr( $element->class, 'logo-image' ) ) {
 			$element->class = '';
@@ -744,6 +745,7 @@ function newsletterglue_final_html_content( $html ) {
 			$element->removeAttribute( 'data-gap' );
 			$element->removeAttribute( 'data-href' );
 			$element->removeAttribute( 'data-align' );
+			$element->removeAttribute( 'data-boxed-gap' );
 		}
 	}
 
@@ -775,7 +777,7 @@ function newsletterglue_final_html_content2( $html ) {
 	}
 
 	// Remove unwanted class junk.
-	$replace = 'table.ngl-table, #template_inner img, table.ngl-table-callout, table.wp-block-newsletterglue-callout, td.ngl-callout-content, a.ngl-metadata-permalink, .wp-block-button__link, div.wp-block-buttons, .wp-block-button, h1.title, p.has-drop-cap, p.has-text-color, a.logo, tr.root-tr';
+	$replace = 'table.ngl-table, #template_inner img, table.ngl-table-callout, table.wp-block-newsletterglue-callout, td.ngl-callout-content, a.ngl-metadata-permalink, .wp-block-button__link, div.wp-block-buttons, .wp-block-button, h1.title, p.has-drop-cap, p.has-text-color, a.logo, tr.root-tr, .has-inline-color, .has-text-align-left, .has-text-align-center, .ngl-social-link, .ngl-share-description';
 	foreach( $output->find( $replace ) as $key => $element ) {
 		if ( ! strstr( $element->class, 'ngl-table-ngl-unsubscribe' ) && ! strstr( $element->class, 'logo-image' ) ) {
 			$element->class = '';
@@ -784,6 +786,7 @@ function newsletterglue_final_html_content2( $html ) {
 			$element->removeAttribute( 'data-gap' );
 			$element->removeAttribute( 'data-href' );
 			$element->removeAttribute( 'data-align' );
+			$element->removeAttribute( 'data-boxed-gap' );
 		}
 	}
 
@@ -1065,7 +1068,7 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 		$holder = 600;
 
 		if ( strstr( $element->parent->class, 'ngl-callout-content' ) ) {
-			$holder = absint( 600 - ( $element->parent->{'data-gap'} * 2 ) );
+			$holder = $element->parent->{ 'data-boxed-gap' };
 		}
 
 		$col_count = 0;
@@ -1244,6 +1247,28 @@ function newsletterglue_generated_html_output_hook4( $html, $post_id, $app ) {
 }
 
 /**
+ * Get cached image sizes.
+ */
+function newsletterglue_cached_image_size( $source ) {
+	$caches = get_option( 'newsletterglue_image_sizes' );
+	$hash = md5( $source );
+	if ( ! empty( $caches ) && isset( $caches[ $hash ] ) ) {
+		return $caches[ $hash ];
+	}
+	return false;
+}
+
+/**
+ * Set cached image sizes.
+ */
+function newsletterglue_cached_image_size_set( $source, $image ) {
+	$caches = get_option( 'newsletterglue_image_sizes' );
+	$hash = md5( $source );
+	$caches[ $hash ] = $image;
+	update_option( 'newsletterglue_image_sizes', $caches );
+}
+
+/**
  * Set font-family per td.
  */
 add_filter( 'newsletterglue_generated_html_output', 'newsletterglue_generated_html_output_hook5', 5, 3 );
@@ -1273,14 +1298,13 @@ function newsletterglue_generated_html_output_hook5( $html, $post_id, $app ) {
 		$replace = '#template_inner img.wp-image';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			if ( ! empty( $element->src ) ) {
-				$image = getimagesize( $element->src );
+				$image = newsletterglue_cached_image_size( $element->src ) ? newsletterglue_cached_image_size( $element->src ) : getimagesize( $element->src );
 				if ( ! empty( $image[0] ) ) {
 					if ( $image[0] && ! $element->width ) {
 						$element->width = $image[0];
 						$element->height = $image[1];
-					} else {
-
 					}
+					newsletterglue_cached_image_size_set( $element->src, $image );
 				}
 			}
 		}
@@ -1288,10 +1312,11 @@ function newsletterglue_generated_html_output_hook5( $html, $post_id, $app ) {
 		$replace = '#template_inner img.logo-image';
 		foreach( $output->find( $replace ) as $key => $element ) {
 			if ( ! empty( $element->src ) ) {
-				$image = getimagesize( $element->src );
+				$image = newsletterglue_cached_image_size( $element->src ) ? newsletterglue_cached_image_size( $element->src ) : getimagesize( $element->src );
 				if ( ! empty( $image[0] ) ) {
 					$element->width = $image[0];
 					$element->height = $image[1];
+					newsletterglue_cached_image_size_set( $element->src, $image );
 				}
 			}
 		}

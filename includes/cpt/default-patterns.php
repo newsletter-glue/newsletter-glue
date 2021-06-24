@@ -84,8 +84,9 @@ class NGL_Default_Patterns {
 		$container_bg 	= newsletterglue_get_theme_option( 'container_bg' );
 
 		$logo_url = NGL_PLUGIN_URL . 'assets/images/email/logo-placeholder.png';
+		$ratio = 614 / 186;
 		$logo_s_w = 135;
-		$logo_s_h = 40;
+		$logo_s_h = ceil( 135 / $ratio );
 
 		// Use current logo.
 		$id = get_option( 'newsletterglue_logo_id' );

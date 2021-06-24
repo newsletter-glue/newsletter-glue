@@ -24,7 +24,7 @@ class NGL_CPT {
 		add_action( 'init', array( __CLASS__, 'load_block_patterns' ), 7 );
 
 		// Default patterns.
-		add_action( 'init', array( __CLASS__, 'create_default_patterns' ), 50 );
+		//add_action( 'init', array( __CLASS__, 'create_default_patterns' ), 50 );
 
 		// Register block category.
 		add_action( 'init', array( __CLASS__, 'register_block_category' ), 999999999 );
@@ -374,6 +374,7 @@ class NGL_CPT {
 					'core/table',
 					'core/columns',
 					'core/embed',
+					'core/html',
 				);
 				return $blocks;
 			}
@@ -455,10 +456,15 @@ class NGL_CPT {
 			echo 'div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link,
 				div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link:hover,
 				div.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link:active
-			{ padding: 12px 20px; color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; background-color: transparent !important; border: 2px solid ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; }';
+			{ padding: 12px 20px; color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . '; background-color: transparent !important; border: 2px solid ' . newsletterglue_get_theme_option( 'btn_bg' ) . '!important; }';
 
 			echo 'div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:hover, div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:active {
 					background-color: 0 !important;
+			}';
+
+			echo 'div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:not(:hover):not(:active):not(.has-background),
+				div.editor-styles-wrapper .wp-block-button:not(.is-style-outline) .wp-block-button__link:hover:active:not(.has-background) {
+					background-color: ' . newsletterglue_get_theme_option( 'btn_bg' ) . ';
 			}';
 
 			echo 'div.editor-styles-wrapper .wp-block .wp-block-newsletterglue-callout.is-color-set .block-editor-block-list__layout > * { color: inherit; }';
