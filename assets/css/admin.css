@@ -2605,13 +2605,14 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	position: absolute;
 	font-size: 13px;
 	font-weight: normal;
-	right: 400px;
+	right: 460px;
 	top: 20px;
-	font-weight: 600;
 	border-radius: 999px;
 	border: 1px solid #e2e2e2;
 	display: flex;
 	color: #bbb;
+	z-index: 1000;
+    background: #fff;
 }
 
 .ngl-theme-toggle span {
@@ -2806,12 +2807,12 @@ div[data-value="times_new_roman"] { font-family: "Times New Roman"; }
 	margin: 0;
 }
 
-.ngl-email .ngl-masthead img {
-	margin-bottom: 0;
+.ngl-email .ngl-masthead {
+	padding: 10px 0;
 }
 
-.ngl-email .ngl-masthead-above {
-	padding: 20px 0 0;
+.ngl-email .ngl-masthead img {
+	margin-bottom: 0;
 }
 
 .ngl-email .wp-block-button {

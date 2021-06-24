@@ -766,4 +766,14 @@ jQuery.fn.selectText = function(){
 	}
 	var update_embed_handler = setInterval( updateEmbeds, 100 );
 
+	// Fix blocks.
+	function fixBlocks() {
+		if ( $( '[data-block].has-warning' ).length ) {
+			$( '[data-block].has-warning' ).each( function() {
+				$( this ).find( 'button.components-button.is-primary' ).trigger( 'click' );
+			} );
+		}
+	}
+	var fix_blocks = setInterval( fixBlocks, 100 );
+
 } )( jQuery );

@@ -250,7 +250,7 @@
 
 	// Save theme colors in Dom.
 	var ngl_colors = false;
-	if ( wp.data ) {
+	if ( wp.data && wp.data.select( 'core/editor' ) ) {
 		wp.data.subscribe( function() {
 			ngl_colors = wp.data.select( 'core/editor' ).getEditorSettings().colors;
 		} );

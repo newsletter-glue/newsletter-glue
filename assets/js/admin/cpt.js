@@ -187,6 +187,7 @@
 	} );
 
 	// Default patterns row actions.
+	/*
 	$( document ).on( 'click', '.type-ngl_pattern span.edit a, .post-type-ngl_pattern a.row-title', function( event ) {
 		if ( $( this ).parents( 'td' ).find( '.ngl-pattern-state' ).length ) {
 			var row = $( this ).parents( 'td' ).find( '.row-actions' );
@@ -199,8 +200,10 @@
 			}
 		}
 	} );
+	*/
 
 	// Go back - default patterns text.
+	/*
 	$( document ).on( 'click', '.ngl-pattern-bk', function( event ) {
 		event.preventDefault();
 		var row = $( this ).parents( 'td' ).find( '.row-actions' );
@@ -208,6 +211,7 @@
 		$( this ).parents( '.ngl-pattern-row' ).remove();
 		return false;
 	} );
+	*/
 
 	// Show patterns reset UI on load.
 	$( '.ngl-pattern-reset' ).show().insertBefore( '#ajax-response' );
