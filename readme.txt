@@ -7,7 +7,7 @@ Tags: newsletter, email, mailchimp, blog post
 Requires at least: 5.5
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable Tag: 1.3.6
+Stable Tag: 1.3.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -191,6 +191,18 @@ Yes! Check it out [here](https://newsletterglue.com).
 10. Newsletter Group Block (for showing/hiding content in your email/blog)
 
 == Changelog ==
+
+= 1.3.6.2, July 1, 2021 =
+
+**Improvement**
+
+* Added maximum width option for logos in the Newsletter Theme Designer
+
+**Fixes**
+
+* Fixed logo auto width issues causing logos sizes to display incorrectly.
+* Added "add another button" back to core button block.
+* Fixed the default font sizes not showing up in newsletters.
 
 = 1.3.6, June 24, 2021 =
 
