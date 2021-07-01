@@ -216,7 +216,6 @@
 				}
 			},
 			success: function( response ) {
-				console.log( response );
 				elem.find( '.ngl-process' ).addClass( 'is-hidden' );
 				if ( response.success || response === true ) {
 					if ( response.success ) {
@@ -249,10 +248,12 @@
 	$( '.ngl .ui.checkbox' ).checkbox();
 
 	// Save theme colors in Dom.
-	var ngl_colors = false;
+	var ngl_colors = null;
+	var ngl_sizes  = null;
 	if ( wp.data && wp.data.select( 'core/editor' ) ) {
 		wp.data.subscribe( function() {
 			ngl_colors = wp.data.select( 'core/editor' ).getEditorSettings().colors;
+			ngl_sizes  = wp.data.select( 'core/editor' ).getEditorSettings().fontSizes;
 		} );
 	}
 
@@ -367,8 +368,6 @@
 				ngl_show_testing_screen();
 			},
 			success: function( result ) {
-				
-				console.log( result );
 
 				setTimeout( function() {
 					if ( result.status === 'invalid' ) {
@@ -413,8 +412,6 @@
 			return false;
 		}
 
-		console.log( ngl_app );
-
 		xhr = $.ajax( {
 			type : 'post',
 			url : newsletterglue_params.ajaxurl,
@@ -423,7 +420,6 @@
 				ngl_show_testing_screen();
 			},
 			success: function( result ) {
-				console.log( result );
 				setTimeout( function() {
 					if ( result.response === 'invalid' ) {
 						ngl_show_not_connected_screen();
@@ -657,7 +653,6 @@
 				$( '.ngl-test-result' ).hide();
 			},
 			success: function( response ) {
-				console.log( response );
 				$( '.ngl-is-sending' ).hide();
 				$( '.ngl-action-link' ).show();
 				if  ( response && response.success ) {
@@ -816,8 +811,6 @@
 		value = encodeURIComponent( value );
 
 		var data = 'action=newsletterglue_ajax_save_field&security=' + newsletterglue_params.ajaxnonce + '&id=' + id + '&value=' + value;
-
-		console.log( 'save_field' );
 
 		$.ajax( {
 			type : 'post',
@@ -1186,14 +1179,15 @@
 
 		// One second after finished loading.
 		setTimeout( function() {
-			if ( ngl_colors ) {
-				console.log( ngl_colors );
-				var data = 'action=newsletterglue_save_default_colors&colors=' + JSON.stringify( ngl_colors ) + '&security=' + newsletterglue_params.ajaxnonce;
+			if ( ngl_colors || ngl_sizes ) {
+				var colors = ngl_colors ? JSON.stringify( ngl_colors ) : '';
+				var sizes  = ngl_sizes ? JSON.stringify( ngl_sizes ) : '';
+				var data = 'action=newsletterglue_save_default_colors&colors=' + colors + '&sizes=' + sizes + '&security=' + newsletterglue_params.ajaxnonce;
 				$.ajax( {
 					type : 'post',
 					url : newsletterglue_params.ajaxurl,
 					data : data,
-					success: function( response ) { console.log( 'done' ); }
+					success: function( response ) { }
 				} );
 			}
 		}, 1000 );

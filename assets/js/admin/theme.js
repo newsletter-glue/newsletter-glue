@@ -11,8 +11,6 @@
 			security:  newsletterglue_params.ajaxnonce
 		};
 
-		console.log( data );
-
 		$.ajax( {
 			type	: 'post',
 			url		: newsletterglue_params.ajaxurl,
@@ -21,16 +19,20 @@
 
 			},
 			success : function( response ) {
-				console.log( response );
 				if ( response.success === true) {
 					$( '#' + elem_id ).parents( '.ngl-theme-upload' ).find( '.ngl-theme-upload-name' ).html( response.data.html );
 					$( '#' + elem_id ).val( response.data.url );
 					$( '#' + elem_id + '_id' ).val( response.data.id );
-					$( '.ngl-email-logo' ).removeClass( 'is-hidden' ).find( 'img' ).attr( 'src', response.data.url );
+					if ( $( '#ngl_add_logo' ).is( ':checked' ) ) {
+						$( '.ngl-email-logo' ).removeClass( 'is-hidden' ).find( 'img' ).attr( 'src', response.data.url );
+					} else {
+						$( '.ngl-email-logo' ).addClass( 'is-hidden' ).find( 'img' ).attr( 'src', response.data.url );
+					}
 				} else {
 					$( '#' + elem_id ).parents( '.ngl-theme-upload' ).find( '.ngl-theme-upload-name' ).html( newsletterglue_params.no_image_set );
 					$( '#' + elem_id ).val( '' );
 					$( '#' + elem_id + '_id' ).val( '' );
+					$( '.ngl-email-logo' ).addClass( 'is-hidden' ).find( 'img' ).attr( 'src', '' );
 				}
 			}
 		} );
@@ -181,6 +183,13 @@
 			}
 			email.find( '.wp-block-button__link' ).css( { 'min-width' : width } );
 		}
+		if ( id == 'max_logo_w' || id == 'mobile_max_logo_w' ) {
+			var width = value + 'px';
+			if ( value == 0 ) {
+				width = '100%';
+			}
+			email.find( '.ngl-email-logo img' ).css( { 'max-width' : width } );
+		}
 
 		// container
 		if ( id == 'container_padding1' || id == 'mobile_container_padding1' ) {
@@ -207,7 +216,7 @@
 
 		// show/hide logo.
 		if ( id == 'ngl_add_logo' ) {
-			if ( value == 1 ) {
+			if ( value == 1 && $( '#newsletterglue_logo_id' ).val() > 0 ) {
 				$( '.ngl-email' ).find( '.ngl-email-logo' ).removeClass( 'is-hidden' );
 			} else {
 				$( '.ngl-email' ).find( '.ngl-email-logo' ).addClass( 'is-hidden' );
@@ -251,8 +260,6 @@
 		if ( id == 'ngl_position_logo' ) {
 			$( '.ngl-email-logo' ).removeClass( 'ngl-logo-left ngl-logo-center ngl-logo-right ngl-logo-full' ).addClass( 'ngl-logo-' + value );
 		}
-
-		console.log( 'save_theme' );
 
 		$.ajax( {
 			type : 'post',
@@ -486,6 +493,13 @@
 		}
 	}
 
+	if ( $( document ).find( '#ngl_add_featured' ).length ) {
+		if ( ! $( document ).find( '#ngl_add_featured' ).is( ':checked' ) ) {
+			$( document ).find( '#ngl_link_featured' ).prop( 'disabled', true );
+			$( document ).find( '#ngl_link_featured' ).parents( '.components-base-control__field' ).addClass( 'disabled' );
+		}
+	}
+
 	$( document ).on( 'change', '#ngl_add_title', function() {
 		if ( $( this ).is( ':checked' ) ) {
 			$( document ).find( '#ngl_link_title' ).prop( 'disabled', false );
@@ -493,6 +507,16 @@
 		} else {
 			$( document ).find( '#ngl_link_title' ).prop( 'disabled', true );
 			$( document ).find( '#ngl_link_title' ).parents( '.components-base-control__field' ).addClass( 'disabled' );
+		}
+	} );
+
+	$( document ).on( 'change', '#ngl_add_featured', function() {
+		if ( $( this ).is( ':checked' ) ) {
+			$( document ).find( '#ngl_link_featured' ).prop( 'disabled', false );
+			$( document ).find( '#ngl_link_featured' ).parents( '.components-base-control__field' ).removeClass( 'disabled' );
+		} else {
+			$( document ).find( '#ngl_link_featured' ).prop( 'disabled', true );
+			$( document ).find( '#ngl_link_featured' ).parents( '.components-base-control__field' ).addClass( 'disabled' );
 		}
 	} );
 

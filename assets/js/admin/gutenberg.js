@@ -773,6 +773,14 @@ jQuery.fn.selectText = function(){
 				$( this ).find( 'button.components-button.is-primary' ).trigger( 'click' );
 			} );
 		}
+		if ( $( '.ngl-metadata' ).length ) {
+			$( '.ngl-metadata' ).each( function() {
+				var last = $( this ).children().last();
+				if ( last.hasClass( 'ngl-metadata-sep' ) ) {
+					last.hide();
+				}
+			} );
+		}
 	}
 	var fix_blocks = setInterval( fixBlocks, 100 );
 
