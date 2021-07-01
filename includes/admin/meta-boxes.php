@@ -17,7 +17,7 @@ function newsletterglue_add_meta_box() {
 	if ( ! empty( $saved_types ) ) {
 		$post_types = explode( ',', $saved_types );
 	} else {
-		$post_types = apply_filters( 'newsletterglue_supported_core_types', array( 'post', 'page' ) );
+		$post_types = apply_filters( 'newsletterglue_supported_core_types', array() );
 	}
 
 	$post_types = array_merge( $post_types, array( 'newsletterglue', 'ngl_pattern' ) );

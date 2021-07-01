@@ -93,7 +93,7 @@ function newsletterglue_add_newsletter_status() {
 	if ( ! empty( $post_types ) ) {
 		$post_types = explode( ',', $post_types );
 	} else {
-		$post_types = apply_filters( 'newsletterglue_supported_core_types', array( 'post', 'page' ) );
+		$post_types = apply_filters( 'newsletterglue_supported_core_types', array() );
 	}
 
 	$post_types = array_merge( $post_types, array( 'newsletterglue' ) );

@@ -7,6 +7,64 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Substack - import newsletter by URL.
+ */
+function newsletterglue_import_substack_post( $url = 'https://mattstoller.substack.com/p/a-private-equity-giant-trained-the', $status = 'publish' ) {
+
+	$request = wp_remote_get( $url );
+	$body    = wp_remote_retrieve_body( $request );
+
+	if ( empty( $body ) ) {
+		return;
+	}
+
+	// Get newsletter content.
+	$first_step 	= explode( '<div class="body markup">' , $body );
+	$second_step	= explode( '</div>' , $first_step[1] );
+	$html 			= $second_step[0];
+
+	// Get the title.
+	preg_match( "/<h1[^>]*class=\"post-title(.*?)<\\/h1>/si", $body, $match );
+	$title = ! empty( $match[0] ) ? wp_strip_all_tags( $match[0] ) : __( 'Untitled newsletter', 'newsletter-glue' );
+
+	// Format HTML content.
+	$output = new simple_html_dom();
+	$output->load( $html, true, false );
+
+	// Make p blocks.
+	$replace = 'p';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		if ( $element->parent()->tag === 'blockquote' ) {
+			continue;
+		}
+		$element->outertext = '<!-- wp:paragraph -->' . $element->outertext . '<!-- /wp:paragraph -->';
+	}
+
+	// Make blockquote blocks.
+	$replace = 'blockquote';
+	foreach( $output->find( $replace ) as $key => $element ) {
+		$element->class = 'wp-block-quote';
+		$element->outertext = '<!-- wp:quote -->' . $element->outertext . '<!-- /wp:quote -->';
+	}
+
+	$output->save();
+
+	$post_content = ( string ) $output;
+
+	$args = array(
+		'post_title'	=> $title,
+		'post_content'	=> $post_content,
+		'post_author'	=> get_current_user_id(),
+		'post_status'	=> $status,
+		'post_type'		=> 'newsletterglue',
+	);
+
+	$post_id = wp_insert_post( $args );
+
+	return $post_id;
+}
+
+/**
  * Add pattern reset UI.
  */
 //add_action( 'manage_posts_extra_tablenav', 'ngl_add_pattern_reset_ui', 10, 1 );

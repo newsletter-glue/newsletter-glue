@@ -249,19 +249,25 @@ class NGL_CPT {
 		register_taxonomy( 'ngl_pattern_category', array( 'ngl_pattern' ), $args );
 
 		// Add default terms (pattern categories)
-		$default_categories = array(
-			'ngl_headers' 		=> __( 'Headers', 'newsletter-glue' ),
-			'ngl_body' 			=> __( 'Body', 'newsletter-glue' ),
-			'ngl_signoffs' 		=> __( 'Sign-offs', 'newsletter-glue' ),
-			'ngl_footers' 		=> __( 'Footers', 'newsletter-glue' ),
-			'ngl_uncategorized' => __( 'Uncategorized', 'newsletter-glue' ),
-		);
+		if ( ! get_option( 'newsletterglue_inserted_pattern_cats' ) ) {
+			$default_categories = array(
+				'ngl_headers' 		=> __( 'Newsletter Header', 'newsletter-glue' ),
+				'ngl_body' 			=> __( 'Newsletter Full Layout', 'newsletter-glue' ),
+				'ngl_signoffs' 		=> __( 'Newsletter Callouts', 'newsletter-glue' ),
+				'ngl_footers' 		=> __( 'Newsletter Footer', 'newsletter-glue' ),
+				'ngl_uncategorized' => __( 'Newsletter Uncategorized', 'newsletter-glue' ),
+			);
 
-		foreach( $default_categories as $cat_id => $cat_name ) {
-			$term = term_exists( $cat_id, 'ngl_pattern_category' );
-			if ( ! $term ) {
-				wp_insert_term( $cat_name, 'ngl_pattern_category', array( 'slug' => $cat_id ) );
+			foreach( $default_categories as $cat_id => $cat_name ) {
+				$term = term_exists( $cat_id, 'ngl_pattern_category' );
+				if ( ! $term ) {
+					wp_insert_term( $cat_name, 'ngl_pattern_category', array( 'slug' => $cat_id ) );
+				} else {
+					wp_update_term( $term[ 'term_id' ], 'ngl_pattern_category', array( 'name' => $cat_name ) );
+				}
 			}
+
+			update_option( 'newsletterglue_inserted_pattern_cats', 'yes' );
 		}
 
 		// Register post meta for rest use.
@@ -369,6 +375,7 @@ class NGL_CPT {
 					'core/list',
 					'core/quote',
 					'core/buttons',
+					'core/button',
 					'core/separator',
 					'core/spacer',
 					'core/table',
@@ -431,6 +438,11 @@ class NGL_CPT {
 				div.editor-styles-wrapper h5, div.editor-styles-wrapper h6 {
 						font-family: Arial, Helvetica, sans-serif; !important; }';
 			}
+
+			echo 'div.editor-styles-wrapper .wp-block.wp-block-quote {
+				border-width: 3px;
+				border-color: ' . newsletterglue_get_theme_option( 'accent' ) . ';
+			}';
 
 			echo 'div.editor-styles-wrapper a, div.editor-styles-wrapper .wp-block a { color: ' . newsletterglue_get_theme_option( 'a_colour' ) . '; text-decoration: none !important; }';
 
@@ -561,27 +573,27 @@ class NGL_CPT {
 
 			register_block_pattern_category(
 				'ngl_headers',
-				array( 'label' => _x( 'Headers', 'Block pattern category', 'newsletter-glue' ) )
-			);
-
-			register_block_pattern_category(
-				'ngl_body',
-				array( 'label' => _x( 'Body', 'Block pattern category', 'newsletter-glue' ) )
+				array( 'label' => _x( 'Newsletter Header', 'Block pattern category', 'newsletter-glue' ) )
 			);
 
 			register_block_pattern_category(
 				'ngl_signoffs',
-				array( 'label' => _x( 'Sign-offs', 'Block pattern category', 'newsletter-glue' ) )
+				array( 'label' => _x( 'Newsletter Callouts', 'Block pattern category', 'newsletter-glue' ) )
+			);
+
+			register_block_pattern_category(
+				'ngl_body',
+				array( 'label' => _x( 'Newsletter Full Layout', 'Block pattern category', 'newsletter-glue' ) )
 			);
 
 			register_block_pattern_category(
 				'ngl_footers',
-				array( 'label' => _x( 'Footers', 'Block pattern category', 'newsletter-glue' ) )
+				array( 'label' => _x( 'Newsletter Footer', 'Block pattern category', 'newsletter-glue' ) )
 			);
 
 			register_block_pattern_category(
 				'ngl_uncategorized',
-				array( 'label' => _x( 'Uncategorized', 'Block pattern category', 'newsletter-glue' ) )
+				array( 'label' => _x( 'Newsletter Uncategorized', 'Block pattern category', 'newsletter-glue' ) )
 			);
 
 			// Get all terms.
@@ -684,7 +696,7 @@ class NGL_CPT {
 						$current = '';
 					}
 				}
-				$views[ $term->slug ] = '<a href="' . admin_url( 'edit.php?post_type=ngl_pattern&ngl_pattern_category=' . $term->slug ) . '" class="' . $current . '">' . $term->name . ' <span class="count">(' . $term->count . ')</span></a>';
+				$views[ $term->slug ] = '<a href="' . admin_url( 'edit.php?post_type=ngl_pattern&ngl_pattern_category=' . $term->slug ) . '" class="' . $current . '">' . str_replace( 'Newsletter ', '', $term->name ) . ' <span class="count">(' . $term->count . ')</span></a>';
 			}
 		}
 

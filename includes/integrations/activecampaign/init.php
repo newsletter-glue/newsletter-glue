@@ -393,4 +393,12 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 		return 'https://help.activecampaign.com/hc/en-us/articles/360015584680-Verify-your-email-domain';
 	}
 
+	/**
+	 * Get lists compat.
+	 */
+	public function _get_lists_compat() {
+		$this->api = new ActiveCampaign( $this->api_url, $this->api_key );
+		return $this->get_lists();
+	}
+
 }
