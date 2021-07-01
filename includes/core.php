@@ -549,7 +549,7 @@ function newsletterglue_generate_content( $post = '', $subject = '', $app = '' )
 
 	// Credits.
 	if ( get_option( 'newsletterglue_credits' ) && $post_type != 'ngl_pattern' ) {
-		$the_content .= '<p class="ngl-credits">' . sprintf( __( 'Seamlessly sent by %s', 'newsletter-glue' ), '<a href="https://newsletterglue.com/" target="_blank">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ) . '</p>';
+		$the_content .= '<p class="ngl-credits">' . sprintf( __( 'Built with %s', 'newsletter-glue' ), '<a href="https://newsletterglue.com/?utm_source=newsletter&utm_medium=ng-signature" target="_blank">' . __( 'Newsletter Glue', 'newsletter-glue' ) . '</a>' ) . '</p>';
 	}
 
 	// Allow 3rd party to customize content tag.
@@ -1057,7 +1057,7 @@ function newsletterglue_generated_html_output_hook2( $html, $post_id, $app ) {
 		if ( newsletterglue_get_theme_option( 'a_colour' ) ) {
 			$accent = newsletterglue_get_theme_option( 'a_colour' );
 		}
-		$output->find( $replace, $key )->outertext = '<div class="ngl-quote" style="margin-left: 0;border-' . $align . ': 2px solid ' . $accent . ';padding-' . $align . ': 20px;' . $style . '">' . $element->innertext . '</div>';
+		$output->find( $replace, $key )->outertext = '<div class="ngl-quote" style="margin-left: 0;border-' . $align . ': 3px solid ' . $accent . ';padding-' . $align . ': 20px;' . $style . '">' . $element->innertext . '</div>';
 	}
 
 	// Set td widths.
@@ -1653,10 +1653,12 @@ function newsletterglue_add_logo() {
 	$logo_url		= get_option( 'newsletterglue_logo_url' );
 	$logo_position 	= get_option( 'newsletterglue_position_logo' );
 
-	if ( $width > 200 ) {
+	$max_logo_w     = newsletterglue_get_theme_option( 'max_logo_w' );
+
+	if ( $max_logo_w && $width > $max_logo_w ) {
 		$ratio = $width / $height;
-		$n_width = 200;
-		$n_height = ceil( 200 / $ratio );
+		$n_width = $max_logo_w;
+		$n_height = ceil( $max_logo_w / $ratio );
 	} else {
 		$n_width = $width;
 		$n_height = $height;
@@ -1794,6 +1796,8 @@ function newsletterglue_get_theme_default( $key ) {
 		'container_padding2'		=> 0,
 		'container_margin1'			=> 10,
 		'container_margin2'			=> 10,
+		'max_logo_w'				=> 0,
+		'mobile_max_logo_w'			=> 0,
 		// Mobile.
 		'mobile_h1_size'			=> 28,
 		'mobile_h2_size'			=> 24,
@@ -1810,6 +1814,16 @@ function newsletterglue_get_theme_default( $key ) {
 	);
 
 	return isset( $keys[ $key ] ) ? $keys[ $key ] : '';
+}
+
+/**
+ * Max logo width.
+ */
+function ngl_get_max_logo_width( $mobile = false ) {
+	$var = $mobile ? 'mobile_max_logo_w' : 'max_logo_w';
+	$max = newsletterglue_get_theme_option( $var );
+
+	return $max ? $max . 'px' : '100%';
 }
 
 /**
@@ -1983,6 +1997,14 @@ table {
 	padding: 0 12px 0 0 !important;
 }
 
+.ngl-quote p {
+	margin-bottom: 15px;
+}
+
+.ngl-quote p:last-child {
+	margin-bottom: 0;
+}
+
 .ngl-table-inline.align-right td td {
 	padding: 0 0 0 12px !important;
 }
@@ -2065,6 +2087,15 @@ a.ngl-metadata-permalink {
 }
 
 <?php
+	$sizes = get_option( 'newsletterglue_theme_sizes' );
+	if ( ! empty( $sizes ) ) {
+		foreach( $sizes as $key => $size ) {
+			$slug 	= $size->slug;
+			$value 	= $size->size . 'px';
+			echo ".has-$slug-font-size { font-size: $value !important; }";
+		}
+	}
+
 	$colors = get_option( 'newsletterglue_theme_colors' );
 	if ( ! empty( $colors ) ) {
 		foreach( $colors as $key => $color ) {
@@ -2335,6 +2366,21 @@ p.ngl-unsubscribe a {
 .is-content-justification-center td { text-align: center; }
 .is-content-justification-right td { text-align: right; }
 
+.wp-block-buttons.is-content-justification-left .wp-block-button,
+.wp-block-buttons .wp-block-button {
+	margin-right: 10px;
+	margin-left: 0;
+}
+
+.wp-block-buttons.is-content-justification-center .wp-block-button {
+	margin: 0 10px;
+}
+
+.wp-block-buttons.is-content-justification-right .wp-block-button {
+	margin-left: 10px;
+	margin-right: 0;
+}
+
 .ngl-table-has-text-align-left td { text-align: left !important; }
 .ngl-table-has-text-align-center td { text-align: center !important; }
 .ngl-table-has-text-align-right td { text-align: right !important; }
@@ -2379,7 +2425,8 @@ p.ngl-unsubscribe a {
 	}
 
 	#template_inner img.logo-image {
-		max-height: 60px !important;
+		max-width: <?php echo ngl_get_max_logo_width( true ); ?> !important;
+		height: auto !important;
 	}
 
 	body, #wrapper, #template_inner, p.ngl-credits, p.ngl-unsubscribe {

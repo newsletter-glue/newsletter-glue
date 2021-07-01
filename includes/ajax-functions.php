@@ -70,17 +70,16 @@ function newsletterglue_save_default_colors() {
 	}
 
 	$colors = isset( $_REQUEST[ 'colors' ] ) ? $_REQUEST[ 'colors' ] : '';
-
-	if ( empty( $colors ) ) {
-		wp_die( -1 );
-	}
+	$sizes  = isset( $_REQUEST[ 'sizes' ] ) ? $_REQUEST[ 'sizes' ] : '';
 
 	$colors = json_decode( stripslashes( $colors ) );
+	$sizes  = json_decode( stripslashes( $sizes ) );
 
 	delete_option( 'newsletterglue_theme_colors' );
 	update_option( 'newsletterglue_theme_colors', $colors );
 
-	print_r( $colors );
+	delete_option( 'newsletterglue_theme_sizes' );
+	update_option( 'newsletterglue_theme_sizes', $sizes );
 
 	die();
 

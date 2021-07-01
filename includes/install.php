@@ -72,6 +72,9 @@ function newsletterglue_run_install() {
 	// Set featured image to show by default.
 	update_option( 'newsletterglue_add_featured', 1 );
 
+	// Default post type for newsletterglue.
+	update_option( 'newsletterglue_post_types', 'post' );
+
 }
 
 /**
