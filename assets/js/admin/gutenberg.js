@@ -768,8 +768,8 @@ jQuery.fn.selectText = function(){
 
 	// Fix blocks.
 	function fixBlocks() {
-		if ( $( '[data-block].has-warning' ).length ) {
-			$( '[data-block].has-warning' ).each( function() {
+		if ( $( '.block-editor-writing-flow [data-block].has-warning' ).length ) {
+			$( '.block-editor-writing-flow [data-block].has-warning' ).each( function() {
 				$( this ).find( 'button.components-button.is-primary' ).trigger( 'click' );
 			} );
 		}

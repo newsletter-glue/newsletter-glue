@@ -30,6 +30,7 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 
 		$this->get_api_key();
 
+		add_filter( 'newsltterglue_activecampaign_html_content', array( $this, 'html_content' ), 10, 2 );
 	}
 
 	/**
@@ -399,6 +400,57 @@ class NGL_Activecampaign extends NGL_Abstract_Integration {
 	public function _get_lists_compat() {
 		$this->api = new ActiveCampaign( $this->api_url, $this->api_key );
 		return $this->get_lists();
+	}
+
+	/**
+	 * Replace universal tags with esp tags.
+	 */
+	public function html_content( $html, $post_id ) {
+
+		$html = $this->convert_tags( $html, $post_id );
+
+		return $html;
+	}
+
+	/**
+	 * Code supported tags for this ESP.
+	 */
+	public function get_tag( $tag, $post_id = 0, $fallback = null ) {
+
+		switch ( $tag ) {
+			case 'unsubscribe_link' :
+				return '%UNSUBSCRIBELINK%';
+			break;
+			case 'phone' :
+				return '%PHONE%';
+			break;
+			case 'list' :
+				return '%LISTNAME%';
+			break;
+			case 'full_name' :
+				return '%FULLNAME%';
+			break;
+			case 'first_name' :
+				return '%FIRSTNAME%';
+			break;
+			case 'last_name' :
+				return '%LASTNAME%';
+			break;
+			case 'email' :
+				return '%EMAIL%';
+			break;
+			case 'update_preferences' :
+				return '%UPDATELINK%';
+			break;
+			case 'admin_address' :
+				return '%SENDER-INFO-SINGLELINE%';
+			break;
+			default :
+				return apply_filters( "newsletterglue_{$this->app}_custom_tag", '', $tag, $post_id );
+			break;
+		}
+
+		return false;
 	}
 
 }

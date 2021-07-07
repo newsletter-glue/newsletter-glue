@@ -29,6 +29,7 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 
 		$this->get_api_key();
 
+		add_filter( 'newsltterglue_sendinblue_html_content', array( $this, 'html_content' ), 10, 2 );
 	}
 
 	/**
@@ -462,6 +463,53 @@ class NGL_Sendinblue extends NGL_Abstract_Integration {
 			'helper'		=> '<a href="https://account.sendinblue.com/advanced/api" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
 		) );
 
+	}
+
+	/**
+	 * Get lists compat.
+	 */
+	public function _get_lists_compat() {
+		$this->api = new NGL_SendinblueApiClient( $this->api_key );
+		return $this->get_lists();
+	}
+
+	/**
+	 * Replace universal tags with esp tags.
+	 */
+	public function html_content( $html, $post_id ) {
+
+		$html = $this->convert_tags( $html, $post_id );
+
+		return $html;
+	}
+
+	/**
+	 * Code supported tags for this ESP.
+	 */
+	public function get_tag( $tag, $post_id = 0, $fallback = null ) {
+
+		switch ( $tag ) {
+			case 'unsubscribe_link' :
+				return '{{ unsubscribe }}';
+			break;
+			case 'first_name' :
+				return '{{ contact.FIRSTNAME }}';
+			break;
+			case 'last_name' :
+				return '{{ contact.LASTNAME }}';
+			break;
+			case 'email' :
+				return '{{ contact.EMAIL }}';
+			break;
+			case 'update_preferences' :
+				return '{{ update_profile }}';
+			break;
+			default :
+				return apply_filters( "newsletterglue_{$this->app}_custom_tag", '', $tag, $post_id );
+			break;
+		}
+
+		return false;
 	}
 
 }

@@ -41,6 +41,7 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 
 		$this->api_key 		= isset( $integration[ 'api_key' ] ) ? $integration[ 'api_key' ] : '';
 
+		add_filter( 'newsltterglue_getresponse_html_content', array( $this, 'html_content' ), 10, 2 );
 	}
 
 	/**
@@ -391,6 +392,51 @@ class NGL_Getresponse extends NGL_Abstract_Integration {
 			'helper'		=> '<a href="https://app.getresponse.com/api" target="_blank">' . __( 'Get API key', 'newsletter-glue' ) . ' <i class="arrow right icon"></i></a>',
 		) );
 
+	}
+
+	/**
+	 * Replace universal tags with esp tags.
+	 */
+	public function html_content( $html, $post_id ) {
+
+		$html = $this->convert_tags( $html, $post_id );
+
+		return $html;
+	}
+
+	/**
+	 * Code supported tags for this ESP.
+	 */
+	public function get_tag( $tag, $post_id = 0, $fallback = null ) {
+
+		switch ( $tag ) {
+			case 'unsubscribe_link' :
+				return '[[remove]]';
+			break;
+			case 'list' :
+				return '[[responder]]';
+			break;
+			case 'name' :
+				return ! empty( $fallback ) ? '[[name fallback="' . $fallback . '"]]' : '[[name]]';
+			break;
+			case 'first_name' :
+				return ! empty( $fallback ) ? '[[firstname fallback="' . $fallback . '"]]' : '[[firstname]]';
+			break;
+			case 'last_name' :
+				return ! empty( $fallback ) ? '[[lastname fallback="' . $fallback . '"]]' : '[[lastname]]';
+			break;
+			case 'email' :
+				return '[[email]]';
+			break;
+			case 'update_preferences' :
+				return '[[change]]';
+			break;
+			default :
+				return apply_filters( "newsletterglue_{$this->app}_custom_tag", '', $tag, $post_id );
+			break;
+		}
+
+		return false;
 	}
 
 }

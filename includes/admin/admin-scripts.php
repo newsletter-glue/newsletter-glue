@@ -218,7 +218,7 @@ function newsletterglue_js_data() {
 								</span>';
 						}
 						echo '</button>';
-						if ( isset( $tag[ 'uneditable' ] ) && $tag[ 'helper' ] ) {
+						if ( isset( $tag[ 'uneditable' ] ) && ! empty( $tag[ 'helper' ] ) ) {
 							echo '<div class="ngl-outside-helper" >' . $tag[ 'helper' ] . '</div>';
 						}
 						if ( ! isset( $tag[ 'uneditable' ] ) ) {

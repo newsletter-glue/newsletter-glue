@@ -373,9 +373,11 @@
 					if ( result.status === 'invalid' ) {
 						theform.parents( '.ngl-cards' ).find( '.ngl-card-state.is-invalid .ngl-card-state-text' ).html( result.message );
 						ngl_show_not_connected_screen();
+						$( '.ngl-license-review' ).show();
 					}
 					if ( result.status === 'valid' ) {
 						ngl_show_connected_screen();
+						$( '.ngl-license-review' ).hide();
 					}
 				}, 1000 );
 
@@ -530,6 +532,10 @@
 			url : newsletterglue_params.ajaxurl,
 			data : data,
 			success: function( result ) {
+
+				if ( ! app ) {
+					$( '#newsletterglue_pro_license' ).val( '' );
+				}
 
 				setTimeout( function() {
 					ngl_show_first_screen();

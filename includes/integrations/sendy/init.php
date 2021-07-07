@@ -466,6 +466,15 @@ class NGL_Sendy extends NGL_Abstract_Integration {
 			case 'unsubscribe_link' :
 				return '[unsubscribe]';
 			break;
+			case 'name' :
+				return ! empty( $fallback ) ? '[Name,fallback=' . $fallback . ']' : '[Name]';
+			break;
+			case 'email' :
+				return ! empty( $fallback ) ? '[Email,fallback=' . $fallback . ']' : '[Email]';
+			break;
+			default :
+				return apply_filters( "newsletterglue_{$this->app}_custom_tag", '', $tag, $post_id );
+			break;
 		}
 
 		return false;

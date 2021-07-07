@@ -111,7 +111,7 @@ class NGL_Default_Patterns {
 			'title'		=> 'Header with Banner + Description',
 			'category' 	=> 'ngl_headers',
 			'content'	=> '<!-- wp:newsletterglue/callout {"cta_padding":0,"cta_padding2":0} -->
-<section class="wp-block-newsletterglue-callout undefined not-color-set" style="background-color:' . $email_bg . ';border-color:' . $email_bg . ';border-style:none;border-width:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;text-align:left;margin-left:0;margin-right:0"><!-- wp:spacer {"height":30} -->
+<section class="wp-block-newsletterglue-callout undefined not-color-set" style="background-color:#f9f9f9;border-color:#eeeeee;border-style:solid;border-width:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;text-align:left;margin-left:0;margin-right:0"><!-- wp:spacer {"height":30} -->
 <div style="height:30px" aria-hidden="true" class="wp-block-spacer"></div>
 <!-- /wp:spacer -->
 
@@ -160,7 +160,7 @@ class NGL_Default_Patterns {
 			'title'		=> 'Header with Banner',
 			'category' 	=> 'ngl_headers',
 			'content'	=> '<!-- wp:newsletterglue/callout {"cta_padding":0,"cta_padding2":0} -->
-<section class="wp-block-newsletterglue-callout undefined not-color-set" style="background-color:' . $email_bg . ';border-color:' . $email_bg . ';border-style:none;border-width:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;text-align:left;margin-left:0;margin-right:0"><!-- wp:paragraph {"align":"right","style":{"color":{"text":"#707070"},"typography":{"fontSize":14}}} -->
+<section class="wp-block-newsletterglue-callout undefined not-color-set" style="background-color:#f9f9f9;border-color:#eeeeee;border-style:solid;border-width:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;text-align:left;margin-left:0;margin-right:0"><!-- wp:paragraph {"align":"right","style":{"color":{"text":"#707070"},"typography":{"fontSize":14}}} -->
 <p class="has-text-align-right has-text-color" style="color:#707070;font-size:14px"><a href="{{ webversion }}">Read online</a></p>
 <!-- /wp:paragraph -->
 
@@ -178,7 +178,7 @@ class NGL_Default_Patterns {
 <!-- /wp:heading -->
 
 <!-- wp:newsletterglue/metadata {"alignment":"left","date_format":"l, j M Y","show_date":false,"show_location":false,"show_readonline":false,"post_id":"0","readingtime":"0 mins","post_date":"Saturday, 19 Jun 2021"} -->
-<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#666666;text-align:left"><div class="ngl-metadata-pic"><img src="' . get_avatar_url( $current_user->user_email ) . '" class="avatar avatar-32 photo"/></div><div class="ngl-metadata-author">' . $current_user->display_name . '</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">0 mins</div><div class="ngl-metadata-sep">|</div></div>
+<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#666666;text-align:left;font-size:12px"><div class="ngl-metadata-pic"><img src="' . get_avatar_url( $current_user->user_email ) . '" class="avatar avatar-32 photo"/></div><div class="ngl-metadata-author">' . $current_user->display_name . '</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">0 mins</div><div class="ngl-metadata-sep">|</div></div>
 <!-- /wp:newsletterglue/metadata -->
 
 <!-- wp:paragraph -->
@@ -191,7 +191,7 @@ class NGL_Default_Patterns {
 			'title'		=> 'Header Minimal with Logo',
 			'category' 	=> 'ngl_headers',
 			'content'	=> '<!-- wp:newsletterglue/callout {"cta_padding":40,"cta_padding2":40} -->
-<section class="wp-block-newsletterglue-callout undefined not-color-set" style="background-color:' . $email_bg . ';border-color:' . $email_bg . ';border-style:none;border-width:0;padding-top:40px;padding-bottom:40px;padding-left:40px;padding-right:40px;text-align:left;margin-left:0;margin-right:0"><!-- wp:image {"align":"center","width":' . $logo_s_w . ',"height":' . $logo_s_h . ',"sizeSlug":"large"} -->
+<section class="wp-block-newsletterglue-callout undefined not-color-set" style="background-color:#f9f9f9;border-color:#eeeeee;border-style:solid;border-width:0;padding-top:40px;padding-bottom:40px;padding-left:40px;padding-right:40px;text-align:left;margin-left:0;margin-right:0"><!-- wp:image {"align":"center","width":' . $logo_s_w . ',"height":' . $logo_s_h . ',"sizeSlug":"large"} -->
 <div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img src="' . $logo_url . '" alt="" width="' . $logo_s_w . '" height="' . $logo_s_h . '"/></figure></div>
 <!-- /wp:image --></section>
 <!-- /wp:newsletterglue/callout -->
@@ -201,7 +201,7 @@ class NGL_Default_Patterns {
 <!-- /wp:spacer -->
 
 <!-- wp:newsletterglue/metadata {"alignment":"right","date_format":"l, j M Y","show_author":false,"show_date":false,"show_location":false,"post_id":"0","readingtime":"0 mins","read_online_link":"email","post_date":"Saturday, 19 Jun 2021"} -->
-<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#666666;text-align:right"><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">0 mins</div><div class="ngl-metadata-sep">|</div><a class="ngl-metadata-permalink" href="{{ webversion }}">Read online</a><img class="ngl-metadata-permalink-arrow" src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/arrow.png"/></div>
+<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#666666;text-align:right;font-size:12px"><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">0 mins</div><div class="ngl-metadata-sep">|</div><a class="ngl-metadata-permalink" href="{{ webversion }}">Read online</a><img class="ngl-metadata-permalink-arrow" src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/arrow.png"/></div>
 <!-- /wp:newsletterglue/metadata -->
 
 <!-- wp:spacer {"height":20} -->
@@ -222,7 +222,7 @@ class NGL_Default_Patterns {
 			'title'		=> 'Header with Coloured Bar',
 			'category' 	=> 'ngl_headers',
 			'content'	=> '<!-- wp:newsletterglue/callout {"bg_color":"#0088a0","cta_padding":30,"cta_padding2":40} -->
-<section class="wp-block-newsletterglue-callout undefined not-color-set" style="background-color:#0088a0;border-color:#f9f9f9;border-style:none;border-width:0;padding-top:30px;padding-bottom:30px;padding-left:40px;padding-right:40px;text-align:left;margin-left:0;margin-right:0"><!-- wp:columns {"verticalAlignment":"center"} -->
+<section class="wp-block-newsletterglue-callout undefined not-color-set" style="background-color:#0088a0;border-color:#eeeeee;border-style:solid;border-width:0;padding-top:30px;padding-bottom:30px;padding-left:40px;padding-right:40px;text-align:left;margin-left:0;margin-right:0"><!-- wp:columns {"verticalAlignment":"center"} -->
 <div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center","width":"40%"} -->
 <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:40%"><!-- wp:image {"align":"left","width":135,"height":41,"sizeSlug":"large"} -->
 <div class="wp-block-image"><figure class="alignleft size-large is-resized"><img src="' . NGL_PLUGIN_URL . 'assets/images/email/logo-placeholder.png" alt="" width="135" height="41"/></figure></div>
@@ -231,7 +231,7 @@ class NGL_Default_Patterns {
 
 <!-- wp:column {"verticalAlignment":"center","width":"60%"} -->
 <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:60%"><!-- wp:newsletterglue/metadata {"text_color":"#FFFFFF","alignment":"right","date_format":"l, j M Y","show_author":false,"show_date":false,"show_location":false,"post_id":"406","readingtime":"1 mins","read_online_link":"email","post_date":"Friday, 25 Jun 2021"} -->
-<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#FFFFFF;text-align:right"><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">1 mins</div><div class="ngl-metadata-sep">|</div><a class="ngl-metadata-permalink" href="{{ webversion }}">Read online</a><img class="ngl-metadata-permalink-arrow" src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/arrow.png"/></div>
+<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#FFFFFF;text-align:right;font-size:12px"><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">1 mins</div><div class="ngl-metadata-sep">|</div><a class="ngl-metadata-permalink" href="{{ webversion }}">Read online</a><img class="ngl-metadata-permalink-arrow" src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/arrow.png"/></div>
 <!-- /wp:newsletterglue/metadata --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
@@ -267,7 +267,7 @@ class NGL_Default_Patterns {
 <!-- /wp:spacer -->
 
 <!-- wp:newsletterglue/metadata {"date_format":"l, j M Y","show_author":false,"show_date":false,"show_location":false,"post_id":"0","readingtime":"1 mins","post_date":"Saturday, 19 Jun 2021"} -->
-<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#666666;text-align:center"><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">1 mins</div><div class="ngl-metadata-sep">|</div><a class="ngl-metadata-permalink" href="{{ blog_post }}">Read online</a><img class="ngl-metadata-permalink-arrow" src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/arrow.png"/></div>
+<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#666666;text-align:center;font-size:12px"><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">1 mins</div><div class="ngl-metadata-sep">|</div><a class="ngl-metadata-permalink" href="{{ blog_post }}">Read online</a><img class="ngl-metadata-permalink-arrow" src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/arrow.png"/></div>
 <!-- /wp:newsletterglue/metadata -->
 
 <!-- wp:spacer {"height":15} -->
@@ -304,7 +304,7 @@ class NGL_Default_Patterns {
 <!-- /wp:image -->
 
 <!-- wp:newsletterglue/metadata {"alignment":"left","date_format":"l, j M Y","show_author":false,"show_date":false,"show_location":false,"post_id":"408","readingtime":"1 mins","post_date":"Friday, 25 Jun 2021"} -->
-<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#666666;text-align:left"><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">1 mins</div><div class="ngl-metadata-sep">|</div><a class="ngl-metadata-permalink" href="{{ blog_post }}">Read online</a><img class="ngl-metadata-permalink-arrow" src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/arrow.png"/></div>
+<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#666666;text-align:left;font-size:12px"><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">1 mins</div><div class="ngl-metadata-sep">|</div><a class="ngl-metadata-permalink" href="{{ blog_post }}">Read online</a><img class="ngl-metadata-permalink-arrow" src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/arrow.png"/></div>
 <!-- /wp:newsletterglue/metadata -->
 
 <!-- wp:spacer {"height":20} -->
@@ -329,7 +329,7 @@ class NGL_Default_Patterns {
 			'title'		=> 'Header inside Coloured Block',
 			'category' 	=> 'ngl_headers',
 			'content'	=> '<!-- wp:newsletterglue/callout {"bg_color":"#0d566c","font_color":"#FFFFFF","cta_padding2":30} -->
-<section class="wp-block-newsletterglue-callout undefined is-color-set" style="background-color:#0d566c;color:#FFFFFF;border-color:#f9f9f9;border-style:none;border-width:0;padding-top:20px;padding-bottom:20px;padding-left:30px;padding-right:30px;text-align:left;margin-left:0;margin-right:0"><!-- wp:image {"align":"right","width":135,"height":41,"sizeSlug":"large"} -->
+<section class="wp-block-newsletterglue-callout undefined is-color-set" style="background-color:#0d566c;color:#FFFFFF;border-color:#eeeeee;border-style:solid;border-width:0;padding-top:20px;padding-bottom:20px;padding-left:30px;padding-right:30px;text-align:left;margin-left:0;margin-right:0"><!-- wp:image {"align":"right","width":135,"height":41,"sizeSlug":"large"} -->
 <div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="' . NGL_PLUGIN_URL . 'assets/images/email/logo-placeholder.png" alt="" width="135" height="41"/></figure></div>
 <!-- /wp:image -->
 
@@ -341,8 +341,8 @@ class NGL_Default_Patterns {
 <h5>Subheading</h5>
 <!-- /wp:heading -->
 
-<!-- wp:newsletterglue/metadata {"text_color":"#FFFFFF","alignment":"left","date_format":"l, j M Y","show_author":false,"show_date":false,"show_location":false,"post_id":"409","readingtime":"1 mins","post_date":"Friday, 25 Jun 2021"} -->
-<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#FFFFFF;text-align:left"><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">1 mins</div><div class="ngl-metadata-sep">|</div><a class="ngl-metadata-permalink" href="{{ blog_post }}">Read online</a><img class="ngl-metadata-permalink-arrow" src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/arrow.png"/></div>
+<!-- wp:newsletterglue/metadata {"text_color":"#FFFFFF","alignment":"left","date_format":"l, j M Y","show_author":false,"show_date":false,"show_location":false,"post_id":"513","readingtime":"1 mins","post_date":"Monday, 5 Jul 2021"} -->
+<div class="wp-block-newsletterglue-metadata ngl-metadata" style="color:#FFFFFF;text-align:left;font-size:12px"><div class="ngl-metadata-issue">Issue #</div><div class="ngl-metadata-sep">|</div><div class="ngl-metadata-readtime">Reading time:</div><div class="ngl-metadata-readtime-ajax">1 mins</div><div class="ngl-metadata-sep">|</div><a class="ngl-metadata-permalink" href="{{ blog_post }}">Read online</a><img class="ngl-metadata-permalink-arrow" src="' . NGL_PLUGIN_URL . 'includes/blocks/newsletterglue_block_metadata/img/arrow.png"/></div>
 <!-- /wp:newsletterglue/metadata --></section>
 <!-- /wp:newsletterglue/callout -->
 
@@ -360,7 +360,7 @@ class NGL_Default_Patterns {
 			'title'		=> 'Footer Minimal outside Container',
 			'category' 	=> 'ngl_footers',
 			'content'	=> '<!-- wp:newsletterglue/callout {"font_color":"#707070","cta_padding":30,"cta_padding2":40} -->
-<section class="wp-block-newsletterglue-callout undefined is-color-set" style="background-color:#f9f9f9;color:#707070;border-color:#f9f9f9;border-style:none;border-width:0;padding-top:30px;padding-bottom:30px;padding-left:40px;padding-right:40px;text-align:left;margin-left:0;margin-right:0"><!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":13},"color":{"text":"#707070"}}} -->
+<section class="wp-block-newsletterglue-callout undefined is-color-set" style="background-color:#f9f9f9;color:#707070;border-color:#eeeeee;border-style:solid;border-width:0;padding-top:30px;padding-bottom:30px;padding-left:40px;padding-right:40px;text-align:left;margin-left:0;margin-right:0"><!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":13},"color":{"text":"#707070"}}} -->
 <p class="has-text-align-center has-text-color" style="color:#707070;font-size:13px">Built with <a rel="noreferrer noopener" href="https://newsletterglue.com/?utm_source=newsletter&utm_medium=ng-signature" target="_blank">Newsletter Glue</a>.</p>
 <!-- /wp:paragraph -->
 
@@ -383,7 +383,7 @@ class NGL_Default_Patterns {
 			'title'		=> 'Footer Minimal with Social Sharing',
 			'category' 	=> 'ngl_footers',
 			'content'	=> '<!-- wp:newsletterglue/callout {"cta_padding":30,"cta_padding2":30} -->
-<section class="wp-block-newsletterglue-callout undefined not-color-set" style="background-color:#f9f9f9;border-color:#f9f9f9;border-style:none;border-width:0;padding-top:30px;padding-bottom:30px;padding-left:30px;padding-right:30px;text-align:left;margin-left:0;margin-right:0"><!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":13},"color":{"text":"#707070"}}} -->
+<section class="wp-block-newsletterglue-callout undefined not-color-set" style="background-color:#f9f9f9;border-color:#eeeeee;border-style:solid;border-width:0;padding-top:30px;padding-bottom:30px;padding-left:30px;padding-right:30px;text-align:left;margin-left:0;margin-right:0"><!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":13},"color":{"text":"#707070"}}} -->
 <p class="has-text-align-center has-text-color" style="color:#707070;font-size:13px">Built with <a rel="noreferrer noopener" href="https://newsletterglue.com/?utm_source=newsletter&utm_medium=ng-signature" target="_blank">Newsletter Glue</a>.</p>
 <!-- /wp:paragraph -->
 
@@ -446,7 +446,7 @@ class NGL_Default_Patterns {
 <!-- /wp:spacer -->
 
 <!-- wp:newsletterglue/callout {"bg_color":"#0d566c","font_color":"#FFFFFF","cta_padding":30,"cta_padding2":40} -->
-<section class="wp-block-newsletterglue-callout undefined is-color-set" style="background-color:#0d566c;color:#FFFFFF;border-color:#f9f9f9;border-style:none;border-width:0;padding-top:30px;padding-bottom:30px;padding-left:40px;padding-right:40px;text-align:left;margin-left:0;margin-right:0"><!-- wp:newsletterglue/share {"alignment":"right","icon_size":20,"icon_shape":"default","icon_color":"white","add_description":false} -->
+<section class="wp-block-newsletterglue-callout undefined is-color-set" style="background-color:#0d566c;color:#FFFFFF;border-color:#eeeeee;border-style:solid;border-width:0;padding-top:30px;padding-bottom:30px;padding-left:40px;padding-right:40px;text-align:left;margin-left:0;margin-right:0"><!-- wp:newsletterglue/share {"alignment":"right","icon_size":20,"icon_shape":"default","icon_color":"white","add_description":false} -->
 <div class="wp-block-newsletterglue-share undefined wp-block-newsletter-share-right ngl-image-size-20" data-image-size="20"><!-- wp:newsletterglue/share-link {"service":"twitter","url":"https://twitter.com/","icon_size":20,"icon_shape":"default","icon_color":"white"} -->
 <a class="wp-block-newsletterglue-share-link ngl-social-link ngl-social-link-twitter" href="https://twitter.com/" target="_blank" rel="noopener"><img src="' . NGL_PLUGIN_URL . 'assets/images/share/default/white/twitter.png" width="20" height="20" style="width:20px;height:20px" class="ngl-inline-image"/></a>
 <!-- /wp:newsletterglue/share-link -->
@@ -493,7 +493,7 @@ class NGL_Default_Patterns {
 <!-- /wp:spacer -->
 
 <!-- wp:newsletterglue/callout {"bg_color":"#0d566c","font_color":"#FFFFFF","cta_padding":30,"cta_padding2":40} -->
-<section class="wp-block-newsletterglue-callout undefined is-color-set" style="background-color:#0d566c;color:#FFFFFF;border-color:#f9f9f9;border-style:none;border-width:0;padding-top:30px;padding-bottom:30px;padding-left:40px;padding-right:40px;text-align:left;margin-left:0;margin-right:0"><!-- wp:image {"align":"left","width":135,"height":41,"sizeSlug":"large","className":"is-style-default"} -->
+<section class="wp-block-newsletterglue-callout undefined is-color-set" style="background-color:#0d566c;color:#FFFFFF;border-color:#eeeeee;border-style:solid;border-width:0;padding-top:30px;padding-bottom:30px;padding-left:40px;padding-right:40px;text-align:left;margin-left:0;margin-right:0"><!-- wp:image {"align":"left","width":135,"height":41,"sizeSlug":"large","className":"is-style-default"} -->
 <div class="wp-block-image is-style-default"><figure class="alignleft size-large is-resized"><img src="' . NGL_PLUGIN_URL . 'assets/images/email/logo-placeholder.png" alt="" width="135" height="41"/></figure></div>
 <!-- /wp:image -->
 
