@@ -5,7 +5,7 @@
  * Description: Email posts to subscribers from the WordPress editor. Works with Mailchimp.
  * Author: Newsletter Glue
  * Author URI: https://newsletterglue.com
- * Version: 1.3.6.2
+ * Version: 1.3.6.3
  * Text Domain: newsletter-glue
  * Domain Path: /i18n/languages/
  */
@@ -71,7 +71,7 @@ final class Newsletter_Glue {
 
 		// Plugin version.
 		if ( ! defined( 'NGL_VERSION' ) ) {
-			define( 'NGL_VERSION', '1.3.6.2' );
+			define( 'NGL_VERSION', '1.3.6.3' );
 		}
 
 		// Plugin Folder Path.
@@ -111,6 +111,7 @@ final class Newsletter_Glue {
 		require_once NGL_PLUGIN_DIR . 'includes/compatibility.php';
 		require_once NGL_PLUGIN_DIR . 'includes/gutenberg.php';
 		require_once NGL_PLUGIN_DIR . 'includes/cpt/cpt.php';
+		require_once NGL_PLUGIN_DIR . 'includes/rewrite.php';
 		require_once NGL_PLUGIN_DIR . 'includes/pro.php';
 		require_once NGL_PLUGIN_DIR . 'includes/upgrade.php';
 
